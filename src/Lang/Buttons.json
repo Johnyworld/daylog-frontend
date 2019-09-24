@@ -1,0 +1,18 @@
+{
+    "logIn" : {
+        "kr" : "로그인",
+        "en" : "Log In"
+    },
+    "signIn" : {
+        "kr" : "가입하기",
+        "en" : "Sign In"
+    },
+    "okay" : {
+        "kr" : "확인",
+        "en" : "Okay"
+    },
+    "back" : {
+        "kr" : "뒤로",
+        "en" : "Back"
+    }
+}
