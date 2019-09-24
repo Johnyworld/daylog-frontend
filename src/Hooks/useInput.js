@@ -8,5 +8,5 @@ export default defaultValue => {
         console.log(value);
     }
 
-    return { value, onChange };
+    return { value, onChange, setValue };
 }

@@ -6,6 +6,8 @@ import Languages from '../Lang/Languages';
 const Container = styled.p`
     font-size: 24px;
     font-weight: 100;
+    line-height: 1.4;
+    word-break: keep-all;
     color: white;
     ${({ lang }) => lang === 'KR' && ` 
         letter-spacing: -.05em;

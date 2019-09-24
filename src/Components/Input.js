@@ -23,7 +23,7 @@ const Container = styled.input`
     }
 `;
 
-const Input = ({ placeholder, value, onChange, type, color, lang }) => {
+const Input = ({ placeholder, value, onChange, type, color, lang, required=true }) => {
     const text = languages( placeholder, lang );
     return <Container 
         placeholder={text} 
@@ -31,6 +31,7 @@ const Input = ({ placeholder, value, onChange, type, color, lang }) => {
         onChange={onChange}
         type={type}
         color={color}
+        required={required}
     />
 }
 
