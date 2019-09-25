@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Languages from '../Lang/Languages';
 
-const Container = styled.p`
+const Container = styled.span`
     font-size: 16px;
     line-height: 1.4;
     ${({ weight }) => weight === 'bold' && ` 

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Languages from '../Lang/Languages';
 
-const Container = styled.p`
-    font-size: 11px;
+const Container = styled.span`
+    font-size: 12px;
     line-height: 1.4;
     color: ${({ theme })=> theme.c_gray };
     ${({ weight }) => weight === 'bold' && ` 

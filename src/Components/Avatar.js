@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
-    width: ${({ size })=> size };
-    height: ${({ size })=> size };
+    ${({ size }) => (`
+        width: ${size};
+        height: ${size};
+        min-width: ${size};
+        min-height: ${size};
+    `)}
     border-radius: 50%;
     background-image: ${({ avatar })=> `url(${avatar})` };
     background-size: cover;

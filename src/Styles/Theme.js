@@ -5,5 +5,6 @@ export default {
     c_black: "#222",
     c_red: "#eb3f3f",
     c_lightGray: "#ddd",
-    c_gray: "#999"
+    c_gray: "#999",
+    c_grayBrighter1: "#a9a9a9"
 }
