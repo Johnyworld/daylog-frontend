@@ -28,6 +28,15 @@ const FEED_QUERY = gql`
             startAt
             endAt
             blocks
+            comments {
+                id
+                text
+                createdAt
+                user {
+                    username
+                    avatar
+                }
+            }
         }
     }
 `;
@@ -67,6 +76,7 @@ export default () => {
                             blocks={post.blocks}
                             lang={lang}
                             post={post}
+                            FEED_QUERY={FEED_QUERY}
                         />
                     ))}
                 </Container>
