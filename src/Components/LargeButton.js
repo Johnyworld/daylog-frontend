@@ -5,14 +5,10 @@ import Languages from '../Lang/Languages';
 
 const Container = styled.button`
     cursor: pointer;
-    background: none;
-    border: none;
     font-size: 28px;
     padding: 0;
     padding-bottom: 4px;
     border-bottom: 1px solid;
-    outline: none;
-
     ${({ color }) => color === 'white' && `
         color: white;
     `}
