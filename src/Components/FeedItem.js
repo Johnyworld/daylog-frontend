@@ -7,8 +7,10 @@ import Theme from '../Styles/Theme.js';
 import Icon from './Icon.js';
 import Avatar from './Avatar.js';
 import TextRegular from './TextRegular.js';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { SEE_POST } from '../Routes/Post.js';
 
 const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -71,28 +73,31 @@ export default ({
     endAt,
     lang,
     blocks,
-    post
+    disableComment=false,
 }) => {
+    useQuery(SEE_POST, {variables: {id}});
     const [ isLikedState, setIsLiked ] = useState(isLiked);
     const [ likesCountState, setLikesCount ] = useState(likesCount);
-    const [ toggleLikeMutation ] = useMutation( TOGGLE_LIKE, { variables: { postId : id }});
+    const [ toggleLikeMutation ] = useMutation( 
+        TOGGLE_LIKE, { 
+            variables: { postId : id },
+            refetchQueries: [{ query: SEE_POST, variables: { id }}]
+        }
+    );
 
     const toggleLike = () => {
         toggleLikeMutation();
         if ( !isLikedState ) {
-            post.isLiked = true;
-            post.likesCount += 1;
             setIsLiked(true);
             setLikesCount(likesCountState+1);
         } else {
-            post.isLiked = false;
-            post.likesCount -= 1;
             setIsLiked(false);
             setLikesCount(likesCountState-1);
         }
     }
     
     return (
+        (
         <Container>
             <Info>
                 <TextSmall string={blocks*15+''} text={message.minute} lang={lang} />
@@ -108,7 +113,7 @@ export default ({
                 <UserInfo>
                     <Avatar avatar={avatar} size="small" />
                     <UserText>
-                        <TextRegular string={author} weight="bold" />
+                        <p><TextRegular string={author} weight="bold" /></p>
                         <TextSmall string={location} />
                     </UserText>
                 </UserInfo>
@@ -116,9 +121,14 @@ export default ({
                     <button onClick={toggleLike}>
                         <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
                     </button> 
-                    <Icon icon="bubble" size="medium" />
+                    { !disableComment && (
+                        <Link to={`/post/${id}`}>
+                            <Icon icon="bubble" size="medium" />
+                        </Link>
+                    )}
                 </Icons>
             </Meta>
         </Container>
+        )
     )
 }
