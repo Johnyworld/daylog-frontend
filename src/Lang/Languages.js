@@ -1,13 +1,17 @@
 import React from 'react';
 
+export const getLang = () => {
+    return window.navigator.language.substr(0, 2);
+}
+
 export const languages = ( text, lang ) => {
-    if ( lang === 'KR' ) return text.kr;
-    if ( lang === 'EN' ) return text.en;
+    if ( lang === 'kr' ) return text.kr;
+    if ( lang === 'en' ) return text.en;
 }
 
 export default ({ text, lang }) => (
     <>
-        {lang==='KR' && text.kr}
-        {lang==='EN' && text.en}
+        {lang==='kr' && text.kr}
+        {lang==='en' && text.en}
     </>
 )

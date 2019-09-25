@@ -8,6 +8,7 @@ import TextMessages from '../Lang/Login.json';
 import TextButtons from '../Lang/Buttons.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
+import { getLang } from '../Lang/Languages';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -82,12 +83,12 @@ let canClick = true;
 export default () => {
     const [ action, setAction ] = useState('logIn');
     const [ print, setPrint ] = useState(false);
+    const lang = getLang();
 
     const email = useInput('');
     const username = useInput('');
     const fullname = useInput('');
     const secret = useInput('');
-    const lang = "KR";
 
     const [ requestSecretMutation ] = useMutation( LOG_IN, { variables: { email: email.value }});
     const [ confirmSecretMutation ] = useMutation( CONFIRM_SECRET, { variables: { email: email.value, secret: secret.value }});
