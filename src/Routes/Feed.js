@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
 import FeedItem from '../Components/FeedItem';
-import { getLang } from '../Lang/Languages';
+import { getLang } from '../Util/Languages';
 
 const FEED_QUERY = gql`
     {
@@ -13,6 +13,7 @@ const FEED_QUERY = gql`
             id
             doing {
                 name
+                color
                 category {
                     name
                 }
@@ -27,6 +28,7 @@ const FEED_QUERY = gql`
             commentsCount
             startAt
             endAt
+            createdAt
             blocks
             comments {
                 id
@@ -64,6 +66,7 @@ export default () => {
                             id={post.id}
                             key={post.id}
                             doing={post.doing.name}
+                            color={post.doing.color}
                             category={post.doing.category.name}
                             author={post.user.username}
                             avatar={post.user.avatar}
@@ -73,6 +76,7 @@ export default () => {
                             commentsCount={post.commentsCount}
                             startAt={post.startAt}
                             endAt={post.endAt}
+                            createdAt={post.createdAt}
                             blocks={post.blocks}
                             lang={lang}
                             post={post}

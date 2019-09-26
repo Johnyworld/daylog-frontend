@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Headers from '../Lang/Headers.json';
 import CommentJson from '../Lang/Comment.json';
-import { getLang, languages } from '../Lang/Languages';
+import { getLang, languages } from '../Util/Languages';
 import FeedItem from '../Components/FeedItem';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
@@ -33,12 +33,14 @@ export const SEE_POST = gql`
             location
             startAt
             endAt
+            createdAt
             blocks
             isLiked
             likesCount
             commentsCount
             doing {
                 name
+                color
                 category {
                     name
                 }
@@ -109,6 +111,7 @@ export default () => {
                     id={data.seePost.id}
                     key={data.seePost.id}
                     doing={data.seePost.doing.name}
+                    color={data.seePost.doing.color}
                     category={data.seePost.doing.category.name}
                     author={data.seePost.user.username}
                     avatar={data.seePost.user.avatar}
@@ -118,6 +121,7 @@ export default () => {
                     commentsCount={data.seePost.commentsCount}
                     startAt={data.seePost.startAt}
                     endAt={data.seePost.endAt}
+                    createdAt={data.seePost.createdAt}
                     blocks={data.seePost.blocks}
                     lang={lang}
                     post={data.seePost}
@@ -131,6 +135,7 @@ export default () => {
                             author={comment.user.username}
                             avatar={comment.user.avatar}
                             createdAt={comment.createdAt}
+                            lang={lang}
                         />
                     ))}
                 </Comments>

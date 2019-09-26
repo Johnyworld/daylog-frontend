@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Avatar from './Avatar';
 import TextRegular from './TextRegular';
 import TextSmall from './TextSmall';
+import { dateConvertor } from '../Util/Convertors';
 
 const Container = styled.li`
     display: flex;
@@ -26,6 +27,7 @@ const Comment = ({
     author,
     avatar,
     createdAt,
+    lang
 }) => {
     return (
         <Container>
@@ -35,7 +37,7 @@ const Comment = ({
                     <TextRegular string={author} weight="bold" />
                     <TextRegular string={text} />
                 </p>
-                <TextSmall string={createdAt} />
+                <TextSmall string={dateConvertor(createdAt, lang)} />
             </Texts>
         </Container>
     )

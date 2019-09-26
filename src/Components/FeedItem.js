@@ -11,6 +11,7 @@ import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { SEE_POST } from '../Routes/Post.js';
+import { blockConvertor, dateConvertor } from '../Util/Convertors.js';
 
 const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -33,9 +34,6 @@ const Info = styled.div`
 
 const Heading = styled.div`
     margin-bottom: 20px;
-    >p:last-child {
-        margin-top: 5px;
-    }
 `;
 
 const Meta = styled.div`
@@ -62,6 +60,7 @@ const Icons = styled.div`
 export default ({
     id,
     doing,
+    color,
     category,
     author,
     avatar,
@@ -71,6 +70,7 @@ export default ({
     commentsCount,
     startAt,
     endAt,
+    createdAt,
     lang,
     blocks,
     disableComment=false,
@@ -100,11 +100,11 @@ export default ({
         (
         <Container>
             <Info>
-                <TextSmall string={blocks*15+''} text={message.minute} lang={lang} />
+                <TextSmall string={blockConvertor(blocks, lang)} />
                 <TextSmall string={category} />
             </Info>
             <Heading>
-                <TextLarge string={doing} text={message.ing} lang={lang} />
+                <TextLarge string={doing} text={message.ing} lang={lang} color={color}/>
                 { likesCountState !== 0 &&
                     <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_blue} weight="bold" />
                 }
@@ -114,7 +114,8 @@ export default ({
                     <Avatar avatar={avatar} size="small" />
                     <UserText>
                         <p><TextRegular string={author} weight="bold" /></p>
-                        <TextSmall string={location} />
+                        <TextSmall string={dateConvertor(createdAt, lang)} />
+                        <TextSmall string={`, ${location}`} />
                     </UserText>
                 </UserInfo>
                 <Icons>
