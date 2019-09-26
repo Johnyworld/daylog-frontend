@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'
-import { languages } from '../Lang/Languages';
+import { languages } from '../Util/Languages';
 
 const Container = styled.input`
     background: none;

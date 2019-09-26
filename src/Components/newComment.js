@@ -5,7 +5,7 @@ import Avatar from '../Components/Avatar';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import CommentJson from '../Lang/Comment.json';
-import { languages } from '../Lang/Languages';
+import { languages } from '../Util/Languages';
 
 const ME = gql`
     {

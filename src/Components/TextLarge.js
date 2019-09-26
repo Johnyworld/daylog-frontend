@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Languages from '../Lang/Languages';
+import Languages from '../Util/Languages';
 
 const Container = styled.h2`
     font-size: 28px;
@@ -13,7 +13,7 @@ const Container = styled.h2`
 
 const TextLarge = ({ text, lang, string, color }) => (
     <Container color={color} >
-        {string}<Languages text={text} lang={lang} />
+        {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )
 

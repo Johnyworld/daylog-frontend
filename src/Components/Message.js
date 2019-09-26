@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Languages from '../Lang/Languages';
+import Languages from '../Util/Languages';
 
 const Container = styled.p`
     font-size: 24px;

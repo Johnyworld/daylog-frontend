@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Languages from '../Lang/Languages';
+import Languages from '../Util/Languages';
 
 const Container = styled.span`
     font-size: 14px;
@@ -20,7 +20,7 @@ const Container = styled.span`
 
 const TextRegular = ({ text, lang, string, weight="regular", color }) => (
     <Container weight={weight} color={color} lang={lang} >
-        {string}<Languages text={text} lang={lang} />
+        {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )
 

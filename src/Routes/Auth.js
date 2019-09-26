@@ -8,7 +8,7 @@ import TextMessages from '../Lang/Login.json';
 import TextButtons from '../Lang/Buttons.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
-import { getLang } from '../Lang/Languages';
+import { getLang } from '../Util/Languages';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
