@@ -33,6 +33,10 @@ const Info = styled.div`
 
 const Heading = styled.div`
     margin-bottom: 20px;
+    span {
+        display: inline-block;
+        margin-top: 3px;
+    }
 `;
 
 const Meta = styled.div`
@@ -109,7 +113,7 @@ export default ({
             <Heading>
                 <TextLarge string={doing} lang={lang} color={color}/>
                 { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_blue} weight="bold" />
+                    <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_black} />
                 }
             </Heading>
             <Meta>
