@@ -29,6 +29,9 @@ const ME = gql`
             fullname
             email
             bio
+            followersCount
+            followingCount
+            likesTotal
         }
     }
 `;
