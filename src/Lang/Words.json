@@ -15,6 +15,10 @@
         "kr" : "뒤로",
         "en" : "Back"
     },
+    "comments" : {
+        "kr" : "댓글",
+        "en" : "Comments"
+    },
     "followers" : {
         "kr" : "팔로워",
         "en" : "Followers"
@@ -23,8 +27,32 @@
         "kr" : "팔로잉",
         "en" : "Following"
     },
-    "comments" : {
-        "kr" : "댓글",
-        "en" : "Comments"
+    "follow" : {
+        "kr" : "팔로우",
+        "en" : "Follow" 
+    },
+    "unFollow" : {
+        "kr" : "팔로우 취소",
+        "en" : "Unfollow"
+    },
+    "editProfile" : {
+        "kr" : "프로필 수정",
+        "en" : "Edit profile"
+    },
+    "day" : {
+        "kr" : "Day",
+        "en" : "Day"
+    },
+    "week" : {
+        "kr" : "Week",
+        "en" : "Week"
+    },
+    "month" : {
+        "kr" : "Month",
+        "en" : "Month"
+    },
+    "year" : {
+        "kr" : "Year",
+        "en" : "Year"
     }
 }

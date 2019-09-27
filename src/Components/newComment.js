@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea'
-import Avatar from '../Components/Avatar';
+import Avatar from './Avatar';
 import CommentJson from '../Lang/Comment.json';
 import { languages } from '../Util/Languages';
 
@@ -49,6 +49,5 @@ const NewComment = ({ lang, onKeyPress, value, onChange }) => {
         </Form>
     )
 }
-
 
 export default NewComment;
