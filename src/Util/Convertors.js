@@ -15,8 +15,8 @@ export const dateConvertor = ( date, lang ) => {
     const now = Date.now();
     const past = now - fullDate.getTime();
 
-    if ( past < 691200000 ) return timeConvertor( past, lang, "only" );
-    if ( past > 691200000 ) return getPrintDate( fullDate, lang );
+    if ( past < 1382400000 ) return timeConvertor( past, lang, "only" );
+    if ( past > 1382400000 ) return getPrintDate( fullDate, lang );
 }
 
 export const blockConvertor = ( blocks, lang ) => {
