@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Auth from '../Routes/Auth';
 import Today from '../Routes/Today';
 import Feed from '../Routes/Feed';
@@ -13,20 +13,18 @@ const LoggedInRoutes = () => (
         <Route path='/feed' component={Feed} />
         <Route path='/log' component={Log} />
         <Route path='/post/:postId'component={Post} />
+        <Redirect from="*" to="/" />
     </Switch>
 )
 
 const LoggedOutRoutes = () => (
     <>
         <Route exact path='/' component={Auth} />
+        <Redirect to="/" />
     </>
 )
 const AppRouter = ({ isLoggedIn }) => (
-    <Router>
-        <Switch>
-            { isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes /> }
-        </Switch>
-    </Router>
+    isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />
 )
 
 AppRouter.propTypes = {
