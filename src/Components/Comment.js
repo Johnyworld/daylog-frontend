@@ -8,6 +8,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post';
 import Icon from './Icon';
+import Username from './Username';
 
 const EDIT_COMMENT = gql`
     mutation editComment( $id:String!, $text:String, $action:String! ) {
@@ -37,10 +38,6 @@ const Box = styled.div`
 const Texts = styled.article`
     > p {
         margin-bottom: 3px;
-        > span:first-child {
-            display: inline-block;
-            margin-right: 6px;
-        }
     }
 `;
 
@@ -99,7 +96,7 @@ const Comment = ({
                 <Avatar avatar={avatar} size="small" />
                 <Texts>
                     <p>
-                        <TextRegular string={author} weight="bold" />
+                        <Username username={author} inline={true} />
                         <TextRegular string={text} />
                     </p>
                     <TextSmall string={dateConvertor(createdAt, lang)} />

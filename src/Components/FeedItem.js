@@ -6,12 +6,12 @@ import TextLarge from './TextLarge.js';
 import Theme from '../Styles/Theme.js';
 import Icon from './Icon.js';
 import Avatar from './Avatar.js';
-import TextRegular from './TextRegular.js';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { SEE_POST } from '../Routes/Post.js';
 import { blockConvertor, dateConvertor } from '../Util/Convertors.js';
+import Username from './Username.js';
 
 const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -120,7 +120,7 @@ export default ({
                 <UserInfo>
                     <Avatar avatar={avatar} size="small" />
                     <UserText>
-                        <p><TextRegular string={author} weight="bold" /></p>
+                        <Username username={author} />
                         <TextSmall string={dateConvertor(createdAt, lang)} />
                         <TextSmall string={`, ${location}`} />
                     </UserText>
