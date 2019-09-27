@@ -8,13 +8,14 @@ import TextMedium from './TextMedium';
 const Container = styled.header`
     position: sticky;
     top: 0;
-    background: white;
+    background-color: white;
     height: 64px;
     padding: 20px;
     padding-bottom: 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    z-index: 999;
 `;
 
 const Gnb = styled.nav`
@@ -25,7 +26,7 @@ const GnbLink = styled(Link)`
     padding-bottom: 4px;
     font-size: 16px;
     font-weight: 700;
-    color: ${({ theme })=> theme.c_grayBrighter1 };
+    color: ${({ theme })=> theme.c_gray };
     &:not(:last-child) {
         margin-right: 20px;
     }
