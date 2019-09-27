@@ -75,4 +75,13 @@ export default ({ icon, size, color="#222" }) => {
             <line fill="none" stroke={color} x1="22.4" y1="22.4" x2="1.6" y2="1.6"/>
         </svg>
     )
+
+    if ( icon === "check" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <polyline fill="none" stroke={color} points="1.1,13.3 7.5,19.7 22.9,4.3 "/>
+        </svg> 
+    )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useInput from '../Hooks/useInput';
@@ -9,6 +10,7 @@ import TextButtons from '../Lang/Buttons.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { getLang } from '../Util/Languages';
+import Icon from '../Components/Icon';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -61,8 +63,18 @@ const InputContainer = styled.div`
     justify-content: flex-end;
     margin-bottom: 60px;
     flex-direction: column;
-    * {
+    > * {
         margin-top: 20px;
+    }
+`;
+
+const InputItem = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    svg {
+        position: absolute;
+        right: 10px;
     }
 `;
 
@@ -83,6 +95,7 @@ let canClick = true;
 export default () => {
     const [ action, setAction ] = useState('logIn');
     const [ print, setPrint ] = useState(false);
+
     const lang = getLang();
 
     const email = useInput('');
@@ -90,11 +103,20 @@ export default () => {
     const fullname = useInput('');
     const secret = useInput('');
 
+    const regUsername = /^[a-z0-9_-]{3,16}$/;
+    const regFullname = /^[^0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]{2,18}$/;
+    const regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    
+    const checkUsername = () => regUsername.test( username.value );
+    const checkFullname = () => regFullname.test( fullname.value );
+    const checkEmail = () => regEmail.test( email.value );
+    const checkSignUp = () => { if ( checkUsername() && checkFullname() && checkEmail() ) return true; }
+
     const [ requestSecretMutation ] = useMutation( LOG_IN, { variables: { email: email.value }});
     const [ confirmSecretMutation ] = useMutation( CONFIRM_SECRET, { variables: { email: email.value, secret: secret.value }});
     const [ localLogInMutation ] = useMutation( LOCAL_LOG_IN );
     const [ createAccountMutation ] = useMutation( CREATE_ACCOUNT, { variables: { username: username.value, email: email.value, fullname: fullname.value } } )
-
+    
     const onClickSignUp = () => {
         setAction('signUp');
     }
@@ -181,7 +203,7 @@ export default () => {
                             <ButtonContainer>
                                 { print !== "noAccount" ?
                                     email.value === "" 
-                                    ? <LargeButton text={TextButtons.signIn} lang={lang} color="white" onClick={onClickSignUp} />
+                                    ? <LargeButton text={TextButtons.signUp} lang={lang} color="white" onClick={onClickSignUp} />
                                     : <LargeButton text={TextButtons.logIn} lang={lang} color="white" />
                                 : null }
                             </ButtonContainer>
@@ -192,9 +214,18 @@ export default () => {
                 { action === "signUp" && (
                     <form onSubmit={onSubmit}>
                         <InputContainer>
-                            <Input placeholder={TextMessages.inputUsername} type="text" color="white" lang={lang} {...username} />
-                            <Input placeholder={TextMessages.inputFullname} type="text" color="white" lang={lang} {...fullname} />
-                            <Input placeholder={TextMessages.inputEmail} type="email" color="white" lang={lang} {...email} />
+                            <InputItem>
+                                <Input placeholder={TextMessages.inputUsername} type="text" color="white" lang={lang} {...username} />
+                                { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
+                            </InputItem>
+                            <InputItem>
+                                <Input placeholder={TextMessages.inputFullname} type="text" color="white" lang={lang} {...fullname} />
+                                { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
+                            </InputItem>
+                            <InputItem>
+                                <Input placeholder={TextMessages.inputEmail} type="email" color="white" lang={lang} {...email} />
+                                { checkEmail() && <Icon icon="check" size="medium" color={'white'} /> }
+                            </InputItem>
                         </InputContainer>
                         <MessageContainer>
                             { print === "fieldsRequired" && <Message text={TextMessages.fieldsRequired} lang={lang} /> }
@@ -203,7 +234,7 @@ export default () => {
                         </MessageContainer>  
                         <ButtonContainer> 
                             { print !== "alreadyTaken" && ( <>
-                                <LargeButton text={TextButtons.signIn} lang={lang} color="white" />
+                                <LargeButton text={TextButtons.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
                                 <LargeButton text={TextButtons.back} lang={lang} color="white" onClick={onClickLogIn} />
                             </> )}
                         </ButtonContainer>

@@ -3,9 +3,9 @@
         "kr" : "로그인",
         "en" : "Log In"
     },
-    "signIn" : {
+    "signUp" : {
         "kr" : "가입하기",
-        "en" : "Sign In"
+        "en" : "Sign Up"
     },
     "okay" : {
         "kr" : "확인",
