@@ -1,14 +1,12 @@
 import React, { useState } from 'react'; 
 import styled from 'styled-components';
-import Header from '../Components/Header';
-import Words from '../Lang/Words.json';
 import CommentJson from '../Lang/Comment.json';
 import { getLang, languages } from '../Util/Languages';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import Loader from '../Components/Loader';
 import Comment from '../Components/Comment';
-import NewComment from '../Components/newComment';
+import NewComment from '../Components/NewComment';
 import useInput from '../Hooks/useInput';
 import TextRegular from '../Components/TextRegular';
 import TextLarge from '../Components/TextLarge';
@@ -114,9 +112,7 @@ export default () => {
         }
     }
 
-    return (
-    <>
-        <Header isDepth={true} text={Words.comments} lang={lang} />
+    return <>
         { loading && <Loader />}
         { !loading && data && data.seePost && (
             <Container>
@@ -148,5 +144,4 @@ export default () => {
             </Container>
         )}
     </>
-    )
 }

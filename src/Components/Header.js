@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Icon from '../Components/Icon';
 import Theme from '../Styles/Theme';
 import TextMedium from './TextMedium';
+import Words from '../Lang/Words.json';
+import { getLang } from '../Util/Languages';
 
 const Container = styled.header`
     position: sticky;
@@ -31,6 +33,7 @@ const GnbLink = styled(Link)`
         margin-right: 20px;
     }
     &.selected {
+        pointer-events: none;
         border-bottom: 3px solid ${({ theme })=> theme.c_blue };
         color: ${({ theme })=> theme.c_black };
     }
@@ -40,12 +43,31 @@ const HeaderIcon = styled(Icon)`
     padding-bottom: 20px;
 `
 
-export default withRouter(({ history, page="today", isDepth, text, lang }) => {
+export default withRouter(({ history, loggedUser }) => {
+    const route = history.location.pathname.split('/')[1];
+    const lang = getLang();
+    let isDepth, text;
+
+    if ( route === "feed" || route === "log" || route === "" ) {
+        isDepth = false;
+    } else {
+        isDepth = true;
+        if ( route === "post" ) text = Words.comments;
+    }
+
+    const changeTab = (e) => {
+        e.currentTarget.parentNode.childNodes.forEach( element => {
+            element.classList.remove("selected");
+        })
+        e.currentTarget.classList.add("selected");
+    }
+
     const onGoBack = (e) => {
         e.preventDefault();
         history.goBack();
     }
-    return (
+
+    return (  
         <Container>
             { !isDepth ? 
                 <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
@@ -56,14 +78,13 @@ export default withRouter(({ history, page="today", isDepth, text, lang }) => {
             }
             { !isDepth ? 
                 <Gnb>
-                    <GnbLink to="/feed" className={ page === "feed" && "selected" } >FEED</GnbLink>
-                    <GnbLink to="/" className={ page === "today" && "selected" } >TODAY</GnbLink>
-                    <GnbLink to="/log" className={ page === "log" && "selected" } >LOG</GnbLink>
+                    <GnbLink onClick={changeTab} to="/feed" className={ route === "feed" && "selected" } >FEED</GnbLink>
+                    <GnbLink onClick={changeTab} to="/" className={ route === "" && "selected" } >TODAY</GnbLink>
+                    <GnbLink onClick={changeTab} to={`/log/${loggedUser.username}`} className={ route === "log" && "selected" } >LOG</GnbLink>
                 </Gnb>
                 :
                 <TextMedium text={text} lang={lang} />
             }
-            
             <HeaderIcon icon="hamburger" size="medium" color={Theme.c_blue} />
         </Container>
     )
