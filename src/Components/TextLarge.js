@@ -6,6 +6,7 @@ import Languages from '../Util/Languages';
 const Container = styled.h2`
     font-size: 28px;
     line-height: 1.2;
+    margin-left: -.1em;
     ${({ color }) => color && ` 
         color: ${ color };
     `}

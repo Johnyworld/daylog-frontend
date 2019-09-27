@@ -17,6 +17,14 @@ const Form = styled.form`
     > div:first-child {
         margin-right: 15px;
     }
+    @media screen and ( min-width: 768px ) {
+        ${({ theme })=> theme.wrap };
+        ${({ theme })=> theme.box };
+        position: sticky;
+        margin-top: 10px;
+        left: 0;
+        right: 0;
+    }
 `;
 
 const Textarea = styled(TextareaAutosize)`

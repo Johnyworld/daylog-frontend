@@ -4,13 +4,17 @@ import Header from '../Components/Header';
 import Headers from '../Lang/Headers.json';
 import CommentJson from '../Lang/Comment.json';
 import { getLang, languages } from '../Util/Languages';
-import FeedItem from '../Components/FeedItem';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import Loader from '../Components/Loader';
 import Comment from '../Components/Comment';
 import NewComment from '../Components/newComment';
 import useInput from '../Hooks/useInput';
+import TextRegular from '../Components/TextRegular';
+import TextLarge from '../Components/TextLarge';
+import TextSmall from '../Components/TextSmall';
+import { blockConvertor } from '../Util/Convertors';
+import Theme from '../Styles/Theme';
 
 const ADD_COMMENT = gql`
     mutation addComment( $postId: String!, $text: String! ) {
@@ -63,13 +67,21 @@ export const SEE_POST = gql`
 `;
 
 const Container = styled.main`
-    padding-bottom: 40px;
+    background-color: ${({ theme })=> theme.c_lightGray };
+    padding-bottom: 70px;
+    min-height: calc(100vh - 70px);
+`;
+
+const Heading = styled.div`
+    ${({ theme })=> theme.wrap };
+    padding: 20px;
 `;
 
 const Comments = styled.ul`
-    padding: 20px;
-    > li {
-        margin-bottom: 20px;
+    ${({ theme })=> theme.wrap };
+    ${({ theme })=> theme.box };
+    @media screen and ( max-width: 767px ) {
+        margin: 0 10px;
     }
 `;
 
@@ -105,32 +117,20 @@ export default () => {
     return (
     <>
         <Header isDepth={true} text={Headers.comments} lang={lang} />
-        { loading ? <Loader /> : (
+        { loading && <Loader />}
+        { !loading && data && data.seePost && (
             <Container>
-                <FeedItem 
-                    id={data.seePost.id}
-                    key={data.seePost.id}
-                    doing={data.seePost.doing.name}
-                    color={data.seePost.doing.color}
-                    category={data.seePost.doing.category.name}
-                    author={data.seePost.user.username}
-                    avatar={data.seePost.user.avatar}
-                    isLiked={data.seePost.isLiked}
-                    location={data.seePost.location}
-                    likesCount={data.seePost.likesCount}
-                    commentsCount={data.seePost.commentsCount}
-                    startAt={data.seePost.startAt}
-                    endAt={data.seePost.endAt}
-                    createdAt={data.seePost.createdAt}
-                    blocks={data.seePost.blocks}
-                    lang={lang}
-                    post={data.seePost}
-                    disableComment={true}
-                />
+                <Heading>
+                    <TextSmall string={blockConvertor(data.seePost.blocks, lang)} />
+                    <TextLarge string={data.seePost.doing.name} color={Theme.c_blueDarker2}/>
+                    <TextRegular string={data.seePost.user.username} color={Theme.c_blueDarker1} />
+                </Heading>
                 <Comments>
                     { data.seePost.comments.map(comment => (
                         <Comment
                             key={comment.id}
+                            id={comment.id}
+                            postId={data.seePost.id}
                             text={comment.text}
                             author={comment.user.username}
                             avatar={comment.user.avatar}
@@ -139,14 +139,14 @@ export default () => {
                         />
                     ))}
                 </Comments>
+                <NewComment
+                    lang={lang}
+                    onKeyPress={onKeyPress}
+                    value={newComment.value}
+                    onChange={newComment.onChange}
+                />
             </Container>
         )}
-        <NewComment
-            lang={lang}
-            onKeyPress={onKeyPress}
-            value={newComment.value}
-            onChange={newComment.onChange}
-        />
     </>
     )
 }

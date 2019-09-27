@@ -50,6 +50,12 @@ const Container = styled.main`
     >*:not(:last-child) {
         margin-bottom: 10px;
     }
+    article {
+        ${({ theme })=> theme.wrap };
+    }
+    @media screen and ( min-width: 768px ) {
+        padding-top: 30px;
+    }
 `;
 
 export default () => {
@@ -59,7 +65,8 @@ export default () => {
     return (
         <>
             <Header page="feed" />
-            { loading ? <Loader /> : (
+            { loading && <Loader />}
+            { !loading && data && data.seeFeed && (
                 <Container>
                     { data.seeFeed.map(post => (
                         <FeedItem

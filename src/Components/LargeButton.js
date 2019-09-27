@@ -9,6 +9,7 @@ const Container = styled.button`
     padding: 0;
     padding-bottom: 4px;
     border-bottom: 1px solid;
+    line-height: 1.2;
     ${({ color }) => color === 'white' && `
         color: white;
     `}

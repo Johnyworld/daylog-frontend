@@ -22,8 +22,7 @@ const TOGGLE_LIKE = gql`
 const Container = styled.article`
     width: 100%;
     padding: 30px;
-    background-color: white;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    ${({ theme })=> theme.box };
 `;
 
 const Info = styled.div`
@@ -85,12 +84,16 @@ export default ({
         }
     );
 
-    const toggleLike = () => {
+    const toggleLike = (e) => {
         toggleLikeMutation();
         if ( !isLikedState ) {
+            e.currentTarget.classList.add('liked');
+            e.currentTarget.classList.remove('unliked');
             setIsLiked(true);
             setLikesCount(likesCountState+1);
         } else {
+            e.currentTarget.classList.remove('liked'); 
+            e.currentTarget.classList.add('unliked'); 
             setIsLiked(false);
             setLikesCount(likesCountState-1);
         }
@@ -104,7 +107,7 @@ export default ({
                 <TextSmall string={category} />
             </Info>
             <Heading>
-                <TextLarge string={doing} text={message.ing} lang={lang} color={color}/>
+                <TextLarge string={doing} lang={lang} color={color}/>
                 { likesCountState !== 0 &&
                     <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_blue} weight="bold" />
                 }
@@ -119,7 +122,7 @@ export default ({
                     </UserText>
                 </UserInfo>
                 <Icons>
-                    <button onClick={toggleLike}>
+                    <button onClick={toggleLike} >
                         <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
                     </button> 
                     { !disableComment && (
