@@ -76,6 +76,35 @@ export default ({
     isFollowing, 
     isSelf 
 }) => {
+    const [ isFollowingState, setIsFollowingState ] = useState(isFollowing);
+    const [ followersCountState, setFollowersCountState ] = useState(followersCount);
+
+    const [ followMutaion ] = useMutation( FOLLOW, { 
+        variables : { id },
+        refetchQueries: [
+            { query: SEE_USER, variables: { username }},
+            { query: FEED_QUERY }
+        ]
+    });
+    const [ unFollowMutaion ] = useMutation( UNFOLLOW, { 
+        variables : { id },
+        refetchQueries: [
+            { query: SEE_USER, variables: { username }},
+            { query: FEED_QUERY }
+        ]
+    });
+
+    const onClickFollow = () => {
+        if ( !isFollowingState ) {
+            setIsFollowingState(true);
+            setFollowersCountState( followersCountState + 1 );
+            followMutaion();
+        } else {
+            setIsFollowingState(false);
+            setFollowersCountState( followersCountState - 1 );
+            unFollowMutaion();
+        }
+    }
 
     return (
         <Container>
@@ -91,7 +120,7 @@ export default ({
                 <Follow>
                     <span>
                         <TextSmall text={Words.followers} color={Theme.c_black} />
-                        <TextSmall string={followersCount} color={Theme.c_black} weight="bold" />
+                        <TextSmall string={followersCountState} color={Theme.c_black} weight="bold" />
                     </span>
                     <span>
                         <TextSmall text={Words.following} color={Theme.c_black} />
@@ -100,6 +129,10 @@ export default ({
                 </Follow>
                 <p><TextSmall string={bio} /></p>
             </Info>
+            { !isFollowingState
+                ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
+                : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
+            }
             { isSelf && <Button text={Words.editProfile} lang={lang} /> }
         </Container>
     )
