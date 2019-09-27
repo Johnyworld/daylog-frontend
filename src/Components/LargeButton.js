@@ -10,14 +10,22 @@ const Container = styled.button`
     padding-bottom: 4px;
     border-bottom: 1px solid;
     line-height: 1.2;
-    ${({ color }) => color === 'white' && `
-        color: white;
-    `}
+    transition: .5s;
+    color: ${({ color }) => color };
+    ${({ className })=> {
+        if ( className === "disabled" ) {
+            return `
+                opacity: .3;
+                border: 0;
+                pointer-events: none;
+            `;
+        }
+    }}
 `;
 
-const LargeButton = ({ text, lang, color, onClick }) => {
+const LargeButton = ({ text, lang, color, onClick, className }) => {
     return (
-        <Container color={color} onClick={onClick}>
+        <Container color={color} onClick={onClick} className={className}>
             <Languages text={text} lang={lang} />
         </Container>
     )
