@@ -14,9 +14,11 @@ const Container = styled.div`
     background-size: cover;
 `;
 
-const Avatar = ({ avatar, size }) => {
+const Avatar = ({ size, avatar }) => {
     let sizePx;
-    
+
+    if (avatar === null) avatar = "https://daylog.s3.ap-northeast-2.amazonaws.com/defaultAvatar.png";
+
     if ( size === "small" ) sizePx = '32px';
     if ( size === "medium" ) sizePx = '40px';
     if ( size === "large" ) sizePx = '60px';
