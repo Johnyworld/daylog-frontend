@@ -2,18 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea'
 import Avatar from '../Components/Avatar';
-import { useQuery } from 'react-apollo-hooks';
-import { gql } from 'apollo-boost';
 import CommentJson from '../Lang/Comment.json';
 import { languages } from '../Util/Languages';
-
-const ME = gql`
-    {
-        me {
-            avatar
-        }
-    }
-`;
 
 const Form = styled.form`
     display: flex;
@@ -36,13 +26,12 @@ const Textarea = styled(TextareaAutosize)`
 `;
 
 const NewComment = ({ lang, onKeyPress, value, onChange }) => {
-    const { data, loading } = useQuery(ME);
-    
+    const me = JSON.parse( sessionStorage.getItem("me") );
     const placeholder = languages(CommentJson.newComment, lang);
 
-    return !loading && (
+    return (
         <Form>
-            <Avatar avatar={data.me.avatar} size="medium" />
+            <Avatar avatar={me.avatar} size="medium" />
             <Textarea 
                 placeholder={placeholder}
                 value={value}
