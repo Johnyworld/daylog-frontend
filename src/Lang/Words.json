@@ -14,5 +14,17 @@
     "back" : {
         "kr" : "뒤로",
         "en" : "Back"
+    },
+    "followers" : {
+        "kr" : "팔로워",
+        "en" : "Followers"
+    },
+    "following" : {
+        "kr" : "팔로잉",
+        "en" : "Following"
+    },
+    "comments" : {
+        "kr" : "댓글",
+        "en" : "Comments"
     }
 }

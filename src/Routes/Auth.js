@@ -6,7 +6,7 @@ import Input from '../Components/Input';
 import Message from '../Components/Message';
 import LargeButton from '../Components/LargeButton';
 import TextMessages from '../Lang/Login.json';
-import TextButtons from '../Lang/Buttons.json';
+import Words from '../Lang/Words.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { getLang } from '../Util/Languages';
@@ -203,8 +203,8 @@ export default () => {
                             <ButtonContainer>
                                 { print !== "noAccount" ?
                                     email.value === "" 
-                                    ? <LargeButton text={TextButtons.signUp} lang={lang} color="white" onClick={onClickSignUp} />
-                                    : <LargeButton text={TextButtons.logIn} lang={lang} color="white" />
+                                    ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
+                                    : <LargeButton text={Words.logIn} lang={lang} color="white" />
                                 : null }
                             </ButtonContainer>
                         </form>
@@ -234,8 +234,8 @@ export default () => {
                         </MessageContainer>  
                         <ButtonContainer> 
                             { print !== "alreadyTaken" && ( <>
-                                <LargeButton text={TextButtons.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
-                                <LargeButton text={TextButtons.back} lang={lang} color="white" onClick={onClickLogIn} />
+                                <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
+                                <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
                             </> )}
                         </ButtonContainer>
                     </form>
@@ -255,7 +255,7 @@ export default () => {
                                 }
                             </MessageContainer>                        
                             <ButtonContainer>
-                                <LargeButton text={TextButtons.okay} lang={lang} color="white" />
+                                <LargeButton text={Words.okay} lang={lang} color="white" />
                             </ButtonContainer>
                         </form>
                     </>

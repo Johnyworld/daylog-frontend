@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import styled from 'styled-components';
 import Header from '../Components/Header';
-import Headers from '../Lang/Headers.json';
+import Words from '../Lang/Words.json';
 import CommentJson from '../Lang/Comment.json';
 import { getLang, languages } from '../Util/Languages';
 import { useQuery, useMutation } from 'react-apollo-hooks';
@@ -116,7 +116,7 @@ export default () => {
 
     return (
     <>
-        <Header isDepth={true} text={Headers.comments} lang={lang} />
+        <Header isDepth={true} text={Words.comments} lang={lang} />
         { loading && <Loader />}
         { !loading && data && data.seePost && (
             <Container>
