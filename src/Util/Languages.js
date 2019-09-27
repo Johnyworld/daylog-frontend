@@ -22,22 +22,26 @@ const getDayOfWeek = ( dow, lang ) => {
     return array[dow];
 }
 
-export const getPrintDate = ( fullDate, lang ) => {
+export const getPrintDate = ( fullDate, lang, option ) => {
     const Y = fullDate.getFullYear();
     let M = fullDate.getMonth();
     let D = fullDate.getDate();
     let dow = getDayOfWeek(fullDate.getDay(), lang);
 
-    if (D < 10) D = `0${D}`;
-    
-    if ( lang === "kr" ) if (M < 9) M = `0${M+1}`;
+    if ( lang === "kr" ) M += 1;
     else M = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "Octorber", "November", "December"
     ][M];
 
-    if ( lang === "kr" ) return `${Y}년 ${M}월 ${D}일 ${dow}요일`;
-    else return `${dow}, ${D}, ${M} ${Y}`
+    switch(option) {
+        case "withoutDow" :
+            if ( lang === "kr" ) return `${Y}년 ${M}월 ${D}일`;
+            else return `${D}, ${M} ${Y}`;
+        default :
+            if ( lang === "kr" ) return `${Y}년 ${M}월 ${D}일 ${dow}요일`;
+            else return `${dow}, ${D}, ${M} ${Y}`
+    }
 }
 
 export const getPrintPastTime = ( array, lang, option ) => {
