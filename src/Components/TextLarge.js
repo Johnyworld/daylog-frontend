@@ -6,14 +6,12 @@ import Languages from '../Util/Languages';
 const Container = styled.h2`
     font-size: 28px;
     line-height: 1.2;
-    margin-left: -.1em;
-    ${({ color }) => color && ` 
-        color: ${ color };
-    `}
+    ${({ color })=> color && ` color: ${ color }; `}
+    ${({ lang })=> { if ( lang === "kr" ) return `margin-left: -.1em;`; }}
 `;
 
 const TextLarge = ({ text, lang, string, color }) => (
-    <Container color={color} >
+    <Container color={color} lang={lang} >
         {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )
@@ -21,7 +19,7 @@ const TextLarge = ({ text, lang, string, color }) => (
 TextLarge.propTypes = {
     text : PropTypes.object,
     lang : PropTypes.string,
-    string : PropTypes.string,
+    string : PropTypes.any,
     color : PropTypes.string
 }
 
