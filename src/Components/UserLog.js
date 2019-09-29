@@ -66,15 +66,16 @@ const Follow = styled.div`
 
 export default ({
     id,
-    avatar, 
-    username, 
-    likesTotal, 
-    bio, 
+    avatar,
+    username,
+    fullname,
+    likesTotal,
+    bio,
     lang,
-    followersCount, 
-    followingCount, 
-    isFollowing, 
-    isSelf 
+    followersCount,
+    followingCount,
+    isFollowing,
+    isSelf
 }) => {
     const [ isFollowingState, setIsFollowingState ] = useState(isFollowing);
     const [ followersCountState, setFollowersCountState ] = useState(followersCount);
@@ -127,7 +128,10 @@ export default ({
                         <TextSmall string={followingCount} color={Theme.c_black} weight="bold" />
                     </span>
                 </Follow>
-                <p><TextSmall string={bio} /></p>
+                <div>
+                    <p><TextSmall string={fullname} color={Theme.c_blueDarker1} /></p>
+                    <TextSmall string={bio} />
+                </div>
             </Info>
             { !isFollowingState
                 ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
