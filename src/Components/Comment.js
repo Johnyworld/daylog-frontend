@@ -96,7 +96,7 @@ const Comment = ({
                 <Avatar avatar={avatar} size="small" />
                 <Texts>
                     <p>
-                        <Username username={author} inline={true} />
+                        <Username username={author} inline={"inline"} />
                         <TextRegular string={text} />
                     </p>
                     <TextSmall string={dateConvertor(createdAt, lang)} />

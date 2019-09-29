@@ -11,7 +11,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import Loader from './Loader';
 
-const ME = gql`
+export const ME = gql`
     {
         me {
             username
@@ -26,16 +26,29 @@ const ME = gql`
     }
 `;
 
+export const TODAY_QUERY = gql`
+    {
+       seeTodayPosts {
+            doing {
+                name
+            }
+            likesCount
+            commentsCount
+            isLiked
+            score
+            startAt
+            endAt
+        }
+    } 
+`;
+
 const LoggedInRoutes = () => {
-    const { data, loading } = useQuery(ME);
+    const { data:meData, loading:meLoading } = useQuery(ME);
+    const { data, loading } = useQuery( TODAY_QUERY );
 
-    if ( !loading && data && data.me ) {
-        sessionStorage.setItem('me', JSON.stringify(data.me));
-    }
-
-    return ( !loading && data && data.me ?
+    return ( !meLoading && meData && meData.me && !loading && data && data.seeTodayPosts ?
         <>
-            <Header loggedUser={data.me} />
+            <Header loggedUser={meData.me} />
             <Switch>
                 <Route exact path='/' component={Today} />
                 <Route path='/feed' component={Feed} />
