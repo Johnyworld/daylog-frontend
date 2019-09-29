@@ -43,8 +43,9 @@ export const FEED_QUERY = gql`
 `;
 
 const Container = styled.main`
-    padding-top: 1px;
+    position: relative;
     min-height: calc(100vh - 64px);
+    padding-top: 1px;
     background-color: ${({ theme })=> theme.c_lightGray };
     >*:not(:last-child) {
         margin-bottom: 10px;
@@ -62,32 +63,34 @@ export default () => {
     const lang = getLang();
 
     return <>
-        { loading && <Loader />}
-        { !loading && data && data.seeFeed && (
-            <Container>
-                { data.seeFeed.map(post => (
-                    <FeedItem
-                        id={post.id}
-                        key={post.id}
-                        doing={post.doing.name}
-                        color={post.doing.color}
-                        category={post.doing.category.name}
-                        author={post.user.username}
-                        avatar={post.user.avatar}
-                        isLiked={post.isLiked}
-                        location={post.location}
-                        likesCount={post.likesCount}
-                        commentsCount={post.commentsCount}
-                        startAt={post.startAt}
-                        endAt={post.endAt}
-                        createdAt={post.createdAt}
-                        blocks={post.blocks}
-                        lang={lang}
-                        post={post}
-                        FEED_QUERY={FEED_QUERY}
-                    />
-                ))}
-            </Container>
-        )}
+        <Container>
+            { loading && <Loader />}
+            { !loading && data && data.seeFeed && (
+                <>
+                    { data.seeFeed.map(post => (
+                        <FeedItem
+                            id={post.id}
+                            key={post.id}
+                            doing={post.doing.name}
+                            color={post.doing.color}
+                            category={post.doing.category.name}
+                            author={post.user.username}
+                            avatar={post.user.avatar}
+                            isLiked={post.isLiked}
+                            location={post.location}
+                            likesCount={post.likesCount}
+                            commentsCount={post.commentsCount}
+                            startAt={post.startAt}
+                            endAt={post.endAt}
+                            createdAt={post.createdAt}
+                            blocks={post.blocks}
+                            lang={lang}
+                            post={post}
+                            FEED_QUERY={FEED_QUERY}
+                        />
+                    ))}
+                </>
+            )}
+        </Container>
     </>
 };

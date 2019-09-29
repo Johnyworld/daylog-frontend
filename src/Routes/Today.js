@@ -1,38 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
-
-const TODAY_QUERY = gql`
-    {
-       seeTodayPosts {
-            doing {
-                name
-            }
-            likesCount
-            commentsCount
-            isLiked
-            score
-            startAt
-            endAt
-        }
-    } 
-`;
+import { TODAY_QUERY } from '../Components/Router';
 
 const Container = styled.main`
-
+    ${({ theme })=> theme.mainContainer };
 `;
 
 export default () => {
     const { data, loading } = useQuery( TODAY_QUERY );
 
-    return <>
-        { loading && <Loader /> }
-        { !loading && data && data.seeTodayPosts && 
-            <Container>
-                Loading Done
-            </Container>
-        }
-    </>
+    return (
+        <Container>
+            { loading && <Loader /> }
+            { !loading && data && data.seeTodayPosts && 
+                <p>Loading Done</p>
+            }
+        </Container>
+    ) 
 };

@@ -15,5 +15,9 @@ export default {
     wrap: `
         max-width: 768px;
         margin: 0 auto;
+    `,
+    mainContainer: `
+        position: relative;
+        min-height: calc(100vh - 64px);
     `
 }
