@@ -43,10 +43,9 @@ export const FEED_QUERY = gql`
 `;
 
 const Container = styled.main`
-    position: relative;
-    min-height: calc(100vh - 64px);
-    padding-top: 1px;
+    ${({ theme })=> theme.mainContainer };
     background-color: ${({ theme })=> theme.c_lightGray };
+    padding-top: 1px;
     >*:not(:last-child) {
         margin-bottom: 10px;
     }
