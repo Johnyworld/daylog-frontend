@@ -122,7 +122,7 @@ export default ({
                     <UserText>
                         <Username username={author} />
                         <TextSmall string={dateConvertor(createdAt, lang)} />
-                        <TextSmall string={`, ${location}`} />
+                        { location && <TextSmall string={`, ${location}`} /> }
                     </UserText>
                 </UserInfo>
                 <Icons>
