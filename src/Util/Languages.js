@@ -22,7 +22,8 @@ const getDayOfWeek = ( dow, lang ) => {
     return array[dow];
 }
 
-export const getPrintDate = ( fullDate, lang, option ) => {
+export const getPrintDate = ( yyyymmdd, lang, option ) => {
+    const fullDate = new Date( yyyymmdd );
     const Y = fullDate.getFullYear();
     let M = fullDate.getMonth();
     let D = fullDate.getDate();
@@ -38,6 +39,12 @@ export const getPrintDate = ( fullDate, lang, option ) => {
         case "withoutDow" :
             if ( lang === "kr" ) return `${Y}년 ${M}월 ${D}일`;
             else return `${D}, ${M} ${Y}`;
+        case "withoutDate" :
+            if ( lang === "kr" ) return `${Y}년 ${M}월`;
+            else return `${M} ${Y}`; 
+        case "onlyYear" :
+            if ( lang === "kr" ) return `${Y}년`;
+            else return `${Y}`;
         default :
             if ( lang === "kr" ) return `${Y}년 ${M}월 ${D}일 ${dow}요일`;
             else return `${dow}, ${D}, ${M} ${Y}`
@@ -87,4 +94,26 @@ export const getPrintBlockTimes = ( h, m, lang ) => {
         else if ( h === 0 && m === 0 ) return "for 15 minutes least";
         else return `for ${m} minutes`; 
     }
+}
+
+export const getPrintWeek = ( yyyymmdd, lang ) => {
+    const thisDay = new Date(yyyymmdd);
+    const Y = thisDay.getFullYear();
+    const M = thisDay.getMonth();
+    const D = thisDay.getDate();
+
+    const whatFirstDay = new Date( Y, M, 1 ).getDay();
+    const whatWeek = Math.floor(( D + whatFirstDay -1 ) / 7);
+
+    if ( lang === "kr" ) return `${Y}년 ${M+1}월 ${whatWeek+1}주차`;
+    else {
+        const WW = [
+            "first", "second", "third", "fourth", "fifth"
+        ][whatWeek];
+        const MM = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "Octorber", "November", "December"
+        ][M]; 
+        return `${WW} week, ${MM}, ${Y}`
+    } 
 }

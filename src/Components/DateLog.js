@@ -4,17 +4,15 @@ import SmallButton from './SmallButton';
 import TextLarge from './TextLarge';
 import Words from '../Lang/Words.json';
 import Theme from '../Styles/Theme';
-import { getPrintDate } from '../Util/Languages';
+import { getPrintDate, getPrintWeek } from '../Util/Languages';
 import Daylog from './Daylog';
 import Weeklog from './Weeklog';
 import Monthlog from './Monthlog';
 import Yearlog from './Yearlog';
-import TextSmall from './TextSmall';
-import CommentJson from '../Lang/Comment.json';
 
 const Container = styled.section`
     padding: 40px 30px;
-    > div {
+    > * {
         margin-bottom: 20px;
     }
 `;
@@ -25,8 +23,8 @@ const DateTab = styled.div`
     }
 `;
 
-export default ({ username, lang }) => {
-    const [ theDay, setTheDay ] = useState(new Date());
+export default ({ username, lang, me, yyyymmdd }) => {
+    const [ theDay, setTheDay ] = useState( yyyymmdd );
     const [ logState, setLogState ] = useState("day");
 
     const colors = [ "#61bffb", "#1a9df9", "#1585d4", "#085fb9", "#1738c6", "#7047e5",
@@ -37,7 +35,12 @@ export default ({ username, lang }) => {
         setLogState( e.currentTarget.dataset.data );
     }
 
-    const yyyymmdd = "2019-09-24";
+    let printDate;
+    
+    if ( logState === "day" ) printDate = getPrintDate( theDay, lang, "withoutDow" );
+    if ( logState === "week" ) printDate = getPrintWeek( theDay, lang );
+    if ( logState === "month" ) printDate = getPrintDate( theDay, lang, "withoutDate" );
+    if ( logState === "year" ) printDate = getPrintDate( theDay, lang, "onlyYear" );
 
     return (
         <Container>
@@ -48,13 +51,12 @@ export default ({ username, lang }) => {
                 <SmallButton onClick={clickDateTab} text={Words.year} data="year" lang={"en"} color={ logState === "year" ? Theme.c_blue : undefined } />
             </DateTab>
             <div>
-                <TextLarge string={getPrintDate( theDay, lang, "withoutDow" )} color={Theme.c_blueDarker1} />
-                { logState === "week" && <TextSmall text={CommentJson.weekLog} lang={lang} /> }
+                <TextLarge string={printDate} color={Theme.c_blueDarker1} />
             </div>
-            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
-            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
-            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
-            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
+            { logState === "day" && <Daylog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
+            { logState === "week" && <Weeklog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
+            { logState === "month" && <Monthlog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
+            { logState === "year" && <Yearlog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
         </Container>
     )
 }

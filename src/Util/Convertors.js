@@ -27,3 +27,7 @@ export const blockConvertor = ( blocks, lang ) => {
     return getPrintBlockTimes( h, m, lang );
 }
 
+export const getYyyymmdd = ( year, month, date ) => {
+    month += 1;
+    return `${year}-${(month>9?'':"0")+month}-${(date>9?'':"0")+date}`;
+}
