@@ -13,6 +13,7 @@ import TextLarge from '../Components/TextLarge';
 import TextSmall from '../Components/TextSmall';
 import { blockConvertor } from '../Util/Convertors';
 import Theme from '../Styles/Theme';
+import { ME } from '../Components/Router.js';
 
 const ADD_COMMENT = gql`
     mutation addComment( $postId: String!, $text: String! ) {
@@ -87,7 +88,11 @@ export default () => {
     const lang = getLang();
     const id = window.location.hash.split("/")[2];
     const newComment = useInput('');
+
     const { data, loading } = useQuery(SEE_POST, { variables: { id }});
+    const { data: meData, loading: meLoading } = useQuery(ME);
+
+
     const [ selfComments, setSelfComments ] = useState('');
     const [ addCommentMutation ] = useMutation( 
         ADD_COMMENT, { 
@@ -122,6 +127,8 @@ export default () => {
                     <TextRegular string={data.seePost.user.username} color={Theme.c_blueDarker1} />
                 </Heading>
                 <Comments>
+                { !meLoading && meData && meData.me &&
+                    <>  
                     { data.seePost.comments.map(comment => (
                         <Comment
                             key={comment.id}
@@ -132,15 +139,21 @@ export default () => {
                             avatar={comment.user.avatar}
                             createdAt={comment.createdAt}
                             lang={lang}
+                            username={meData.me.username}
                         />
                     ))}
+                    </>
+                }
                 </Comments>
-                <NewComment
-                    lang={lang}
-                    onKeyPress={onKeyPress}
-                    value={newComment.value}
-                    onChange={newComment.onChange}
-                />
+                { !meLoading && meData && meData.me && 
+                    <NewComment
+                        lang={lang}
+                        onKeyPress={onKeyPress}
+                        value={newComment.value}
+                        onChange={newComment.onChange}
+                        avatar={meData.me.avatar}
+                    />
+                }
             </Container>
         )}
     </>

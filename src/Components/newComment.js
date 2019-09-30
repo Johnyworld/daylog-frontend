@@ -4,8 +4,6 @@ import TextareaAutosize from 'react-autosize-textarea'
 import Avatar from './Avatar';
 import CommentJson from '../Lang/Comment.json';
 import { languages } from '../Util/Languages';
-import { useQuery } from 'react-apollo-hooks';
-import { ME } from './Router';
 
 const Form = styled.form`
     display: flex;
@@ -35,23 +33,20 @@ const Textarea = styled(TextareaAutosize)`
     width: 100%;
 `;
 
-const NewComment = ({ lang, onKeyPress, value, onChange }) => {
-    const { data, loading } = useQuery(ME);
-    const placeholder = languages(CommentJson.newComment, lang);
+const NewComment = ({ lang, onKeyPress, value, onChange, avatar }) => {
+     const placeholder = languages(CommentJson.newComment, lang);
 
     return (
         <Form>
-            { !loading && data && data.me &&
-                <>
-                    <Avatar avatar={data.me.avatar} size="medium" />
-                    <Textarea 
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={onChange}
-                        onKeyPress={onKeyPress}
-                    />
-                </>
-            }
+            <>
+                <Avatar avatar={avatar} size="medium" />
+                <Textarea 
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
+                />
+            </>
         </Form>
     )
 }

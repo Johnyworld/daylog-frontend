@@ -61,7 +61,8 @@ const Comment = ({
     author,
     avatar,
     createdAt,
-    lang
+    lang,
+    username
 }) => {
     const [ isDelete, setIsDelete ] = useState(false);
     const [ editCommentMutation ] = useMutation(EDIT_COMMENT, { 
@@ -69,10 +70,8 @@ const Comment = ({
         refetchQueries: [{ query: SEE_POST, variables: { id: postId }}]
     });
 
-    const me = JSON.parse( sessionStorage.getItem("me") );
-
     const boxSlide = (e) => {
-        if ( me.username === author ) {
+        if ( username === author ) {
             const hasClass = e.currentTarget.classList.contains('open'); 
             if ( !hasClass ) {
                 e.currentTarget.classList.add('open');
