@@ -27,10 +27,14 @@ export default ({ username, lang }) => {
     const [ theDay, setTheDay ] = useState(new Date());
     const [ logState, setLogState ] = useState("day");
 
+    const colors = [ "#61bffb", "#1a9df9", "#1585d4", "#085fb9", "#1738c6", "#7047e5",
+                     "#a55af8", "#db57fc", "#ff81ec", "#fac07b", "#f9dc84", "#c0d419",
+                     "#8fb91f", "#428b15", "#176c1d", "#124f3e", "#198f88", "#24abc3" ];
+
     const clickDateTab = (e) => {
         setLogState( e.currentTarget.dataset.data );
     }
-    
+
     const yyyymmdd = "2019-09-18";
 
     return (
@@ -42,10 +46,10 @@ export default ({ username, lang }) => {
                 <SmallButton onClick={clickDateTab} text={Words.year} data="year" lang={"en"} color={ logState === "year" ? Theme.c_blue : undefined } />
             </DateTab>
             <TextLarge string={getPrintDate( theDay, lang, "withoutDow" )} color={Theme.c_blueDarker1} />
-            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} /> }
-            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} /> }
-            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} /> }
-            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} /> }
+            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
+            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
+            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
+            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
         </Container>
     )
 }
