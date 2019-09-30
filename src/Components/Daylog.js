@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from './Loader';
-import GraphList from './GraphList';
-import Graph from './Graph';
 import GraphContainer from './GraphContainer';
 
 const SEE_DAYLOG = gql`
@@ -35,7 +33,6 @@ const SEE_DAYLOG = gql`
 
 const Container = styled.section`
     position: relative;
-    margin-bottom: 30px;
 `;
 
 

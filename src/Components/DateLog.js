@@ -9,11 +9,13 @@ import Daylog from './Daylog';
 import Weeklog from './Weeklog';
 import Monthlog from './Monthlog';
 import Yearlog from './Yearlog';
+import TextSmall from './TextSmall';
+import CommentJson from '../Lang/Comment.json';
 
 const Container = styled.section`
     padding: 40px 30px;
-    h2 {
-        margin: 30px 0;
+    > div {
+        margin-bottom: 20px;
     }
 `;
 
@@ -35,7 +37,7 @@ export default ({ username, lang }) => {
         setLogState( e.currentTarget.dataset.data );
     }
 
-    const yyyymmdd = "2019-09-18";
+    const yyyymmdd = "2019-09-24";
 
     return (
         <Container>
@@ -45,9 +47,12 @@ export default ({ username, lang }) => {
                 <SmallButton onClick={clickDateTab} text={Words.month} data="month" lang={"en"} color={ logState === "month" ? Theme.c_blue : undefined } />
                 <SmallButton onClick={clickDateTab} text={Words.year} data="year" lang={"en"} color={ logState === "year" ? Theme.c_blue : undefined } />
             </DateTab>
-            <TextLarge string={getPrintDate( theDay, lang, "withoutDow" )} color={Theme.c_blueDarker1} />
+            <div>
+                <TextLarge string={getPrintDate( theDay, lang, "withoutDow" )} color={Theme.c_blueDarker1} />
+                { logState === "week" && <TextSmall text={CommentJson.weekLog} lang={lang} /> }
+            </div>
             { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
-            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
+            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
             { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
             { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} /> }
         </Container>
