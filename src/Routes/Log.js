@@ -6,6 +6,8 @@ import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';
 import UserLog from '../Components/UserLog';
 import DateLog from '../Components/DateLog';
+import { ME } from '../Components/Router';
+import { getYyyymmdd } from '../Util/Convertors';
 
 export const SEE_USER = gql`
     query seeUser( $username: String! ) {
@@ -32,12 +34,17 @@ const Container = styled.main`
 export default () => {
     const username = window.location.hash.split("/")[2];
     const lang = getLang();
+    const date = new Date();
+    // const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
+    const yyyymmdd = "2019-09-21"
+
     const { data, loading } = useQuery( SEE_USER, { variables: { username } } );
+    const { data: meData, loading: meLoading } = useQuery(ME);
     
     return <>
         <Container>
             { loading && <Loader /> }
-            { !loading && data && data.seeUser && 
+            { !loading && data && data.seeUser && !meLoading && meData && meData.me &&
             <>
                 <UserLog
                     id={data.seeUser.id} 
@@ -55,6 +62,8 @@ export default () => {
                 <DateLog
                     username={username}
                     lang={lang}
+                    me={meData.me}
+                    yyyymmdd={yyyymmdd}
                 />
             </>
             }
