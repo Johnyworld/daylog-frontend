@@ -14,6 +14,7 @@ import TextSmall from '../Components/TextSmall';
 import { blockConvertor } from '../Util/Convertors';
 import Theme from '../Styles/Theme';
 import { ME } from '../Components/Router.js';
+import Comments from '../Components/Comments.js';
 
 const ADD_COMMENT = gql`
     mutation addComment( $postId: String!, $text: String! ) {
@@ -60,6 +61,9 @@ export const SEE_POST = gql`
                     username
                     avatar
                 }
+                post {
+                    id
+                }
             }
         }
     }
@@ -74,14 +78,6 @@ const Container = styled.main`
 const Heading = styled.div`
     ${({ theme })=> theme.wrap };
     padding: 20px;
-`;
-
-const Comments = styled.ul`
-    ${({ theme })=> theme.wrap };
-    ${({ theme })=> theme.box };
-    @media screen and ( max-width: 767px ) {
-        margin: 0 10px;
-    }
 `;
 
 export default () => {
@@ -126,33 +122,17 @@ export default () => {
                     <TextLarge string={data.seePost.doing.name} color={Theme.c_blueDarker2}/>
                     <TextRegular string={data.seePost.user.username} color={Theme.c_blueDarker1} />
                 </Heading>
-                <Comments>
                 { !meLoading && meData && meData.me &&
-                    <>  
-                    { data.seePost.comments.map(comment => (
-                        <Comment
-                            key={comment.id}
-                            id={comment.id}
-                            postId={data.seePost.id}
-                            text={comment.text}
-                            author={comment.user.username}
-                            avatar={comment.user.avatar}
-                            createdAt={comment.createdAt}
+                    <>
+                        <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
+                        <NewComment
                             lang={lang}
-                            username={meData.me.username}
+                            onKeyPress={onKeyPress}
+                            value={newComment.value}
+                            onChange={newComment.onChange}
+                            avatar={meData.me.avatar}
                         />
-                    ))}
                     </>
-                }
-                </Comments>
-                { !meLoading && meData && meData.me && 
-                    <NewComment
-                        lang={lang}
-                        onKeyPress={onKeyPress}
-                        value={newComment.value}
-                        onChange={newComment.onChange}
-                        avatar={meData.me.avatar}
-                    />
                 }
             </Container>
         )}
