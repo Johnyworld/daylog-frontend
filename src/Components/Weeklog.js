@@ -4,6 +4,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from './Loader';
 import GraphContainer from './GraphContainer';
+import Review from './Review';
 
 const SEE_WEEKLOG = gql`
     query seeWeekLog( $username: String!, $yyyymmdd: String! ) {
@@ -42,9 +43,10 @@ export default ({ username, yyyymmdd, colors, lang }) => {
         <>
             <Container>
                 { loading && <Loader /> }
-                { !loading && data && data.seeWeekLog &&
-                    <GraphContainer data={data.seeWeekLog} colors={colors} />
-                }
+                { !loading && data && data.seeWeekLog && <>
+                    <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
+                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} lang={lang} />
+                </>}
             </Container>
         </>
     )
