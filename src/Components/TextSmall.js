@@ -19,7 +19,7 @@ const Container = styled.span`
 `;
 
 const TextSmall = ({ text, lang, string, weight="regular", color }) => (
-    <Container weight={weight} color={color} lang={lang} >
+    <Container weight={weight} color={color} lang={lang} className="text-small" >
         {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )
