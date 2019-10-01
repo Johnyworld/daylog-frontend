@@ -19,5 +19,17 @@ export default {
     mainContainer: `
         position: relative;
         min-height: calc(100vh - 64px);
+    `,
+    miniFeedTitle: `
+        .text-regular {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+    `,
+    miniFeedBox: `
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        background-color: white; 
+        padding: 20px 30px;
+        margin: 0 -30px;
     `
 }

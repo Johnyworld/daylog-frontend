@@ -5,10 +5,10 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import { getPrintDate, afterWhen } from '../Util/Languages';
+import { getPrintDate } from '../Util/Languages';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
-import { blockConvertor, blockToTime, timePresenter } from '../Util/Convertors';
+import { timePresenter } from '../Util/Convertors';
 import Message from '../Lang/FeedItem.json';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 
@@ -32,17 +32,12 @@ const SEE_MY_POSTS = gql`
 `;
 
 const Container = styled.ul`
+    ${({ theme })=> theme.miniFeedTitle }
     margin-top: 20px;
-    .text-regular {
-        display: inline-block;
-        margin-bottom: 5px;
-    }
 `;
 
 const Box = styled.li`
-    ${({ theme })=> theme.box }
-    padding: 20px 30px;
-    margin: 0 -30px;
+    ${({ theme })=> theme.miniFeedBox }
     &:not(:last-child) {
         border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
     }

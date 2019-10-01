@@ -6,17 +6,12 @@ import Words from '../Lang/Words.json';
 import Theme from '../Styles/Theme'
 
 const Container = styled.div`
+    ${({ theme })=> theme.miniFeedTitle }
     margin-top: 30px;
-    .text-regular {
-        display: inline-block;
-        margin-bottom: 5px;
-    }
 `;
 
 const Box = styled.div`
-    ${({ theme })=> theme.box };
-    padding: 30px;
-    margin: 0 -30px;
+    ${({ theme })=> theme.miniFeedBox };
     display: flex;
     > span:first-child {
         min-width: 30%;
