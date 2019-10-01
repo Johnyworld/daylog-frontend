@@ -96,7 +96,12 @@ export const getPrintBlockTimes = ( h, m, lang ) => {
     }
 }
 
-export const getPrintWeek = ( yyyymmdd, lang ) => {
+export const getPrintWeek = ( yyyymmdd, lang, option ) => {
+    if ( option === "yyyymmWeek" ) {
+        const split = yyyymmdd.split('-');
+        const M = parseInt(split[1]);
+        return `${split[0]}년 ${M}월 ${split[2].substr(1, 1)}주차`;
+    }
     const thisDay = new Date(yyyymmdd);
     const Y = thisDay.getFullYear();
     const M = thisDay.getMonth();

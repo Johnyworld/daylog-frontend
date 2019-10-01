@@ -23,6 +23,10 @@
         "kr" : "리뷰",
         "en" : "Review"
     },
+    "lastReviews" : {
+        "kr" : "지난 리뷰들",
+        "en" : "Last reviews"
+    },
     "noReview" : {
         "kr" : "리뷰가 없습니다.",
         "en" : "There is no review."

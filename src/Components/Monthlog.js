@@ -5,21 +5,20 @@ import { useQuery } from 'react-apollo-hooks';
 import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
+import Reviews from './Reviews';
 
 const SEE_MONTHLOG = gql`
     query seeMonthLog( $username: String!, $yyyymm: String! ) {
         seeMonthLog( username: $username, yyyymm: $yyyymm ) {
-            monthReviews {
+            monthReview {
                 text
                 likesCount
             }
-            monthComments {
+            eachReviews {
+                id
                 text
-                createdAt
-                user {
-                    avatar
-                    username
-                }
+                likesCount
+                yyyymmdd
             }
             averageScore
             doingLogs {
@@ -45,7 +44,10 @@ export default ({ username, yyyymmdd, colors, lang }) => {
             { loading && <Loader /> }
             { !loading && data && data.seeMonthLog && <>
                 <GraphContainer data={data.seeMonthLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeMonthLog.monthReviews[0]} averageScore={data.seeMonthLog.averageScore} lang={lang} />
+                <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} lang={lang} />
+                { data.seeMonthLog.eachReviews[0] &&
+                    <Reviews reviews={data.seeMonthLog.eachReviews} lang={lang} />
+                }
             </>}
         </Container>
     )
