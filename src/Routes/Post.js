@@ -5,7 +5,6 @@ import { getLang, languages } from '../Util/Languages';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import Loader from '../Components/Loader';
-import Comment from '../Components/Comment';
 import NewComment from '../Components/NewComment';
 import useInput from '../Hooks/useInput';
 import TextRegular from '../Components/TextRegular';

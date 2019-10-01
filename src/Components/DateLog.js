@@ -12,7 +12,7 @@ import Yearlog from './Yearlog';
 
 const Container = styled.section`
     padding: 40px 30px;
-    > * {
+    > *:not(:last-child) {
         margin-bottom: 20px;
     }
 `;
