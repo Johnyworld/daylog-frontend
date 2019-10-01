@@ -5,6 +5,7 @@ import { useQuery } from 'react-apollo-hooks';
 import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
+import EachPosts from './EachPosts';
 
 const SEE_WEEKLOG = gql`
     query seeWeekLog( $username: String!, $yyyymmdd: String! ) {
@@ -13,13 +14,8 @@ const SEE_WEEKLOG = gql`
                 text
                 likesCount
             }
-            weekComments {
-                text
-                createdAt
-                user {
-                    avatar
-                    username
-                }
+            eachDays {
+                yyyymmdd
             }
             averageScore
             doingLogs {
@@ -46,6 +42,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
                 { !loading && data && data.seeWeekLog && <>
                     <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
                     <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} lang={lang} />
+                    <EachPosts posts={data.seeWeekLog.eachDays} username={username} lang={lang} />
                 </>}
             </Container>
         </>

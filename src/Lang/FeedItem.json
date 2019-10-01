@@ -10,5 +10,9 @@
     "likes" : {
         "kr" : "개의 파이팅",
         "en" : " GO!"
+    },
+    "comments" : {
+        "kr" : "개의 댓글",
+        "en" : " comments"
     }
 }

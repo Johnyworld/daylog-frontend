@@ -31,3 +31,24 @@ export const getYyyymmdd = ( year, month, date ) => {
     month += 1;
     return `${year}-${(month>9?'':"0")+month}-${(date>9?'':"0")+date}`;
 }
+
+const blockToTime = ( blocks ) => {
+    const hours = Math.floor( blocks/4 );
+    const minutes = blocks % 4 * 15;
+    return { hours, minutes };
+}
+
+const timeZero = ( time ) => {
+    if ( time > 9 ) return time;
+    else return `0${time}`;
+}
+
+export const timePresenter = ( startAt, endAt ) => {
+    const start = blockToTime( startAt );
+    const end = blockToTime( endAt );
+    const SH = timeZero( start.hours );
+    const SM = timeZero( start.minutes );
+    const EH = timeZero( end.hours );
+    const EM = timeZero( end.minutes );
+    return `${SH}:${SM} - ${EH}:${EM}`;
+}
