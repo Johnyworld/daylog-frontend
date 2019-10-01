@@ -13,7 +13,7 @@ const Anchor = styled(Link)`
 
 export default ({ username, inline }) => {
     return (
-        <Anchor to={`/log/${username}`} inline={inline} >
+        <Anchor to={`/feed/${username}`} inline={inline} >
             <TextRegular string={username} weight="bold" />
         </Anchor>
     )

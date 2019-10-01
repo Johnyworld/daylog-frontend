@@ -33,7 +33,6 @@ const GnbLink = styled(Link)`
         margin-right: 20px;
     }
     &.selected {
-        pointer-events: none;
         border-bottom: 3px solid ${({ theme })=> theme.c_blue };
         color: ${({ theme })=> theme.c_black };
     }

@@ -36,7 +36,7 @@ export default () => {
     const lang = getLang();
     const date = new Date();
     // const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
-    const yyyymmdd = "2019-09-21"
+    const yyyymmdd = "2019-09-23"
 
     const { data, loading } = useQuery( SEE_USER, { variables: { username } } );
     const { data: meData, loading: meLoading } = useQuery(ME);

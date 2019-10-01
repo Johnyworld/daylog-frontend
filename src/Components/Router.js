@@ -51,6 +51,7 @@ const LoggedInRoutes = () => {
             <Header loggedUser={meData.me} />
             <Switch>
                 <Route exact path='/' component={Today} />
+                <Route path='/feed/:username' component={Log} />
                 <Route path='/feed' component={Feed} />
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
