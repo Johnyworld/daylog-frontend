@@ -26,7 +26,6 @@ class Graph extends Component {
     }
     componentDidMount() {
         const { data, colors } = this.state;
-        console.log(data)
         const canvas = document.getElementById('jsGraph');
         const ctx = canvas.getContext('2d');
 

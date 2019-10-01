@@ -4,6 +4,7 @@ import Graph from './Graph';
 import GraphList from './GraphList';
 import TextRegular from './TextRegular';
 import Words from '../Lang/Words.json';
+import Theme from '../Styles/Theme';
 
 const Container = styled.div`
     display: flex;
@@ -23,7 +24,7 @@ const Lists = styled.ul`
 export default ({ data, colors, lang }) => {
     return (
         <Container>
-            { !data[0] && <TextRegular text={Words.noData} lang={lang} /> }
+            { !data[0] && <TextRegular text={Words.noData} color={Theme.c_gray} lang={lang} /> }
             { data[0] && 
                 <>
                     <GraphWrap>

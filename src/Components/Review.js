@@ -31,7 +31,7 @@ export default ({ review, averageScore, lang }) => {
                 <Score score={ averageScore } size="medium" />
                 { review 
                     ? <TextRegular string={ review.text } />
-                    : <TextRegular text={ Words.noReview } lang={lang} />
+                    : <TextRegular text={ Words.noReview } color={Theme.c_gray} lang={lang} />
                 }
             </Box>
         </Container>
