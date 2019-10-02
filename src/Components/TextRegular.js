@@ -11,7 +11,7 @@ const Container = styled.span`
         font-weight: 700;
     `}
     ${({ lang }) => lang === 'kr' && ` 
-        letter-spacing: -.05em;
+        letter-spacing: -.03em;
     `}
     ${({ color }) => color && ` 
         color: ${ color };

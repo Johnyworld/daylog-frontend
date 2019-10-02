@@ -10,7 +10,7 @@ const Container = styled.p`
     word-break: keep-all;
     color: white;
     ${({ lang }) => lang === 'kr' && ` 
-        letter-spacing: -.05em;
+        letter-spacing: -.03em;
     `}
 `;
 
