@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Auth from '../Routes/Auth';
-import Today from '../Routes/Today';
-import Feed from '../Routes/Feed';
-import Log from '../Routes/Log';
-import Post from '../Routes/Post';
-import Header from './Header';
+import Auth from './Routes/Auth';
+import Today from './Routes/Today';
+import Feed from './Routes/Feed';
+import Log from './Routes/Log';
+import Post from './Routes/Post';
+import Header from './Components/Header';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
-import Loader from './Loader';
+import Loader from './Components/Loader';
 
 export const ME = gql`
     {

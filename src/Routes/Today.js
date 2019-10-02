@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
-import { TODAY_QUERY } from '../Components/Router';
+import { TODAY_QUERY } from '../Router';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };

@@ -6,8 +6,7 @@ import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';
 import UserLog from '../Components/UserLog';
 import DateLog from '../Components/DateLog';
-import { ME } from '../Components/Router';
-import { getYyyymmdd } from '../Util/Convertors';
+import { ME } from '../Router';
 
 export const SEE_USER = gql`
     query seeUser( $username: String! ) {
