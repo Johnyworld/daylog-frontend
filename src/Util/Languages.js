@@ -51,6 +51,13 @@ export const getPrintDate = ( yyyymmdd, lang, option ) => {
     }
 }
 
+export const getPrintDateAuto = ( yyyymmdd, lang ) => {
+    if ( yyyymmdd.includes("W") ) return getPrintWeek( yyyymmdd, lang, "yyyymmWeek" ); 
+    if ( yyyymmdd.length === 10 ) return getPrintDate( yyyymmdd, lang )
+    if ( yyyymmdd.length === 7 ) return getPrintDate( yyyymmdd, lang, "withoutDate" )
+    if ( yyyymmdd.length === 4 ) return getPrintDate( yyyymmdd, lang, "onlyYear" )
+}
+
 export const getPrintPastTime = ( array, lang, option ) => {
     let string = [];
     let print;
