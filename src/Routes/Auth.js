@@ -30,8 +30,8 @@ const LOCAL_LOG_IN = gql`
 `;
 
 const CREATE_ACCOUNT = gql`
-    mutation createAccount( $email: String!, $username: String!, $fullname: String!, $bio: String ) {
-        createAccount( email:$email, username: $username, fullname: $fullname, bio: $bio )
+    mutation createAccount( $email: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
+        createAccount( email:$email, username: $username, fullname: $fullname, bio: $bio, lang: $lang )
     }
 `;
 
