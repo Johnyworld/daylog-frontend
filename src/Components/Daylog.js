@@ -10,6 +10,7 @@ const SEE_DAYLOG = gql`
     query seeDayLog( $username: String!, $yyyymmdd: String! ) {
         seeDayLog( username: $username, yyyymmdd: $yyyymmdd ) {
             dayReviews {
+                id
                 text
                 likesCount
             }
@@ -48,7 +49,7 @@ export default ({ username, yyyymmdd, colors, lang, printDate }) => {
             { loading && <Loader /> }
             { !loading && data && data.seeDayLog && <>
                 <GraphContainer data={data.seeDayLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} lang={lang} />
+                <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} username={username} date={yyyymmdd} lang={lang} QUERY={SEE_DAYLOG} />
                 {/* <Comments comments={data.seeDayLog.dayComments} me={me} lang={lang} /> */}
             </>}
         </Container>

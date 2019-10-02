@@ -8,9 +8,10 @@ import Review from './Review';
 import Reviews from './Reviews';
 
 const SEE_MONTHLOG = gql`
-    query seeMonthLog( $username: String!, $yyyymm: String! ) {
-        seeMonthLog( username: $username, yyyymm: $yyyymm ) {
+    query seeMonthLog( $username: String!, $yyyymmdd: String! ) {
+        seeMonthLog( username: $username, yyyymmdd: $yyyymmdd ) {
             monthReview {
+                id
                 text
                 likesCount
             }
@@ -37,16 +38,16 @@ const Container = styled.section`
 
 export default ({ username, yyyymmdd, colors, lang }) => {
     const yyyymm = yyyymmdd.substr(0, 7);
-    const { data, loading } = useQuery( SEE_MONTHLOG, { variables: { username, yyyymm }});
+    const { data, loading } = useQuery( SEE_MONTHLOG, { variables: { username, yyyymmdd: yyyymm }});
 
     return (
         <Container>
             { loading && <Loader /> }
             { !loading && data && data.seeMonthLog && <>
                 <GraphContainer data={data.seeMonthLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} lang={lang} />
+                <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} username={username} date={yyyymm} lang={lang} QUERY={SEE_MONTHLOG} />
                 { data.seeMonthLog.eachReviews[0] &&
-                    <Reviews reviews={data.seeMonthLog.eachReviews} lang={lang} />
+                    <Reviews reviews={data.seeMonthLog.eachReviews} date={yyyymm} lang={lang} />
                 }
             </>}
         </Container>

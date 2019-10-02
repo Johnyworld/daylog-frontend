@@ -23,13 +23,29 @@
         "kr" : "리뷰",
         "en" : "Review"
     },
+    "write" : {
+        "kr" : "쓰기",
+        "en" : "Write"
+    },
+    "delete" : {
+        "kr" : "삭제",
+        "en" : "Delete"
+    },
+    "edit" : {
+        "kr" : "수정",
+        "en" : "Edit"
+    },
     "lastReviews" : {
-        "kr" : "지난 리뷰들",
-        "en" : "Last reviews"
+        "kr" : "이번 달 리뷰들",
+        "en" : "Reviews of this Month"
     },
     "noReview" : {
         "kr" : "리뷰가 없습니다.",
         "en" : "There is no review."
+    },
+    "inputReview" : {
+        "kr" : "리뷰를 입력해주세요.",
+        "en" : "Add a review."
     },
     "noData" : {
         "kr" : "데이터가 없습니다.",

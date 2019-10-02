@@ -7,8 +7,8 @@ import GraphContainer from './GraphContainer';
 import Review from './Review';
 
 const SEE_YEARLOG = gql`
-    query seeYearLog( $username: String!, $yyyy: String! ) {
-        seeYearLog( username: $username, yyyy: $yyyy ) {
+    query seeYearLog( $username: String!, $yyyymmdd: String! ) {
+        seeYearLog( username: $username, yyyymmdd: $yyyymmdd ) {
             averageScore
             doingLogs {
                 name
@@ -16,7 +16,8 @@ const SEE_YEARLOG = gql`
                 percent
                 postsCount
             }
-            yearReviews {
+            yearReview {
+                id
                 text
                 likesCount
             }
@@ -30,14 +31,14 @@ const Container = styled.section`
 
 export default ({ username, yyyymmdd, colors, lang }) => {
     const yyyy = yyyymmdd.substr(0, 4);
-    const { data, loading } = useQuery( SEE_YEARLOG, { variables: { username, yyyy }});
+    const { data, loading } = useQuery( SEE_YEARLOG, { variables: { username, yyyymmdd: yyyy }});
 
     return (
         <Container>
             { loading && <Loader /> }
             { !loading && data && data.seeYearLog && <>
                 <GraphContainer data={data.seeYearLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeYearLog.yearReviews[0]} averageScore={data.seeYearLog.averageScore} lang={lang} />
+                <Review review={data.seeYearLog.yearReview[0]} averageScore={data.seeYearLog.averageScore} username={username} date={yyyy} lang={lang} QUERY={SEE_YEARLOG} />
             </>}
         </Container>
     )

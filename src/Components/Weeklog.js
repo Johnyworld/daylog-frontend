@@ -6,11 +6,13 @@ import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
 import EachPosts from './EachPosts';
+import { getWeek } from '../Util/Convertors';
 
 const SEE_WEEKLOG = gql`
     query seeWeekLog( $username: String!, $yyyymmdd: String! ) {
         seeWeekLog( username: $username, yyyymmdd: $yyyymmdd ) {
             weekReviews {
+                id
                 text
                 likesCount
             }
@@ -34,6 +36,7 @@ const Container = styled.section`
 
 export default ({ username, yyyymmdd, colors, lang }) => {
     const { data, loading } = useQuery( SEE_WEEKLOG, { variables: { username, yyyymmdd }});
+    const yyyymmWeek = getWeek(yyyymmdd);
 
     return (
         <>
@@ -41,7 +44,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
                 { loading && <Loader /> }
                 { !loading && data && data.seeWeekLog && <>
                     <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
-                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} lang={lang} />
+                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} />
                     <EachPosts posts={data.seeWeekLog.eachDays} username={username} lang={lang} />
                 </>}
             </Container>
