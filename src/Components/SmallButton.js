@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Theme from '../Styles/Theme';
 
 const Container = styled.button`
-    
+    display: inline-block; 
 `;
 
 const SmallButton = ({ onClick, data, text, lang, color=Theme.c_gray }) => {

@@ -21,7 +21,7 @@ export default {
         min-height: calc(100vh - 64px);
     `,
     miniFeedTitle: `
-        .text-regular {
+        > .text-regular {
             display: inline-block;
             margin-bottom: 5px;
         }

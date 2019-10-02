@@ -4,16 +4,13 @@ import message from '../Lang/FeedItem.json';
 import TextSmall from './TextSmall.js';
 import TextLarge from './TextLarge.js';
 import Theme from '../Styles/Theme.js';
-import Icon from './Icon.js';
-import Avatar from './Avatar.js';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { SEE_POST } from '../Routes/Post.js';
-import { blockConvertor, dateConvertor } from '../Util/Convertors.js';
-import Username from './Username.js';
+import { blockConvertor } from '../Util/Convertors.js';
+import FeedUser from './FeedUser.js';
 
-const TOGGLE_LIKE = gql`
+export const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
         toggleLike( postId: $postId ) 
     }
@@ -28,7 +25,7 @@ const Container = styled.article`
 const Info = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
 `;
 
 const Heading = styled.div`
@@ -36,27 +33,6 @@ const Heading = styled.div`
     span {
         display: inline-block;
         margin-top: 3px;
-    }
-`;
-
-const Meta = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const UserInfo = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-const UserText = styled.div`
-    margin-left: 10px;
-`;
-
-const Icons = styled.div`
-    >*:not(:first-child) {
-        margin-left: 20px;
     }
 `;
 
@@ -107,8 +83,8 @@ export default ({
         (
         <Container>
             <Info>
-                <TextSmall string={blockConvertor(blocks, lang)} />
-                <TextSmall string={category} />
+                <TextSmall string={blockConvertor(blocks, lang)} lang={lang} />
+                <TextSmall string={category} lang={lang} />
             </Info>
             <Heading>
                 <TextLarge string={doing} lang={lang} color={color}/>
@@ -116,26 +92,16 @@ export default ({
                     <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_black} />
                 }
             </Heading>
-            <Meta>
-                <UserInfo>
-                    <Avatar avatar={avatar} size="small" />
-                    <UserText>
-                        <Username username={author} />
-                        <TextSmall string={dateConvertor(createdAt, lang)} />
-                        { location && <TextSmall string={`, ${location}`} /> }
-                    </UserText>
-                </UserInfo>
-                <Icons>
-                    <button onClick={toggleLike} >
-                        <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
-                    </button> 
-                    { !disableComment && (
-                        <Link to={`/post/${id}`}>
-                            <Icon icon="bubble" size="medium" />
-                        </Link>
-                    )}
-                </Icons>
-            </Meta>
+            <FeedUser
+                id={id}
+                author={author}
+                avatar={avatar}
+                location={location}
+                createdAt={createdAt}
+                toggleLike={toggleLike}
+                isLikedState={isLikedState}
+                lang={lang}
+            />
         </Container>
         )
     )
