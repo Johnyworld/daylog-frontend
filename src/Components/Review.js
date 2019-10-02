@@ -13,6 +13,7 @@ import useInput from '../Hooks/useInput';
 import LargeButton from './LargeButton';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 import { languages } from '../Util/Languages';
+import TextSmall from './TextSmall';
 
 const ADD_REVIEW = gql`
     mutation addReview( $text: String!, $yyyymmdd: String! ) {
@@ -27,6 +28,12 @@ const EDIT_REVIEW = gql`
         editReview( id: $id, text: $text ) {
             id
         }
+    }
+`;
+
+const DELETE_REVIEW = gql`
+    mutation deleteReview( $id: String! ) {
+        deleteReview( id: $id )
     }
 `;
 
@@ -53,6 +60,10 @@ const Buttons = styled.div`
         &:not(:last-child) {
             margin-right: 20px;
         } 
+    }
+    .text-small {
+        display: block;
+        margin-top: 5px;
     }
 `;
 
@@ -100,6 +111,7 @@ const Textarea = styled(TextareaAutosize)`
 
 export default ({ review, averageScore, username, date, lang, QUERY }) => {
     const [ onPopup, setOnPopup ] = useState(false);
+    const [ confirmDelete, setConfirmDelete ] = useState(false);
     const reviewText = useInput(review ? review.text : "");
     const placeholder = languages(Words.inputReview);
 
@@ -108,15 +120,27 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
         refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
     });
 
-    const [ EditReviewMutation ] = useMutation(EDIT_REVIEW, { 
+    const [ editReviewMutation ] = useMutation(EDIT_REVIEW, { 
         variables: { text: reviewText.value, id: review ? review.id : "" },
         refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
     });
 
+    const [ deleteReviewMutation ] = useMutation(DELETE_REVIEW, {
+        variables: { id: review ? review.id : "" }, 
+        refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
+    })
+
     const onWrite = () => { setOnPopup("write") }
-    const onEdit = () => { setOnPopup("edit"); }
-    const onDelete = () => { console.log("Delete", date); }
-    const closePopup = () => { setOnPopup(false); }
+    const onEdit = () => { setOnPopup("edit") }
+    const closePopup = () => { setOnPopup(false) }
+    const cancelDelete = () => { setConfirmDelete(false); }
+    const onDelete = () => {
+        setConfirmDelete(true);
+        if ( confirmDelete ) {
+            deleteReviewMutation(); 
+            setConfirmDelete(false);
+        }
+    }
 
     const onSubmit = () => {
         if ( onPopup === "write" ) {
@@ -124,9 +148,9 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
             setOnPopup(false);
         }
         if ( onPopup === "edit" ) {
-            EditReviewMutation();
+            editReviewMutation();
             setOnPopup(false);
-        }    
+        }
     }
 
     return (
@@ -145,6 +169,10 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
                             : (<>
                                 <SmallButton onClick={onEdit} text={Words.edit} lang={lang} />
                                 <SmallButton onClick={onDelete} text={Words.delete} lang={lang} />
+                                { confirmDelete && <>
+                                    <SmallButton onClick={cancelDelete} text={Words.cancel} lang={lang} />
+                                    <TextSmall text={Words.confirmDelete} lang={lang} color={Theme.c_red} />
+                                </>}
                             </>)
                         }
                     </Buttons>
