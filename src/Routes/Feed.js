@@ -6,6 +6,7 @@ import Loader from '../Components/Loader';
 import FeedItem from '../Components/FeedItem';
 import { getLang } from '../Util/Languages';
 import FeedReview from '../Components/FeedReview';
+import { ME } from '../Router';
 
 export const FEED_QUERY = gql`
     {
@@ -74,7 +75,9 @@ const Container = styled.main`
 
 export default () => {
     const { data, loading } = useQuery(FEED_QUERY);
-    const lang = getLang();
+    const { data: meData, loading: meLoading } = useQuery(ME);
+
+    const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
     let Feed=[];
 
     if ( !loading && data && data.seeFeed ) {

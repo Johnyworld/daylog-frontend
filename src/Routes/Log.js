@@ -32,13 +32,15 @@ const Container = styled.main`
 
 export default () => {
     const username = window.location.hash.split("/")[2];
-    const lang = getLang();
+
+    const { data, loading } = useQuery( SEE_USER, { variables: { username } } );
+    const { data: meData, loading: meLoading } = useQuery(ME);
+
+    const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
     const date = new Date();
     // const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
     const yyyymmdd = "2019-09-23"
 
-    const { data, loading } = useQuery( SEE_USER, { variables: { username } } );
-    const { data: meData, loading: meLoading } = useQuery(ME);
     
     return <>
         <Container>

@@ -1,8 +1,16 @@
 import React from 'react';
 
-export const getLang = () => {
-    return "kr";
-    // return window.navigator.language.substr(0, 2);
+export const langList = [
+    { value: "en", local: "English" },
+    { value: "kr", local: "한국어" }
+];
+
+export const getLang = ( userlang ) => {
+    if ( !userlang ) {
+        return window.navigator.language.substr(0, 2);
+    } else {
+        return userlang;
+    }
 }
 
 export const languages = ( text, lang ) => {
