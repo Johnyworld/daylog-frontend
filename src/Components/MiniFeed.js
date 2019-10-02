@@ -9,7 +9,7 @@ import { getPrintDate } from '../Util/Languages';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import { timePresenter } from '../Util/Convertors';
-import Message from '../Lang/FeedItem.json';
+import Words from '../Lang/Words.json';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const SEE_MY_POSTS = gql`
@@ -74,10 +74,10 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
                         <TextLarge string={ post.doing.name } color={ post.doing.color } key={post.id} />
                         <LikesAndComments>
                             <Link to={`/post/${post.id}`}>
-                                <TextSmall string={post.commentsCount+''} text={Message.comments} lang={lang} color={Theme.c_blue} weight="bold" />
+                                <TextSmall string={post.commentsCount+''} text={Words.commentsCount} lang={lang} color={Theme.c_blue} weight="bold" />
                             </Link>
                             { post.likesCount !== 0 &&
-                                <TextSmall string={post.likesCount+''} text={Message.likes} lang={lang} color={Theme.c_black} />
+                                <TextSmall string={post.likesCount+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                             }
                         </LikesAndComments>
                     </Box>

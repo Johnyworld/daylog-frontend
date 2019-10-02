@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; 
 import styled from 'styled-components';
-import CommentJson from '../Lang/Comment.json';
+import Words from '../Lang/Words.json';
 import { getLang, languages } from '../Util/Languages';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
@@ -96,7 +96,7 @@ export default () => {
         }
     );
     
-    const failToSend = languages(CommentJson.failToSend, lang);
+    const failToSend = languages(Words.failToSend, lang);
 
     const onKeyPress = async e => {
         const { which } = e;

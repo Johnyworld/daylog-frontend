@@ -5,7 +5,6 @@ import useInput from '../Hooks/useInput';
 import Input from '../Components/Input';
 import Message from '../Components/Message';
 import LargeButton from '../Components/LargeButton';
-import TextMessages from '../Lang/Login.json';
 import Words from '../Lang/Words.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
@@ -115,7 +114,7 @@ export default () => {
     const [ requestSecretMutation ] = useMutation( LOG_IN, { variables: { email: email.value }});
     const [ confirmSecretMutation ] = useMutation( CONFIRM_SECRET, { variables: { email: email.value, secret: secret.value }});
     const [ localLogInMutation ] = useMutation( LOCAL_LOG_IN );
-    const [ createAccountMutation ] = useMutation( CREATE_ACCOUNT, { variables: { username: username.value, email: email.value, fullname: fullname.value } } )
+    const [ createAccountMutation ] = useMutation( CREATE_ACCOUNT, { variables: { username: username.value, email: email.value, fullname: fullname.value, lang } } )
     
     const onClickSignUp = () => {
         setAction('signUp');
@@ -194,11 +193,11 @@ export default () => {
                         <Logo>Daylog</Logo>
                         <form onSubmit={onSubmit}>
                             <InputContainer>
-                                <Input placeholder={TextMessages.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
                             </InputContainer>
                             <MessageContainer>
-                                { email.value === "" && <Message text={TextMessages.account} lang={lang} /> }
-                                { print === "noAccount" && <Message text={TextMessages.noAccount} lang={lang} /> }
+                                { email.value === "" && <Message text={Words.account} lang={lang} /> }
+                                { print === "noAccount" && <Message text={Words.noAccount} lang={lang} /> }
                             </MessageContainer>                        
                             <ButtonContainer>
                                 { print !== "noAccount" ?
@@ -215,22 +214,22 @@ export default () => {
                     <form onSubmit={onSubmit}>
                         <InputContainer>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
+                                <Input placeholder={Words.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
                                 { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
+                                <Input placeholder={Words.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
                                 { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
                                 { checkEmail() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                         </InputContainer>
                         <MessageContainer>
-                            { print === "fieldsRequired" && <Message text={TextMessages.fieldsRequired} lang={lang} /> }
-                            { print === "alreadyTaken" && <Message text={TextMessages.alreadyTaken} lang={lang} /> }
-                            { print === "createdAccount" && <Message text={TextMessages.createdAccount} lang={lang} /> }
+                            { print === "fieldsRequired" && <Message text={Words.fieldsRequired} lang={lang} /> }
+                            { print === "alreadyTaken" && <Message text={Words.alreadyTaken} lang={lang} /> }
+                            { print === "createdAccount" && <Message text={Words.createdAccount} lang={lang} /> }
                         </MessageContainer>  
                         <ButtonContainer> 
                             { print !== "alreadyTaken" && ( <>
@@ -246,12 +245,12 @@ export default () => {
                         <Logo>Daylog</Logo> 
                         <form onSubmit={onSubmit}>
                             <InputContainer>
-                                <Input placeholder={TextMessages.inputSecret} type="text" color="white" lang={lang} {...secret} />
+                                <Input placeholder={Words.inputSecret} type="text" color="white" lang={lang} {...secret} />
                             </InputContainer>
                             <MessageContainer>
                                 { print !== "cantConfirm" 
-                                    ? <Message text={TextMessages.secret} lang={lang} />
-                                    : <Message text={TextMessages.cantConfirm} lang={lang} /> 
+                                    ? <Message text={Words.secret} lang={lang} />
+                                    : <Message text={Words.cantConfirm} lang={lang} /> 
                                 }
                             </MessageContainer>                        
                             <ButtonContainer>

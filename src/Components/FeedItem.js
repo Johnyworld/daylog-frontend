@@ -1,6 +1,6 @@
 import React, { useState }from 'react';
 import styled from 'styled-components';
-import message from '../Lang/FeedItem.json';
+import Words from '../Lang/Words.json';
 import TextSmall from './TextSmall.js';
 import TextLarge from './TextLarge.js';
 import Theme from '../Styles/Theme.js';
@@ -89,7 +89,7 @@ export default ({
             <Heading>
                 <TextLarge string={doing} lang={lang} color={color}/>
                 { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={message.likes} lang={lang} color={Theme.c_black} />
+                    <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                 }
             </Heading>
             <FeedUser

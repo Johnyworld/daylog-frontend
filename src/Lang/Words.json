@@ -1,4 +1,28 @@
 {
+    "inputEmail" : {
+        "kr" : "이메일",
+        "en" : "Email"
+    },
+    "inputUsername" : {
+        "kr" : "아이디",
+        "en" : "Username"
+    },
+    "inputFullname" : {
+        "kr" : "이름",
+        "en" : "Fullname"
+    },
+    "bio" : {
+        "kr" : "소개글",
+        "en" : "Bio"
+    },
+    "lang" : {
+        "kr" : "언어",
+        "en" : "Language"
+    },
+    "inputSecret" : {
+        "kr" : "로그인코드",
+        "en" : "Secret code"
+    },
     "logIn" : {
         "kr" : "로그인",
         "en" : "Log In"
@@ -18,6 +42,10 @@
     "comments" : {
         "kr" : "댓글",
         "en" : "Comments"
+    },
+    "editProfile" : {
+        "kr" : "프로필 수정",
+        "en" : "Edit profile"
     },
     "review" : {
         "kr" : "리뷰",
@@ -75,10 +103,6 @@
         "kr" : "팔로우 취소",
         "en" : "Unfollow"
     },
-    "editProfile" : {
-        "kr" : "프로필 수정",
-        "en" : "Edit profile"
-    },
     "day" : {
         "kr" : "Day",
         "en" : "Day"
@@ -94,5 +118,77 @@
     "year" : {
         "kr" : "Year",
         "en" : "Year"
+    },
+    "minute" : {
+        "kr" : "분 째",
+        "en" : "minutes"
+    },
+    "ing" : {
+        "kr" : " 중",
+        "en" : ""
+    },
+    "likes" : {
+        "kr" : "개의 파이팅",
+        "en" : " GO!"
+    },
+    "commentsCount" : {
+        "kr" : "개의 댓글",
+        "en" : " comments"
+    },
+    "newComment" : {
+        "kr" : "댓글 쓰기...",
+        "en" : "Add a new comment..."
+    },
+    "failToSend" : {
+        "kr" : "메시지 전송에 실패했습니다.",
+        "en" : "Fail to send a message. try again."
+    },
+    "weekLog" : {
+        "kr" : "최근 한 주간의 정보입니다.",
+        "en" : "Last one week."
+    },
+    "reviewWhen" : {
+        "kr" : "의 리뷰",
+        "en" : ", reviewed at"
+    },
+    "account" : {
+        "kr" : "계정이 없으신가요?",
+        "en" : "Don't have an account?"
+    },
+    "code" : {
+        "kr" : "이메일로 전송된 코드를 입력해주세요.",
+        "en" : "Don't have an account?"
+    }, 
+    "codeIncorrect" : {
+        "kr" : "코드가 다릅니다. 다시 입력해주세요.",
+        "en" : "Don't have an account?"
+    }, 
+    "accountNotExist" : {
+        "kr" : "존재하지 않는 계정입니다. 서비스에 가입하세요!",
+        "en" : "Don't have an account?"
+    },
+    "fieldsRequired" : {
+        "kr" : "빈 칸을 모두 입력해주세요.",
+        "en" : "All field are required"
+    },
+    "noAccount" : {
+        "kr" : "존재하지 않는 계정입니다. 서비스에 가입하세요!",
+        "en" : "You don't have account yet. Sign up now!"
+    },
+    "secret" : {
+        "kr" : "이메일로 전송된 코드를 입력해주세요.",
+        "en" : "Input your code sent by email."
+    },
+    "cantConfirm" : {
+        "kr" : "코드가 다릅니다. 다시 입력해주세요.",
+        "en" : "Can't confirm secret. Check again."
+    },
+    "alreadyTaken" : {
+        "kr" : "이메일 또는 아이디가 이미 존재합니다.",
+        "en" : "This username or email is already taken."
+    },
+    "createdAccount" : {
+        "kr" : "회원가입을 축하드립니다. 로그인해주세요.",
+        "en" : "Account created! Log in now."
     }
 }

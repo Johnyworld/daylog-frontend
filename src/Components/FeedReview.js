@@ -5,9 +5,9 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import Message from '../Lang/FeedItem.json';
+import Words from '../Lang/Words.json';
 import TextSmall from './TextSmall';
-import { getPrintDate, getPrintDateAuto } from '../Util/Languages';
+import { getPrintDateAuto } from '../Util/Languages';
 
 const SEE_REVIEW = gql`
     query seeReview( $id: String! ) {
@@ -76,10 +76,10 @@ export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, av
     return (
         <Container>
             <Text>
-                <TextSmall string={datePrint} text={Message.reviewWhen} lang={lang} color={Theme.c_gray} />
+                <TextSmall string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
                 <TextRegular string={text} lang={lang} />
                 { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={Message.likes} lang={lang} color={Theme.c_black} />
+                    <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                 }
             </Text>
             <FeedUser

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea'
 import Avatar from './Avatar';
-import CommentJson from '../Lang/Comment.json';
+import Words from '../Lang/Words.json';
 import { languages } from '../Util/Languages';
 
 const Form = styled.form`
@@ -34,7 +34,7 @@ const Textarea = styled(TextareaAutosize)`
 `;
 
 const NewComment = ({ lang, onKeyPress, value, onChange, avatar }) => {
-     const placeholder = languages(CommentJson.newComment, lang);
+     const placeholder = languages(Words.newComment, lang);
 
     return (
         <Form>
