@@ -7,10 +7,14 @@ const Container = styled.input`
     background: none;
     border: none;
     border-bottom: 1px solid;
-    padding: 10px;
     outline: none;
     width: 100%;
-    font-size: 20px;
+    padding: 10px;
+    font-size: 16px;
+    color: ${({ theme })=> theme.c_black};
+    &.large {
+        font-size: 20px;
+    }
     ${({ color, theme }) => color === 'white' && `
         color: white;
         border-color: ${ theme.c_blueBrighter2 };
@@ -23,7 +27,7 @@ const Container = styled.input`
     }
 `;
 
-const Input = ({ placeholder, value, onChange, type, color, lang, required=true }) => {
+const Input = ({ placeholder, value, onChange, type, color, lang, required=true, className }) => {
     const text = languages( placeholder, lang );
     return <Container 
         placeholder={text} 
@@ -32,6 +36,7 @@ const Input = ({ placeholder, value, onChange, type, color, lang, required=true 
         type={type}
         color={color}
         required={required}
+        className={className}
     />
 }
 

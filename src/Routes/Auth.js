@@ -194,7 +194,7 @@ export default () => {
                         <Logo>Daylog</Logo>
                         <form onSubmit={onSubmit}>
                             <InputContainer>
-                                <Input placeholder={TextMessages.inputEmail} type="email" color="white" lang={lang} {...email} />
+                                <Input placeholder={TextMessages.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
                             </InputContainer>
                             <MessageContainer>
                                 { email.value === "" && <Message text={TextMessages.account} lang={lang} /> }
@@ -215,15 +215,15 @@ export default () => {
                     <form onSubmit={onSubmit}>
                         <InputContainer>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputUsername} type="text" color="white" lang={lang} {...username} />
+                                <Input placeholder={TextMessages.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
                                 { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputFullname} type="text" color="white" lang={lang} {...fullname} />
+                                <Input placeholder={TextMessages.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
                                 { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                             <InputItem>
-                                <Input placeholder={TextMessages.inputEmail} type="email" color="white" lang={lang} {...email} />
+                                <Input placeholder={TextMessages.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
                                 { checkEmail() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
                         </InputContainer>
