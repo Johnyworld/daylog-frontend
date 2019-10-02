@@ -25,15 +25,19 @@
     },
     "logIn" : {
         "kr" : "로그인",
-        "en" : "Log In"
+        "en" : "Login"
     },
     "signUp" : {
         "kr" : "가입하기",
-        "en" : "Sign Up"
+        "en" : "Signup"
     },
     "okay" : {
         "kr" : "확인",
         "en" : "Okay"
+    },
+    "done" : {
+        "kr" : "완료",
+        "en" : "Done"
     },
     "back" : {
         "kr" : "뒤로",

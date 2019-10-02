@@ -31,7 +31,7 @@ const Container = styled.section`
     background-color: white;
     ${({ theme })=> theme.box };
     > div:first-child { margin-right: 15px; }
-    > button {
+    > button, > a {
         position: absolute;
         bottom: -14px;
         right: 30px;
@@ -133,11 +133,12 @@ export default ({
                     <TextSmall string={bio} />
                 </div>
             </Info>
-            { !isFollowingState
-                ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
-                : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
+            { !isSelf
+                ? !isFollowingState
+                    ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
+                    : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
+                : <Button to={`/log/${username}/edit`} text={Words.editProfile} lang={lang} /> 
             }
-            { isSelf && <Button text={Words.editProfile} lang={lang} /> }
         </Container>
     )
 }

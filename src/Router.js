@@ -10,15 +10,18 @@ import Header from './Components/Header';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import Loader from './Components/Loader';
+import EditProfile from './Routes/EditProfile';
 
 export const ME = gql`
     {
         me {
+            id
             username
             avatar
             fullname
             email
             bio
+            lang
             followersCount
             followingCount
             likesTotal
@@ -53,6 +56,7 @@ const LoggedInRoutes = () => {
                 <Route exact path='/' component={Today} />
                 <Route path='/feed/:username' component={Log} />
                 <Route path='/feed' component={Feed} />
+                <Route path='/log/:username/edit' component={EditProfile} />
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
                 <Redirect from="*" to="/" />

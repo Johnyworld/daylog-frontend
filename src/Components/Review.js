@@ -101,7 +101,7 @@ const LargeButtonStyled = styled(LargeButton)`
 `;
 
 const Textarea = styled(TextareaAutosize)`
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.4;
     padding: 5px;
     max-height: 5.2em;
@@ -139,6 +139,7 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
         if ( confirmDelete ) {
             deleteReviewMutation(); 
             setConfirmDelete(false);
+            reviewText.setValue('');
         }
     }
 
@@ -159,7 +160,7 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
             <Box className="review">
                 <Score score={ averageScore } size="medium" />
                 <Inner>
-                    { review 
+                    { reviewText.value && reviewText.value!==""
                         ? <TextRegular string={ reviewText.value } lang={lang} />
                         : <TextRegular text={ Words.noReview } color={Theme.c_gray} lang={lang} />
                     }

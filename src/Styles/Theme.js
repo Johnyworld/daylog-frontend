@@ -7,7 +7,24 @@ export default {
     c_black: "#222",
     c_red: "#eb3f3f",
     c_lightGray: "#edf1f5",
+    c_lightGrayDarker1: "#dbe1e6",
     c_gray: "#a4b4c1",
+    f_regular: `
+        font-size: 14px;
+        line-height: 1.4;
+    `,
+    f_medium: `
+        font-size: 16px;
+        line-height: 1.4; 
+    `,
+    f_small: `
+        font-size: 12px;
+        line-height: 1.2;  
+    `,
+    f_large: `
+        font-size: 28px;
+        line-height: 1.2;   
+    `,
     box: `
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         background-color: white;
@@ -15,6 +32,15 @@ export default {
     wrap: `
         max-width: 768px;
         margin: 0 auto;
+    `,
+    inputUnderline: `
+        border: 0;
+        border-bottom: 1px solid;
+        border-color: #dbe1e6;
+        transition: border-color .5s;
+        &:focus {
+            border-color: #1a9df9;
+        }
     `,
     mainContainer: `
         position: relative;

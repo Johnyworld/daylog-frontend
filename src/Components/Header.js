@@ -44,10 +44,14 @@ const HeaderIcon = styled(Icon)`
 
 export default withRouter(({ history, loggedUser }) => {
     const route = history.location.pathname.split('/')[1];
+    const action = history.location.pathname.split('/')[3];
     const lang = getLang();
     let isDepth, text;
-
-    if ( route === "feed" || route === "log" || route === "" ) {
+    
+    if ( route === "log" && action && action === "edit" ) {
+        isDepth = true;
+        text = Words.editProfile;
+    } else if ( route === "feed" || route === "log" || route === "" ) {
         isDepth = false;
     } else {
         isDepth = true;

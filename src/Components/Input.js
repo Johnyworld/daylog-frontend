@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import { languages } from '../Util/Languages';
 
 const Container = styled.input`
+    ${({ theme })=> theme.f_regular };
+    ${({ theme })=> theme.inputUnderline };
     background: none;
-    border: none;
-    border-bottom: 1px solid;
+    transition: .5s;
     outline: none;
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
+    padding: 10px 3px 9px;
     color: ${({ theme })=> theme.c_black};
     &.large {
         font-size: 20px;
@@ -20,6 +20,9 @@ const Container = styled.input`
         border-color: ${ theme.c_blueBrighter2 };
         &::placeholder {
             color: ${ theme.c_blueBrighter1 };
+        }
+        &:focus {
+            border-color: white;
         }
     `}
     &::placeholder {
