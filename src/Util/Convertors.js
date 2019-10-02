@@ -52,3 +52,15 @@ export const timePresenter = ( startAt, endAt ) => {
     const EM = timeZero( end.minutes );
     return `${SH}:${SM} - ${EH}:${EM}`;
 }
+
+export const getWeek = (yyyymmdd) => {
+    const thisDay = new Date(yyyymmdd);
+    const Y = thisDay.getFullYear();
+    const M = thisDay.getMonth();
+    const D = thisDay.getDate();
+
+    const whatFirstDay = new Date( Y, M, 1 ).getDay();
+    const whatWeek = Math.floor(( D + whatFirstDay -1 ) / 7);
+
+    return `${Y}-${(M>9?'':"0")+(M+1)}-W${whatWeek}`;
+}
