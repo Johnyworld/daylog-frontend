@@ -14,6 +14,7 @@ import LargeButton from './LargeButton';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 import { languages } from '../Util/Languages';
 import TextSmall from './TextSmall';
+import { FEED_QUERY } from '../Routes/Feed';
 
 const ADD_REVIEW = gql`
     mutation addReview( $text: String!, $yyyymmdd: String! ) {
@@ -91,25 +92,34 @@ const Textarea = styled(TextareaAutosize)`
     border-bottom: 1px solid ${({ theme })=> theme.c_gray };
 `;
 
-export default ({ review, averageScore, username, date, lang, QUERY }) => {
+export default ({ review, averageScore, username, date, weekDate, lang, QUERY }) => {
     const [ onPopup, setOnPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
     const reviewText = useInput(review ? review.text : "");
     const placeholder = languages(Words.inputReview);
 
     const [ addReviewMutation ] = useMutation(ADD_REVIEW, { 
-        variables: { text: reviewText.value, yyyymmdd: date },
-        refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
+        variables: { text: reviewText.value, yyyymmdd: weekDate ? weekDate : date },
+        refetchQueries: [
+            { query: QUERY, variables: { username, yyyymmdd: date }},
+            { query: FEED_QUERY }
+        ]
     });
 
     const [ editReviewMutation ] = useMutation(EDIT_REVIEW, { 
         variables: { text: reviewText.value, id: review ? review.id : "" },
-        refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
+        refetchQueries: [
+            { query: QUERY, variables: { username, yyyymmdd: date }},
+            { query: FEED_QUERY }
+        ]
     });
 
     const [ deleteReviewMutation ] = useMutation(DELETE_REVIEW, {
         variables: { id: review ? review.id : "" }, 
-        refetchQueries: [{ query: QUERY, variables: { username, yyyymmdd: date }}]
+        refetchQueries: [
+            { query: QUERY, variables: { username, yyyymmdd: date }},
+            { query: FEED_QUERY }
+        ]
     })
 
     const onWrite = () => { setOnPopup("write") }
@@ -142,7 +152,7 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
             <Box className="review">
                 <Score score={ averageScore } size="medium" />
                 <Inner>
-                    { reviewText.value && reviewText.value!==""
+                    { reviewText.value
                         ? <TextRegular string={ reviewText.value } lang={lang} />
                         : <TextRegular text={ Words.noReview } color={Theme.c_gray} lang={lang} />
                     }
