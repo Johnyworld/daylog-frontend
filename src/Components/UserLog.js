@@ -30,7 +30,7 @@ const Container = styled.section`
     padding: 40px 30px;
     background-color: white;
     ${({ theme })=> theme.box };
-    > div:first-child { margin-right: 15px; }
+    > .avatar { margin-right: 20px; }
     > button, > a {
         position: absolute;
         bottom: -14px;

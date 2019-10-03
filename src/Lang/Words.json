@@ -51,6 +51,10 @@
         "kr" : "프로필 수정",
         "en" : "Edit profile"
     },
+    "editAvatar" : {
+        "kr" : "프로필 사진 바꾸기",
+        "en" : "Edit avatar"
+    },
     "review" : {
         "kr" : "리뷰",
         "en" : "Review"
@@ -62,6 +66,18 @@
     "delete" : {
         "kr" : "삭제",
         "en" : "Delete"
+    },
+    "upload" : {
+        "kr" : "파일 업로드",
+        "en" : "Upload photo"
+    },
+    "failToUpload" : {
+        "kr" : "사진 업로드에 실패했습니다.",
+        "en" : "Fail to upload photo"
+    },
+    "deleteAvatar" : {
+        "kr" : "현재 사진 지우기",
+        "en" : "Delete current photo"
     },
     "edit" : {
         "kr" : "수정",

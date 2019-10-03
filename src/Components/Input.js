@@ -30,7 +30,7 @@ const Container = styled.input`
     }
 `;
 
-const Input = ({ placeholder, value, onChange, type, color, lang, required=true, className }) => {
+const Input = ({ placeholder, value, onChange, type, color, lang, required=true, id, name, accept, className }) => {
     const text = languages( placeholder, lang );
     return <Container 
         placeholder={text} 
@@ -38,6 +38,9 @@ const Input = ({ placeholder, value, onChange, type, color, lang, required=true,
         onChange={onChange}
         type={type}
         color={color}
+        id={id}
+        name={name}
+        accept={accept}
         required={required}
         className={className}
     />
@@ -46,7 +49,7 @@ const Input = ({ placeholder, value, onChange, type, color, lang, required=true,
 Input.propTypes = {
     placeholder : PropTypes.object.isRequired,
     required : PropTypes.bool,
-    value : PropTypes.string.isRequired,
+    value : PropTypes.string,
     onChange : PropTypes.func.isRequired,
     type : PropTypes.string,
     color : PropTypes.string,

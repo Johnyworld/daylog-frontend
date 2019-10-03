@@ -17,14 +17,14 @@ const Container = styled.div`
 const Avatar = ({ size, avatar }) => {
     let sizePx;
 
-    if (avatar === null) avatar = "https://daylog.s3.ap-northeast-2.amazonaws.com/defaultAvatar.png";
+    if (avatar === null || avatar === "") avatar = "https://daylog.s3.ap-northeast-2.amazonaws.com/defaultAvatar.png";
 
     if ( size === "small" ) sizePx = '32px';
     if ( size === "medium" ) sizePx = '40px';
-    if ( size === "large" ) sizePx = '60px';
+    if ( size === "large" ) sizePx = '80px';
 
     return (
-        <Container avatar={avatar} size={sizePx} />
+        <Container avatar={avatar} size={sizePx} className="avatar" />
     )
 } 
 

@@ -15,6 +15,11 @@ import TextareaAutosize from 'react-autosize-textarea/lib';
 import LargeButton from '../Components/LargeButton';
 import { gql } from 'apollo-boost';
 import TextLarge from '../Components/TextLarge';
+import Avatar from '../Components/Avatar';
+import axios from 'axios';
+import TextMedium from '../Components/TextMedium';
+import SmallButton from '../Components/SmallButton';
+import Icon from '../Components/Icon';
 
 const EDIT_USER = gql`
     mutation editUser( $id: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
@@ -22,23 +27,41 @@ const EDIT_USER = gql`
     }
 `;
 
+const DELETE_AVATAR = gql`
+    mutation deleteAvatar( $id: String! ) {
+        deleteAvatar( id: $id )
+    }
+`;
+
+
 const Container = styled.main`
     padding: 30px;
 `;
 
-const Row = styled.section`
+const Profile = styled.section`
     display: flex;
-    margin-bottom: 15px;
-    justify-content: space-between;
-    input, > div {
-        width: 70%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-right: 30px;
+    .avatar {
+        margin-right: 20px;
     }
+    .text-medium { 
+        display: block; 
+    }
+`;
+
+const Row = styled.section`
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-gap: 20px;
+    margin-bottom: 15px;
     .text-regular:first-child {
         margin-top: 10px;
     }
     .text-regular:last-child {
         display: block;
-        width: 70%;
         padding: 10px 4px;
         ${({ theme })=> theme.inputUnderline };
     }
@@ -47,7 +70,6 @@ const Row = styled.section`
 const Textarea = styled(TextareaAutosize)`
     ${({ theme })=> theme.f_regular };
     ${({ theme })=> theme.inputUnderline };
-    width: 70%;
     padding: 10px 3px;
 `;
 
@@ -56,11 +78,28 @@ const Confirm = styled.div`
     text-align: right;
 `;
 
+const PopupContainer = styled.div`
+    ${({ theme })=> theme.popupContainer };
+`;
+
+const Popup = styled.div`
+    ${({ theme })=> theme.popup };
+    input[type=file] {
+        display: none;
+    }
+    button {
+        margin-left: 20px;
+    }
+`;
+
 export default () => {
     const { data, loading } = useQuery(ME);
 
     if ( !loading && data && data.me ) {
         const [ editDone, setEditDone ] = useState(false);
+        const [ onPopup, setOnPopup ] = useState(false);
+        const [ avatarState, setAvatarState ] = useState(data.me.avatar);
+
         const lang = getLang(data.me.lang);
 
         const username = useInput(data.me.username);
@@ -85,6 +124,12 @@ export default () => {
             }, refetchQueries: [{ query: ME }]
         });
 
+        const [ deleteAvatarMutation ] = useMutation( DELETE_AVATAR, {
+            variables: {
+                id: data.me.id,
+            }, refetchQueries: [{ query: ME }]
+        });
+
         if ( editDone && editData && editData.editUser && !editLoading ) {
             window.location = `/#/log/${username.value}`            
             setEditDone(false);
@@ -93,6 +138,27 @@ export default () => {
         const onSubmit = () => {
             editUserMutation();
             setEditDone(true);
+        }
+
+        const onDeleteAvatar = () => {
+            deleteAvatarMutation();
+            setOnPopup(false);
+        }
+
+        const onChangeAvatar = (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('avatar', e.target.files[0]);
+            formData.append('userId', data.me.id);
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            };
+            axios.post("http://localhost:4000/upload", formData, config )
+                .then((response) => { 
+                    setAvatarState(response.data.Location);
+                    setOnPopup(false);
+                })
+                .catch(() => { alert(languages(Words.failToUpload, lang)); });
         }
     
         const onChangeSelect = (e) => {
@@ -105,6 +171,13 @@ export default () => {
                 { loading && <Loader /> }
                 { !loading && data && data.me &&
                     <>
+                        <Profile>
+                            <Avatar avatar={avatarState} size="large" />
+                            <div>
+                                <TextMedium string={data.me.username} weight="bold" />
+                                <SmallButton text={Words.editAvatar} lang={lang} onClick={()=>{ setOnPopup(true) }} color={Theme.c_blue} />
+                            </div>
+                        </Profile>
                         <Row>
                             <TextRegular text={Words.inputUsername} lang={lang} weight='bold' />
                             <Input placeholder={Words.inputUsername} lang={lang} {...username} />
@@ -132,6 +205,23 @@ export default () => {
                             }
                         </Confirm>
                     </>
+                }
+                { onPopup &&
+                    <PopupContainer>
+                        <Popup>
+                            <div className="popup-firstline">
+                                <TextLarge text={Words.editAvatar} lang={lang} color={Theme.c_blueDarker2} />
+                                <button onClick={()=>{ setOnPopup(false) }}>
+                                    <Icon icon="x" size="medium" />
+                                </button>
+                            </div>
+                            <label htmlFor="avatar">
+                                <TextRegular text={Words.upload} lang={lang} color={Theme.c_blue} weight="bold" />
+                            </label>
+                            <Input placeholder={Words.upload} onChange={onChangeAvatar} lang={lang} type="file" accept="image/*" name="avatar" id="avatar" />
+                            <SmallButton text={Words.deleteAvatar} lang={lang} onClick={onDeleteAvatar} color={Theme.c_red} />
+                        </Popup>
+                    </PopupContainer>
                 }
             </Container>
         )
