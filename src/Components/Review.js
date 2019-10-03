@@ -68,29 +68,11 @@ const Buttons = styled.div`
 `;
 
 const InputPopup = styled.div`
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, .8);
+    ${({ theme })=> theme.popupContainer };
 `;
 
 const Popup = styled.div`
-    position: absolute;
-    padding: 30px;
-    width: 100%;
-    margin: auto;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-`;
-
-const Row = styled.div`
-    display: flex;
-    margin-bottom: 30px;
-    justify-content: space-between;
+    ${({ theme })=> theme.popup };
 `;
 
 const LargeButtonStyled = styled(LargeButton)`
@@ -182,12 +164,12 @@ export default ({ review, averageScore, username, date, lang, QUERY }) => {
             { onPopup &&
                 <InputPopup>
                     <Popup>
-                        <Row>
+                        <div className="popup-firstline">
                             <TextLarge text={Words.review} lang={lang} color={Theme.c_blueDarker2} />
                             <button onClick={closePopup}>
                                 <Icon icon="x" size="medium" />
                             </button>
-                        </Row>
+                        </div>
                         <form onSubmit={onSubmit} >
                             <Textarea value={reviewText.value} onChange={reviewText.onChange} placeholder={placeholder} />
                             <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} />

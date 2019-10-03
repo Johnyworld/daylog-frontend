@@ -33,6 +33,29 @@ export default {
         max-width: 768px;
         margin: 0 auto;
     `,
+    popupContainer:`
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 9999;
+        background-color: rgba(0, 0, 0, .8);
+    `,
+    popup:`
+        position: absolute;
+        padding: 30px;
+        width: 100%;
+        margin: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: white;
+        .popup-firstline {
+            display: flex;
+            margin-bottom: 30px;
+            justify-content: space-between;
+        }
+    `,
     inputUnderline: `
         border: 0;
         border-bottom: 1px solid;
