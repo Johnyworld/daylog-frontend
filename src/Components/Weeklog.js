@@ -44,7 +44,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
                 { loading && <Loader /> }
                 { !loading && data && data.seeWeekLog && <>
                     <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
-                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} />
+                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmdd} weekDate={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} />
                     <EachPosts posts={data.seeWeekLog.eachDays} username={username} lang={lang} />
                 </>}
             </Container>
