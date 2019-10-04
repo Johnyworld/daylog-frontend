@@ -112,29 +112,35 @@ export const getPrintBlockTimes = ( h, m, lang ) => {
 }
 
 export const getPrintWeek = ( yyyymmdd, lang, option ) => {
+    const Weeks = [
+        "first", "second", "third", "fourth", "fifth"
+    ]
+    const Month = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "Octorber", "November", "December"
+    ]
+
+    let Y, M, W, D;
+
     if ( option === "yyyymmWeek" ) {
         const split = yyyymmdd.split('-');
-        const M = parseInt( split[1] );
-        const W = parseInt( split[2].substr(1, 1) ) + 1;
-        return `${split[0]}년 ${M}월 ${W}주차`;
+        Y = parseInt( split[0] );
+        M = parseInt( split[1] )-1;
+        W = parseInt( split[2].substr(1, 1) );
+    } else {
+        const thisDay = new Date(yyyymmdd);
+        Y = thisDay.getFullYear();
+        M = thisDay.getMonth();
+        D = thisDay.getDate();
+    
+        const whatFirstDay = new Date( Y, M, 1 ).getDay();
+        W = Math.floor(( D + whatFirstDay -1 ) / 7);
     }
-    const thisDay = new Date(yyyymmdd);
-    const Y = thisDay.getFullYear();
-    const M = thisDay.getMonth();
-    const D = thisDay.getDate();
 
-    const whatFirstDay = new Date( Y, M, 1 ).getDay();
-    const whatWeek = Math.floor(( D + whatFirstDay -1 ) / 7);
-
-    if ( lang === "kr" ) return `${Y}년 ${M+1}월 ${whatWeek+1}주차`;
+    if ( lang === "kr" ) return `${Y}년 ${M+1}월 ${W+1}주차`;
     else {
-        const WW = [
-            "first", "second", "third", "fourth", "fifth"
-        ][whatWeek];
-        const MM = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "Octorber", "November", "December"
-        ][M]; 
+        const WW = Weeks[W];
+        const MM = Month[M]; 
         return `${WW} week, ${MM}, ${Y}`
     } 
 }
