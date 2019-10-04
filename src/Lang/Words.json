@@ -47,6 +47,18 @@
         "kr" : "댓글",
         "en" : "Comments"
     },
+    "search" : {
+        "kr" : "검색",
+        "en" : "Search"
+    },
+    "inputSearch" : {
+        "kr" : "검색어를 입력해주세요.",
+        "en" : "Please enter your search term"
+    },
+    "noSearchResult" : {
+        "kr" : "검색 결과가 없습니다.",
+        "en" : "No results."
+    },
     "editProfile" : {
         "kr" : "프로필 수정",
         "en" : "Edit profile"

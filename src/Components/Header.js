@@ -56,6 +56,7 @@ export default withRouter(({ history, loggedUser }) => {
     } else {
         isDepth = true;
         if ( route === "post" ) text = Words.comments;
+        if ( route === "search" ) text = Words.search;
     }
 
     const changeTab = (e) => {
@@ -73,7 +74,9 @@ export default withRouter(({ history, loggedUser }) => {
     return (  
         <Container>
             { !isDepth ? 
-                <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
+                <Link to="/search">
+                    <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
+                </Link>
                 :
                 <button onClick={onGoBack}>
                     <HeaderIcon icon="back" size="medium" color={Theme.c_blue} />

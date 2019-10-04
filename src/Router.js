@@ -6,6 +6,7 @@ import Today from './Routes/Today';
 import Feed from './Routes/Feed';
 import Log from './Routes/Log';
 import Post from './Routes/Post';
+import Search from './Routes/Search';
 import Header from './Components/Header';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
@@ -59,6 +60,7 @@ const LoggedInRoutes = () => {
                 <Route path='/log/:username/edit' component={EditProfile} />
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
+                <Route path='/search'component={Search} />
                 <Redirect from="*" to="/" />
             </Switch>
         </>
