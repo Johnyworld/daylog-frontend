@@ -147,6 +147,10 @@
         "kr" : "팔로워가 없습니다.",
         "en" : "No followers"
     },
+    "noFeed" : {
+        "kr" : "처음이신가요? 친구가 있다면, 찾아보세요!",
+        "en" : "Is this your first time? You can search your friends!"
+    },
     "day" : {
         "kr" : "Day",
         "en" : "Day"

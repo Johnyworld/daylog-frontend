@@ -7,6 +7,9 @@ import FeedItem from '../Components/FeedItem';
 import { getLang } from '../Util/Languages';
 import FeedReview from '../Components/FeedReview';
 import { ME } from '../Router';
+import Search from './Search';
+import Words from '../Lang/Words.json';
+import TextSmall from '../Components/TextSmall';
 
 export const FEED_QUERY = gql`
     {
@@ -73,6 +76,14 @@ const Container = styled.main`
     }
 `;
 
+const NoFeed = styled.main`
+    > .text-small {
+        display: block;
+        padding: 30px;
+        padding-bottom: 0;
+    }
+`;
+
 export default () => {
     const { data, loading } = useQuery(FEED_QUERY);
     const { data: meData, loading: meLoading } = useQuery(ME);
@@ -90,9 +101,15 @@ export default () => {
         <Container>
             { loading && <Loader />}
             { !loading && data && data.seeFeed && (
-                <>
-                    { Feed.map(post => (
-                        post.blocks 
+                !Feed[0]
+                ?
+                    <NoFeed>
+                        <TextSmall text={Words.noFeed} lang={lang} />
+                        <Search />
+                    </NoFeed>
+                : 
+                    Feed.map(post => (
+                        post.blocks // 리뷰인지 포스트인지 체트
                         ?
                             <FeedItem
                                 id={post.id}
@@ -125,8 +142,7 @@ export default () => {
                                 avatar={post.user.avatar}
                                 lang={lang}
                             />
-                    ))}
-                </>
+                    ))
             )}
         </Container>
     </>
