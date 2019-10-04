@@ -5,7 +5,7 @@ import Languages from '../Util/Languages';
 
 const Container = styled.button`
     cursor: pointer;
-    font-size: 28px;
+    font-size: 24px;
     padding: 0;
     padding-bottom: 4px;
     border-bottom: 1px solid;
