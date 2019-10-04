@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../Components/Icon';
@@ -6,6 +6,7 @@ import Theme from '../Styles/Theme';
 import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
 import { getLang } from '../Util/Languages';
+import SideMenu from './SideMenu';
 
 const Container = styled.header`
     position: sticky;
@@ -43,6 +44,7 @@ const HeaderIcon = styled(Icon)`
 `
 
 export default withRouter(({ history, loggedUser }) => {
+    const [ sidemenu, setSidemenu ] = useState(false);
     const route = history.location.pathname.split('/')[1];
     const action = history.location.pathname.split('/')[3];
     const lang = getLang();
@@ -70,28 +72,47 @@ export default withRouter(({ history, loggedUser }) => {
         e.preventDefault();
         history.goBack();
     }
+    
+    const callSideMenu = () => {
+        setSidemenu(true);
+    }
+
+    const closeSideMenu = (e) => {
+        const popupContainer = e.target.parentNode.parentNode.parentNode.parentNode;
+        popupContainer.classList.add("fadeOut");
+        popupContainer.classList.remove("fadeIn");
+        setTimeout(() => {
+            setSidemenu(false);
+            popupContainer.classList.remove("fadeOut"); 
+        }, 500)
+    }
 
     return (  
-        <Container>
-            { !isDepth ? 
-                <Link to="/search">
-                    <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
-                </Link>
-                :
-                <button onClick={onGoBack}>
-                    <HeaderIcon icon="back" size="medium" color={Theme.c_blue} />
+        <>
+            <Container>
+                { !isDepth ? 
+                    <Link to="/search">
+                        <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
+                    </Link>
+                    :
+                    <button onClick={onGoBack}>
+                        <HeaderIcon icon="back" size="medium" color={Theme.c_blue} />
+                    </button>
+                }
+                { !isDepth ? 
+                    <Gnb>
+                        <GnbLink onClick={changeTab} to="/feed" className={ route === "feed" && "selected" } >FEED</GnbLink>
+                        <GnbLink onClick={changeTab} to="/" className={ route === "" && "selected" } >TODAY</GnbLink>
+                        <GnbLink onClick={changeTab} to={`/log/${loggedUser.username}`} className={ route === "log" && "selected" } >LOG</GnbLink>
+                    </Gnb>
+                    :
+                    <TextMedium text={text} lang={lang} />
+                }
+                <button onClick={callSideMenu}>
+                    <HeaderIcon icon="hamburger" size="medium" color={Theme.c_blue} />
                 </button>
-            }
-            { !isDepth ? 
-                <Gnb>
-                    <GnbLink onClick={changeTab} to="/feed" className={ route === "feed" && "selected" } >FEED</GnbLink>
-                    <GnbLink onClick={changeTab} to="/" className={ route === "" && "selected" } >TODAY</GnbLink>
-                    <GnbLink onClick={changeTab} to={`/log/${loggedUser.username}`} className={ route === "log" && "selected" } >LOG</GnbLink>
-                </Gnb>
-                :
-                <TextMedium text={text} lang={lang} />
-            }
-            <HeaderIcon icon="hamburger" size="medium" color={Theme.c_blue} />
-        </Container>
+            </Container>
+            { sidemenu && <SideMenu closePopup={closeSideMenu} lang={lang} /> }
+        </>
     )
 });

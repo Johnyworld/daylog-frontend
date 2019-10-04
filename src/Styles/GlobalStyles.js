@@ -37,8 +37,10 @@ export default createGlobalStyle`
     }
 
     .pop { animation-name: pop; }
-
     .unpop { animation-name: unpop; }
+
+    .fadeIn { animation-name: fadeIn; opacity: 1; }
+    .fadeOut { animation-name: fadeOut; opacity: 0; }
 
     @keyframes pop {
         0% { transform: scale(.6); }
@@ -49,5 +51,14 @@ export default createGlobalStyle`
         0% { transform: scale(.6); }
         100% { transform: scale(1); }
     }
-    
+
+    @keyframes fadeIn {
+        0% { opacity: 0 }
+        100% { opacity: 1 }
+    }
+
+    @keyframes fadeOut {
+        0% { opacity: 1 }
+        100% { opacity: 0 }
+    }
 `;
