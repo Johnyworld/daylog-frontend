@@ -35,4 +35,19 @@ export default createGlobalStyle`
         border: 0;
         outline: none;
     }
+
+    .pop { animation-name: pop; }
+
+    .unpop { animation-name: unpop; }
+
+    @keyframes pop {
+        0% { transform: scale(.6); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes unpop {
+        0% { transform: scale(.6); }
+        100% { transform: scale(1); }
+    }
+    
 `;

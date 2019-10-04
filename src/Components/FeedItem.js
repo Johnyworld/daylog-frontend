@@ -9,6 +9,7 @@ import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
 import { blockConvertor } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
+import { FEED_QUERY } from '../Routes/Feed.js';
 
 export const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -54,26 +55,28 @@ export default ({
     blocks,
     disableComment=false,
 }) => {
-    useQuery(SEE_POST, {variables: {id}});
+    useQuery( SEE_POST, {variables: {id}} );
     const [ isLikedState, setIsLiked ] = useState(isLiked);
     const [ likesCountState, setLikesCount ] = useState(likesCount);
     const [ toggleLikeMutation ] = useMutation( 
         TOGGLE_LIKE, { 
             variables: { postId : id },
-            refetchQueries: [{ query: SEE_POST, variables: { id }}]
+            refetchQueries: [
+                { query: FEED_QUERY }
+            ]
         }
     );
 
     const toggleLike = (e) => {
         toggleLikeMutation();
         if ( !isLikedState ) {
-            e.currentTarget.classList.add('liked');
-            e.currentTarget.classList.remove('unliked');
+            e.currentTarget.classList.add('pop');
+            e.currentTarget.classList.remove('unpop');
             setIsLiked(true);
             setLikesCount(likesCountState+1);
         } else {
-            e.currentTarget.classList.remove('liked'); 
-            e.currentTarget.classList.add('unliked'); 
+            e.currentTarget.classList.remove('pop'); 
+            e.currentTarget.classList.add('unpop'); 
             setIsLiked(false);
             setLikesCount(likesCountState-1);
         }

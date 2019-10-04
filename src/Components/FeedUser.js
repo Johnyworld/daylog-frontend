@@ -28,6 +28,10 @@ const Icons = styled.div`
     >*:not(:first-child) {
         margin-left: 20px;
     }
+    button {
+        animation-duration: .5s;
+        animation-timing-function: cubic-bezier(.19,.52,.41,1.31);
+    }
 `;
 
 export default ({ id, author, avatar, location, createdAt, toggleLike, isLikedState, disableComment, lang }) => {
