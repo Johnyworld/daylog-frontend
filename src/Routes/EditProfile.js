@@ -19,7 +19,7 @@ import Avatar from '../Components/Avatar';
 import axios from 'axios';
 import TextMedium from '../Components/TextMedium';
 import SmallButton from '../Components/SmallButton';
-import Icon from '../Components/Icon';
+import PopupHeader from '../Components/PopupHeader';
 
 const EDIT_USER = gql`
     mutation editUser( $id: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
@@ -201,7 +201,7 @@ export default () => {
                         <Confirm>
                             { !editDone 
                                 ? <LargeButton text={Words.done} lang={lang} color={Theme.c_blue} onClick={onSubmit} className={ checkReg() ? "" : "disabled" } />
-                                : <TextLarge string="수정 완료" lang={lang} />
+                                : <TextLarge text={Words.editDone} lang={lang} />
                             }
                         </Confirm>
                     </>
@@ -209,12 +209,7 @@ export default () => {
                 { onPopup &&
                     <PopupContainer>
                         <Popup>
-                            <div className="popup-firstline">
-                                <TextLarge text={Words.editAvatar} lang={lang} color={Theme.c_blueDarker2} />
-                                <button onClick={()=>{ setOnPopup(false) }}>
-                                    <Icon icon="x" size="medium" />
-                                </button>
-                            </div>
+                            <PopupHeader text={Words.editAvatar} lang={lang} closePopup={()=>{ setOnPopup(false) }} />
                             <label htmlFor="avatar">
                                 <TextRegular text={Words.upload} lang={lang} color={Theme.c_blue} weight="bold" />
                             </label>

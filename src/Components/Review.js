@@ -7,14 +7,13 @@ import Theme from '../Styles/Theme'
 import SmallButton from './SmallButton';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
-import Icon from './Icon';
-import TextLarge from './TextLarge';
 import useInput from '../Hooks/useInput';
 import LargeButton from './LargeButton';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 import { languages } from '../Util/Languages';
 import TextSmall from './TextSmall';
 import { FEED_QUERY } from '../Routes/Feed';
+import PopupHeader from './PopupHeader';
 
 const ADD_REVIEW = gql`
     mutation addReview( $text: String!, $yyyymmdd: String! ) {
@@ -174,12 +173,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
             { onPopup &&
                 <InputPopup>
                     <Popup>
-                        <div className="popup-firstline">
-                            <TextLarge text={Words.review} lang={lang} color={Theme.c_blueDarker2} />
-                            <button onClick={closePopup}>
-                                <Icon icon="x" size="medium" />
-                            </button>
-                        </div>
+                        <PopupHeader text={Words.review} lang={lang} closePopup={closePopup} />
                         <form onSubmit={onSubmit} >
                             <Textarea value={reviewText.value} onChange={reviewText.onChange} placeholder={placeholder} />
                             <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} />

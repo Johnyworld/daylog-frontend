@@ -50,11 +50,6 @@ export default {
         top: 50%;
         transform: translateY(-50%);
         background-color: white;
-        .popup-firstline {
-            display: flex;
-            margin-bottom: 30px;
-            justify-content: space-between;
-        }
     `,
     inputUnderline: `
         border: 0;
