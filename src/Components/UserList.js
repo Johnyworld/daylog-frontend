@@ -8,7 +8,7 @@ const Container = styled.ul`
     overflow: scroll;
 `;
 
-const UserList = ({ users, lang, thisUser }) => {
+const UserList = ({ users, lang, thisUser, meName }) => {
     return (
         <Container>
             { users.map( user => (
@@ -21,6 +21,7 @@ const UserList = ({ users, lang, thisUser }) => {
                     isFollowing={user.isFollowing}
                     thisUser={thisUser}
                     lang={lang}
+                    meName={meName}
                 />
             ))}
         </Container>

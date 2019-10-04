@@ -79,6 +79,7 @@ export default () => {
                         followingCount={data.seeUser.followingCount}
                         isFollowing={data.seeUser.isFollowing}
                         isSelf={data.seeUser.isSelf}
+                        meName={meData.me.username}
                     />
                     <DateLog
                         username={username}

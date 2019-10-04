@@ -35,7 +35,7 @@ const User = styled.div`
     }
 `;
 
-const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, lang }) => {
+const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, lang, meName }) => {
     const [ isFollowingState, setIsFollowingState ] = useState(isFollowing);
     
     const [ followMutation ] = useMutation( FOLLOW, { 
@@ -77,9 +77,11 @@ const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, l
                     <TextSmall string={fullname} />
                 </div>
             </User>
-            { isFollowingState
-                ? <Button lang={lang} text={Words.unFollow} onClick={unFollow} />
-                : <Button lang={lang} text={Words.follow} onClick={follow} />
+            { username !== meName &&
+                ( isFollowingState
+                    ? <Button lang={lang} text={Words.unFollow} onClick={unFollow} />
+                    : <Button lang={lang} text={Words.follow} onClick={follow} />
+                )
             }
         </Container>
     )

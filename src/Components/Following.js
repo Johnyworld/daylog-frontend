@@ -28,7 +28,7 @@ const Popup = styled.div`
     ${({ theme })=> theme.popup };
 `;
 
-export default ({ username, closePopup, lang }) => {
+export default ({ username, closePopup, lang, meName }) => {
     const { data, loading } = useQuery(SEE_FOLLOWING, { variables: { username } });
     
     return (
@@ -38,7 +38,7 @@ export default ({ username, closePopup, lang }) => {
                 { loading && <LoaderRelative /> }
                 { !loading && data && data.seeFollowing && (
                     data.seeFollowing[0]
-                        ? <UserList users={data.seeFollowing} lang={lang} thisUser={username} />
+                        ? <UserList users={data.seeFollowing} lang={lang} thisUser={username} meName={meName} />
                         : <TextRegular text={Words.noFollowing} lang={lang} />
                 )}
             </Popup> 

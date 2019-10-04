@@ -77,7 +77,8 @@ export default ({
     followersCount,
     followingCount,
     isFollowing,
-    isSelf
+    isSelf,
+    meName
 }) => {
     const [ onPopup, setOnPopup ] = useState(false);
     const [ isFollowingState, setIsFollowingState ] = useState(isFollowing);
@@ -154,8 +155,8 @@ export default ({
                     : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
                 : <Button to={`/log/${username}/edit`} text={Words.editProfile} lang={lang} /> 
             }
-            { onPopup === "followingList" && <Following username={username} closePopup={closePopup} lang={lang} /> }
-            { onPopup === "followersList" && <Followers username={username} closePopup={closePopup} lang={lang} /> }
+            { onPopup === "followingList" && <Following username={username} closePopup={closePopup} lang={lang} meName={meName} /> }
+            { onPopup === "followersList" && <Followers username={username} closePopup={closePopup} lang={lang} meName={meName} /> }
         </Container>
     )
 }
