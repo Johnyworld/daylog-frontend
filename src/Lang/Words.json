@@ -51,6 +51,10 @@
         "kr" : "프로필 수정",
         "en" : "Edit profile"
     },
+    "editDone" : {
+        "kr" : "수정 완료",
+        "en" : "Edit done"
+    },
     "editAvatar" : {
         "kr" : "프로필 사진 바꾸기",
         "en" : "Edit avatar"
@@ -123,6 +127,14 @@
         "kr" : "팔로우 취소",
         "en" : "Unfollow"
     },
+    "noFollowing" : {
+        "kr" : "팔로우 하는 사용자가 없습니다.",
+        "en" : "No following user"
+    },
+    "noFollowers" : {
+        "kr" : "팔로워가 없습니다.",
+        "en" : "No followers"
+    },
     "day" : {
         "kr" : "Day",
         "en" : "Day"
@@ -169,7 +181,7 @@
     },
     "reviewWhen" : {
         "kr" : "의 리뷰",
-        "en" : ", reviewed at"
+        "en" : ""
     },
     "account" : {
         "kr" : "계정이 없으신가요?",

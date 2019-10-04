@@ -11,14 +11,16 @@ import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_USER } from '../Routes/Log';
 import { FEED_QUERY } from '../Routes/Feed';
+import Following from './Following';
+import Followers from './Followers';
 
-const FOLLOW = gql`
+export const FOLLOW = gql`
     mutation follow( $id: String! ) {
         follow( id: $id )
     }
 `;
 
-const UNFOLLOW = gql`
+export const UNFOLLOW = gql`
     mutation unFollow( $id: String! ) {
         unFollow( id: $id )
     }
@@ -55,7 +57,7 @@ const Likes = styled.div`
 `;
 
 const Follow = styled.div`
-    > span {
+    > button {
         display: inline-block;
         margin-right: 30px;
         > *:first-child {
@@ -77,21 +79,22 @@ export default ({
     isFollowing,
     isSelf
 }) => {
+    const [ onPopup, setOnPopup ] = useState(false);
     const [ isFollowingState, setIsFollowingState ] = useState(isFollowing);
     const [ followersCountState, setFollowersCountState ] = useState(followersCount);
 
-    const [ followMutaion ] = useMutation( FOLLOW, { 
+    const [ followMutation ] = useMutation( FOLLOW, { 
         variables : { id },
         refetchQueries: [
             { query: SEE_USER, variables: { username }},
-            { query: FEED_QUERY }
+            { query: FEED_QUERY }, 
         ]
     });
-    const [ unFollowMutaion ] = useMutation( UNFOLLOW, { 
+    const [ unFollowMutation ] = useMutation( UNFOLLOW, { 
         variables : { id },
         refetchQueries: [
             { query: SEE_USER, variables: { username }},
-            { query: FEED_QUERY }
+            { query: FEED_QUERY }, 
         ]
     });
 
@@ -99,12 +102,24 @@ export default ({
         if ( !isFollowingState ) {
             setIsFollowingState(true);
             setFollowersCountState( followersCountState + 1 );
-            followMutaion();
+            followMutation();
         } else {
             setIsFollowingState(false);
             setFollowersCountState( followersCountState - 1 );
-            unFollowMutaion();
+            unFollowMutation();
         }
+    }
+
+    const showFollowersList = () => {
+        setOnPopup("followersList");
+    }    
+
+    const showFollowingList = () => {
+        setOnPopup("followingList");
+    }
+
+    const closePopup = () => {
+        setOnPopup(false);
     }
 
     return (
@@ -119,14 +134,14 @@ export default ({
                     </Likes>
                 </User>
                 <Follow>
-                    <span>
+                    <button onClick={showFollowersList} >
                         <TextSmall text={Words.followers} color={Theme.c_black} />
                         <TextSmall string={followersCountState} color={Theme.c_black} weight="bold" />
-                    </span>
-                    <span>
+                    </button>
+                    <button onClick={showFollowingList} >
                         <TextSmall text={Words.following} color={Theme.c_black} />
                         <TextSmall string={followingCount} color={Theme.c_black} weight="bold" />
-                    </span>
+                    </button>
                 </Follow>
                 <div>
                     <p><TextSmall string={fullname} color={Theme.c_blueDarker1} /></p>
@@ -139,6 +154,8 @@ export default ({
                     : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
                 : <Button to={`/log/${username}/edit`} text={Words.editProfile} lang={lang} /> 
             }
+            { onPopup === "followingList" && <Following username={username} closePopup={closePopup} lang={lang} /> }
+            { onPopup === "followersList" && <Followers username={username} closePopup={closePopup} lang={lang} /> }
         </Container>
     )
 }
