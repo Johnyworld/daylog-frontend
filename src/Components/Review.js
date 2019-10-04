@@ -94,6 +94,8 @@ const Textarea = styled(TextareaAutosize)`
 export default ({ review, averageScore, username, date, weekDate, lang, QUERY }) => {
     const [ onPopup, setOnPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
+    const [ reviewTextDone, SetReviewTextDone ] = useState(review ? review.text : "");
+
     const reviewText = useInput(review ? review.text : "");
     const placeholder = languages(Words.inputReview);
 
@@ -129,6 +131,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
         setConfirmDelete(true);
         if ( confirmDelete ) {
             deleteReviewMutation(); 
+            SetReviewTextDone(false)
             setConfirmDelete(false);
             reviewText.setValue('');
         }
@@ -137,10 +140,12 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
     const onSubmit = () => {
         if ( onPopup === "write" ) {
             addReviewMutation();
+            SetReviewTextDone(reviewText.value);
             setOnPopup(false);
         }
         if ( onPopup === "edit" ) {
             editReviewMutation();
+            SetReviewTextDone(reviewText.value);
             setOnPopup(false);
         }
     }
@@ -151,12 +156,12 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
             <Box className="review">
                 <Score score={ averageScore } size="medium" />
                 <Inner>
-                    { reviewText.value
-                        ? <TextRegular string={ reviewText.value } lang={lang} />
+                    { reviewTextDone
+                        ? <TextRegular string={ reviewTextDone } lang={lang} />
                         : <TextRegular text={ Words.noReview } color={Theme.c_gray} lang={lang} />
                     }
                     <Buttons>
-                        { !review  
+                        { !reviewTextDone
                             ? <SmallButton onClick={onWrite} text={Words.write} lang={lang} /> 
                             : (<>
                                 <SmallButton onClick={onEdit} text={Words.edit} lang={lang} />
