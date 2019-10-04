@@ -31,7 +31,7 @@ const Icon = styled.div`
 
 export default ({ list, value, onChange }) => {
     return (
-        <Container>
+        <Container className="select">
             <Select onChange={onChange} value={value} >
                 { list.map( item => (
                     <option key={item.value} value={item.value}>{item.local}</option>

@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Languages from '../Util/Languages';
 
 const Container = styled.h2`
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1.2;
+    white-space: nowrap;
     ${({ color })=> color && ` color: ${ color }; `}
     ${({ lang })=> { if ( lang === "kr" ) return `margin-left: -.1em;`; }}
 `;
