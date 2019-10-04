@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Languages from '../Util/Languages';
 
 const Container = styled.p`
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 100;
     line-height: 1.4;
     word-break: keep-all;

@@ -8,7 +8,7 @@ import LargeButton from '../Components/LargeButton';
 import Words from '../Lang/Words.json';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
-import { getLang } from '../Util/Languages';
+import { getLang, languages } from '../Util/Languages';
 import Icon from '../Components/Icon';
 
 const LOG_IN = gql`
@@ -74,6 +74,20 @@ const InputItem = styled.div`
     svg {
         position: absolute;
         right: 10px;
+    }
+    &::after {
+        font-size: 11px;
+        content: ${({ text, lang })=> text && `"${languages( text, lang )}"` };
+        display: block;
+        color: white;
+        opacity: 0;
+        position: absolute;
+        top: -.8em;
+        right: 0;
+        transition: opacity .5s;
+    }
+    &:hover::after {
+        opacity: .4;
     }
 `;
 
@@ -213,11 +227,11 @@ export default () => {
                 { action === "signUp" && (
                     <form onSubmit={onSubmit}>
                         <InputContainer>
-                            <InputItem>
+                            <InputItem text={Words.checkUsername} lang={lang} >
                                 <Input placeholder={Words.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
                                 { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
-                            <InputItem>
+                            <InputItem text={Words.checkFullname} lang={lang} >
                                 <Input placeholder={Words.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
                                 { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
                             </InputItem>
@@ -245,7 +259,7 @@ export default () => {
                         <Logo>Daylog</Logo> 
                         <form onSubmit={onSubmit}>
                             <InputContainer>
-                                <Input placeholder={Words.inputSecret} type="text" color="white" lang={lang} {...secret} />
+                                <Input placeholder={Words.inputSecret} type="text" className="large" color="white" lang={lang} {...secret} />
                             </InputContainer>
                             <MessageContainer>
                                 { print !== "cantConfirm" 
