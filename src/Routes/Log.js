@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
@@ -7,6 +7,7 @@ import { getLang } from '../Util/Languages';
 import UserLog from '../Components/UserLog';
 import DateLog from '../Components/DateLog';
 import { ME } from '../Router';
+import { getYyyymmdd } from '../Util/Convertors';
 
 export const SEE_USER = gql`
     query seeUser( $username: String! ) {
@@ -32,42 +33,61 @@ const Container = styled.main`
 
 export default () => {
     const username = window.location.hash.split("/")[2];
-
     const { data, loading } = useQuery( SEE_USER, { variables: { username } } );
     const { data: meData, loading: meLoading } = useQuery(ME);
 
-    const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
     const date = new Date();
-    // const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
-    const yyyymmdd = "2019-09-23"
 
+    const [ yearSum, setYearSum ] = useState( date.getFullYear() );
+    const [ monthSum, setMonthSum ] = useState( date.getMonth() );
+    const [ dateSum, setDateSum ] = useState( date.getDate() );
     
-    return <>
-        <Container>
-            { loading && <Loader /> }
-            { !loading && data && data.seeUser && !meLoading && meData && meData.me &&
-            <>
-                <UserLog
-                    id={data.seeUser.id} 
-                    avatar={data.seeUser.avatar}
-                    username={username}
-                    fullname={data.seeUser.fullname}
-                    likesTotal={data.seeUser.likesTotal}
-                    bio={data.seeUser.bio}
-                    lang={lang}
-                    followersCount={data.seeUser.followersCount}
-                    followingCount={data.seeUser.followingCount}
-                    isFollowing={data.seeUser.isFollowing}
-                    isSelf={data.seeUser.isSelf}
-                />
-                <DateLog
-                    username={username}
-                    lang={lang}
-                    me={meData.me}
-                    yyyymmdd={yyyymmdd}
-                />
-            </>
-            }
-        </Container>
-    </>
+    if ( !loading && data && data.seeUser && !meLoading && meData && meData.me ) {
+
+        date.setYear( yearSum );
+        date.setMonth( monthSum );
+        date.setDate( dateSum );
+        
+        const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
+        
+        console.log(date, yyyymmdd, dateSum)
+        const lang = getLang( meData.me.lang );
+
+        const setTheDate = {
+            setPrevYear : () => setYearSum( yearSum-1 ),
+            setNextYear : () => setYearSum( yearSum+1 ),
+            setPrevMonth : () => setMonthSum( monthSum-1 ),
+            setNextMonth : () => setMonthSum( monthSum+1 ),
+            setPrevWeek : () => setDateSum( dateSum-7 ),
+            setNextWeek : () => setDateSum( dateSum+7 ),
+            setPrevDay : () => setDateSum( dateSum-1 ),
+            setNextDay : () => setDateSum( dateSum+1 ),
+        }
+        
+        return <>
+            <Container>
+                <>
+                    <UserLog
+                        id={data.seeUser.id} 
+                        avatar={data.seeUser.avatar}
+                        username={username}
+                        fullname={data.seeUser.fullname}
+                        likesTotal={data.seeUser.likesTotal}
+                        bio={data.seeUser.bio}
+                        lang={lang}
+                        followersCount={data.seeUser.followersCount}
+                        followingCount={data.seeUser.followingCount}
+                        isFollowing={data.seeUser.isFollowing}
+                        isSelf={data.seeUser.isSelf}
+                    />
+                    <DateLog
+                        username={username}
+                        lang={lang}
+                        yyyymmdd={yyyymmdd}
+                        setTheDate={setTheDate}
+                    />
+                </>
+            </Container>
+        </> 
+    } else return <Loader />;
 }

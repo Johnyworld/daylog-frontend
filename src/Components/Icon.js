@@ -66,6 +66,15 @@ export default ({ icon, size, color="#222" }) => {
         </svg>
     )
 
+    if ( icon === "next" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <polyline fill="none" stroke={color} points="6.7,23.2 17.9,12 6.7,0.9 "/>
+        </svg>
+    )
+
     if ( icon === "x" ) return (
         <svg xmlns="http://www.w3.org/2000/svg" 
             width={sizeNum} 

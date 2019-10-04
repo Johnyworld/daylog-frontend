@@ -9,6 +9,7 @@ import Daylog from './Daylog';
 import Weeklog from './Weeklog';
 import Monthlog from './Monthlog';
 import Yearlog from './Yearlog';
+import Icon from './Icon';
 
 const Container = styled.section`
     padding: 40px 30px;
@@ -23,8 +24,20 @@ const DateTab = styled.div`
     }
 `;
 
-export default ({ username, lang, me, yyyymmdd }) => {
-    const [ theDay, setTheDay ] = useState( yyyymmdd );
+const Heading = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div {
+        height: 24px;
+        button:last-child {
+            margin-left: 20px;
+        } 
+    }
+    
+`;
+
+export default ({ username, lang, yyyymmdd, setTheDate }) => {
     const [ logState, setLogState ] = useState("day");
 
     const colors = [ "#61bffb", "#1a9df9", "#1585d4", "#085fb9", "#1738c6", "#7047e5",
@@ -35,12 +48,50 @@ export default ({ username, lang, me, yyyymmdd }) => {
         setLogState( e.currentTarget.dataset.data );
     }
 
+    const changeDatePrev = () => {
+        switch(logState) {
+            case "day" :
+                setTheDate.setPrevDay();
+                break;
+            case "week" :
+                setTheDate.setPrevWeek();
+                break;
+            case "month" :
+                setTheDate.setPrevMonth();
+                break;
+            case "year" :
+                setTheDate.setPrevYear();
+                break;
+            default :
+                break;
+        }
+    }
+
+    const changeDateNext = () => {
+        switch(logState) {
+            case "day" :
+                setTheDate.setNextDay();
+                break;
+            case "week" :
+                setTheDate.setNextWeek();
+                break;
+            case "month" :
+                setTheDate.setNextMonth();
+                break;
+            case "year" :
+                setTheDate.setNextYear();
+                break;
+            default :
+                break;
+        }
+    }
+
     let printDate;
     
-    if ( logState === "day" ) printDate = getPrintDate( theDay, lang, "withoutDow" );
-    if ( logState === "week" ) printDate = getPrintWeek( theDay, lang );
-    if ( logState === "month" ) printDate = getPrintDate( theDay, lang, "withoutDate" );
-    if ( logState === "year" ) printDate = getPrintDate( theDay, lang, "onlyYear" );
+    if ( logState === "day" ) printDate = getPrintDate( yyyymmdd, lang, "withoutDow" );
+    if ( logState === "week" ) printDate = getPrintWeek( yyyymmdd, lang );
+    if ( logState === "month" ) printDate = getPrintDate( yyyymmdd, lang, "withoutDate" );
+    if ( logState === "year" ) printDate = getPrintDate( yyyymmdd, lang, "onlyYear" );
 
     return (
         <Container>
@@ -50,13 +101,17 @@ export default ({ username, lang, me, yyyymmdd }) => {
                 <SmallButton onClick={clickDateTab} text={Words.month} data="month" lang={"en"} color={ logState === "month" ? Theme.c_blue : undefined } />
                 <SmallButton onClick={clickDateTab} text={Words.year} data="year" lang={"en"} color={ logState === "year" ? Theme.c_blue : undefined } />
             </DateTab>
-            <div>
+            <Heading>
                 <TextLarge string={printDate} color={Theme.c_blueDarker1} />
-            </div>
-            { logState === "day" && <Daylog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
-            { logState === "week" && <Weeklog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
-            { logState === "month" && <Monthlog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
-            { logState === "year" && <Yearlog username={username} yyyymmdd={theDay} colors={colors} lang={lang} /> }
+                <div>
+                    <button onClick={changeDatePrev}><Icon icon="back" color={Theme.c_blue} size="medium" /></button>
+                    <button onClick={changeDateNext}><Icon icon="next" color={Theme.c_blue} size="medium" /></button>
+                </div>
+            </Heading>
+            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
+            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
+            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
+            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
         </Container>
     )
 }
