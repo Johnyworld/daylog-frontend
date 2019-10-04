@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
-import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
+import LoaderRelative from './LoaderRelative';
 
 const SEE_YEARLOG = gql`
     query seeYearLog( $username: String!, $yyyymmdd: String! ) {
@@ -35,7 +35,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
 
     return (
         <Container>
-            { loading && <Loader /> }
+            { loading && <LoaderRelative /> }
             { !loading && data && data.seeYearLog && <>
                 <GraphContainer data={data.seeYearLog.doingLogs} colors={colors} lang={lang} />
                 <Review review={data.seeYearLog.yearReview[0]} averageScore={data.seeYearLog.averageScore} username={username} date={yyyy} lang={lang} QUERY={SEE_YEARLOG} />

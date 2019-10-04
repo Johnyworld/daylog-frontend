@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
-import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
 import Reviews from './Reviews';
+import LoaderRelative from './LoaderRelative';
 
 const SEE_MONTHLOG = gql`
     query seeMonthLog( $username: String!, $yyyymmdd: String! ) {
@@ -42,7 +42,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
 
     return (
         <Container>
-            { loading && <Loader /> }
+            { loading && <LoaderRelative /> }
             { !loading && data && data.seeMonthLog && <>
                 <GraphContainer data={data.seeMonthLog.doingLogs} colors={colors} lang={lang} />
                 <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} username={username} date={yyyymm} lang={lang} QUERY={SEE_MONTHLOG} />

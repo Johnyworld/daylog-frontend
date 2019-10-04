@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
-import Loader from './Loader';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
 import EachPosts from './EachPosts';
 import { getWeek } from '../Util/Convertors';
+import LoaderRelative from './LoaderRelative';
 
 const SEE_WEEKLOG = gql`
     query seeWeekLog( $username: String!, $yyyymmdd: String! ) {
@@ -41,7 +41,7 @@ export default ({ username, yyyymmdd, colors, lang }) => {
     return (
         <>
             <Container>
-                { loading && <Loader /> }
+                { loading && <LoaderRelative /> }
                 { !loading && data && data.seeWeekLog && <>
                     <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
                     <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmdd} weekDate={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} />
