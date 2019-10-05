@@ -20,7 +20,6 @@ export const dateConvertor = ( date, lang ) => {
 }
 
 export const blockConvertor = ( blocks, lang ) => {
-    blocks -= 1;
     const h = Math.floor( blocks / 4 );
     const m = (blocks - h*4) * 15;
 
@@ -38,9 +37,19 @@ const blockToTime = ( blocks ) => {
     return { hours, minutes };
 }
 
+export const getNowBlock = () => {
+    const H = new Date().getHours();
+    const M = new Date().getMinutes();
+    return (H*4) + (Math.floor(M/15));
+}
+
 const timeZero = ( time ) => {
     if ( time > 9 ) return time;
     else return `0${time}`;
+}
+
+export const scoreZero = ( score ) => {
+    return parseInt(score).toString() === score ? `${score}.0` : score;
 }
 
 export const timePresenter = ( startAt, endAt ) => {
