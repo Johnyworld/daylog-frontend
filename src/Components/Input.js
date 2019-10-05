@@ -31,7 +31,7 @@ const Container = styled.input`
 `;
 
 const Input = ({ placeholder, value, onChange, type, color, lang, required=true, id, name, accept, className }) => {
-    const text = languages( placeholder, lang );
+    const text = placeholder && languages( placeholder, lang );
     return <Container 
         placeholder={text} 
         value={value}
@@ -53,7 +53,7 @@ Input.propTypes = {
     onChange : PropTypes.func.isRequired,
     type : PropTypes.string,
     color : PropTypes.string,
-    lang : PropTypes.string.isRequired
+    lang : PropTypes.string
 }
 
 export default Input;

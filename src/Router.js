@@ -35,13 +35,16 @@ export const TODAY_QUERY = gql`
        seeTodayPosts {
             doing {
                 name
+                color
             }
             likesCount
             commentsCount
             isLiked
+            blocks
             score
             startAt
             endAt
+            yyyymmdd
         }
     } 
 `;

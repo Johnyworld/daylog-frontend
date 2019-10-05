@@ -246,5 +246,21 @@
     "checkFullname" : {
         "kr" : "숫자, 특수문자 제외 2-17자",
         "en" : "No numbers, no symbols, 2-17 characters"
+    },
+    "setScore" : {
+        "kr" : "평가",
+        "en" : "Rate"
+    },
+    "setScoreTitle" : {
+        "kr" : "만족도 평가",
+        "en" : "Rating satisfaction"
+    },
+    "satisfaction" : {
+        "kr" : "만족도",
+        "en" : "Satisfaction"
+    },
+    "setScoreDesc" : {
+        "kr" : "얼마나 집중했고, 얼마나 만족했는지 0점부터 5점까지의 점수로 평가해주세요.",
+        "en" : "Rate from 0 to 5 points how focused and satisfied you are." 
     }
 }
