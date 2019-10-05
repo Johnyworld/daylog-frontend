@@ -6,6 +6,7 @@ export default {
     c_blueDarker2: "#3f6179",
     c_black: "#222",
     c_red: "#eb3f3f",
+    c_lightGrayBrighter1: "#f6f7f9",
     c_lightGray: "#edf1f5",
     c_lightGrayDarker1: "#dbe1e6",
     c_gray: "#a4b4c1",

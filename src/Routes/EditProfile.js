@@ -49,6 +49,7 @@ const Profile = styled.section`
     }
     .text-medium { 
         display: block; 
+        margin-bottom: 5px;
     }
 `;
 
