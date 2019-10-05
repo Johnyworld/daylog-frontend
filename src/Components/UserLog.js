@@ -146,7 +146,7 @@ export default ({
                 </Follow>
                 <div>
                     <p><TextSmall string={fullname} color={Theme.c_blueDarker1} /></p>
-                    <TextSmall string={bio} />
+                    <TextSmall string={bio} lang={lang} />
                 </div>
             </Info>
             { !isSelf
