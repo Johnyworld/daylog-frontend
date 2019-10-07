@@ -8,9 +8,7 @@ import Log from './Routes/Log';
 import Post from './Routes/Post';
 import Search from './Routes/Search';
 import Header from './Components/Header';
-import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
-import Loader from './Components/Loader';
 import EditProfile from './Routes/EditProfile';
 
 export const ME = gql`
@@ -33,6 +31,7 @@ export const ME = gql`
 export const TODAY_QUERY = gql`
     {
        seeTodayPosts {
+            id
             doing {
                 name
                 color
@@ -50,12 +49,9 @@ export const TODAY_QUERY = gql`
 `;
 
 const LoggedInRoutes = () => {
-    const { data:meData, loading:meLoading } = useQuery(ME);
-    const { data, loading } = useQuery( TODAY_QUERY );
-
-    return ( !meLoading && meData && meData.me && !loading && data && data.seeTodayPosts ?
+    return (
         <>
-            <Header loggedUser={meData.me} />
+            <Header />
             <Switch>
                 <Route exact path='/' component={Today} />
                 <Route path='/feed/:username' component={Log} />
@@ -67,7 +63,7 @@ const LoggedInRoutes = () => {
                 <Redirect from="*" to="/" />
             </Switch>
         </>
-    : <Loader /> )
+    )
 }
 
 const LoggedOutRoutes = () => (
