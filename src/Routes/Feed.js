@@ -20,7 +20,10 @@ export const FEED_QUERY = gql`
                     name
                     color
                     category {
-                        name
+                        lang {
+                            kr
+                            en
+                        }
                     }
                 }
                 user {
@@ -94,7 +97,6 @@ export default () => {
     if ( !loading && data && data.seeFeed ) {
         Feed = [ ...data.seeFeed.posts, ...data.seeFeed.reviews ];
         Feed.sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 );
-        console.log(Feed);
     }
 
     return <>
@@ -116,7 +118,7 @@ export default () => {
                                 key={post.id}
                                 doing={post.doing.name}
                                 color={post.doing.color}
-                                category={post.doing.category.name}
+                                category={post.doing.category.lang}
                                 author={post.user.username}
                                 avatar={post.user.avatar}
                                 isLiked={post.isLiked}

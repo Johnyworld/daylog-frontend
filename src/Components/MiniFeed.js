@@ -21,6 +21,10 @@ const SEE_MY_POSTS = gql`
                 color
                 category {
                     name
+                    lang {
+                        kr
+                        en
+                    }
                 }
             }
             likesCount
@@ -69,7 +73,7 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
                             <p>
                                 <TextSmall string={timePresenter( post.startAt, post.endAt )} />
                             </p>
-                            <TextSmall string={post.doing.category.name} />
+                            <TextSmall text={post.doing.category.lang} lang={lang} />
                         </Info>
                         <TextLarge string={ post.doing.name } color={ post.doing.color } key={post.id} />
                         <LikesAndComments>
