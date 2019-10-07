@@ -12,7 +12,7 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    html, input, textarea, select, option {
+    html, input, textarea, select, option, button {
         font-family: 'Open Sans', 'Noto Sans KR', sans-serif;
     }
 
