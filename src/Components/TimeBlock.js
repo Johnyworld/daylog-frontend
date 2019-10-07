@@ -5,6 +5,7 @@ import Score from './Score';
 import SmallButton from './SmallButton';
 import Words from '../Lang/Words.json';
 import SetScore from './SetScore';
+import { scoreZero } from '../Util/Convertors';
 
 const Container = styled.li`
     position: relative;
@@ -15,8 +16,7 @@ const Container = styled.li`
     background-color: ${({ theme })=> theme.c_lightGrayBrighter1 };
     &:not(:first-child) { border-top: 1px solid white; }
     &.hour { border-top: 3px solid white; }
-    /* &.hour:first-child { border-top: 0; } */
-    &:first-child { border: 3px solid ${({ theme })=> theme.c_black }}
+    &.hour:first-child { border-top: 0; }
     ${({ color, doing })=> {
         if ( color && !doing ) return `
         border-color: #0000000f !important;
@@ -24,6 +24,7 @@ const Container = styled.li`
         `
         else if ( color ) return `background-color: ${color}; `
     }};
+    &:last-child { border: 3px solid ${({ theme })=> theme.c_black } !important };
 `;
 
 const Inner = styled.div`
@@ -51,7 +52,7 @@ const TimePrint = styled.div`
 `;
 
 
-const TimeBlock = ({ block, doing, color, score, blocks, isLiked, likesCount, postsCount, lang }) => {
+const TimeBlock = ({ id, block, doing, color, score, blocks, isLiked, likesCount, postsCount, lang }) => {
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
 
@@ -69,7 +70,7 @@ const TimeBlock = ({ block, doing, color, score, blocks, isLiked, likesCount, po
                 <Inner>
                     <TextRegular string={doing} color="white" />
                     { scoreState
-                        ? <Score score={score} size="small" color="white" /> 
+                        ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
                         : <SmallButton onClick={onScorePopup} text={Words.setScore} lang={lang} color="white" />
                     }
                 </Inner>
@@ -78,7 +79,8 @@ const TimeBlock = ({ block, doing, color, score, blocks, isLiked, likesCount, po
                 { block%4 === 0 && ( block/4 > 9 ? block/4 : `0${block/4}` )}
             </TimePrint>
             { scorePopup && 
-                <SetScore 
+                <SetScore
+                    id={id}
                     doing={doing}
                     closePopup={closePopup}
                     lang={lang}
