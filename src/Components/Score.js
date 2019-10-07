@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.span`
     display: inline-block;
@@ -8,7 +9,8 @@ const Container = styled.span`
     line-height: 1;
     ${({ color })=> color && `color: ${color};`};
 `;
-export default ({ score, size, color }) => {
+
+const Score = ({ score, size, color }) => {
     let sizeNum;
     if ( size === "medium" ) sizeNum = "28px";
     if ( size === "large" ) sizeNum = "50px";
@@ -22,3 +24,11 @@ export default ({ score, size, color }) => {
         </Container>
     )
 }
+
+Score.propTypes = {
+    score : PropTypes.number.isRequired,
+    size : PropTypes.string.isRequired,
+    color : PropTypes.string
+}
+
+export default Score;

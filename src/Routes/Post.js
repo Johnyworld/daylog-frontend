@@ -34,6 +34,7 @@ export const SEE_POST = gql`
         seePost( id : $id ) {
             id
             location
+            score
             startAt
             endAt
             createdAt

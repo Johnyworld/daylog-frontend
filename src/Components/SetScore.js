@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PopupHeader from './PopupHeader';
 import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import { blockConvertor, scoreZero } from '../Util/Convertors';
+import { blockConvertor } from '../Util/Convertors';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import Score from './Score';
 import useInput from '../Hooks/useInput';
+import LargeButton from './LargeButton';
+import { gql } from 'apollo-boost';
+import { useMutation } from 'react-apollo-hooks';
+import { SEE_POST } from '../Routes/Post';
+
+const EDIT_POST = gql`
+    mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $type: String! ) {
+        editPost( id: $id, doingId: $doingId, location: $location, score: $score, startAt: $startAt, endAt: $endAt, type: $type ) {
+            id
+        }
+    }
+`;
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };
@@ -31,10 +43,27 @@ const Rating = styled.div`
     }
 `;
 
-export default ({ doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
+const LargeButtonStyled = styled(LargeButton)`
+    display: block;
+    margin-left: auto;
+`;
+
+export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
     const slider = useInput( scoreState ? scoreState : 2.5 );
-    const scoreWithZero = scoreZero(slider.value);
+    const scoreFloat = parseFloat(slider.value);
     const time = blockConvertor(blocks, lang);
+
+    const [ editPostMutation ] = useMutation( EDIT_POST, {
+        variables: { id, score: scoreFloat, type:"score" },
+        refetchQueries: [{ query: SEE_POST, variables: { id } }]
+    })
+
+    const onClick = () => {
+        editPostMutation();
+        setScoreState( scoreFloat );
+        closePopup();
+    }
+
     return (
         <Container>
             <Popup>
@@ -45,10 +74,11 @@ export default ({ doing, closePopup, lang, blocks, color, scoreState, setScoreSt
                     <TextLarge string={doing} color={color} lang={lang} />
                     <Rating>
                         <TextSmall text={Words.satisfaction} lang={lang} />
-                        <Score score={scoreWithZero} size="large" />
+                        <Score score={scoreFloat} size="large" />
                     </Rating>
-                    <input type="range" value={slider.value} onChange={slider.onChange} min="0" max="5" step="0.5" />
+                    <input type="range" value={slider.value} onChange={slider.onChange} min={0} max={5} step={0.5} />
                 </Doing>
+                <LargeButtonStyled onClick={onClick} text={Words.okay} lang={lang} color={Theme.c_blue} />
             </Popup>
         </Container>
     )

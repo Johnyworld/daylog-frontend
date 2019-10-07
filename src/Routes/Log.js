@@ -50,7 +50,6 @@ export default () => {
         
         const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
         
-        console.log(date, yyyymmdd, dateSum)
         const lang = getLang( meData.me.lang );
 
         const setTheDate = {
