@@ -4,6 +4,7 @@ export default {
     c_blueBrighter2: "#94d1fc",
     c_blueDarker1: "#567f9c",
     c_blueDarker2: "#3f6179",
+    c_blueDarker3: "#08436d",
     c_black: "#222",
     c_red: "#eb3f3f",
     c_lightGrayBrighter1: "#f6f7f9",
