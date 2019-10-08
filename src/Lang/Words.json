@@ -262,5 +262,21 @@
     "setScoreDesc" : {
         "kr" : "얼마나 집중했고, 얼마나 만족했는지 0점부터 5점까지의 점수로 평가해주세요.",
         "en" : "Rate from 0 to 5 points how focused and satisfied you are." 
+    },
+    "whatNow" : {
+        "kr" : "지금 뭐해요?",
+        "en" : "Now"
+    },
+    "whatNowRemark" : {
+        "kr" : "지금 하고있는 일과를 눌러주세요.",
+        "en" : "What are you doing?"
+    },
+    "favorite" : {
+        "kr" : "자주 하는 일과",
+        "en" : "Your favorite"
+    },
+    "location" : {
+        "kr" : "위치",
+        "en" : "Location"
     }
 }

@@ -93,4 +93,26 @@ export default ({ icon, size, color="#222" }) => {
             <polyline fill="none" stroke={color} points="1.1,13.3 7.5,19.7 22.9,4.3 "/>
         </svg> 
     )
+    
+    if ( icon === "gridMenu" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <rect fill="none" stroke={color} x="2.5" y="2.5" width="6.8" height="6.8"/>
+            <rect fill="none" stroke={color} x="14.7" y="2.5" width="6.8" height="6.8"/>
+            <rect fill="none" stroke={color} x="2.5" y="14.7" width="6.8" height="6.8"/>
+            <rect fill="none" stroke={color} x="14.7" y="14.7" width="6.8" height="6.8"/>
+        </svg> 
+    )
+
+    if ( icon === "nut" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <circle fill="none" stroke={color} cx="12" cy="12" r="5.7"/>
+            <polygon fill="none" stroke={color} points="2.1,6.3 2.1,17.7 12,23.5 21.9,17.7 21.9,6.3 12,0.6 "/>
+        </svg> 
+    )
 }

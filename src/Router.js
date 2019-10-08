@@ -24,6 +24,12 @@ export const ME = gql`
             followersCount
             followingCount
             likesTotal
+            doings {
+                id
+                name
+                color
+                icon
+            }
         }
     }
 `;
@@ -33,6 +39,7 @@ export const TODAY_QUERY = gql`
        seeTodayPosts {
             id
             doing {
+                id
                 name
                 color
             }

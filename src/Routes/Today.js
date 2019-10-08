@@ -6,6 +6,7 @@ import { TODAY_QUERY, ME } from '../Router';
 import { getLang } from '../Util/Languages';
 import TimeBlocks from '../Components/TimeBlocks';
 import { getNowBlock, getYyyymmdd } from '../Util/Convertors';
+import WhatNow from '../Components/WhatNow';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
@@ -23,7 +24,7 @@ export default () => {
         yesterday.setDate( yesterday.getDate() -1 );
         const yyyymmddYesterday = getYyyymmdd( yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate() );
         
-        let blocks = []
+        let blocks = [];
         for ( let i=0; i<96; i++ ) {
             let block = now-i;
             let isYesterday = false;
@@ -52,6 +53,7 @@ export default () => {
         return (
             <Container>
                 <TimeBlocks blocks={blocks} lang={lang} />
+                <WhatNow doings={meData.me.doings} lang={lang} recent={recent} />
             </Container>
         )
     } else return <Loader />
