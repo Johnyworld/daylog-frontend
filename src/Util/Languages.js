@@ -113,7 +113,7 @@ export const getPrintBlockTimes = ( h, m, lang ) => {
 
 export const getPrintWeek = ( yyyymmdd, lang, option ) => {
     const Weeks = [
-        "first", "second", "third", "fourth", "fifth"
+        "1st", "2nd", "3rd", "4th", "5th"
     ]
     const Month = [
         "January", "February", "March", "April", "May", "June",
