@@ -19,11 +19,11 @@ export const dateConvertor = ( date, lang ) => {
     if ( past > 1382400000 ) return getPrintDate( fullDate, lang );
 }
 
-export const blockConvertor = ( blocks, lang ) => {
+export const blockConvertor = ( blocks, lang, option ) => {
     const h = Math.floor( blocks / 4 );
     const m = (blocks - h*4) * 15;
 
-    return getPrintBlockTimes( h, m, lang );
+    return getPrintBlockTimes( h, m, lang, option );
 }
 
 export const getYyyymmdd = ( year, month, date ) => {
@@ -31,10 +31,23 @@ export const getYyyymmdd = ( year, month, date ) => {
     return `${year}-${(month>9?'':"0")+month}-${(date>9?'':"0")+date}`;
 }
 
-const blockToTime = ( blocks ) => {
+export const blockToTime = ( blocks ) => {
     const hours = Math.floor( blocks/4 );
     const minutes = blocks % 4 * 15;
     return { hours, minutes };
+}
+
+const timeToBlock = ( hour, minute ) => {
+    return hour*4 + Math.floor(minute/15);
+}
+
+export const getEndAt = ( startAt ) => {
+    const EndAt = timeToBlock( new Date().getHours(), new Date().getMinutes() ) + 1;
+    if ( EndAt < startAt ) {
+        return EndAt + 96;
+    } else {
+        return EndAt;
+    }
 }
 
 export const getNowBlock = () => {

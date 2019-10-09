@@ -11,6 +11,7 @@ export default {
     c_lightGray: "#edf1f5",
     c_lightGrayDarker1: "#dbe1e6",
     c_gray: "#a4b4c1",
+    size_doingButton: 72,
     f_regular: `
         font-size: 14px;
         line-height: 1.4;
@@ -48,6 +49,7 @@ export default {
         position: absolute;
         padding: 30px;
         width: 100%;
+        max-height: 90vh;
         margin: auto;
         top: 50%;
         transform: translateY(-50%);

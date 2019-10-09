@@ -12,11 +12,24 @@ import Words from '../Lang/Words.json';
 import TextSmall from '../Components/TextSmall';
 
 export const FEED_QUERY = gql`
-    {
+    query seeFeed {
         seeFeed {
+            reviews {
+                id
+                text
+                yyyymmdd
+                createdAt
+                isLiked
+                likesCount
+                user {
+                    username
+                    avatar
+                }
+            }
             posts {
                 id
                 doing {
+                    id
                     name
                     color
                     category {
@@ -27,6 +40,7 @@ export const FEED_QUERY = gql`
                     }
                 }
                 user {
+                    id
                     username
                     avatar
                 }
@@ -46,18 +60,6 @@ export const FEED_QUERY = gql`
                         username
                         avatar
                     }
-                }
-            }
-            reviews {
-                id
-                text
-                yyyymmdd
-                createdAt
-                isLiked
-                likesCount
-                user {
-                    username
-                    avatar
                 }
             }
         }
@@ -90,62 +92,61 @@ const NoFeed = styled.main`
 export default () => {
     const { data, loading } = useQuery(FEED_QUERY);
     const { data: meData, loading: meLoading } = useQuery(ME);
-
-    const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
-    let Feed=[];
-
+    window.scrollTo(0, 0);
+    
     if ( !loading && data && data.seeFeed ) {
+        const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
+        let Feed=[];
         Feed = [ ...data.seeFeed.posts, ...data.seeFeed.reviews ];
         Feed.sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 );
-    }
 
-    return <>
-        <Container>
-            { loading && <Loader />}
-            { !loading && data && data.seeFeed && (
-                !Feed[0]
-                ?
-                    <NoFeed>
-                        <TextSmall text={Words.noFeed} lang={lang} />
-                        <Search />
-                    </NoFeed>
-                : 
-                    Feed.map(post => (
-                        post.blocks // 리뷰인지 포스트인지 체트
-                        ?
-                            <FeedItem
-                                id={post.id}
-                                key={post.id}
-                                doing={post.doing.name}
-                                color={post.doing.color}
-                                category={post.doing.category.lang}
-                                author={post.user.username}
-                                avatar={post.user.avatar}
-                                isLiked={post.isLiked}
-                                location={post.location}
-                                likesCount={post.likesCount}
-                                commentsCount={post.commentsCount}
-                                startAt={post.startAt}
-                                endAt={post.endAt}
-                                createdAt={post.createdAt}
-                                blocks={post.blocks}
-                                lang={lang}
-                            />
-                        :
-                            <FeedReview
-                                id={post.id}
-                                key={post.id}
-                                text={post.text}
-                                yyyymmdd={post.yyyymmdd}
-                                createdAt={post.createdAt}
-                                isLiked={post.isLiked}
-                                likesCount={post.likesCount}
-                                author={post.user.username}
-                                avatar={post.user.avatar}
-                                lang={lang}
-                            />
-                    ))
-            )}
-        </Container>
-    </>
+        return <>
+            <Container>
+                {
+                    !Feed[0]
+                    ?
+                        <NoFeed>
+                            <TextSmall text={Words.noFeed} lang={lang} />
+                            <Search />
+                        </NoFeed>
+                    : 
+                        Feed.map(post => (
+                            post.blocks // 리뷰인지 포스트인지 체트
+                            ?
+                                <FeedItem
+                                    id={post.id}
+                                    key={post.id}
+                                    doing={post.doing.name}
+                                    color={post.doing.color}
+                                    category={post.doing.category.lang}
+                                    author={post.user.username}
+                                    avatar={post.user.avatar}
+                                    isLiked={post.isLiked}
+                                    location={post.location}
+                                    likesCount={post.likesCount}
+                                    commentsCount={post.commentsCount}
+                                    startAt={post.startAt}
+                                    endAt={post.endAt}
+                                    createdAt={post.createdAt}
+                                    blocks={post.blocks}
+                                    lang={lang}
+                                />
+                            :
+                                <FeedReview
+                                    id={post.id}
+                                    key={post.id}
+                                    text={post.text}
+                                    yyyymmdd={post.yyyymmdd}
+                                    createdAt={post.createdAt}
+                                    isLiked={post.isLiked}
+                                    likesCount={post.likesCount}
+                                    author={post.user.username}
+                                    avatar={post.user.avatar}
+                                    lang={lang}
+                                />
+                        ))
+                }
+            </Container>
+        </>
+    } else return <Loader />
 };

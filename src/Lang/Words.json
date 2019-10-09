@@ -264,12 +264,12 @@
         "en" : "Rate from 0 to 5 points how focused and satisfied you are." 
     },
     "whatNow" : {
-        "kr" : "지금 뭐해요?",
-        "en" : "Now"
+        "kr" : "새로운 기록 추가하기",
+        "en" : "Add an new log"
     },
     "whatNowRemark" : {
-        "kr" : "지금 하고있는 일과를 눌러주세요.",
-        "en" : "What are you doing?"
+        "kr" : "일과를 선택하세요.",
+        "en" : "Choice what you are doing."
     },
     "favorite" : {
         "kr" : "자주 하는 일과",
@@ -278,5 +278,9 @@
     "location" : {
         "kr" : "위치",
         "en" : "Location"
+    },
+    "still" : {
+        "kr" : "이어서..",
+        "en" : "Still.."
     }
 }

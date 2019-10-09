@@ -86,7 +86,7 @@ export default ({
         (
         <Container>
             <Info>
-                <TextSmall string={blockConvertor(blocks, lang)} lang={lang} />
+                <TextSmall string={blockConvertor(blocks, lang, "isFor")} lang={lang} />
                 <TextSmall text={category} lang={lang} />
             </Info>
             <Heading>

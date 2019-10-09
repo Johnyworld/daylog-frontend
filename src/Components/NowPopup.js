@@ -12,6 +12,9 @@ import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { UPLOAD } from './WhatNow';
 import { TODAY_QUERY } from '../Router';
+import TextRegular from './TextRegular';
+import { EDIT_POST } from './SetScore';
+import { getEndAt } from '../Util/Convertors';
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };
@@ -30,10 +33,23 @@ const LinkStyled = styled(Link)`
 const DoingGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-    margin-bottom: 30px;
+    grid-gap: 8px;
+    margin: 40px 0 30px;
     button {
         margin-right: 0;
+    }
+
+    @media screen and ( max-width: 374px ) {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+`;
+
+const Row = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .text-regular {
+        width: 40%;
     }
 `;
 
@@ -43,18 +59,42 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-left: auto;
 `;
 
-export default ({ doings, closePopup, lang }) => {
+export default ({ doings, recent, closePopup, focused, now, lang }) => {
+    console.log(recent)
     const [ selectedDoing, setSelectedDoing ] = useState(null);
+    const [ isStill, setIsStill ] = useState(false);
     const location = useInput('');
 
     const [ uploadMutation ] = useMutation( UPLOAD, {
-        variables: { doingId: selectedDoing, location: location.value },
+        variables: { 
+            doingId: selectedDoing, 
+            location: location.value,
+            startAt: focused.index - ( 95-now )
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
+    const [ stillMutation ] = useMutation( EDIT_POST, {
+        variables: { 
+            id: recent && recent.id, 
+            endAt: focused.index - ( 95-now ) + 1,
+            location: location.value,
+            type: "endAt" 
+        },
         refetchQueries: [{ query: TODAY_QUERY }]
     });
 
     const onClickButton = (e) => {
         const childNodes = e.currentTarget.parentNode.childNodes;
         setSelectedDoing(e.currentTarget.dataset.id);
+        if ( e.currentTarget.classList.contains('recent') ) {
+            location.setValue(recent.location);
+            setIsStill(true);
+        } else {
+            location.setValue("");
+            setIsStill(false); 
+        }
+
         childNodes.forEach( node => {
             node.classList.remove('selected');
         });
@@ -62,8 +102,13 @@ export default ({ doings, closePopup, lang }) => {
     }
 
     const onClickSubmit = () => {
-        uploadMutation();
-        closePopup();
+        if ( recent.doing.id === selectedDoing && isStill ) {
+            stillMutation();
+            closePopup();
+        } else {
+            uploadMutation();
+            closePopup();
+        }
     }
 
     return (
@@ -74,11 +119,37 @@ export default ({ doings, closePopup, lang }) => {
                     <Icon icon="nut" size="medium" />
                 </LinkStyled>
                 <DoingGrid>
+                    { recent && 
+                        <DoingButton
+                            key={recent.doing.id}
+                            id={recent.doing.id}
+                            name={recent.doing.name}
+                            icon={recent.doing.icon}
+                            color={recent.doing.color}
+                            onClick={onClickButton}
+                            focused={focused}
+                            lang={lang}
+                            className="recent"
+                        /> 
+                    }
                     { doings[0] && doings.map( doing => (
-                        <DoingButton key={doing.id} id={doing.id} name={doing.name} icon={doing.icon} color={doing.color} onClick={onClickButton} />
+                        doing.id !== recent.doing.id &&
+                        <DoingButton
+                            key={doing.id}
+                            id={doing.id}
+                            name={doing.name}
+                            icon={doing.icon}
+                            color={doing.color}
+                            onClick={onClickButton}
+                            focused={focused}
+                            lang={lang} 
+                        />
                     ))}
                 </DoingGrid>
-                <Input placeholder={Words.location} {...location} lang={lang} />
+                <Row>
+                    <TextRegular text={Words.location} lang={lang} />
+                    <Input placeholder={Words.location} {...location} lang={lang} />
+                </Row>
                 <LargeButtonStyled text={Words.okay} lang={lang} onClick={onClickSubmit} color={Theme.c_blue} className={ !selectedDoing && "disabled" } />
             </Popup>
         </Container>

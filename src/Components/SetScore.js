@@ -14,7 +14,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_POST } from '../Routes/Post';
 
-const EDIT_POST = gql`
+export const EDIT_POST = gql`
     mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $type: String! ) {
         editPost( id: $id, doingId: $doingId, location: $location, score: $score, startAt: $startAt, endAt: $endAt, type: $type ) {
             id
@@ -51,7 +51,7 @@ const LargeButtonStyled = styled(LargeButton)`
 export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
     const slider = useInput( scoreState ? scoreState : 2.5 );
     const scoreFloat = parseFloat(slider.value);
-    const time = blockConvertor(blocks, lang);
+    const time = blockConvertor(blocks, lang, "isFor");
 
     const [ editPostMutation ] = useMutation( EDIT_POST, {
         variables: { id, score: scoreFloat, type:"score" },

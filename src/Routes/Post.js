@@ -118,7 +118,7 @@ export default () => {
         { !loading && data && data.seePost && (
             <Container>
                 <Heading>
-                    <TextSmall string={blockConvertor(data.seePost.blocks, lang)} />
+                    <TextSmall string={blockConvertor(data.seePost.blocks, lang, "isFor")} />
                     <TextLarge string={data.seePost.doing.name} color={Theme.c_blueDarker2}/>
                     <TextRegular string={data.seePost.user.username} color={Theme.c_blueDarker1} />
                 </Heading>

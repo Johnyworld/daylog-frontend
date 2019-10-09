@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import IconImage from './IconImage';
 import TextSmall from './TextSmall';
+import { languages } from '../Util/Languages';
+import Words from '../Lang/Words.json'
+import Theme from '../Styles/Theme';
+import { useMutation } from 'react-apollo-hooks';
+import { TODAY_QUERY } from '../Router';
+import { UPLOAD } from './WhatNow';
 
 const Container = styled.button`
     display: flex;
@@ -10,8 +16,8 @@ const Container = styled.button`
     justify-content: center;
     flex-direction: column;
     position: relative;
-    padding: 8px 5px;
-    width: 72px;
+    padding: 8px 0 5px;
+    min-width: 72px;
     height: 72px;
     margin-right: 10px;
     border: 1px solid ${({ theme })=> theme.c_gray };
@@ -27,8 +33,8 @@ const Container = styled.button`
         border: 3px solid ${({ theme })=> theme.c_blue };
     }
 
-    &.keep:after {
-        content: 'keep';
+    &.recent:after {
+        content: ${({ lang })=> `"${languages(Words.still, lang)}"` };
         display: block;
         position: absolute;
         top: 0;
@@ -40,6 +46,11 @@ const Container = styled.button`
         border-radius: 1em;
         transform: translate(-20%, -50%);
         font-size: 12px;
+    }
+
+    &.selected:after {
+        top: -2px;
+        left: -2px;
     }
 
     &.pinned:after {
@@ -55,20 +66,30 @@ const Container = styled.button`
     }
 
     .text-small {
-        white-space: nowrap;
+        width: ${ Theme.size_doingButton - 4 }px;
         margin-top: 5px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 `;
 
-const DoingButton = ({ id, name, icon, color, className, onClick }) => {
+const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused, now }) => {
+
+    const [ uploadMutation ] = useMutation( UPLOAD, {
+        variables: { 
+            doingId: id,
+            startAt: focused.index - ( 95-now )
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
     const onClickFast = () => {
-        console.log(id, name);
+        uploadMutation();
     }
 
     return (
-        <Container className={className} onClick={ onClick ? onClick : onClickFast } data-id={id} >
+        <Container className={className} onClick={ onClick ? onClick : onClickFast } data-id={id} lang={lang} >
             <IconImage url={icon} size="medium" />
             <TextSmall string={name} color={color} />
         </Container>

@@ -41,8 +41,10 @@ export const TODAY_QUERY = gql`
             doing {
                 id
                 name
+                icon
                 color
             }
+            location
             likesCount
             commentsCount
             isLiked

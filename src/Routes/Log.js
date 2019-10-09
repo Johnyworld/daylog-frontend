@@ -42,6 +42,8 @@ export default () => {
     const [ monthSum, setMonthSum ] = useState( date.getMonth() );
     const [ dateSum, setDateSum ] = useState( date.getDate() );
     
+    window.scrollTo(0, 0); 
+
     if ( !loading && data && data.seeUser && !meLoading && meData && meData.me ) {
 
         date.setYear( yearSum );
