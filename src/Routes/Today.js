@@ -67,8 +67,20 @@ export default () => {
 
         return (
             <Container>
-                <TimeBlocks blocks={blocks} lang={lang} setFocused={setFocused} />
-                <WhatNow doings={meData.me.doings} lang={lang} focused={focused} recent={recent} now={now} className={ blocks[focused.index].doing ? "disabled" : "" } />
+                <TimeBlocks
+                    blocks={blocks}
+                    lang={lang}
+                    setFocused={setFocused} 
+                />
+                <WhatNow
+                    doings={meData.me.doings}
+                    lang={lang}
+                    focused={focused}
+                    recent={recent}
+                    now={now}
+                    next={next}
+                    className={ blocks[focused.index].doing ? "disabled" : "" } 
+                />
             </Container>
         )
     } else return <Loader />

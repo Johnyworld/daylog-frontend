@@ -33,8 +33,11 @@ const Container = styled.button`
         border: 3px solid ${({ theme })=> theme.c_blue };
     }
 
+    &.next:after { content: ${({ lang })=> `"${languages(Words.pullUp, lang)}"` }; }
+    &.recent:after { content: ${({ lang })=> `"${languages(Words.still, lang)}"` }; }
+
+    &.next:after,
     &.recent:after {
-        content: ${({ lang })=> `"${languages(Words.still, lang)}"` };
         display: block;
         position: absolute;
         top: 0;

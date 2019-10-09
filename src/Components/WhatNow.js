@@ -63,7 +63,7 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ doings, lang, recent, focused, now, className }) => {
+export default ({ doings, lang, recent, focused, now, next, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
@@ -71,6 +71,15 @@ export default ({ doings, lang, recent, focused, now, className }) => {
             id: recent && recent.id,
             endAt: focused.index - ( 95-now ) + 1,
             type: "endAt" 
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
+    const [ pullMutation ] = useMutation( EDIT_POST, {
+        variables: { 
+            id: next && next.id,
+            startAt: focused.index - ( 95-now ),
+            type: "startAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     });
@@ -87,8 +96,14 @@ export default ({ doings, lang, recent, focused, now, className }) => {
         stillMutation();
     }
 
+    const onClickPull = () => {
+        console.log("pull");
+        pullMutation();
+    }
+
     const width = (doings.length + 1) * (Theme.size_doingButton + 10);
     const recentDoingId = recent ? recent.doing.id : "";
+    const nextDoingId = next ? next.doing.id : "";
 
     return (
         <Container className={className} >
@@ -122,8 +137,22 @@ export default ({ doings, lang, recent, focused, now, className }) => {
                             className="recent"
                         /> 
                     } 
+                    { next &&
+                        <DoingButton
+                            key={next.doing.id}
+                            id={next.doing.id}
+                            name={next.doing.name}
+                            icon={next.doing.icon}
+                            color={next.doing.color}
+                            lang={lang}
+                            onClick={onClickPull}
+                            focused={focused}
+                            now={now}
+                            className="next"
+                        /> 
+                    }
                     { doings[0] && doings.map( doing => (
-                        doing.id !== recentDoingId && 
+                        doing.id !== recentDoingId && doing.id !== nextDoingId &&
                         <DoingButton
                             key={doing.id}
                             id={doing.id}

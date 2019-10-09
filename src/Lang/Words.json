@@ -282,5 +282,9 @@
     "still" : {
         "kr" : "이어서..",
         "en" : "Still.."
+    },
+    "pullUp" : {
+        "kr" : "당기기",
+        "en" : "Pull"
     }
 }
