@@ -4,7 +4,7 @@ import TimeBlock from './TimeBlock';
 
 const Container = styled.ul`
     margin-left: 35px;
-    padding-bottom: 50vh;
+    padding-bottom: 40vh;
     display: none;
     &.appear {
         display: block;
@@ -12,14 +12,6 @@ const Container = styled.ul`
 `;
 
 class TimeBlocks extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            blocks : this.props.blocks,
-            lang : this.props.lang
-        }
-    }
-
     today = null;
 
     componentDidMount() {
@@ -28,23 +20,25 @@ class TimeBlocks extends Component {
     }
 
     render() {
-        const { blocks, lang } = this.state;
+        const { blocks, lang, setFocused } = this.props;
         return (
             <Container ref={ ref => this.today = ref }>
-                { blocks.map(block => {
+                { blocks.map((block, index) => {
                     return (
                         <TimeBlock
                             key={block.block}
                             id={block.id}
+                            index={index}
                             block={block.block}
                             doing={block.doing ? block.doing.name : null}
                             color={block.doing ? block.doing.color : null}
                             score={block.score}
                             blocks={block.blocks}
-                            isLiked={block.isLiked}
                             likesCount={block.likesCount}
-                            postsCount={block.postsCount}
+                            commentsCount={block.commentsCount}
                             lang={lang}
+                            setFocused={setFocused}
+                            className={index === blocks.length-1 ? "selected first last" : ""}
                         />
                     )
                 })}
