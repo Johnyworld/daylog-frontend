@@ -96,18 +96,21 @@ export const getPrintPastTime = ( array, lang, option ) => {
     return string.join(' ');
 }
 
-export const getPrintBlockTimes = ( h, m, lang ) => {
+export const getPrintBlockTimes = ( h, m, lang, option ) => {
+    let isFor = "";
     if ( lang === 'kr' ) {
-        if ( h !== 0 && m === 0 ) return `${h}시간 동안`
-        else if ( h !== 0 ) return `${h}시간 ${m}분 동안`;
-        else if ( h === 0 && m === 0 ) return "15분 미만 동안";
-        else return `${m}분 동안`;
+        if ( option === "isFor" ) isFor = "동안";
+        if ( h !== 0 && m === 0 ) return `${h}시간 ${isFor}`;
+        else if ( h !== 0 ) return `${h}시간 ${m}분 ${isFor}`;
+        else if ( h === 0 && m === 0 ) return `15분 미만 ${isFor}`;
+        else return `${m}분 ${isFor}`;
     }
     else {
-        if ( h !== 0 && m === 0 ) return `for ${h} hours`
-        else if ( h !== 0 ) return `for ${h} hours ${m} minutes`;
-        else if ( h === 0 && m === 0 ) return "for 15 minutes least";
-        else return `for ${m} minutes`; 
+        if ( option === "isFor" ) isFor = "for";
+        if ( h !== 0 && m === 0 ) return `${isFor} ${h} hours`
+        else if ( h !== 0 ) return `${isFor} ${h} hours ${m} minutes`;
+        else if ( h === 0 && m === 0 ) return `${isFor} 15 minutes least`;
+        else return `${isFor} ${m} minutes`; 
     }
 }
 
