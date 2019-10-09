@@ -9,7 +9,7 @@ import Icon from './Icon';
 import TextSmall from './TextSmall';
 import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
-import { TODAY_QUERY } from '../Router';
+import { TODAY_QUERY } from './TodayQueries';
 import EditLocation from './EditLocation';
 
 const Container = styled.li`
@@ -32,6 +32,7 @@ const Container = styled.li`
     &.focused:after {
         background-color: #fff3;
         pointer-events: none;
+        border-top: 1px dashed #fffa;
     }
     &.selected:after {
         content: ' ';

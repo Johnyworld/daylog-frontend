@@ -12,7 +12,7 @@ import TextLarge from '../Components/TextLarge';
 import TextSmall from '../Components/TextSmall';
 import { blockConvertor } from '../Util/Convertors';
 import Theme from '../Styles/Theme';
-import { ME } from '../Router';
+import { ME } from '../Components/TodayQueries';
 import Comments from '../Components/Comments.js';
 
 const ADD_COMMENT = gql`

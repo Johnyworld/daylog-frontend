@@ -8,7 +8,7 @@ import Theme from '../Styles/Theme';
 import LargeButton from './LargeButton';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
-import { TODAY_QUERY } from '../Router';
+import { TODAY_QUERY } from './TodayQueries';
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };

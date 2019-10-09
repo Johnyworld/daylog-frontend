@@ -131,25 +131,28 @@ export default ({ icon, size, color="#222" }) => {
             width={sizeNum} 
             height={sizeNum} 
             viewBox={`0 0 24 24`}>
-            <polyline fill="none" stroke={color} strokeMiterlimit="10" points="21.1,0 21.1,6.6 0.5,6.6 0.5,0 "/>
+            <polyline fill="none" stroke={color} strokeMiterlimit="10" points="22.4,0 22.4,6.6 1.8,6.6 1.8,0 "/>
             <g>
-                <g>
-                    <line fill="none" stroke={color} strokeMiterlimit="10" x1="0.5" y1="24" x2="0.5" y2="22.5"/>
-                    <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="2.7195,1.813" x1="0.5" y1="20.7" x2="0.5" y2="12.5"/>
-                    <polyline fill="none" stroke={color} strokeMiterlimit="10" points="0.5,11.6 0.5,10.1 2,10.1 		"/>
-                    <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="3.1029,2.0686" x1="4.1" y1="10.1" x2="18.5" y2="10.1"/>
-                    <polyline fill="none" stroke={color} strokeMiterlimit="10" points="19.6,10.1 21.1,10.1 21.1,11.6 		"/>
-                    <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="2.7195,1.813" x1="21.1" y1="13.4" x2="21.1" y2="21.6"/>
-                    <line fill="none" stroke={color} strokeMiterlimit="10" x1="21.1" y1="22.5" x2="21.1" y2="24"/>
-                </g>
+                <line fill="none" stroke={color} strokeMiterlimit="10" x1="1.8" y1="24" x2="1.8" y2="22.5"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="2.7195,1.813" x1="1.8" y1="20.2" x2="1.8" y2="15.5"/>
+                <polyline fill="none" stroke={color} strokeMiterlimit="10" points="1.8,14.3 1.8,12.8 3.3,12.8 		"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="3.1029,2.0686" x1="5.4" y1="12.8" x2="19.9" y2="12.8"/>
+                <polyline fill="none" stroke={color} strokeMiterlimit="10" points="20.9,12.8 22.4,12.8 22.4,14.3 		"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" strokeDasharray="2.7195,1.813" x1="22.4" y1="16.6" x2="22.4" y2="21.3"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" x1="22.4" y1="22.5" x2="22.4" y2="24"/>one" stroke
             </g>
             <g>
-                <line fill="none" stroke={color} strokeMiterlimit="10" x1="7.9" y1="20.2" x2="13.5" y2="14.6"/>
-                <line fill="none" stroke={color} strokeMiterlimit="10" x1="7.9" y1="14.6" x2="13.5" y2="20.2"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" x1="9.2" y1="21.7" x2="14.8" y2="16.1"/>
+                <line fill="none" stroke={color} strokeMiterlimit="10" x1="9.2" y1="16.1" x2="14.8" y2="21.7"/>
+            </g>
+            <g>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" x1="0" y1="9.6" x2="1.5" y2="9.6"/>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" strokeDasharray="2.8636,1.9091" x1="3.4" y1="9.6" x2="21.5" y2="9.6"/>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" x1="22.5" y1="9.6" x2="24" y2="9.6"/>
             </g>
         </svg> 
     )
-
+                           
     if ( icon === "cutTop" ) return (
         <svg xmlns="http://www.w3.org/2000/svg" 
             width={sizeNum} 
@@ -164,10 +167,15 @@ export default ({ icon, size, color="#222" }) => {
                 <line strokeDasharray="1.5332,1.0221" strokeMiterlimit="10" fill="none" stroke={color} x1="1.8" y1="4.1" x2="1.8" y2="2"/>
                 <line strokeMiterlimit="10" fill="none" stroke={color} x1="1.8" y1="1.5" x2="1.8" y2="0"/>
             </g>
-            <polyline strokeMiterlimit="10" fill="none" stroke={color} points="1.8,24 1.8,10.1 22.4,10.1 22.4,24 "/>
+            <polyline strokeMiterlimit="10" fill="none" stroke={color} points="1.8,24 1.8,12.8 22.4,12.8 22.4,24 "/>
             <g>
                 <line strokeMiterlimit="10" fill="none" stroke={color} x1="9.9" y1="4.7" x2="14.1" y2="0.4"/>
                 <line strokeMiterlimit="10" fill="none" stroke={color} x1="9.9" y1="0.4" x2="14.1" y2="4.7"/>
+            </g>
+            <g>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" x1="0" y1="9.6" x2="1.5" y2="9.6"/>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" strokeDasharray="2.8636,1.9091" x1="3.4" y1="9.6" x2="21.5" y2="9.6"/>
+                <line fill="none" stroke="#EB3F3F" strokeWidth="1.5" strokeMiterlimit="10" x1="22.5" y1="9.6" x2="24" y2="9.6"/>
             </g>
         </svg> 
     )

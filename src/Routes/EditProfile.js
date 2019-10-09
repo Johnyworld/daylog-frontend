@@ -7,7 +7,7 @@ import { getLang, langList, languages } from '../Util/Languages';
 import Input from '../Components/Input';
 import useInput from '../Hooks/useInput';
 import { useQuery, useMutation } from 'react-apollo-hooks';
-import { ME } from '../Router';
+import { ME } from '../Components/TodayQueries';
 import Loader from '../Components/Loader';
 import Theme from '../Styles/Theme';
 import Select from '../Components/Select';

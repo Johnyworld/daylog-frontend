@@ -8,54 +8,7 @@ import Log from './Routes/Log';
 import Post from './Routes/Post';
 import Search from './Routes/Search';
 import Header from './Components/Header';
-import { gql } from 'apollo-boost';
 import EditProfile from './Routes/EditProfile';
-
-export const ME = gql`
-    {
-        me {
-            id
-            username
-            avatar
-            fullname
-            email
-            bio
-            lang
-            followersCount
-            followingCount
-            likesTotal
-            doings {
-                id
-                name
-                color
-                icon
-            }
-        }
-    }
-`;
-
-export const TODAY_QUERY = gql`
-    {
-       seeTodayPosts {
-            id
-            doing {
-                id
-                name
-                icon
-                color
-            }
-            location
-            likesCount
-            commentsCount
-            isLiked
-            blocks
-            score
-            startAt
-            endAt
-            yyyymmdd
-        }
-    } 
-`;
 
 const LoggedInRoutes = () => {
     return (

@@ -7,7 +7,7 @@ import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
 import { getLang } from '../Util/Languages';
 import SideMenu from './SideMenu';
-import { ME } from '../Router';
+import { ME } from './TodayQueries';
 import { useQuery } from 'react-apollo-hooks';
 
 const Container = styled.header`

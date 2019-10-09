@@ -6,7 +6,7 @@ import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';
 import UserLog from '../Components/UserLog';
 import DateLog from '../Components/DateLog';
-import { ME } from '../Router';
+import { ME } from '../Components/TodayQueries';
 import { getYyyymmdd } from '../Util/Convertors';
 
 export const SEE_USER = gql`

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
-import { TODAY_QUERY, ME } from '../Router';
+import { TODAY_QUERY, ME } from '../Components/TodayQueries';
 import { getLang } from '../Util/Languages';
 import TimeBlocks from '../Components/TimeBlocks';
 import { getNowBlock, getYyyymmdd } from '../Util/Convertors';
@@ -11,7 +11,6 @@ import WhatNow from '../Components/WhatNow';
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
 `;
-
 
 const blocksFoundation = ( now ) => {
     let blocks = [];
@@ -63,7 +62,12 @@ export default () => {
         const next = blocks.find(( post, index ) => post.blocks && index > focused );
         const lang = getLang( meData.me.lang );
 
-        console.log( recent, next );
+
+        const focusedblock = blocks[focused];
+        console.log("---------------------------");
+        console.log("Focused Block : ", focusedblock);
+        console.log("Recent Block : ", recent);
+        console.log("Next Block : ", next);
 
         return (
             <Container>
@@ -78,6 +82,7 @@ export default () => {
                     doings={meData.me.doings}
                     lang={lang}
                     focused={focused}
+                    focusedblock={focusedblock}
                     recent={recent}
                     now={now}
                     next={next}

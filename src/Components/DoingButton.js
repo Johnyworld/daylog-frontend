@@ -7,7 +7,7 @@ import { languages } from '../Util/Languages';
 import Words from '../Lang/Words.json'
 import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
-import { TODAY_QUERY } from '../Router';
+import { TODAY_QUERY } from './TodayQueries';
 import { UPLOAD } from './WhatNow';
 
 const Container = styled.button`

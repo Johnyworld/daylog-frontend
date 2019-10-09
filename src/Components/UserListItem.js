@@ -11,7 +11,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { FEED_QUERY } from '../Routes/Feed';
 import { SEE_FOLLOWERS } from './Followers';
 import { SEE_FOLLOWING } from './Following';
-import { ME } from '../Router';
+import { ME } from './TodayQueries';
 
 const Container = styled.li`
     display: flex;

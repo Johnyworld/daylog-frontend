@@ -11,7 +11,7 @@ import LargeButton from './LargeButton';
 import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { UPLOAD } from './WhatNow';
-import { TODAY_QUERY } from '../Router';
+import { TODAY_QUERY } from './TodayQueries';
 import TextRegular from './TextRegular';
 import { EDIT_POST } from './SetScore';
 import { getEndAt } from '../Util/Convertors';
@@ -60,7 +60,6 @@ const LargeButtonStyled = styled(LargeButton)`
 `;
 
 export default ({ doings, recent, closePopup, focused, now, lang }) => {
-    console.log(recent)
     const [ selectedDoing, setSelectedDoing ] = useState(null);
     const [ isStill, setIsStill ] = useState(false);
     const location = useInput('');

@@ -155,7 +155,6 @@ export default () => {
                     setTimeout(()=>{ canClick = true }, 1000);
                 }
             } catch(e) {
-                console.log(e);
                 setTimeout(()=>{ canClick = true }, 1000);
             }
         } 

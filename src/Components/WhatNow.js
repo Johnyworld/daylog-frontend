@@ -11,8 +11,7 @@ import { gql } from 'apollo-boost';
 import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
-import { TODAY_QUERY } from '../Router';
-import { blockToTime, blockConvertor } from '../Util/Convertors';
+import { TODAY_QUERY } from './TodayQueries';
 
 export const UPLOAD = gql`
     mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float ) {
@@ -63,7 +62,7 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ doings, lang, recent, focused, now, next, className }) => {
+export default ({ doings, lang, recent, focused, focusedblock, now, next, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
@@ -97,7 +96,6 @@ export default ({ doings, lang, recent, focused, now, next, className }) => {
     }
 
     const onClickPull = () => {
-        console.log("pull");
         pullMutation();
     }
 
