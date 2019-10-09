@@ -51,7 +51,7 @@ export default ({ icon, size, color="#222" }) => {
         <svg xmlns="http://www.w3.org/2000/svg" 
             width={sizeNum} 
             height={sizeNum} 
-            viewBox={`0 0 ${sizeNum} ${sizeNum}`}>
+            viewBox={`0 0 24 24`}>
             <path fill="none" stroke={color} strokeLinecap='round' strokeLinejoin='round' strokeMiterlimit={10} d="M14.5,0.5H8.1c-4.2,0-7.6,3.4-7.6,7.6v1.1c0,3.6,2.5,6.6,5.9,7.4c0,0-0.1,2.2-3.1,4.1c5.3,0.2,7.9-3.9,7.9-3.9
             h3.3c4.2,0,7.6-3.4,7.6-7.6V8.1C22.1,3.9,18.7,0.5,14.5,0.5z"/>
         </svg>
@@ -84,6 +84,19 @@ export default ({ icon, size, color="#222" }) => {
             <line fill="none" stroke={color} x1="22.4" y1="22.4" x2="1.6" y2="1.6"/>
         </svg>
     )
+
+    if ( icon === "plus" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <line fill="none" stroke={color} x1="23.6" y1="12" x2="0.4" y2="12"/>
+            <line fill="none" stroke={color} x1="12" y1="23.6" x2="12" y2="0.4"/>
+        </svg>
+    )
+
+
+
 
     if ( icon === "check" ) return (
         <svg xmlns="http://www.w3.org/2000/svg" 
