@@ -279,6 +279,10 @@
         "kr" : "위치",
         "en" : "Location"
     },
+    "editLocation" : {
+        "kr" : "위치 수정",
+        "en" : "Edit location"
+    },
     "still" : {
         "kr" : "이어서..",
         "en" : "Still.."

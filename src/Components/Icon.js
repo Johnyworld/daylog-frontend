@@ -171,5 +171,15 @@ export default ({ icon, size, color="#222" }) => {
             </g>
         </svg> 
     )
-}
 
+    if ( icon === "location" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <path fill="none" stroke={color} strokeMiterlimit="10" d="M19.6,8.1c0,4.2-3,9.3-7.6,14.7C8.1,17.4,4.4,12.3,4.4,8.1S7.8,0.6,12,0.6S19.6,3.9,19.6,8.1z"/>
+            <circle fill="none" stroke={color} strokeMiterlimit="10" cx="12" cy="8.5" r="3.2"/>
+        </svg> 
+    )
+
+}

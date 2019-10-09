@@ -33,6 +33,7 @@ class TimeBlocks extends Component {
                             doing={block.doing ? block.doing.name : null}
                             color={block.doing ? block.doing.color : null}
                             score={block.score}
+                            location={block.location}
                             blocks={block.blocks}
                             likesCount={block.likesCount}
                             commentsCount={block.commentsCount}

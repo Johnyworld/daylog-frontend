@@ -10,6 +10,7 @@ import TextSmall from './TextSmall';
 import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { TODAY_QUERY } from '../Router';
+import EditLocation from './EditLocation';
 
 const Container = styled.li`
     position: relative;
@@ -127,11 +128,12 @@ const Side = styled.div`
 
 
 const TimeBlock = ({
-    id, index, block, doing, color, score, blocks, likesCount, commentsCount, 
+    id, index, block, doing, color, score, location, blocks, likesCount, commentsCount, 
     lang, className, now, focused, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
+    const [ locationPopup, setLocationPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
 
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
@@ -161,8 +163,13 @@ const TimeBlock = ({
         setScorePopup(true);
     }
 
+    const onLocationPopup = () => {
+        setLocationPopup(true);
+    }
+
     const closePopup = () => {
         setScorePopup(false);
+        setLocationPopup(false);
     }
 
     const onClickDelete = () => {
@@ -231,8 +238,8 @@ const TimeBlock = ({
             }
             { doing && <>
                 <Side className="edit-and-delete">
-                    <button className="edit">
-                        <Icon icon="nut" size="small" color={Theme.c_blueDarker2} />
+                    <button onClick={onLocationPopup}>
+                        <Icon icon="location" size="small" color={Theme.c_blueDarker2} />
                     </button>
                     <button onClick={onClickDelete} className={`delete ${ confirmDelete && 'confirm-delete'}`} >
                         <Icon icon="x" size="small" color={ !confirmDelete ? Theme.c_blueDarker2 : "white" } />
@@ -256,6 +263,9 @@ const TimeBlock = ({
                     scoreState={scoreState}
                     setScoreState={setScoreState}
             />}
+            { locationPopup && 
+                <EditLocation id={id} location={location} lang={lang} closePopup={closePopup} />
+            }
         </Container>
     )
 }
