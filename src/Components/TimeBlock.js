@@ -55,6 +55,10 @@ const Container = styled.li`
         opacity: 0;
         pointer-events: none; 
     }
+    &.selected.focused .cut-post {
+        opacity: 1;
+        pointer-events: all;
+    }
 `;
 
 const Inner = styled.div`
@@ -97,6 +101,14 @@ const Side = styled.div`
             margin-right: 10px;
         }
     }
+
+    &.cut-post {
+        opacity: 0;
+        pointer-events: none;
+        transition: .3s;
+    }
+
+    &.cut-post,
     &.edit-and-delete {
         button {
             display: flex;
@@ -114,12 +126,34 @@ const Side = styled.div`
 `;
 
 
-const TimeBlock = ({ id, index, block, doing, color, score, blocks, likesCount, commentsCount, lang, className, setFocused }) => {
+const TimeBlock = ({
+    id, index, block, doing, color, score, blocks, likesCount, commentsCount, 
+    lang, className, now, focused, setFocused }) => {
+
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
+
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
         variables : { id, type: "delete" },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    })
+
+    const [ cutTopMutation ] = useMutation( EDIT_POST, { 
+        variables : { 
+            id,
+            startAt:  focused.index - ( 95-now ),
+            type: "startAt"
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    })
+
+    const [ cutBottomMutation ] = useMutation( EDIT_POST, { 
+        variables : { 
+            id,
+            endAt:  focused.index - ( 95-now ),
+            type: "endAt"
+        },
         refetchQueries: [{ query: TODAY_QUERY }]
     })
 
@@ -132,11 +166,16 @@ const TimeBlock = ({ id, index, block, doing, color, score, blocks, likesCount, 
     }
 
     const onClickDelete = () => {
-        if ( confirmDelete ) {
-            deletePostMutation();
-        } else {
-            setConfirmDelete(true);
-        }
+        if ( confirmDelete ) { deletePostMutation(); } 
+        else { setConfirmDelete(true); }
+    }
+
+    const onClickCutTop = () => {
+        cutTopMutation();
+    }
+
+    const onClickCutBottom = () => {
+        cutBottomMutation();
     }
 
     const selection = (e) => {
@@ -159,10 +198,7 @@ const TimeBlock = ({ id, index, block, doing, color, score, blocks, likesCount, 
             }
         });
 
-        setFocused({ 
-            index,
-            post: id
-        });
+        setFocused({ index, post: id });
 
         if ( last ) { children[last].classList.add("last"); }
         else { target.classList.add("last", "first"); }
@@ -183,17 +219,16 @@ const TimeBlock = ({ id, index, block, doing, color, score, blocks, likesCount, 
             <TimePrint>
                 { block%4 === 0 && ( block/4 > 9 ? block/4 : `0${block/4}` )}
             </TimePrint>
-            { scorePopup && 
-                <SetScore
-                    id={id}
-                    doing={doing}
-                    closePopup={closePopup}
-                    lang={lang}
-                    blocks={blocks}
-                    color={color}
-                    scoreState={scoreState}
-                    setScoreState={setScoreState}
-            />}
+            { !doing && id &&
+                <Side className="cut-post">
+                    <button onClick={onClickCutTop} >
+                        <Icon icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
+                    </button>
+                    <button onClick={onClickCutBottom} >
+                        <Icon icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
+                    </button>
+                </Side>
+            }
             { doing && <>
                 <Side className="edit-and-delete">
                     <button className="edit">
@@ -210,7 +245,17 @@ const TimeBlock = ({ id, index, block, doing, color, score, blocks, likesCount, 
                     <TextSmall string={commentsCount} />
                 </Side>
             </> }
-            
+            { scorePopup && 
+                <SetScore
+                    id={id}
+                    doing={doing}
+                    closePopup={closePopup}
+                    lang={lang}
+                    blocks={blocks}
+                    color={color}
+                    scoreState={scoreState}
+                    setScoreState={setScoreState}
+            />}
         </Container>
     )
 }

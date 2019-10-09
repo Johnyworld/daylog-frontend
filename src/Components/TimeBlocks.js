@@ -20,7 +20,7 @@ class TimeBlocks extends Component {
     }
 
     render() {
-        const { blocks, lang, setFocused } = this.props;
+        const { blocks, lang, now, focused, setFocused } = this.props;
         return (
             <Container ref={ ref => this.today = ref }>
                 { blocks.map((block, index) => {
@@ -37,6 +37,8 @@ class TimeBlocks extends Component {
                             likesCount={block.likesCount}
                             commentsCount={block.commentsCount}
                             lang={lang}
+                            now={now}
+                            focused={focused}
                             setFocused={setFocused}
                             className={index === blocks.length-1 ? "selected first last" : ""}
                         />

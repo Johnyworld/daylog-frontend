@@ -70,6 +70,8 @@ export default () => {
                 <TimeBlocks
                     blocks={blocks}
                     lang={lang}
+                    now={now}
+                    focused={focused}
                     setFocused={setFocused} 
                 />
                 <WhatNow
