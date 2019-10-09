@@ -82,7 +82,7 @@ const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused,
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
             doingId: id,
-            startAt: focused.index - ( 95-now )
+            startAt: focused - ( 95-now )
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     });

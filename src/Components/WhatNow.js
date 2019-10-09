@@ -69,7 +69,7 @@ export default ({ doings, lang, recent, focused, now, next, className }) => {
     const [ stillMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: recent && recent.id,
-            endAt: focused.index - ( 95-now ) + 1,
+            endAt: focused - ( 95-now ) + 1,
             type: "endAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
@@ -78,7 +78,7 @@ export default ({ doings, lang, recent, focused, now, next, className }) => {
     const [ pullMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: next && next.id,
-            startAt: focused.index - ( 95-now ),
+            startAt: focused - ( 95-now ),
             type: "startAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]

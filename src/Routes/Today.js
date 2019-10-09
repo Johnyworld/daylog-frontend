@@ -52,15 +52,15 @@ const initBlocks = ( todayPosts, foundation, now ) => {
 export default () => {
     const { data, loading } = useQuery( TODAY_QUERY );
     const { data: meData, loading: meLoading } = useQuery(ME);
-    const [ focused, setFocused ] = useState({ index : 95 });
+    const [ focused, setFocused ] = useState( 95 );
     
     if ( !loading && data && data.seeTodayPosts && meData && meData.me && !meLoading ) {
         const now = getNowBlock();
         let foundation = blocksFoundation(now);
         let blocks = initBlocks(data.seeTodayPosts, foundation, now);
 
-        const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused.index >= 95 );
-        const next = blocks.find(( post, index ) => post.blocks && index > focused.index );
+        const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );
+        const next = blocks.find(( post, index ) => post.blocks && index > focused );
         const lang = getLang( meData.me.lang );
 
         console.log( recent, next );
@@ -81,7 +81,7 @@ export default () => {
                     recent={recent}
                     now={now}
                     next={next}
-                    className={ blocks[focused.index].doing ? "disabled" : "" } 
+                    className={ blocks[focused].doing ? "disabled" : "" } 
                 />
             </Container>
         )

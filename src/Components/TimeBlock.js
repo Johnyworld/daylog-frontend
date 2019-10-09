@@ -144,7 +144,7 @@ const TimeBlock = ({
     const [ cutTopMutation ] = useMutation( EDIT_POST, { 
         variables : { 
             id,
-            startAt:  focused.index - ( 95-now ),
+            startAt:  focused - ( 95-now ),
             type: "startAt"
         },
         refetchQueries: [{ query: TODAY_QUERY }]
@@ -153,7 +153,7 @@ const TimeBlock = ({
     const [ cutBottomMutation ] = useMutation( EDIT_POST, { 
         variables : { 
             id,
-            endAt:  focused.index - ( 95-now ),
+            endAt:  focused - ( 95-now ),
             type: "endAt"
         },
         refetchQueries: [{ query: TODAY_QUERY }]
@@ -205,7 +205,7 @@ const TimeBlock = ({
             }
         });
 
-        setFocused({ index, post: id });
+        setFocused(index);
 
         if ( last ) { children[last].classList.add("last"); }
         else { target.classList.add("last", "first"); }
