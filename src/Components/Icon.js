@@ -190,4 +190,17 @@ export default ({ icon, size, color="#222" }) => {
         </svg> 
     )
 
+    if ( icon === "pencel" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <g>
+                <path fill={color} d="M16.7,2.4l4.7,4.7L10,18.5l-7.5,3.3c0,0-0.1,0-0.1,0c-0.1,0-0.2-0.1-0.3-0.2c-0.1-0.1,0-0.3,0-0.3l3.2-7.6
+			L16.7,2.4 M16.7,1L4.4,13.2L1.1,21c-0.4,0.9,0.3,1.9,1.2,1.9c0.2,0,0.4,0,0.5-0.1l7.7-3.4L22.8,7.1L16.7,1L16.7,1z"/>
+            </g>
+            <line fill="none" stroke={color} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" x1="5" y1="13.8" x2="9.9" y2="18.7"/>
+            <polygon fill={color} points="2.6,20 4.1,21.5 2,22.4 1.4,21.8"/>
+        </svg> 
+    )
 }

@@ -64,6 +64,7 @@ export default withRouter(({ history }) => {
             isDepth = true;
             if ( route === "post" ) text = Words.comments;
             if ( route === "search" ) text = Words.search;
+            if ( route === "doing" ) text = Words.editDoing;
         }
     
         const changeTab = (e) => {

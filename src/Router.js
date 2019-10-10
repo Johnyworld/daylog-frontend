@@ -9,6 +9,7 @@ import Post from './Routes/Post';
 import Search from './Routes/Search';
 import Header from './Components/Header';
 import EditProfile from './Routes/EditProfile';
+import EditDoings from './Routes/EditDoings';
 
 const LoggedInRoutes = () => {
     return (
@@ -22,6 +23,7 @@ const LoggedInRoutes = () => {
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
                 <Route path='/search'component={Search} />
+                <Route path='/doing'component={EditDoings} />
                 <Redirect from="*" to="/" />
             </Switch>
         </>

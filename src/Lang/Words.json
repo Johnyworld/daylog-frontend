@@ -290,5 +290,9 @@
     "pullUp" : {
         "kr" : "당기기",
         "en" : "Pull"
+    },
+    "editDoing" : {
+        "kr" : "일과 수정하기",
+        "en" : "Edit Doings"
     }
 }

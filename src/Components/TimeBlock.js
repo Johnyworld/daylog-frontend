@@ -18,7 +18,7 @@ const Container = styled.li`
     display: flex;
     padding: 0 5px;
     width: 55vw;
-    height: 36px;
+    height: 32px;
     background-color: ${({ theme })=> theme.c_lightGrayBrighter1 };
     &:not(:first-child) { border-top: 1px solid white; }
     &.hour { border-top: 3px solid white; }
