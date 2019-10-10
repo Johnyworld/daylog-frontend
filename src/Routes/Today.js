@@ -7,9 +7,37 @@ import { getLang } from '../Util/Languages';
 import TimeBlocks from '../Components/TimeBlocks';
 import { getNowBlock, getYyyymmdd } from '../Util/Convertors';
 import WhatNow from '../Components/WhatNow';
+import Icon from '../Components/Icon';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
+import DayComment from '../Components/DayComment';
+import Popup from '../Components/Popup';
+import Words from '../Lang/Words.json';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
+`;
+
+const Bottom = styled.div`
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    height: 64px;
+    width: 100%;
+    border-top: 1px solid ${({ theme })=> theme.c_lightGray };
+    background-color: white;
+    z-index: 150;
+    > * {
+        width: 50%;
+        &:not(:last-child) {
+            border-right: 1px solid ${({ theme })=> theme.c_lightGray };
+        }
+    }
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 
 const blocksFoundation = ( now ) => {
@@ -68,7 +96,6 @@ export default () => {
         const next = blocks.find(( post, index ) => post.blocks && index > focused );
         const lang = getLang( meData.me.lang );
 
-
         const focusedBlock = blocks[focused];
         console.log("---------------------------");
         console.log("Focused Block : ", focusedBlock);
@@ -96,6 +123,14 @@ export default () => {
                     next={next}
                     className={ blocks[focused].doing ? "disabled" : "" } 
                 />
+                <Bottom>
+                    <button onClick={onPopupDayComment} >
+                        <Icon icon="bubble" size="medium" />
+                    </button>
+                    <Link to={`/doing`}>
+                        <Icon icon="nut" size="medium" />
+                    </Link>
+                </Bottom>
             </Container>
         )
     } else return <Loader />

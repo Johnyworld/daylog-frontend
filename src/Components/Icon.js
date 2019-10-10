@@ -52,8 +52,9 @@ export default ({ icon, size, color="#222" }) => {
             width={sizeNum} 
             height={sizeNum} 
             viewBox={`0 0 24 24`}>
-            <path fill="none" stroke={color} strokeLinecap='round' strokeLinejoin='round' strokeMiterlimit={10} d="M14.5,0.5H8.1c-4.2,0-7.6,3.4-7.6,7.6v1.1c0,3.6,2.5,6.6,5.9,7.4c0,0-0.1,2.2-3.1,4.1c5.3,0.2,7.9-3.9,7.9-3.9
-            h3.3c4.2,0,7.6-3.4,7.6-7.6V8.1C22.1,3.9,18.7,0.5,14.5,0.5z"/>
+            <path fill="none" stroke={color} strokeLinecap='round' strokeLinejoin='round' strokeMiterlimit={10} 
+                d="M0.9,10.6c0,4.1,2.5,6.4,5.9,7.2c0,0-0.1,2.2-3.1,4.1c4.5,0.3,7.2-2.3,7.7-3.6c6.3,0.6,11.5-2.7,11.5-8.3
+                c0-4.7-4.9-7.9-10.7-7.9C6.6,2.1,0.9,4.9,0.9,10.6z"/>
         </svg>
     )
 
@@ -121,8 +122,8 @@ export default ({ icon, size, color="#222" }) => {
             width={sizeNum} 
             height={sizeNum} 
             viewBox={`0 0 24 24`}>
-            <circle fill="none" stroke={color} cx="12" cy="12" r="5.7"/>
-            <polygon fill="none" stroke={color} points="2.1,6.3 2.1,17.7 12,23.5 21.9,17.7 21.9,6.3 12,0.6 "/>
+            <circle fill="none" stroke={color} cx="12" cy="12" r="5.4"/>
+            <polygon fill="none" stroke={color} points="2.6,6.6 2.6,17.4 12,22.9 21.4,17.4 21.4,6.6 12,1.1 "/>
         </svg> 
     )
 
