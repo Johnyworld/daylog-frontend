@@ -80,8 +80,8 @@ export default ({ icon, size, color="#222" }) => {
             width={sizeNum} 
             height={sizeNum} 
             viewBox={`0 0 24 24`}>
-            <line fill="none" stroke={color} x1="22.4" y1="1.6" x2="1.6" y2="22.4"/>
-            <line fill="none" stroke={color} x1="22.4" y1="22.4" x2="1.6" y2="1.6"/>
+            <line fill="none" stroke={color} x1="21" y1="3" x2="3" y2="21"/>
+            <line fill="none" stroke={color} x1="21" y1="21" x2="3" y2="3"/>
         </svg>
     )
 
