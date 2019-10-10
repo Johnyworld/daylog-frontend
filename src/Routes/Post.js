@@ -43,13 +43,16 @@ export const SEE_POST = gql`
             likesCount
             commentsCount
             doing {
+                id
                 name
                 color
                 category {
+                    id
                     name
                 }
             }
             user {
+                id
                 username
                 avatar
             }
@@ -58,6 +61,7 @@ export const SEE_POST = gql`
                 text
                 createdAt
                 user {
+                    id
                     username
                     avatar
                 }

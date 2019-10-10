@@ -17,11 +17,14 @@ const SEE_MY_POSTS = gql`
         seeMyPosts( username: $username, yyyymmdd: $yyyymmdd ) {
             id
             doing {
+                id
                 name
                 color
                 category {
+                    id
                     name
                     lang {
+                        id
                         kr
                         en
                     }

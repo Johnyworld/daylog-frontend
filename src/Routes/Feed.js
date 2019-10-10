@@ -22,6 +22,7 @@ export const FEED_QUERY = gql`
                 isLiked
                 likesCount
                 user {
+                    id
                     username
                     avatar
                 }
@@ -33,7 +34,9 @@ export const FEED_QUERY = gql`
                     name
                     color
                     category {
+                        id
                         lang {
+                            id
                             kr
                             en
                         }
@@ -57,6 +60,7 @@ export const FEED_QUERY = gql`
                     text
                     createdAt
                     user {
+                        id
                         username
                         avatar
                     }

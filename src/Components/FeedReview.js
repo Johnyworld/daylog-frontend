@@ -18,6 +18,7 @@ const SEE_REVIEW = gql`
             isLiked
             likesCount
             user {
+                id
                 username
                 avatar
             }
