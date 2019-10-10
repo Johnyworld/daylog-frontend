@@ -10,8 +10,6 @@ import WhatNow from '../Components/WhatNow';
 import Icon from '../Components/Icon';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import DayComment from '../Components/DayComment';
-import Popup from '../Components/Popup';
-import Words from '../Lang/Words.json';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
@@ -86,6 +84,7 @@ export default () => {
     const { data, loading } = useQuery( TODAY_QUERY );
     const { data: meData, loading: meLoading } = useQuery(ME);
     const [ focused, setFocused ] = useState( 95 );
+    const [ popupDayComment, setPopupDayComment ] = useState(false);
     
     if ( !loading && data && data.seeTodayPosts && meData && meData.me && !meLoading ) {
         const now = getNowBlock();
@@ -101,6 +100,15 @@ export default () => {
         console.log("Focused Block : ", focusedBlock);
         console.log("Recent Block : ", recent);
         console.log("Next Block : ", next);
+
+        const onPopupDayComment = () => {
+            setPopupDayComment(true);
+        }
+
+        const closePopup = () => {
+            setPopupDayComment(false);
+        }
+
 
         return (
             <Container>
@@ -123,6 +131,13 @@ export default () => {
                     next={next}
                     className={ blocks[focused].doing ? "disabled" : "" } 
                 />
+                { popupDayComment && 
+                    <DayComment
+                        lang={lang}
+                        closePopup={closePopup}
+                        me={meData.me}
+                    /> 
+                }
                 <Bottom>
                     <button onClick={onPopupDayComment} >
                         <Icon icon="bubble" size="medium" />

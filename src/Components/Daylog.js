@@ -14,18 +14,6 @@ const SEE_DAYLOG = gql`
                 text
                 likesCount
             }
-            dayComments {
-                id
-                text
-                createdAt
-                user {
-                    avatar
-                    username
-                }
-                post {
-                    id
-                }
-            }
             averageScore
             doingLogs {
                 name
