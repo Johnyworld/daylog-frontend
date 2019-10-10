@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import Languages from '../Util/Languages';
 
 const Container = styled.span`
+    display: inline-block;
     font-size: 14px;
+    font-weight: 300;
     line-height: 1.4;
-    font-weight: 400;
     ${({ weight }) => weight === 'bold' && ` 
         font-weight: 700;
     `}

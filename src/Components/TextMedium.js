@@ -5,6 +5,7 @@ import Languages from '../Util/Languages';
 
 const Container = styled.span`
     font-size: 16px;
+    font-weight: 300;
     line-height: 1.4;
     ${({ weight }) => weight === 'bold' && ` 
         font-weight: 700;
