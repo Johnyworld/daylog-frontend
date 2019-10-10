@@ -77,12 +77,13 @@ const Container = styled.button`
     }
 `;
 
-const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused, now }) => {
+const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused, focusedBlock, now }) => {
 
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
             doingId: id,
-            startAt: focused - ( 95-now )
+            startAt: focusedBlock && focusedBlock.block,
+            option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     });

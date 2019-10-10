@@ -14,7 +14,7 @@ import { UPLOAD } from './WhatNow';
 import { TODAY_QUERY } from './TodayQueries';
 import TextRegular from './TextRegular';
 import { EDIT_POST } from './SetScore';
-import { getEndAt } from '../Util/Convertors';
+import { getStillEndAt, getPullStartAt } from '../Util/Util';
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };
@@ -59,10 +59,15 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-left: auto;
 `;
 
-export default ({ doings, recent, closePopup, focused, now, lang }) => {
+export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, lang }) => {
     const [ selectedDoing, setSelectedDoing ] = useState(null);
     const [ isStill, setIsStill ] = useState(false);
+    const [ isPull, setIsPull ] = useState(false);
+
     const location = useInput('');
+
+    const stillEndAt = getStillEndAt( focusedBlock, recent ); 
+    const pullStartAt = getPullStartAt( focusedBlock, next );
 
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
@@ -76,9 +81,19 @@ export default ({ doings, recent, closePopup, focused, now, lang }) => {
     const [ stillMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: recent && recent.id, 
-            endAt: focused - ( 95-now ) + 1,
+            endAt: stillEndAt,
             location: location.value,
             type: "endAt" 
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
+    const [ pullMutation ] = useMutation( EDIT_POST, {
+        variables: { 
+            id: next && next.id,
+            startAt: pullStartAt,
+            location: location.value,
+            type: "startAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     });
@@ -86,29 +101,43 @@ export default ({ doings, recent, closePopup, focused, now, lang }) => {
     const onClickButton = (e) => {
         const childNodes = e.currentTarget.parentNode.childNodes;
         setSelectedDoing(e.currentTarget.dataset.id);
-        if ( e.currentTarget.classList.contains('recent') ) {
-            location.setValue(recent.location);
-            setIsStill(true);
-        } else {
-            location.setValue("");
-            setIsStill(false); 
-        }
-
+        
+        // Set classname for style
         childNodes.forEach( node => {
             node.classList.remove('selected');
         });
         e.currentTarget.classList.add('selected');
+
+        // Set location value of recent (or next) post.
+        if ( e.currentTarget.classList.contains('recent') ) {
+            location.setValue(recent.location);
+            setIsStill(true);
+        } else if ( e.currentTarget.classList.contains('next') ) {
+            location.setValue(next.location);
+            setIsPull(true); 
+        } else {
+            location.setValue("");
+            setIsStill(false); 
+            setIsPull(false);
+        }
+
     }
 
     const onClickSubmit = () => {
-        if ( recent.doing.id === selectedDoing && isStill ) {
+        if ( recent && recent.doing.id === selectedDoing && isStill ) {
             stillMutation();
+            closePopup();
+        } else if ( next && next.doing.id === selectedDoing && isPull ) {
+            pullMutation();
             closePopup();
         } else {
             uploadMutation();
             closePopup();
         }
     }
+    
+    const recentDoingId = recent ? recent.doing.id : "";
+    const nextDoingId = next ? next.doing.id : "";
 
     return (
         <Container>
@@ -118,7 +147,7 @@ export default ({ doings, recent, closePopup, focused, now, lang }) => {
                     <Icon icon="nut" size="medium" />
                 </LinkStyled>
                 <DoingGrid>
-                    { recent && 
+                    { recent && recent.doing &&
                         <DoingButton
                             key={recent.doing.id}
                             id={recent.doing.id}
@@ -131,8 +160,23 @@ export default ({ doings, recent, closePopup, focused, now, lang }) => {
                             className="recent"
                         /> 
                     }
+                    { next && next.doing &&
+                        <DoingButton
+                            key={next.doing.id}
+                            id={next.doing.id}
+                            name={next.doing.name}
+                            icon={next.doing.icon}
+                            color={next.doing.color}
+                            lang={lang}
+                            onClick={onClickButton}
+                            focused={focused}
+                            focusedBlock={focusedBlock}
+                            now={now}
+                            className="next"
+                        /> 
+                    }
                     { doings[0] && doings.map( doing => (
-                        doing.id !== recent.doing.id &&
+                        doing.id !== recentDoingId && doing.id !== nextDoingId &&
                         <DoingButton
                             key={doing.id}
                             id={doing.id}

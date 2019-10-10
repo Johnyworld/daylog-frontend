@@ -11,6 +11,7 @@ import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { TODAY_QUERY } from './TodayQueries';
 import EditLocation from './EditLocation';
+import { getStillEndAt, getCutTopEndAt, getCutTopStartAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
 
 const Container = styled.li`
     position: relative;
@@ -130,12 +131,19 @@ const Side = styled.div`
 
 const TimeBlock = ({
     id, index, block, doing, color, score, location, blocks, likesCount, commentsCount, 
-    lang, className, now, focused, setFocused }) => {
+    lang, className, now, focused, focusedBlock, recent, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
     const [ locationPopup, setLocationPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
+
+    const cutTopStartAt = getCutTopStartAt( focusedBlock, recent );
+    const cutTopEndAt = getCutTopEndAt( focusedBlock, recent );
+    const cutTopType = getCutTopType( focusedBlock, recent )
+    const cutBottomEndAt = getCutBottomEndAt( focusedBlock, recent );
+
+    console.log( cutBottomEndAt );
 
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
         variables : { id, type: "delete" },
@@ -145,8 +153,9 @@ const TimeBlock = ({
     const [ cutTopMutation ] = useMutation( EDIT_POST, { 
         variables : { 
             id,
-            startAt:  focused - ( 95-now ),
-            type: "startAt"
+            startAt: cutTopStartAt,
+            endAt: cutTopEndAt,
+            type: cutTopType
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     })
@@ -154,7 +163,7 @@ const TimeBlock = ({
     const [ cutBottomMutation ] = useMutation( EDIT_POST, { 
         variables : { 
             id,
-            endAt:  focused - ( 95-now ),
+            endAt: cutBottomEndAt,
             type: "endAt"
         },
         refetchQueries: [{ query: TODAY_QUERY }]

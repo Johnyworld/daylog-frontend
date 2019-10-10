@@ -38,6 +38,12 @@ const initBlocks = ( todayPosts, foundation, now ) => {
         const num = 95 - ( now - startAt );
         foundation[num] = { ...foundation[num], ...post };
 
+        if ( post.yyyymmdd === yyyymmddYesterday ) {
+            foundation[num].postYesterday = true;
+        } else {
+            foundation[num].postYesterday = false;
+        }
+
         for ( let i=1; i<post.blocks; i++ ) {
             if ( foundation[num+i] ) {
                 foundation[num+i].id = foundation[num].id;
@@ -63,9 +69,9 @@ export default () => {
         const lang = getLang( meData.me.lang );
 
 
-        const focusedblock = blocks[focused];
+        const focusedBlock = blocks[focused];
         console.log("---------------------------");
-        console.log("Focused Block : ", focusedblock);
+        console.log("Focused Block : ", focusedBlock);
         console.log("Recent Block : ", recent);
         console.log("Next Block : ", next);
 
@@ -76,13 +82,15 @@ export default () => {
                     lang={lang}
                     now={now}
                     focused={focused}
+                    focusedBlock={focusedBlock}
+                    recent={recent}
                     setFocused={setFocused} 
                 />
                 <WhatNow
                     doings={meData.me.doings}
                     lang={lang}
                     focused={focused}
-                    focusedblock={focusedblock}
+                    focusedBlock={focusedBlock}
                     recent={recent}
                     now={now}
                     next={next}

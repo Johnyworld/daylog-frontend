@@ -12,10 +12,11 @@ import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
 import { TODAY_QUERY } from './TodayQueries';
+import { getStillEndAt, getPullStartAt } from '../Util/Util';
 
 export const UPLOAD = gql`
-    mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float ) {
-        upload( doingId: $doingId, location: $location, startAt: $startAt, score: $score ) {
+    mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float, $option: String ) {
+        upload( doingId: $doingId, location: $location, startAt: $startAt, score: $score, option: $option ) {
             id
         }
     }
@@ -62,13 +63,16 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ doings, lang, recent, focused, focusedblock, now, next, className }) => {
+export default ({ doings, lang, recent, focused, focusedBlock, now, next, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
+
+    const stillEndAt = getStillEndAt( focusedBlock, recent ); 
+    const pullStartAt = getPullStartAt( focusedBlock, next );
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: recent && recent.id,
-            endAt: focused - ( 95-now ) + 1,
+            endAt: stillEndAt,
             type: "endAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
@@ -77,7 +81,7 @@ export default ({ doings, lang, recent, focused, focusedblock, now, next, classN
     const [ pullMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: next && next.id,
-            startAt: focused - ( 95-now ),
+            startAt: pullStartAt,
             type: "startAt" 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
@@ -121,7 +125,7 @@ export default ({ doings, lang, recent, focused, focusedblock, now, next, classN
             </Header>
             <ScrollContainer>
                 <DoingButtons width={width}>
-                    { recent &&
+                    { recent && recent.doing &&
                         <DoingButton
                             key={recent.doing.id}
                             id={recent.doing.id}
@@ -131,11 +135,12 @@ export default ({ doings, lang, recent, focused, focusedblock, now, next, classN
                             lang={lang}
                             onClick={onClickStill}
                             focused={focused}
+                            focusedBlock={focusedBlock}
                             now={now}
                             className="recent"
                         /> 
                     } 
-                    { next &&
+                    { next && next.doing &&
                         <DoingButton
                             key={next.doing.id}
                             id={next.doing.id}
@@ -145,6 +150,7 @@ export default ({ doings, lang, recent, focused, focusedblock, now, next, classN
                             lang={lang}
                             onClick={onClickPull}
                             focused={focused}
+                            focusedBlock={focusedBlock}
                             now={now}
                             className="next"
                         /> 
@@ -159,12 +165,23 @@ export default ({ doings, lang, recent, focused, focusedblock, now, next, classN
                             color={doing.color}
                             lang={lang}
                             focused={focused}
+                            focusedBlock={focusedBlock}
                             now={now}
                         />
                     ))}
                 </DoingButtons>
             </ScrollContainer>
-            { nowPopup && <NowPopup doings={doings} recent={recent} closePopup={closePopup} lang={lang} focused={focused} now={now} /> }
+            { nowPopup && 
+                <NowPopup 
+                    doings={doings}
+                    recent={recent}
+                    closePopup={closePopup}
+                    lang={lang}
+                    focused={focused}
+                    focusedBlock={focusedBlock}
+                    now={now}
+                    next={next}
+                /> }
         </Container>
     )
 }
