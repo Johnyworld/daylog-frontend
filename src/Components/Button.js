@@ -9,6 +9,9 @@ const Container = styled.button`
     padding: 5px 35px;
     border-radius: 5px;
     color: white;
+    &.narrow {
+        padding: 5px 15px;
+    }
 `;
 
 const LinkStyled = styled(Link)`
@@ -17,18 +20,21 @@ const LinkStyled = styled(Link)`
     padding: 5px 35px;
     border-radius: 5px;
     color: white; 
+    &.narrow {
+        padding: 5px 15px;
+    }
 `;
 
-const Button = ({ onClick, text, lang, to }) => {
+const Button = ({ onClick, text, lang, to, className }) => {
     if ( to ) {
         return (
-            <LinkStyled to={to}>
+            <LinkStyled to={to} className={className} >
                 <TextRegular text={text} lang={lang} />
             </LinkStyled>
         )
     } else {
         return (
-            <Container onClick={onClick} >
+            <Container onClick={onClick} className={className} >
                 <TextRegular text={text} lang={lang} />
             </Container>
         )
