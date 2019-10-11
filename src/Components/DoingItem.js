@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TextMedium from './TextMedium';
 import Icon from './Icon';
 import Theme from '../Styles/Theme';
+import IconButton from './IconButton';
 
 const Container = styled.li`
     position: relative;
@@ -65,7 +66,7 @@ const DoingItem = ({ id, name, color, icon, author, me, lang }) => {
                     </DoingIcon>
                 </IconContainer>
                 { me.id === author.id
-                    ? <button><EditIcon icon="pencel" size="medium" /></button>
+                    ? <IconButton icon="pencel" size="medium" />
                     : <EditIcon icon="pencel" size="medium" color={Theme.c_lightGray} />
                 }
             </Column>

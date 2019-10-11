@@ -1,10 +1,11 @@
 import React from 'react';
+import Theme from '../Styles/Theme';
 
 export default ({ icon, size, color="#222" }) => {
     let sizeNum;
 
-    if ( size === "small" ) sizeNum = 16;
-    if ( size === "medium" ) sizeNum = 24;
+    if ( size === "small" ) sizeNum = Theme.size_iconSmall;
+    if ( size === "medium" ) sizeNum = Theme.size_iconMedium;
 
     if ( icon === "search" ) return (
         <svg xmlns="http://www.w3.org/2000/svg" 
