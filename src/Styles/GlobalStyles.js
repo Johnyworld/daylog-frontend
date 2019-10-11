@@ -36,6 +36,13 @@ export default createGlobalStyle`
         outline: none;
     }
 
+    select {
+        appearance:none;
+        -webkit-appearance:none;
+        -moz-appearance:none;
+        -o-appearance:none;
+    }
+
     .pop { animation-name: pop; }
     .unpop { animation-name: unpop; }
 

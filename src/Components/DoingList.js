@@ -17,7 +17,7 @@ export default ({ category, doings, me, lang }) => {
         <Container>
             <TextSmall text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
             { doings.map( doing => (
-                doing.category.name === category.name &&
+                doing.category.name === category.value &&
                 <DoingItem 
                     key={doing.id}
                     id={doing.id}
