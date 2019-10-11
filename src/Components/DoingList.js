@@ -20,7 +20,6 @@ export default ({ category, doings, me, lang }) => {
                 doing.category.name === category.value &&
                 <DoingItem 
                     key={doing.id}
-                    id={doing.id}
                     name={doing.name}
                     color={doing.color}
                     icon={doing.icon}

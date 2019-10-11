@@ -6,12 +6,15 @@ import { languages } from '../Util/Languages';
 const Container = styled.div`
     position: relative;
     width: 100%;
+    &.left-align {
+        select { padding-left: 0; }
+    }
 `;
 
 const SelectInput = styled.select`
     ${({ theme })=> theme.f_regular };
     ${({ theme })=> theme.inputUnderline };
-    padding: 10px 0;
+    padding: 10px 3px;
     background: none;
     width: 100%;
     outline: none;
@@ -32,9 +35,9 @@ const Icon = styled.div`
     pointer-events: none;
 `;
 
-const Select = ({ list, value, onChange, lang }) => {
+const Select = ({ list, value, onChange, lang, className }) => {
     return (
-        <Container className="select">
+        <Container className={`select ${className}`}>
             <SelectInput onChange={onChange} value={value} >
                 { list.map( item => (
                     <option key={item.value} value={item.value}>{

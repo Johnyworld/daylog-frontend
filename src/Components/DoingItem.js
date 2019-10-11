@@ -4,6 +4,8 @@ import TextMedium from './TextMedium';
 import Icon from './Icon';
 import Theme from '../Styles/Theme';
 import IconButton from './IconButton';
+import Button from './Button';
+import Words from '../Lang/Words.json';
 
 const Container = styled.li`
     position: relative;
@@ -19,7 +21,6 @@ const Container = styled.li`
 `;
 
 const Column = styled.div`
-
     display: flex;
     align-items: center;
 `;
@@ -40,10 +41,12 @@ const EditIcon = styled(Icon)`
 `;
 
 const IconContainer = styled.div`
-    margin-right: 15px;
-    padding-right: 15px;
-    box-sizing: content-box;
-    border-right: 1px solid ${({ theme })=> theme.c_lightGray };
+    &:not(:last-child) {
+        margin-right: 15px;
+        padding-right: 15px;
+        box-sizing: content-box;
+        border-right: 1px solid ${({ theme })=> theme.c_lightGray };
+    }
 `;
 
 const DoingIcon = styled.div`
@@ -52,7 +55,7 @@ const DoingIcon = styled.div`
     background-color: #ddd;
 `;
 
-const DoingItem = ({ id, name, color, icon, author, me, lang }) => {
+const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) => {
     return (
         <Container>
             <Column>
@@ -65,9 +68,14 @@ const DoingItem = ({ id, name, color, icon, author, me, lang }) => {
 
                     </DoingIcon>
                 </IconContainer>
-                { me.id === author.id
-                    ? <IconButton icon="pencel" size="medium" />
-                    : <EditIcon icon="pencel" size="medium" color={Theme.c_lightGray} />
+                { me &&
+                    ( me.id === author.id
+                        ? <IconButton icon="pencel" size="medium" />
+                        : <EditIcon icon="pencel" size="medium" color={Theme.c_lightGray} />
+                    )
+                }
+                { id &&
+                    <Button text={Words.select} lang={lang} className="narrow" onClick={onSelectDoing.bind(this, id)} />
                 }
             </Column>
         </Container>
