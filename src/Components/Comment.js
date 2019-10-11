@@ -22,7 +22,8 @@ const Container = styled.li`
 
 const Box = styled.div`
     position: relative;
-    padding: 10px;
+    padding: 10px 30px;
+    border-top: 1px solid ${({ theme })=> theme.c_lightGray }
     background-color: white;
     display: flex;
     transition: .5s;

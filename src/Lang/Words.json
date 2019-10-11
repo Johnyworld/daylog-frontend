@@ -47,6 +47,10 @@
         "kr" : "댓글",
         "en" : "Comments"
     },
+    "dayComments" : {
+        "kr" : "최근 댓글 모아보기",
+        "en" : "Recent comments"
+    },
     "search" : {
         "kr" : "검색",
         "en" : "Search"
@@ -294,5 +298,13 @@
     "editDoing" : {
         "kr" : "일과 수정하기",
         "en" : "Edit Doings"
+    },
+    "addDoing" : {
+        "kr" : "일과 추가하기",
+        "en" : "Add"
+    },
+    "addDoingRemark" : {
+        "kr" : "새로운 일과를 추가합니다.",
+        "en" : "Add a new Doing"
     }
 }

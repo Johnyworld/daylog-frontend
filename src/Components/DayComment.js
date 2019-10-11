@@ -41,9 +41,7 @@ const Popup = styled.div`
 
 const Comments = styled.ul`
     overflow-y: scroll;
-    li div {
-        padding: 10px 0;
-    }
+    margin: 0 -30px;
 `;
 
 const DayComment = ({ lang, closePopup, me }) => {
@@ -52,7 +50,7 @@ const DayComment = ({ lang, closePopup, me }) => {
     return (
         <Container>
             <Popup>
-                <PopupHeader text={Words.comments} lang={lang} closePopup={closePopup} />
+                <PopupHeader text={Words.dayComments} lang={lang} closePopup={closePopup} />
                 { loading && <LoaderRelative /> }
                 { !loading && data && data.seeDayComments &&
                     <Comments>
