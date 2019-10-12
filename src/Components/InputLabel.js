@@ -9,10 +9,6 @@ const Container = styled.div`
     grid-template-columns: 2fr 5fr;
     grid-gap: 20px;
     align-items: center;
-    margin-bottom: 15px;
-    .text-regular:first-child {
-        margin-top: 10px;
-    }
 `;
 
 const InputLabel = ({

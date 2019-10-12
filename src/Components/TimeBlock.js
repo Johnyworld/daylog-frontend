@@ -11,7 +11,7 @@ import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { TODAY_QUERY } from './TodayQueries';
 import EditLocation from './EditLocation';
-import { getStillEndAt, getCutTopEndAt, getCutTopStartAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
+import { getCutTopEndAt, getCutTopStartAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
 
 const Container = styled.li`
     position: relative;

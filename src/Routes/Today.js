@@ -88,14 +88,15 @@ export default () => {
     
     if ( !loading && data && data.seeTodayPosts && meData && meData.me && !meLoading ) {
         const now = getNowBlock();
+        const lang = getLang( meData.me.lang );
+
         let foundation = blocksFoundation(now);
         let blocks = initBlocks(data.seeTodayPosts, foundation, now);
 
+        const focusedBlock = blocks[focused];
         const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );
         const next = blocks.find(( post, index ) => post.blocks && index > focused );
-        const lang = getLang( meData.me.lang );
 
-        const focusedBlock = blocks[focused];
         console.log("---------------------------");
         console.log("Focused Block : ", focusedBlock);
         console.log("Recent Block : ", recent);

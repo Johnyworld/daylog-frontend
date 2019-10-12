@@ -17,7 +17,7 @@ const PopupHeader = ({ text, remark, closePopup, lang }) => {
     return (
         <Container className="popup-header">
             <div>
-                <TextLarge text={text} lang={lang} color={Theme.c_blueDarker2} />
+                <TextLarge text={text} lang={lang} />
                 { remark && <TextSmall text={remark} lang={lang} /> }
             </div>
             <button onClick={closePopup}>
