@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -16,24 +16,16 @@ const Canvas = styled.canvas`
     transform: rotate(-90deg);
 `;
 
-class Graph extends Component {
-    constructor(props) { 
-        super(props);
-        this.state = {
-            data : this.props.data,
-            colors : this.props.colors
-        }
-    }
-    componentDidMount() {
-        const { data, colors } = this.state;
+const Graph = ({ data, colors }) => {
+    const canvasScript = () => {
         const canvas = document.getElementById('jsGraph');
         const ctx = canvas.getContext('2d');
-
         let startAngle = 0;
+
         data.forEach((item, i) => {
             const start = (Math.PI/50) * startAngle;
-            const end = Math.PI * 2 
-
+            const end = Math.PI * 2;
+    
             ctx.beginPath();
             ctx.moveTo( 200, 200 );
             ctx.arc( 200, 200, 200, start, end, false );
@@ -41,16 +33,18 @@ class Graph extends Component {
             ctx.fillStyle = colors[i];
             ctx.fill();
             startAngle += item.percent;
-        })
+        });
     }
 
-    render() {
-        return (
-            <Container>
-                <Canvas id="jsGraph" width="400" height="400" />
-            </Container>
-        );
-    }
+    useEffect(() => {
+        canvasScript();
+    });
+
+    return (
+        <Container>
+            <Canvas id="jsGraph" width="400" height="400" />
+        </Container>
+    );
 }
 
 export default Graph;
