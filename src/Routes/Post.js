@@ -10,7 +10,7 @@ import useInput from '../Hooks/useInput';
 import TextRegular from '../Components/TextRegular';
 import TextLarge from '../Components/TextLarge';
 import TextSmall from '../Components/TextSmall';
-import { blockConvertor } from '../Util/Convertors';
+import { blockToTimeFor } from '../Util/Convertors';
 import Theme from '../Styles/Theme';
 import { ME } from '../Components/TodayQueries';
 import Comments from '../Components/Comments.js';
@@ -130,7 +130,7 @@ export default () => {
         { !loading && data && data.seePost && (
             <Container>
                 <Heading>
-                    <TextSmall string={blockConvertor(data.seePost.blocks, lang, "isFor")} />
+                    <TextSmall string={blockToTimeFor(data.seePost.blocks, lang, "isFor")} />
                     <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
                     <Username username={data.seePost.user.username} inline="true" />
                 </Heading>

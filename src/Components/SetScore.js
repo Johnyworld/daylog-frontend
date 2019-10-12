@@ -4,7 +4,7 @@ import PopupHeader from './PopupHeader';
 import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import { blockConvertor } from '../Util/Convertors';
+import { blockToTimeFor } from '../Util/Convertors';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import Score from './Score';
@@ -51,7 +51,7 @@ const LargeButtonStyled = styled(LargeButton)`
 export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
     const slider = useInput( scoreState ? scoreState : 2.5 );
     const scoreFloat = parseFloat(slider.value);
-    const time = blockConvertor(blocks, lang, "isFor");
+    const time = blockToTimeFor(blocks, lang, "isFor");
 
     const [ editPostMutation ] = useMutation( EDIT_POST, {
         variables: { id, score: scoreFloat, type:"score" },

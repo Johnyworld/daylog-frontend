@@ -7,7 +7,7 @@ import Theme from '../Styles/Theme.js';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
-import { blockConvertor } from '../Util/Convertors.js';
+import { blockToTimeFor, blockToTimeStart } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
 import { FEED_QUERY } from '../Routes/Feed.js';
 
@@ -86,7 +86,10 @@ export default ({
         (
         <Container>
             <Info>
-                <TextSmall string={blockConvertor(blocks, lang, "isFor")} lang={lang} />
+                <p>
+                    <TextSmall string={blockToTimeStart(startAt)} />
+                    <TextSmall string={blockToTimeFor(blocks, lang, "isFor")} lang={lang} />
+                </p>
                 <TextSmall text={category} lang={lang} />
             </Info>
             <Heading>
