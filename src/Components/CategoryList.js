@@ -6,6 +6,7 @@ import LoaderRelative from './LoaderRelative';
 import DoingItem from './DoingItem';
 import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
+import Button from './Button';
 
 const SEARCH_DOING = gql`
     query searchDoing( $term: String!, $category: String ) {
@@ -32,28 +33,42 @@ const Container = styled.ul`
     max-height: 50vh;
 `;
 
-const CategoryList = ({ term, category, list, lang, onSelectDoing }) => {
+const ButtonStyled = styled(Button)`
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    padding: 10px;
+`;
+
+const CategoryList = ({ term, category, list, lang, onSelectDoing, setAdding }) => {
     const { data, loading } = useQuery( SEARCH_DOING, { variables: { term, category }});
+    
+    const onClickAdd = () => {
+        setAdding(true);
+    }
+
     return (
         <Container>
             { loading && <LoaderRelative /> }
-            { !loading && data && data.searchDoing && (
-                data.searchDoing[0]
-                ? 
-                data.searchDoing.map( doing => (
-                    <DoingItem
-                        key={doing.id}
-                        id={doing.id}
-                        name={doing.name}
-                        color={doing.color}
-                        author={doing.author}
-                        onSelectDoing={onSelectDoing}
-                        lang={lang}
-                    />
-                ))
-                : 
-                <TextMedium text={Words.noSearchResult} lang={lang} />
-            )}
+            { !loading && data && data.searchDoing && ( <>
+                { data.searchDoing[0]
+                    ? 
+                    data.searchDoing.map( doing => (
+                        <DoingItem
+                            key={doing.id}
+                            id={doing.id}
+                            name={doing.name}
+                            color={doing.color}
+                            author={doing.author}
+                            onSelectDoing={onSelectDoing}
+                            lang={lang}
+                        />
+                    ))
+                    : 
+                    <TextMedium text={Words.noSearchResult} lang={lang} /> 
+                }
+                <ButtonStyled text={Words.addNew} lang={lang} onClick={onClickAdd} />
+            </>)}
         </Container>
     )
 }

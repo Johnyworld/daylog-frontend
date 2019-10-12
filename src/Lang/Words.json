@@ -47,9 +47,21 @@
         "kr" : "추가",
         "en" : "Add"
     },
+    "addNew" : {
+        "kr" : "새로 추가하기",
+        "en" : "Add a new Doing"
+    },
     "select" : {
         "kr" : "선택",
         "en" : "select"
+    },
+    "icon" : {
+        "kr" : "아이콘",
+        "en" : "Icon"
+    },
+    "color" : {
+        "kr" : "색상",
+        "en" : "Color"
     },
     "comments" : {
         "kr" : "댓글",
@@ -326,5 +338,9 @@
     "addDoingRemark" : {
         "kr" : "새로운 일과를 추가합니다.",
         "en" : "Add a new Doing"
+    },
+    "colors" : {
+        "kr" : "색상 선택",
+        "en" : "Colors"
     }
 }

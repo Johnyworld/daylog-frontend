@@ -52,7 +52,8 @@ const IconContainer = styled.div`
 const DoingIcon = styled.div`
     width: 24px;
     height: 24px;
-    background-color: #ddd;
+    background-color: ${({ icon })=> icon ? "none" : "#ddd" };
+    background-image: ${({ icon })=> icon && `url(${icon})` };
 `;
 
 const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) => {
@@ -64,9 +65,7 @@ const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) =
             </Column>
             <Column>
                 <IconContainer>
-                    <DoingIcon>
-
-                    </DoingIcon>
+                    <DoingIcon icon={icon} />
                 </IconContainer>
                 { me &&
                     ( me.id === author.id
