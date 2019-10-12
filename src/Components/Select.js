@@ -40,8 +40,8 @@ const Select = ({ list, value, onChange, lang, className }) => {
         <Container className={`select ${className}`}>
             <SelectInput onChange={onChange} value={value} >
                 { list.map( item => (
-                    <option key={item.value} value={item.value}>{
-                        item.lang ? languages(item.lang, lang) : item.name
+                    <option key={item.name} value={item.name}>{
+                        item.lang ? languages(item.lang, lang) : item.title
                     }</option>
                 ))}
             </SelectInput>

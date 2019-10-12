@@ -38,6 +38,14 @@ export const SEE_MY_DOINGS = gql`
     }
 `;
 
+const ADD_DOING = gql`
+    mutation addDoing( $name: String!, $color: String!, $icon: String!, $categoryId: String! ) {
+        addDoing ( name: $name, color: $color, icon: $icon, categoryId: $categoryId ) {
+            id
+        }
+    }
+`;
+
 const PIN_DOING = gql`
     mutation addPin( $doingId: String! ) {
         addPin( doingId: $doingId )
@@ -58,11 +66,18 @@ const Header = styled.header`
 const getCategories = ( doings ) => {
     let categories = [];
     doings.forEach( doing => {
-        categories = [ ...categories, { value: doing.category.name, lang: doing.category.lang } ];
+        categories = [ 
+            ...categories, 
+            { 
+                name: doing.category.name, 
+                lang: doing.category.lang,
+                id: doing.category.id
+            }
+        ];
     });
     return categories.filter((category, index) => {
         return categories.findIndex( item => {
-            return category.value === item.value;
+            return category.name === item.name;
         }) === index;
     });
 }
@@ -71,14 +86,18 @@ export default () => {
     const { data, loading } = useQuery(SEE_MY_DOINGS);
     const { data: meData, loading: meLoading } = useQuery(ME);
     const [ addDoingPopup, setAddDoingPopup ] = useState(false);
+
     const [ addPinMutation ] = useMutation(PIN_DOING, { 
         refetchQueries: [{ query: SEE_MY_DOINGS }]
+    });
+
+    const [ addDoingMutation ] = useMutation(ADD_DOING, {
+        refetchQueries : [{ query: SEE_MY_DOINGS }]
     });
     
     if ( !loading && data && data.seeFollowedDoings && meData && meData.me && !meLoading ) {
         const categories = getCategories( data.seeFollowedDoings );
         const lang = getLang( meData.me.lang );
-
 
         const onAddDoingPopup = () => {
             setAddDoingPopup(true);
@@ -102,7 +121,7 @@ export default () => {
                 </Header>
                 { categories.map( category => (
                     <DoingList
-                        key={category.value}
+                        key={category.name}
                         category={category}
                         doings={data.seeFollowedDoings}
                         me={meData.me}
@@ -111,9 +130,10 @@ export default () => {
                 ))}
                 { addDoingPopup && 
                     <AddDoing
-                        categories={[ {value:"default", lang: Words.selectCategory }, ...categories]}
+                        categories={[ {name:"default", lang: Words.selectCategory }, ...categories]}
                         closePopup={closePopup}
                         onSelectDoing={onSelectDoing}
+                        addDoingMutation={addDoingMutation}
                         lang={lang}
                     />
                 }

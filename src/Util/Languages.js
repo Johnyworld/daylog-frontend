@@ -1,8 +1,8 @@
 import React from 'react';
 
 export const langList = [
-    { value: "en", name: "English" },
-    { value: "kr", name: "한국어" }
+    { name: "en", title: "English" },
+    { name: "kr", title: "한국어" }
 ];
 
 export const getLang = ( userlang ) => {
