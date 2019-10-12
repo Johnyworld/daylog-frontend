@@ -182,7 +182,7 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                 <PopupHeader text={Words.addDoing} remark={Words.addDoingRemark} lang={lang} closePopup={closePopup} />
                 { loading && <LoaderRelative /> }
                 { !loading && data && data.seeCategoryList &&
-                    <Select list={data.seeCategoryList} onChange={onChangeCategory} lang={lang} className="left-align" />
+                    <Select list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]} onChange={onChangeCategory} lang={lang} className="left-align" />
                 }
                 { category.value !== "default" &&
                     <Name>
