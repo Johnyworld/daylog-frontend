@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextSmall from './TextSmall';
+import { blockToTimeFor } from '../Util/Convertors';
 
 const Container = styled.li`
     display: flex;
@@ -20,8 +21,20 @@ const Color = styled.div`
     background-color: ${({ color })=> color };
 `;
 
-export default ({ name, index, minutes, percent, postsCount, colors }) => {
-    
+const Number = styled.p`
+    position: relative;
+    min-width: 35%;
+`;
+
+const Unit = styled(TextSmall)`
+    position: absolute;
+    right: 0;
+    opacity: ${props => props.showing? 1:0};
+    transition: .5s;
+`
+
+export default ({ name, index, blocks, percent, postsCount, colors, unit, lang }) => {
+    const time = blockToTimeFor( blocks, lang );
 
     return (
         <Container>
@@ -29,7 +42,10 @@ export default ({ name, index, minutes, percent, postsCount, colors }) => {
                 <Color color={colors[index]} />
                 <TextSmall string={name} />
             </Name>
-            <TextSmall string={`${percent}%`} />
+            <Number>
+                <Unit string={`${percent}%`} showing={unit==='percent'} />
+                <Unit string={time} showing={unit==='time'} />
+            </Number>
         </Container>
     )
 }

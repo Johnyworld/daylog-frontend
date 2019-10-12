@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Graph from './Graph';
 import GraphList from './GraphList';
@@ -22,6 +22,24 @@ const Lists = styled.ul`
 `;
 
 export default ({ data, colors, lang }) => {
+    const [ unit, setUnit ] = useState('percent');
+
+    const slide = (delay) => {
+        if ( unit === 'percent' ) {
+            setTimeout(()=> { setUnit( 'time' ); }, delay);
+        } else if ( unit === 'time' ) {
+            setTimeout(()=> { setUnit( 'percent' ); }, delay);
+        }
+    }
+    
+    useEffect(()=> {
+        slide(5000);
+    });
+
+    const toggleUnit = () => {
+        slide();
+    }
+
     return (
         <Container>
             { !data[0] && <TextRegular text={Words.noData} color={Theme.c_gray} lang={lang} /> }
@@ -30,16 +48,18 @@ export default ({ data, colors, lang }) => {
                     <GraphWrap>
                         <Graph data={data} colors={colors} />
                     </GraphWrap>
-                    <Lists>
+                    <Lists onClick={toggleUnit}>
                         { data.map((doing, key) => (
                             <GraphList
                                 key={`${key}_${doing.name}`}
                                 index={key}
                                 name={doing.name}
-                                minutes={doing.blocks*15}
+                                blocks={doing.blocks}
                                 percent={doing.percent}
                                 postsCount={doing.postsCount}
                                 colors={colors}
+                                unit={unit}
+                                lang={lang}
                             />
                         ))}
                     </Lists>
