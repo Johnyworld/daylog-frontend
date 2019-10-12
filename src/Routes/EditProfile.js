@@ -20,6 +20,7 @@ import axios from 'axios';
 import TextMedium from '../Components/TextMedium';
 import SmallButton from '../Components/SmallButton';
 import PopupHeader from '../Components/PopupHeader';
+import InputLabel from '../Components/InputLabel';
 
 const EDIT_USER = gql`
     mutation editUser( $id: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
@@ -46,6 +47,8 @@ const Profile = styled.section`
     padding-right: 30px;
 `;
 
+const InputField = styled.section``;
+
 const AvatarStyled = styled(Avatar)`
     margin-right: 20px;
 `;
@@ -60,6 +63,10 @@ const Row = styled.section`
     grid-template-columns: 2fr 5fr;
     grid-gap: 20px;
     margin-bottom: 15px;
+`;
+
+const InputLabelStyled = styled(InputLabel)`
+    margin-bottom: 15px; 
 `;
 
 const Label = styled(TextRegular)`
@@ -183,26 +190,22 @@ export default () => {
                                 <SmallButton text={Words.editAvatar} lang={lang} onClick={()=>{ setOnPopup(true) }} color={Theme.c_blue} />
                             </div>
                         </Profile>
-                        <Row>
-                            <Label text={Words.inputUsername} lang={lang} weight='bold' />
-                            <Input placeholder={Words.inputUsername} lang={lang} {...username} />
-                        </Row> 
-                        <Row>
-                            <Label text={Words.inputFullname} lang={lang} weight='bold' />
-                            <Input placeholder={Words.inputFullname} lang={lang} {...fullname} />
-                        </Row> 
-                        <Row>
-                            <Label text={Words.inputEmail} lang={lang} weight='bold' />
-                            <DisabledText string={data.me.email} color={Theme.c_gray} />
-                        </Row> 
-                        <Row>
-                            <Label text={Words.lang} lang={lang} weight='bold' />
-                            <Select list={langList} value={language.value} onChange={onChangeSelect} />
-                        </Row> 
-                        <Row>
-                            <Label text={Words.bio} lang={lang} weight='bold' />
-                            <Textarea placeholder={placeholder} value={bio.value} onChange={bio.onChange} />
-                        </Row> 
+                        <InputField>
+                            <InputLabelStyled label={Words.inputUsername} placeholder={Words.inputUsername} lang={lang} {...username} />
+                            <InputLabelStyled label={Words.inputFullname} placeholder={Words.inputFullname} lang={lang} {...fullname} />
+                            <Row>
+                                <Label text={Words.inputEmail} lang={lang} weight='bold' />
+                                <DisabledText string={data.me.email} color={Theme.c_gray} />
+                            </Row> 
+                            <Row>
+                                <Label text={Words.lang} lang={lang} weight='bold' />
+                                <Select list={langList} value={language.value} onChange={onChangeSelect} />
+                            </Row> 
+                            <Row>
+                                <Label text={Words.bio} lang={lang} weight='bold' />
+                                <Textarea placeholder={placeholder} value={bio.value} onChange={bio.onChange} />
+                            </Row> 
+                        </InputField>
                         <Confirm>
                             { !editDone 
                                 ? <LargeButton text={Words.done} lang={lang} color={Theme.c_blue} onClick={onSubmit} className={ checkReg() ? "" : "disabled" } />

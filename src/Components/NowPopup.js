@@ -15,6 +15,7 @@ import { TODAY_QUERY } from './TodayQueries';
 import TextRegular from './TextRegular';
 import { EDIT_POST } from './SetScore';
 import { getStillEndAt, getPullStartAt } from '../Util/Util';
+import InputLabel from './InputLabel';
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };
@@ -51,17 +52,9 @@ const DoingGrid = styled.div`
     }
 `;
 
-const Row = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
+const LocationInput = styled(InputLabel)``;
 
-const LocationText = styled(TextRegular)`
-    width: 40%;
-`
-
-const LargeButtonStyled = styled(LargeButton)`
+const DoneButton = styled(LargeButton)`
     display: block;
     margin-top: 30px;
     margin-left: auto;
@@ -156,6 +149,7 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                 </LinkStyled>
                 <PopupContent>
                     <DoingGrid>
+                        {/* 이전 타임라인에 기록이 있을 경우 "이어서" 버튼 */}
                         { recent && recent.doing &&
                             <DoingButton
                                 key={recent.doing.id}
@@ -169,6 +163,7 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                                 className="recent"
                             /> 
                         }
+                        {/* 다음 타임라인에 기록이 있을 경우 "당기기" 버튼 */}
                         { next && next.doing &&
                             <DoingButton
                                 key={next.doing.id}
@@ -184,6 +179,7 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                                 className="next"
                             /> 
                         }
+                        {/* 나머지 버튼들 배열 */}
                         { doings[0] && doings.map( doing => (
                             doing.id !== recentDoingId && doing.id !== nextDoingId &&
                             <DoingButton
@@ -199,11 +195,8 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                         ))}
                     </DoingGrid>
                 </PopupContent>
-                <Row>
-                    <LocationText text={Words.location} lang={lang} />
-                    <Input placeholder={Words.location} {...location} lang={lang} />
-                </Row>
-                <LargeButtonStyled text={Words.okay} lang={lang} onClick={onClickSubmit} color={Theme.c_blue} className={ !selectedDoing && "disabled" } />
+                <LocationInput label={Words.location} placeholder={Words.location} {...location} lang={lang} />
+                <DoneButton text={Words.done} lang={lang} onClick={onClickSubmit} color={Theme.c_blue} className={ !selectedDoing && "disabled" } />
             </Popup>
         </Container>
     )

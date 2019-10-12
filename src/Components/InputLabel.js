@@ -15,7 +15,7 @@ const InputLabel = ({
     label, placeholder, value, onChange, type, color, lang, 
     required, id, name, accept, className }) => {
     return (
-        <Container>
+        <Container className={className}>
             <TextRegular text={label} lang={lang} weight="bold" />
             <Input
                 placeholder={placeholder}
@@ -28,7 +28,6 @@ const InputLabel = ({
                 id={id}
                 name={name}
                 accept={accept}
-                className={className}
             />
         </Container>
     )
