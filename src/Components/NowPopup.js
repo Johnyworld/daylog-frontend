@@ -24,6 +24,13 @@ const Popup = styled.div`
     ${({ theme })=> theme.popup };
 `;
 
+const PopupContent = styled.section`
+   ${({ theme })=> theme.popupContent };
+   max-height: 50vh;
+   margin: 0 -30px 30px;
+   padding: 0 30px;
+`;
+
 const LinkStyled = styled(Link)`
     position: absolute;
     top: 30px;
@@ -34,7 +41,7 @@ const DoingGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 8px;
-    margin: 40px 0 30px;
+    padding-top: 10px;
     button {
         margin-right: 0;
     }
@@ -147,49 +154,51 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                 <LinkStyled to={`/doing`}>
                     <Icon icon="nut" size="medium" />
                 </LinkStyled>
-                <DoingGrid>
-                    { recent && recent.doing &&
-                        <DoingButton
-                            key={recent.doing.id}
-                            id={recent.doing.id}
-                            name={recent.doing.name}
-                            icon={recent.doing.icon}
-                            color={recent.doing.color}
-                            onClick={onClickButton}
-                            focused={focused}
-                            lang={lang}
-                            className="recent"
-                        /> 
-                    }
-                    { next && next.doing &&
-                        <DoingButton
-                            key={next.doing.id}
-                            id={next.doing.id}
-                            name={next.doing.name}
-                            icon={next.doing.icon}
-                            color={next.doing.color}
-                            lang={lang}
-                            onClick={onClickButton}
-                            focused={focused}
-                            focusedBlock={focusedBlock}
-                            now={now}
-                            className="next"
-                        /> 
-                    }
-                    { doings[0] && doings.map( doing => (
-                        doing.id !== recentDoingId && doing.id !== nextDoingId &&
-                        <DoingButton
-                            key={doing.id}
-                            id={doing.id}
-                            name={doing.name}
-                            icon={doing.icon}
-                            color={doing.color}
-                            onClick={onClickButton}
-                            focused={focused}
-                            lang={lang} 
-                        />
-                    ))}
-                </DoingGrid>
+                <PopupContent>
+                    <DoingGrid>
+                        { recent && recent.doing &&
+                            <DoingButton
+                                key={recent.doing.id}
+                                id={recent.doing.id}
+                                name={recent.doing.name}
+                                icon={recent.doing.icon}
+                                color={recent.doing.color}
+                                onClick={onClickButton}
+                                focused={focused}
+                                lang={lang}
+                                className="recent"
+                            /> 
+                        }
+                        { next && next.doing &&
+                            <DoingButton
+                                key={next.doing.id}
+                                id={next.doing.id}
+                                name={next.doing.name}
+                                icon={next.doing.icon}
+                                color={next.doing.color}
+                                lang={lang}
+                                onClick={onClickButton}
+                                focused={focused}
+                                focusedBlock={focusedBlock}
+                                now={now}
+                                className="next"
+                            /> 
+                        }
+                        { doings[0] && doings.map( doing => (
+                            doing.id !== recentDoingId && doing.id !== nextDoingId &&
+                            <DoingButton
+                                key={doing.id}
+                                id={doing.id}
+                                name={doing.name}
+                                icon={doing.icon}
+                                color={doing.color}
+                                onClick={onClickButton}
+                                focused={focused}
+                                lang={lang} 
+                            />
+                        ))}
+                    </DoingGrid>
+                </PopupContent>
                 <Row>
                     <LocationText text={Words.location} lang={lang} />
                     <Input placeholder={Words.location} {...location} lang={lang} />

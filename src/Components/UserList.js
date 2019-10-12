@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import UserListItem from './UserListItem';
 
 const Container = styled.ul`
-    max-height: 70vh;
-    overflow: scroll;
+    ${ props => props.theme.popupContent }
 `;
 
 const UserList = ({ users, lang, thisUser, meName }) => {

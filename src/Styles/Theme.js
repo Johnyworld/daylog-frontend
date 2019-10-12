@@ -57,6 +57,11 @@ export default {
         transform: translateY(-50%);
         background-color: white;
     `,
+    popupContent:`
+        overflow-y: scroll;
+        overscroll-behavior: contain;
+        max-height: 60vh;
+    `,
     inputUnderline: `
         border: 0;
         border-bottom: 1px solid;
@@ -71,10 +76,8 @@ export default {
         min-height: calc(100vh - 64px);
     `,
     miniFeedTitle: `
-        > .text-regular {
-            display: inline-block;
-            margin-bottom: 5px;
-        }
+        display: inline-block;
+        margin-bottom: 5px;
     `,
     miniFeedBox: `
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);

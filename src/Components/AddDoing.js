@@ -38,6 +38,10 @@ const Popup = styled.div`
     ${({ theme })=> theme.popup };
 `;
 
+const PopupContent = styled.section`
+   ${({ theme })=> theme.popupContent }; 
+`;
+
 const Name = styled.div`
     margin: 15px 0 10px;
 `;
@@ -98,9 +102,8 @@ const SideWindow = styled.div`
 `;
 
 const Items = styled.ul`
-    overflow-y: scroll;
-    overscroll-behavior: contain;
-    height: 80%;
+    ${({ theme })=> theme.popupContent }
+    max-height: 82%;
     margin-bottom: 30px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -181,40 +184,42 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
             <Popup>
                 <PopupHeader text={Words.addDoing} remark={Words.addDoingRemark} lang={lang} closePopup={closePopup} />
                 { loading && <LoaderRelative /> }
-                { !loading && data && data.seeCategoryList &&
-                    <Select list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]} onChange={onChangeCategory} lang={lang} className="left-align" />
-                }
-                { category.value !== "default" &&
-                    <Name>
-                        <InputLabel label={Words.doingName} value={term.value} onChange={onChangeTerm} placeholder={Words.enterDoingName} lang={lang} />
-                    </Name>
-                }
-                { term.value !== "" && !adding &&
-                    <CategoryList
-                        category={category.value}
-                        term={term.value}
-                        lang={lang}
-                        onSelectDoing={onSelectDoing} 
-                        setAdding={setAdding}
-                    />
-                }
-                { adding && <>
-                    <Row>
-                        <TextRegular text={Words.icon} lang={lang} weight="bold" />
-                        <Column>
-                            <CustomIcon icon={icon} />
-                            <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "icon")} />
-                        </Column>
-                    </Row>
-                    <Row>
-                        <TextRegular text={Words.color} lang={lang} weight="bold" />
-                        <Column>
-                            <Palette color={color} />
-                            <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "color")} />
-                        </Column>
-                    </Row>
-                    <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
-                </> }
+                <PopupContent>
+                    { !loading && data && data.seeCategoryList &&
+                        <Select list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]} onChange={onChangeCategory} lang={lang} className="left-align" />
+                    }
+                    { category.value !== "default" &&
+                        <Name>
+                            <InputLabel label={Words.doingName} value={term.value} onChange={onChangeTerm} placeholder={Words.enterDoingName} lang={lang} />
+                        </Name>
+                    }
+                    { term.value !== "" && !adding &&
+                        <CategoryList
+                            category={category.value}
+                            term={term.value}
+                            lang={lang}
+                            onSelectDoing={onSelectDoing} 
+                            setAdding={setAdding}
+                        />
+                    }
+                    { adding && <>
+                        <Row>
+                            <TextRegular text={Words.icon} lang={lang} weight="bold" />
+                            <Column>
+                                <CustomIcon icon={icon} />
+                                <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "icon")} />
+                            </Column>
+                        </Row>
+                        <Row>
+                            <TextRegular text={Words.color} lang={lang} weight="bold" />
+                            <Column>
+                                <Palette color={color} />
+                                <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "color")} />
+                            </Column>
+                        </Row>
+                        <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
+                    </> }
+                </PopupContent>
                 <SideWin 
                     type="color"
                     array={Colors}
