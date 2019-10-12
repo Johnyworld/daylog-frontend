@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
 import Reviews from './Reviews';
 import LoaderRelative from './LoaderRelative';
+import { getLangArray } from '../Util/Languages';
 
 const SEE_MONTHLOG = gql`
     query seeMonthLog( $username: String!, $yyyymmdd: String! ) {
@@ -36,7 +38,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-export default ({ username, yyyymmdd, colors, lang }) => {
+const Monthlog = ({ username, yyyymmdd, colors, lang }) => {
     const yyyymm = yyyymmdd.substr(0, 7);
     const { data, loading } = useQuery( SEE_MONTHLOG, { variables: { username, yyyymmdd: yyyymm }});
 
@@ -53,3 +55,12 @@ export default ({ username, yyyymmdd, colors, lang }) => {
         </Container>
     )
 }
+
+Monthlog.propTypes = {
+    username : PropTypes.string.isRequired,
+    yyyymmdd : PropTypes.string.isRequired,
+    colors : PropTypes.array.isRequired,
+    lang: PropTypes.oneOf( getLangArray() )
+}
+
+export default Monthlog;

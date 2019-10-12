@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Words from '../Lang/Words.json';
 import Theme from '../Styles/Theme'
 import TextRegular from './TextRegular.js';
 import TextSmall from './TextSmall.js';
-import { getPrintDate, getPrintWeek } from '../Util/Languages.js';
+import { getPrintDate, getPrintWeek, getLangArray } from '../Util/Languages.js';
 
 const Container = styled.div`
     margin-top: 20px;
@@ -23,7 +24,7 @@ const Review = styled.li`
     }
 `;
 
-export default ({ reviews, lang }) => {
+const Reviews = ({ reviews, lang }) => {
     return (
         <Container>
             <Title text={Words.lastReviews} lang={lang} color={Theme.c_gray} />
@@ -43,3 +44,10 @@ export default ({ reviews, lang }) => {
         </Container>
     )
 }
+
+Reviews.propTypes = {
+    reviews: PropTypes.array.isRequired,
+    lang: PropTypes.oneOf( getLangArray() )
+}
+
+export default Reviews;

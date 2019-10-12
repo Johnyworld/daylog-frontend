@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Graph from './Graph';
 import GraphList from './GraphList';
 import TextRegular from './TextRegular';
 import Words from '../Lang/Words.json';
 import Theme from '../Styles/Theme';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.div`
     display: flex;
@@ -21,7 +23,7 @@ const Lists = styled.ul`
     min-width: 60%;
 `;
 
-export default ({ data, colors, lang }) => {
+const GraphContainer = ({ data, colors, lang }) => {
     const [ unit, setUnit ] = useState('percent');
 
     const slide = (delay) => {
@@ -68,3 +70,11 @@ export default ({ data, colors, lang }) => {
         </Container>
     )   
 }
+
+GraphContainer.propTypes = {
+    data: PropTypes.array.isRequired,
+    colors: PropTypes.array.isRequired,
+    lang: PropTypes.oneOf(getLangArray())
+}
+
+export default GraphContainer;

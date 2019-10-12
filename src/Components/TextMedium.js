@@ -25,6 +25,7 @@ const TextMedium = ({ className, text, lang, string, weight="regular", color }) 
 )
 
 TextMedium.propTypes = {
+    className : PropTypes.string,
     text : PropTypes.object,
     lang : PropTypes.string,
     string : PropTypes.any,

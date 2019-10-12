@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { languages } from '../Util/Languages';
+import { languages, getLangArray } from '../Util/Languages';
 
 const Container = styled.div`
     position: relative;
@@ -35,7 +35,7 @@ const Icon = styled.div`
     pointer-events: none;
 `;
 
-const Select = ({ list, value, onChange, lang, className }) => {
+const Select = ({ className, list, value, onChange, lang }) => {
     return (
         <Container className={`select ${className}`}>
             <SelectInput onChange={onChange} value={value} >
@@ -51,10 +51,11 @@ const Select = ({ list, value, onChange, lang, className }) => {
 }
 
 Select.propTypes = {
+    className: PropTypes.string,
     list: PropTypes.array.isRequired,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    lang: PropTypes.string
+    lang: PropTypes.oneOf( getLangArray() )
 }
 
 export default Select;

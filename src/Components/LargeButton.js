@@ -32,9 +32,11 @@ const LargeButton = ({ text, lang, color, onClick, className }) => {
 }
 
 LargeButton.propTypes = {
+    className : PropTypes.string,
     text : PropTypes.object.isRequired,
     lang : PropTypes.string.isRequired,
-    color : PropTypes.string
+    color : PropTypes.string,
+    onClick : PropTypes.func,
 }
 
 export default LargeButton;

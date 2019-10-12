@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import TextRegular from './TextRegular';
 import Score from './Score';
 import SmallButton from './SmallButton';
@@ -12,6 +13,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { TODAY_QUERY } from './TodayQueries';
 import EditLocation from './EditLocation';
 import { getCutTopEndAt, getCutTopStartAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
     position: relative;
@@ -134,7 +136,7 @@ const CountNum = styled(TextSmall)`
 
 const TimeBlock = ({
     id, index, block, doing, color, score, location, blocks, likesCount, commentsCount, 
-    lang, className, now, focused, focusedBlock, recent, setFocused }) => {
+    lang, className, focusedBlock, recent, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
@@ -279,6 +281,24 @@ const TimeBlock = ({
             }
         </Container>
     )
+}
+
+TimeBlock.propTypes = {
+    id: PropTypes.string,
+    index: PropTypes.number,
+    block: PropTypes.number,
+    doing: PropTypes.string,
+    color: PropTypes.string,
+    score: PropTypes.number,
+    location: PropTypes.string,
+    blocks: PropTypes.number,
+    likesCount: PropTypes.number,
+    commentsCount: PropTypes.number,
+    lang: PropTypes.oneOf( getLangArray() ),
+    className: PropTypes.string,
+    focusedBlock: PropTypes.object,
+    recent: PropTypes.object,
+    setFocused: PropTypes.func
 }
 
 export default TimeBlock;

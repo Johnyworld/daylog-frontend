@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Avatar from './Avatar';
 import TextRegular from './TextRegular';
 import Icon from './Icon';
@@ -13,6 +14,7 @@ import { SEE_USER } from '../Routes/Log';
 import { FEED_QUERY } from '../Routes/Feed';
 import Following from './Following';
 import Followers from './Followers';
+import { getLangArray } from '../Util/Languages';
 
 export const FOLLOW = gql`
     mutation follow( $id: String! ) {
@@ -69,7 +71,7 @@ const Follow = styled.div`
     }
 `;
 
-export default ({
+const UserLog = ({
     id,
     avatar,
     username,
@@ -163,3 +165,20 @@ export default ({
         </Container>
     )
 }
+
+UserLog.propTypes = {
+    id: PropTypes.string,
+    avatar: PropTypes.string,
+    username: PropTypes.string,
+    fullname: PropTypes.string,
+    likesTotal: PropTypes.number,
+    bio: PropTypes.string,
+    lang: PropTypes.oneOf( getLangArray() ),
+    followersCount: PropTypes.number,
+    followingCount: PropTypes.number,
+    isFollowing: PropTypes.bool,
+    isSelf: PropTypes.bool,
+    meName: PropTypes.string
+}
+
+export default UserLog;

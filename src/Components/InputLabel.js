@@ -34,4 +34,19 @@ const InputLabel = ({
     )
 }
 
+InputLabel.propTypes = {
+    label : PropTypes.object.isRequired,
+    lang : PropTypes.string.isRequired,
+    id : PropTypes.string,
+    name : PropTypes.string,
+    accept : PropTypes.string,
+    className : PropTypes.string,
+    placeholder : PropTypes.object.isRequired,
+    required : PropTypes.bool,
+    value : PropTypes.string,
+    onChange : PropTypes.func.isRequired,
+    type : PropTypes.string,
+    color : PropTypes.string,
+}
+
 export default InputLabel;

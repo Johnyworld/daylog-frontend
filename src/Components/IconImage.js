@@ -24,7 +24,7 @@ const IconImage = ({ url, size }) => {
 
 IconImage.propTypes = {
     url: PropTypes.string,
-    size: PropTypes.string.isRequired
+    size: PropTypes.oneOf([ 'small', 'medium' ]).isRequired
 }
 
 export default IconImage;

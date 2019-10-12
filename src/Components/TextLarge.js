@@ -21,6 +21,7 @@ const TextLarge = ({ className, text, lang, string, color }) => (
 )
 
 TextLarge.propTypes = {
+    className : PropTypes.string,
     text : PropTypes.object,
     lang : PropTypes.string,
     string : PropTypes.any,

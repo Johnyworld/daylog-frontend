@@ -25,6 +25,7 @@ const TextSmall = ({ className, text, lang, string, weight="regular", color }) =
 )
 
 TextSmall.propTypes = {
+    className : PropTypes.string,
     text : PropTypes.object,
     lang : PropTypes.string,
     string : PropTypes.any,

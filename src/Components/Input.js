@@ -53,7 +53,10 @@ Input.propTypes = {
     onChange : PropTypes.func.isRequired,
     type : PropTypes.string,
     color : PropTypes.string,
-    lang : PropTypes.string
+    lang : PropTypes.string,
+    id : PropTypes.string,
+    name : PropTypes.string,
+    accept : PropTypes.string,
 }
 
 export default Input;

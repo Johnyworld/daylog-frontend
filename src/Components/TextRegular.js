@@ -26,6 +26,7 @@ const TextRegular = ({ className, text, lang, string, weight="regular", color })
 )
 
 TextRegular.propTypes = {
+    className : PropTypes.string,
     text : PropTypes.object,
     lang : PropTypes.string,
     string : PropTypes.any,

@@ -8,7 +8,7 @@ const Container = styled.button`
     display: inline-block; 
 `;
 
-const SmallButton = ({ onClick, data, text, lang, color=Theme.c_gray }) => {
+const SmallButton = ({ className, onClick, data, text, lang, color=Theme.c_gray }) => {
     return (
         <Container onClick={onClick} data-data={data} className="small-button" >
             <TextRegular text={text} lang={lang} color={color} weight="bold" />
@@ -17,11 +17,12 @@ const SmallButton = ({ onClick, data, text, lang, color=Theme.c_gray }) => {
 }
 
 SmallButton.propTypes = {
+    className : PropTypes.string,
+    onClick : PropTypes.func,
+    data : PropTypes.string,
     text : PropTypes.object.isRequired,
     lang : PropTypes.string.isRequired,
-    color : PropTypes.any,
-    onClick : PropTypes.func,
-    data : PropTypes.string
+    color : PropTypes.any
 }
 
 export default SmallButton;

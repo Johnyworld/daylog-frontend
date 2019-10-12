@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import { getPrintDate } from '../Util/Languages';
+import { getPrintDate, getLangArray } from '../Util/Languages';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import { timePresenter } from '../Util/Convertors';
@@ -100,7 +100,8 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
 
 MiniFeed.propTypes = {
     username: PropTypes.string.isRequired,
-    yyyymmdd: PropTypes.string.isRequired
+    yyyymmdd: PropTypes.string.isRequired,
+    lang: PropTypes.oneOf( getLangArray() )
 }
 
 export default MiniFeed;

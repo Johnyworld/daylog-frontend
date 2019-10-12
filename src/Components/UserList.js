@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import UserListItem from './UserListItem';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.ul`
     ${ props => props.theme.popupContent }
@@ -29,7 +30,9 @@ const UserList = ({ users, lang, thisUser, meName }) => {
 
 UserList.propTypes = {
     users : PropTypes.array.isRequired,
-    lang: PropTypes.string
+    lang: PropTypes.oneOf( getLangArray() ),
+    thisUser: PropTypes.string,
+    meName: PropTypes.string
 }
 
 export default UserList;

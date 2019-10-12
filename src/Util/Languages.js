@@ -5,6 +5,12 @@ export const langList = [
     { name: "kr", title: "한국어" }
 ];
 
+export const getLangArray = () => {
+    let array = [];
+    langList.forEach( lang=> {array = [ ...array, lang.name ]});
+    return array;
+}
+
 export const getLang = ( userlang ) => {
     if ( !userlang ) {
         return window.navigator.language.substr(0, 2);

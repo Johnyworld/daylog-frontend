@@ -12,6 +12,7 @@ import { FEED_QUERY } from '../Routes/Feed';
 import { SEE_FOLLOWERS } from './Followers';
 import { SEE_FOLLOWING } from './Following';
 import { ME } from './TodayQueries';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
     display: flex;
@@ -93,7 +94,9 @@ UserListItem.propTypes = {
     fullname : PropTypes.string.isRequired,
     avatar : PropTypes.string.isRequired,
     isFollowing : PropTypes.bool.isRequired,
-    lang: PropTypes.string
+    lang: PropTypes.oneOf( getLangArray() ),
+    thisUser: PropTypes.string,
+    meName: PropTypes.string
 }
 
 export default UserListItem

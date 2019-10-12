@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import PopupHeader from './PopupHeader';
 import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
@@ -13,6 +14,7 @@ import LargeButton from './LargeButton';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_POST } from '../Routes/Post';
+import { getLangArray } from '../Util/Languages';
 
 export const EDIT_POST = gql`
     mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $type: String! ) {
@@ -49,7 +51,7 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-left: auto;
 `;
 
-export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
+const SetScore = ({ id, doing, closePopup, lang, blocks, color, scoreState, setScoreState }) => {
     const slider = useInput( scoreState ? scoreState : 2.5 );
     const scoreFloat = parseFloat(slider.value);
     const time = blockToTimeFor(blocks, lang, "isFor");
@@ -84,3 +86,16 @@ export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setSco
         </Container>
     )
 }
+
+SetScore.propTypes = {
+    id: PropTypes.string,
+    doing: PropTypes.string,
+    color: PropTypes.string,
+    blocks: PropTypes.number,
+    lang: PropTypes.oneOf( getLangArray() ),
+    scoreState: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
+    setScoreState: PropTypes.func,
+    closePopup: PropTypes.func
+}
+
+export default SetScore;

@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import GraphContainer from './GraphContainer';
 import Review from './Review';
 import LoaderRelative from './LoaderRelative';
+import { getLangArray } from '../Util/Languages';
 
 const SEE_DAYLOG = gql`
     query seeDayLog( $username: String!, $yyyymmdd: String! ) {
@@ -29,7 +31,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-export default ({ username, yyyymmdd, colors, lang, printDate }) => {
+const Daylog = ({ username, yyyymmdd, colors, lang }) => {
     const { data, loading } = useQuery( SEE_DAYLOG, { variables: { username, yyyymmdd }});
 
     return (
@@ -38,8 +40,16 @@ export default ({ username, yyyymmdd, colors, lang, printDate }) => {
             { !loading && data && data.seeDayLog && <>
                 <GraphContainer data={data.seeDayLog.doingLogs} colors={colors} lang={lang} />
                 <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} username={username} date={yyyymmdd} lang={lang} QUERY={SEE_DAYLOG} />
-                {/* <Comments comments={data.seeDayLog.dayComments} me={me} lang={lang} /> */}
             </>}
         </Container>
     )
 }
+
+Daylog.propTypes = {
+    username : PropTypes.string.isRequired,
+    yyyymmdd : PropTypes.string.isRequired,
+    colors : PropTypes.array.isRequired,
+    lang: PropTypes.oneOf( getLangArray() )
+}
+
+export default Daylog;

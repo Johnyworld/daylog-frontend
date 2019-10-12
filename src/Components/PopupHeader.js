@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TextLarge from './TextLarge';
-import Theme from '../Styles/Theme';
 import Icon from './Icon';
 import TextSmall from './TextSmall';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.div`
     display: flex;
@@ -31,7 +31,7 @@ PopupHeader.propTypes = {
     text: PropTypes.object.isRequired,
     remark: PropTypes.object, 
     closePopup : PropTypes.func,
-    lang: PropTypes.string
+    lang: PropTypes.oneOf( getLangArray() )
 }
 
 export default PopupHeader;

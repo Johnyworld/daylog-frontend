@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import TextSmall from './TextSmall';
 import { blockToTimeFor } from '../Util/Convertors';
+import { langList, getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
     display: flex;
@@ -33,9 +35,9 @@ const Unit = styled(TextSmall)`
     transition: .5s;
 `
 
-export default ({ name, index, blocks, percent, postsCount, colors, unit, lang }) => {
+const GraphList = ({ name, index, blocks, percent, colors, unit, lang }) => {
     const time = blockToTimeFor( blocks, lang );
-
+    
     return (
         <Container>
             <Name>
@@ -49,3 +51,15 @@ export default ({ name, index, blocks, percent, postsCount, colors, unit, lang }
         </Container>
     )
 }
+
+GraphList.propTypes = {
+    name: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    blocks: PropTypes.number.isRequired,
+    percent: PropTypes.number.isRequired,
+    colors: PropTypes.array.isRequired,
+    unit: PropTypes.oneOf([ 'percent', 'time' ]),
+    lang: PropTypes.oneOf( getLangArray() )
+}
+
+export default GraphList;

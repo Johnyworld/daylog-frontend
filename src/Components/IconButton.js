@@ -24,7 +24,7 @@ const IconButton = ({ icon, size, color, onClick }) => {
 
 IconButton.propTypes = {
     icon: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
+    size: PropTypes.oneOf([ "small", "medium" ]).isRequired,
     color: PropTypes.string,
     onClick: PropTypes.func
 }
