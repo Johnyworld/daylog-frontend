@@ -30,9 +30,10 @@ const Container = styled.li`
 const User = styled.div`
     display: flex;
     align-items: center;
-    .avatar {
-        margin-right: 10px;
-    }
+`;
+
+const AvatarStyled = styled(Avatar)`
+    margin-right: 10px;
 `;
 
 const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, lang, meName }) => {
@@ -71,7 +72,7 @@ const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, l
     return (
         <Container>
             <User>
-                <Avatar avatar={avatar} size="small" />
+                <AvatarStyled avatar={avatar} size="small" />
                 <div>
                     <Username username={username} />
                     <TextSmall string={fullname} />

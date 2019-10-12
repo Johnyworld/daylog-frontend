@@ -67,15 +67,15 @@ const Container = styled.button`
         background-color: red;
         transform: translate(0, -50%);
     }
-
-    .text-small {
-        width: ${ Theme.size_doingButton - 4 }px;
-        margin-top: 5px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
 `;
+
+const Name = styled(TextSmall)`
+    width: ${ Theme.size_doingButton - 4 }px;
+    margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`
 
 const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused, focusedBlock, now }) => {
 
@@ -95,7 +95,7 @@ const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused,
     return (
         <Container className={className} onClick={ onClick ? onClick : onClickFast } data-id={id} lang={lang} >
             <IconImage url={icon} size="medium" />
-            <TextSmall string={name} color={color} />
+            <Name string={name} color={color} />
         </Container>
     )
 }

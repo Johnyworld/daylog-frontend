@@ -14,7 +14,7 @@ const Container = styled.div`
     background-size: cover;
 `;
 
-const Avatar = ({ size, avatar }) => {
+const Avatar = ({ className, size, avatar }) => {
     let sizePx;
 
     if (avatar === null || avatar === "") avatar = "https://daylog.s3.ap-northeast-2.amazonaws.com/defaultAvatar.png";
@@ -24,7 +24,7 @@ const Avatar = ({ size, avatar }) => {
     if ( size === "large" ) sizePx = '80px';
 
     return (
-        <Container avatar={avatar} size={sizePx} className="avatar" />
+        <Container className={className} avatar={avatar} size={sizePx} />
     )
 } 
 

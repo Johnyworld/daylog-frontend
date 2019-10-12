@@ -69,13 +69,13 @@ const Inner = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-
     .small-button {
-        .text-regular {
-            ${({ theme })=> theme.f_small };
-        }
         width: 30px;
     }
+`;
+
+const Name = styled(TextRegular)`
+    ${({ theme })=> theme.f_small };
 `;
 
 const TimePrint = styled.div`
@@ -100,9 +100,6 @@ const Side = styled.div`
     &.likes-and-comments {
         transition: .5s;
         background-color: white;
-        .text-small:not(:last-child) {
-            margin-right: 10px;
-        }
     }
 
     &.cut-post {
@@ -128,6 +125,12 @@ const Side = styled.div`
     }
 `;
 
+const CountNum = styled(TextSmall)`
+    &:not(:last-child) {
+        margin-right: 10px;
+    }
+`;
+
 
 const TimeBlock = ({
     id, index, block, doing, color, score, location, blocks, likesCount, commentsCount, 
@@ -142,8 +145,6 @@ const TimeBlock = ({
     const cutTopEndAt = getCutTopEndAt( focusedBlock, recent );
     const cutTopType = getCutTopType( focusedBlock, recent )
     const cutBottomEndAt = getCutBottomEndAt( focusedBlock, recent );
-
-    console.log( cutBottomEndAt );
 
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
         variables : { id, type: "delete" },
@@ -226,7 +227,7 @@ const TimeBlock = ({
         <Container className={ `${className} ${block%4 === 0 ? "hour" : "" }` } color={color} doing={doing} data-id={id} data-index={index} onClick={selection} >
             { doing && (
                 <Inner>
-                    <TextRegular string={doing} color="white" />
+                    <Name string={doing} color="white" />
                     { scoreState
                         ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
                         : <SmallButton onClick={onScorePopup} text={Words.setScore} lang={lang} color="white" />
@@ -257,9 +258,9 @@ const TimeBlock = ({
                 </Side>
                 <Side className="likes-and-comments">
                     <Icon icon="clap" size="small" />
-                    <TextSmall string={likesCount} />
+                    <CountNum string={likesCount} />
                     <Icon icon="bubble" size="small" />
-                    <TextSmall string={commentsCount} />
+                    <CountNum string={commentsCount} />
                 </Side>
             </> }
             { scorePopup && 

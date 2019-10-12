@@ -18,8 +18,8 @@ const Container = styled.span`
     `}
 `;
 
-const TextMedium = ({ text, lang, string, weight="regular", color }) => (
-    <Container weight={weight} color={color} lang={lang} className="text-medium" >
+const TextMedium = ({ className, text, lang, string, weight="regular", color }) => (
+    <Container className={className} weight={weight} color={color} lang={lang} >
         {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )

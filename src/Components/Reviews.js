@@ -8,7 +8,10 @@ import { getPrintDate, getPrintWeek } from '../Util/Languages.js';
 
 const Container = styled.div`
     margin-top: 20px;
-    ${({ theme })=> theme.miniFeedTitle };
+`;
+
+const Title = styled(TextRegular)`
+    ${({ theme })=> theme.miniFeedTitle }
 `;
 
 const ReviewsContainer = styled.ul``;
@@ -23,7 +26,7 @@ const Review = styled.li`
 export default ({ reviews, lang }) => {
     return (
         <Container>
-            <TextRegular text={Words.lastReviews} lang={lang} color={Theme.c_gray} />
+            <Title text={Words.lastReviews} lang={lang} color={Theme.c_gray} />
             <ReviewsContainer>
                 { reviews.map( review => (
                     <Review key={review.id}>

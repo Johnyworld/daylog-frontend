@@ -6,16 +6,17 @@ import TextSmall from './TextSmall';
 
 const Container = styled.ul`
     margin-bottom: 50px;
-    .text-small {
-        display: inline-block;
-        margin-bottom: 10px;
-    }
+`;
+
+const CategoryName = styled(TextSmall)`
+    display: inline-block;
+    margin-bottom: 10px;
 `;
 
 export default ({ category, doings, me, lang }) => {
     return (
         <Container>
-            <TextSmall text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
+            <CategoryName text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
             { doings.map( doing => (
                 doing.category.name === category.name &&
                 <DoingItem 

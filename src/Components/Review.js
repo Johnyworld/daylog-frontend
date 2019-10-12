@@ -38,8 +38,11 @@ const DELETE_REVIEW = gql`
 `;
 
 const Container = styled.div`
-    ${({ theme })=> theme.miniFeedTitle }
     margin-top: 30px;
+`;
+
+const Title = styled(TextRegular)`
+    ${({ theme })=> theme.miniFeedTitle }
 `;
 
 const Box = styled.div`
@@ -61,10 +64,11 @@ const Buttons = styled.div`
             margin-right: 20px;
         } 
     }
-    .text-small {
-        display: block;
-        margin-top: 5px;
-    }
+`;
+
+const ConfirmDeleteMessage = styled(TextSmall)`
+    display: block;
+    margin-top: 5px;
 `;
 
 const InputPopup = styled.div`
@@ -152,7 +156,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
 
     return (
         <Container>
-            <TextRegular text={Words.review} lang={lang} color={Theme.c_gray}/>
+            <Title text={Words.review} lang={lang} color={Theme.c_gray}/>
             <Box className="review">
                 <Score score={ averageScore } size="medium" />
                 <Inner>
@@ -168,7 +172,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
                                 <SmallButton onClick={onDelete} text={Words.delete} lang={lang} />
                                 { confirmDelete && <>
                                     <SmallButton onClick={cancelDelete} text={Words.cancel} lang={lang} />
-                                    <TextSmall text={Words.confirmDelete} lang={lang} color={Theme.c_red} />
+                                    <ConfirmDeleteMessage text={Words.confirmDelete} lang={lang} color={Theme.c_red} />
                                 </>}
                             </>)
                         }

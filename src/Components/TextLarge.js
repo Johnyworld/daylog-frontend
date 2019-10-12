@@ -14,8 +14,8 @@ const Container = styled.h2`
     `;}}
 `;
 
-const TextLarge = ({ text, lang, string, color }) => (
-    <Container color={color} lang={lang} className="text-large" >
+const TextLarge = ({ className, text, lang, string, color }) => (
+    <Container className={className} color={color} lang={lang} >
         {string}{text && <Languages text={text} lang={lang} /> }
     </Container>
 )

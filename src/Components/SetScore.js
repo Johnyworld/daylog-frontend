@@ -38,9 +38,10 @@ const Rating = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    .text-small {
-        margin-right: 20px;
-    }
+`;
+
+const TextSmallStyled = styled(TextSmall)`
+    margin-right: 20px;
 `;
 
 const LargeButtonStyled = styled(LargeButton)`
@@ -73,7 +74,7 @@ export default ({ id, doing, closePopup, lang, blocks, color, scoreState, setSco
                     <TextSmall string={time} lang={lang} />
                     <TextLarge string={doing} color={color} lang={lang} />
                     <Rating>
-                        <TextSmall text={Words.satisfaction} lang={lang} />
+                        <TextSmallStyled text={Words.satisfaction} lang={lang} />
                         <Score score={scoreFloat} size="large" />
                     </Rating>
                     <input type="range" value={slider.value} onChange={slider.onChange} min={0} max={5} step={0.5} />

@@ -39,8 +39,12 @@ const SEE_MY_POSTS = gql`
 `;
 
 const Container = styled.ul`
-    ${({ theme })=> theme.miniFeedTitle }
+    
     margin-top: 20px;
+`;
+
+const Title = styled(TextRegular)`
+    ${({ theme })=> theme.miniFeedTitle }
 `;
 
 const Box = styled.li`
@@ -69,7 +73,7 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
     if ( !loading && data && data.seeMyPosts && data.seeMyPosts[0] ) {
         return (
             <Container>
-                <TextRegular string={ getPrintDate(yyyymmdd, lang) } color={ Theme.c_gray }/>
+                <Title string={ getPrintDate(yyyymmdd, lang) } color={ Theme.c_gray }/>
                 { data.seeMyPosts.map( post => (
                     <Box key={post.id} >
                         <Info>

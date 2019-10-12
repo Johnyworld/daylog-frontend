@@ -78,9 +78,6 @@ const Container = styled.main`
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-bottom: 70px;
     min-height: calc(100vh - 70px);
-    .text-regular {
-
-    }
 `;
 
 const Heading = styled.div`

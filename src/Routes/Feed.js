@@ -85,13 +85,12 @@ const Container = styled.main`
     }
 `;
 
-const NoFeed = styled.main`
-    > .text-small {
-        display: block;
-        padding: 30px;
-        padding-bottom: 0;
-    }
-`;
+const NoFeed = styled.main``;
+const NoFeedMessage = styled(TextSmall)`
+    display: block;
+    padding: 30px;
+    padding-bottom: 0;
+`
 
 export default () => {
     const { data, loading } = useQuery(FEED_QUERY);
@@ -110,7 +109,7 @@ export default () => {
                     !Feed[0]
                     ?
                         <NoFeed>
-                            <TextSmall text={Words.noFeed} lang={lang} />
+                            <NoFeedMessage text={Words.noFeed} lang={lang} />
                             <Search />
                         </NoFeed>
                     : 

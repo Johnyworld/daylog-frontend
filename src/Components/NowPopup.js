@@ -48,10 +48,11 @@ const Row = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .text-regular {
-        width: 40%;
-    }
 `;
+
+const LocationText = styled(TextRegular)`
+    width: 40%;
+`
 
 const LargeButtonStyled = styled(LargeButton)`
     display: block;
@@ -190,7 +191,7 @@ export default ({ doings, recent, closePopup, focused, focusedBlock, now, next, 
                     ))}
                 </DoingGrid>
                 <Row>
-                    <TextRegular text={Words.location} lang={lang} />
+                    <LocationText text={Words.location} lang={lang} />
                     <Input placeholder={Words.location} {...location} lang={lang} />
                 </Row>
                 <LargeButtonStyled text={Words.okay} lang={lang} onClick={onClickSubmit} color={Theme.c_blue} className={ !selectedDoing && "disabled" } />

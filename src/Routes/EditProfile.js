@@ -44,13 +44,15 @@ const Profile = styled.section`
     align-items: center;
     margin-bottom: 40px;
     padding-right: 30px;
-    .avatar {
-        margin-right: 20px;
-    }
-    .text-medium { 
-        display: block; 
-        margin-bottom: 5px;
-    }
+`;
+
+const AvatarStyled = styled(Avatar)`
+    margin-right: 20px;
+`;
+
+const Username = styled(TextMedium)`
+    display: block; 
+    margin-bottom: 5px;
 `;
 
 const Row = styled.section`
@@ -58,15 +60,17 @@ const Row = styled.section`
     grid-template-columns: 2fr 5fr;
     grid-gap: 20px;
     margin-bottom: 15px;
-    .text-regular:first-child {
-        margin-top: 10px;
-    }
-    .text-regular:last-child {
-        display: block;
-        padding: 10px 4px;
-        ${({ theme })=> theme.inputUnderline };
-    }
 `;
+
+const Label = styled(TextRegular)`
+    margin-top: 10px;
+`;
+
+const DisabledText = styled(TextRegular)`
+    display: block;
+    padding: 10px 4px;
+    ${({ theme })=> theme.inputUnderline };
+`
 
 const Textarea = styled(TextareaAutosize)`
     ${({ theme })=> theme.f_regular };
@@ -173,30 +177,30 @@ export default () => {
                 { !loading && data && data.me &&
                     <>
                         <Profile>
-                            <Avatar avatar={avatarState} size="large" />
+                            <AvatarStyled avatar={avatarState} size="large" />
                             <div>
-                                <TextMedium string={data.me.username} weight="bold" />
+                                <Username string={data.me.username} weight="bold" />
                                 <SmallButton text={Words.editAvatar} lang={lang} onClick={()=>{ setOnPopup(true) }} color={Theme.c_blue} />
                             </div>
                         </Profile>
                         <Row>
-                            <TextRegular text={Words.inputUsername} lang={lang} weight='bold' />
+                            <Label text={Words.inputUsername} lang={lang} weight='bold' />
                             <Input placeholder={Words.inputUsername} lang={lang} {...username} />
                         </Row> 
                         <Row>
-                            <TextRegular text={Words.inputFullname} lang={lang} weight='bold' />
+                            <Label text={Words.inputFullname} lang={lang} weight='bold' />
                             <Input placeholder={Words.inputFullname} lang={lang} {...fullname} />
                         </Row> 
                         <Row>
-                            <TextRegular text={Words.inputEmail} lang={lang} weight='bold' />
-                            <TextRegular string={data.me.email} color={Theme.c_gray} />
+                            <Label text={Words.inputEmail} lang={lang} weight='bold' />
+                            <DisabledText string={data.me.email} color={Theme.c_gray} />
                         </Row> 
                         <Row>
-                            <TextRegular text={Words.lang} lang={lang} weight='bold' />
+                            <Label text={Words.lang} lang={lang} weight='bold' />
                             <Select list={langList} value={language.value} onChange={onChangeSelect} />
                         </Row> 
                         <Row>
-                            <TextRegular text={Words.bio} lang={lang} weight='bold' />
+                            <Label text={Words.bio} lang={lang} weight='bold' />
                             <Textarea placeholder={placeholder} value={bio.value} onChange={bio.onChange} />
                         </Row> 
                         <Confirm>

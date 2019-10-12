@@ -32,12 +32,15 @@ const Container = styled.section`
     padding: 40px 30px;
     background-color: white;
     ${({ theme })=> theme.box };
-    > .avatar { margin-right: 20px; }
     > button, > a {
         position: absolute;
         bottom: -14px;
         right: 30px;
     }
+`;
+
+const AvatarStyled = styled(Avatar)`
+    margin-right: 20px;
 `;
 
 const Info = styled.div`
@@ -125,7 +128,7 @@ export default ({
 
     return (
         <Container>
-            <Avatar avatar={avatar} size="large" />
+            <AvatarStyled avatar={avatar} size="large" />
             <Info>
                 <User>
                     <TextRegular string={username} weight="bold" />

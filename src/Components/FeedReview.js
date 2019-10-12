@@ -40,9 +40,17 @@ const Container = styled.article`
 
 const Text = styled.div`
     margin-bottom: 20px;
-    .text-small { display: inline-block; margin-bottom: 5px; }
-    .text-regular { display: block; margin-bottom: 5px; }
 `;
+
+const Date = styled(TextSmall)`
+    display: inline-block;
+    margin-bottom: 5px;
+`;
+
+const Article = styled(TextRegular)`
+    display: block;
+    margin-bottom: 5px;
+`
 
 
 export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, avatar, lang }) => {
@@ -77,8 +85,8 @@ export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, av
     return (
         <Container>
             <Text>
-                <TextSmall string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
-                <TextRegular string={text} lang={lang} />
+                <Date string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
+                <Article string={text} lang={lang} />
                 { likesCountState !== 0 &&
                     <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                 }
