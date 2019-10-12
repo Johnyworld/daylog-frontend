@@ -6,6 +6,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import LoaderRelative from './LoaderRelative';
 import Comment from './Comment';
+import TextRegular from './TextRegular';
 
 const SEE_DAY_COMMENTS = gql`
     {
@@ -40,7 +41,7 @@ const Popup = styled.div`
 `;
 
 const Comments = styled.ul`
-    overflow-y: scroll;
+    ${({ theme })=> theme.popupContent }
     margin: 0 -30px;
 `;
 
@@ -52,7 +53,9 @@ const DayComment = ({ lang, closePopup, me }) => {
             <Popup>
                 <PopupHeader text={Words.dayComments} lang={lang} closePopup={closePopup} />
                 { loading && <LoaderRelative /> }
-                { !loading && data && data.seeDayComments &&
+                { !loading && data && data.seeDayComments && (
+                    data.seeDayComments[0] 
+                    ?
                     <Comments>
                         { data.seeDayComments.map( comment => (
                             <Comment
@@ -68,7 +71,9 @@ const DayComment = ({ lang, closePopup, me }) => {
                             />
                         ))}
                     </Comments>
-                }
+                    :
+                    <TextRegular text={Words.noComments} lang={lang} />
+                )}
             </Popup>
         </Container>
     )
