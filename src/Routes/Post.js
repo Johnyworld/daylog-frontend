@@ -14,6 +14,7 @@ import { blockConvertor } from '../Util/Convertors';
 import Theme from '../Styles/Theme';
 import { ME } from '../Components/TodayQueries';
 import Comments from '../Components/Comments.js';
+import Username from '../Components/Username.js';
 
 const ADD_COMMENT = gql`
     mutation addComment( $postId: String!, $text: String! ) {
@@ -77,6 +78,9 @@ const Container = styled.main`
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-bottom: 70px;
     min-height: calc(100vh - 70px);
+    .text-regular {
+
+    }
 `;
 
 const Heading = styled.div`
@@ -84,15 +88,18 @@ const Heading = styled.div`
     padding: 20px;
 `;
 
+const NoCommentMessage = styled.p`
+    text-align: center;
+    padding: 30px;
+`
+
 export default () => {
-    const lang = getLang();
     const id = window.location.hash.split("/")[2];
     const newComment = useInput('');
-
+    
     const { data, loading } = useQuery(SEE_POST, { variables: { id }});
     const { data: meData, loading: meLoading } = useQuery(ME);
-
-
+    
     const [ selfComments, setSelfComments ] = useState('');
     const [ addCommentMutation ] = useMutation( 
         ADD_COMMENT, { 
@@ -100,7 +107,8 @@ export default () => {
             refetchQueries: [{ query: SEE_POST, variables: { id }}]
         }
     );
-    
+        
+    const lang = getLang( !meLoading && meData && meData.me && meData.me.lang );
     const failToSend = languages(Words.failToSend, lang);
 
     const onKeyPress = async e => {
@@ -123,12 +131,19 @@ export default () => {
             <Container>
                 <Heading>
                     <TextSmall string={blockConvertor(data.seePost.blocks, lang, "isFor")} />
-                    <TextLarge string={data.seePost.doing.name} color={Theme.c_blueDarker2}/>
-                    <TextRegular string={data.seePost.user.username} color={Theme.c_blueDarker1} />
+                    <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
+                    <Username username={data.seePost.user.username} inline="true" />
                 </Heading>
                 { !meLoading && meData && meData.me &&
                     <>
-                        <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
+                        { data.seePost.comments[0] 
+                            ? 
+                            <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
+                            : 
+                            <NoCommentMessage>
+                                <TextRegular text={Words.noComments} lang={lang} />
+                            </NoCommentMessage>
+                        }
                         <NewComment
                             lang={lang}
                             onKeyPress={onKeyPress}

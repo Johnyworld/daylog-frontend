@@ -8,7 +8,10 @@ const Container = styled.h2`
     line-height: 1.2;
     white-space: nowrap;
     ${({ color })=> color && ` color: ${ color }; `}
-    ${({ lang })=> { if ( lang === "kr" ) return `margin-left: -.1em;`; }}
+    ${({ lang })=> { if ( lang === "kr" ) return `
+        margin-left: -.1em;
+        letter-spacing: -.02em;
+    `;}}
 `;
 
 const TextLarge = ({ text, lang, string, color }) => (

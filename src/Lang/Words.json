@@ -71,6 +71,10 @@
         "kr" : "최근 댓글 모아보기",
         "en" : "Recent comments"
     },
+    "noComments" : {
+        "kr" : "댓글이 없습니다.",
+        "en" : "No comments."
+    },
     "selectCategory" : {
         "kr" : "카테고리를 선택하세요.",
         "en" : "Select a category"
