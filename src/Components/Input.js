@@ -49,7 +49,7 @@ const Input = ({ placeholder, value, onChange, type, color, lang, required=true,
 Input.propTypes = {
     placeholder : PropTypes.object.isRequired,
     required : PropTypes.bool,
-    value : PropTypes.string,
+    value : PropTypes.any,
     onChange : PropTypes.func.isRequired,
     type : PropTypes.string,
     color : PropTypes.string,
