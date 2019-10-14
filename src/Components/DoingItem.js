@@ -6,6 +6,7 @@ import Theme from '../Styles/Theme';
 import IconButton from './IconButton';
 import Button from './Button';
 import Words from '../Lang/Words.json';
+import IconImage from './IconImage';
 
 const Container = styled.li`
     position: relative;
@@ -49,13 +50,6 @@ const IconContainer = styled.div`
     }
 `;
 
-const DoingIcon = styled.div`
-    width: 24px;
-    height: 24px;
-    background-color: ${({ icon })=> icon ? "none" : "#ddd" };
-    background-image: ${({ icon })=> icon && `url(${icon})` };
-`;
-
 const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) => {
     return (
         <Container>
@@ -65,7 +59,7 @@ const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) =
             </Column>
             <Column>
                 <IconContainer>
-                    <DoingIcon icon={icon} />
+                    <IconImage url={icon} size="medium" />
                 </IconContainer>
                 { me &&
                     ( me.id === author.id

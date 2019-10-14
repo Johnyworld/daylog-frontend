@@ -6,7 +6,7 @@ const Container = styled.div`
     ${({ url, theme })=> url 
         ? `background-image: url(${url});` 
         : `background-color: ${theme.c_lightGray}; border-radius: 50%;` }
-    background-image: (${({ url })=> `` });
+    background-size: cover;
     width: ${({ size })=> `${size}px`};
     height: ${({ size })=> `${size}px`};
 `;
