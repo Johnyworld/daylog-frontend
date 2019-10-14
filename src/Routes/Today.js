@@ -97,11 +97,6 @@ export default () => {
         const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );
         const next = blocks.find(( post, index ) => post.blocks && index > focused );
 
-        console.log("---------------------------");
-        console.log("Focused Block : ", focusedBlock);
-        console.log("Recent Block : ", recent);
-        console.log("Next Block : ", next);
-
         const onPopupDayComment = () => {
             setPopupDayComment(true);
         }
@@ -110,14 +105,11 @@ export default () => {
             setPopupDayComment(false);
         }
 
-
         return (
             <Container>
                 <TimeBlocks
                     blocks={blocks}
                     lang={lang}
-                    now={now}
-                    focused={focused}
                     focusedBlock={focusedBlock}
                     recent={recent}
                     setFocused={setFocused} 

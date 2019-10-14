@@ -69,9 +69,17 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
     const pullStartAt = getPullStartAt( focusedBlock, next );
 
+    const [ uploadMutation ] = useMutation( UPLOAD, {
+        variables: { 
+            startAt: focusedBlock && focusedBlock.block,
+            option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
+        },
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
     const [ stillMutation ] = useMutation( EDIT_POST, {
         variables: { 
-            id: recent && recent.id,
+            id: recent && recent.id, 
             endAt: stillEndAt,
             type: "endAt" 
         },
@@ -101,6 +109,13 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
 
     const onClickPull = () => {
         pullMutation();
+    }
+
+    const onClickUpload = ({id, location}) => {
+        uploadMutation({ variables: {
+            doingId: id,
+            location: location ? location : ""
+        }});
     }
 
     const width = (doings.length + 1) * (Theme.size_doingButton + 10);
@@ -134,9 +149,6 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
                             color={recent.doing.color}
                             lang={lang}
                             onClick={onClickStill}
-                            focused={focused}
-                            focusedBlock={focusedBlock}
-                            now={now}
                             className="recent"
                         /> 
                     } 
@@ -149,9 +161,6 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
                             color={next.doing.color}
                             lang={lang}
                             onClick={onClickPull}
-                            focused={focused}
-                            focusedBlock={focusedBlock}
-                            now={now}
                             className="next"
                         /> 
                     }
@@ -164,9 +173,7 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
                             icon={doing.icon}
                             color={doing.color}
                             lang={lang}
-                            focused={focused}
-                            focusedBlock={focusedBlock}
-                            now={now}
+                            onClick={onClickUpload}
                         />
                     ))}
                 </DoingButtons>
@@ -177,10 +184,13 @@ export default ({ doings, lang, recent, focused, focusedBlock, now, next, classN
                     recent={recent}
                     closePopup={closePopup}
                     lang={lang}
-                    focused={focused}
                     focusedBlock={focusedBlock}
-                    now={now}
                     next={next}
+                    recentDoingId={recentDoingId}
+                    nextDoingId={nextDoingId}
+                    stillMutation={stillMutation}
+                    pullMutation={pullMutation}
+                    onClickUpload={onClickUpload}
                 /> }
         </Container>
     )

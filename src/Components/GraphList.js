@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TextSmall from './TextSmall';
 import { blockToTimeFor } from '../Util/Convertors';
-import { langList, getLangArray } from '../Util/Languages';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
     display: flex;

@@ -3,12 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import IconImage from './IconImage';
 import TextSmall from './TextSmall';
-import { languages } from '../Util/Languages';
+import { languages, getLangArray } from '../Util/Languages';
 import Words from '../Lang/Words.json'
 import Theme from '../Styles/Theme';
-import { useMutation } from 'react-apollo-hooks';
-import { TODAY_QUERY } from './TodayQueries';
-import { UPLOAD } from './WhatNow';
 
 const Container = styled.button`
     display: flex;
@@ -77,23 +74,12 @@ const Name = styled(TextSmall)`
     white-space: nowrap;
 `
 
-const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused, focusedBlock, now }) => {
-
-    const [ uploadMutation ] = useMutation( UPLOAD, {
-        variables: { 
-            doingId: id,
-            startAt: focusedBlock && focusedBlock.block,
-            option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
-        },
-        refetchQueries: [{ query: TODAY_QUERY }]
-    });
-
-    const onClickFast = () => {
-        uploadMutation();
-    }
+const DoingButton = ({
+    id, name, icon, color, className, lang,
+    onClick }) => {
 
     return (
-        <Container className={className} onClick={ onClick ? onClick : onClickFast } data-id={id} lang={lang} >
+        <Container className={className} onClick={ onClick.bind(this, {id}) } data-id={id} lang={lang} >
             <IconImage url={icon} size="medium" />
             <Name string={name} color={color} />
         </Container>
@@ -101,9 +87,15 @@ const DoingButton = ({ id, name, icon, color, className, onClick, lang, focused,
 }
 
 DoingButton.propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     icon: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    lang: PropTypes.oneOf( getLangArray() ),
+    focusedBlock: PropTypes.object,
+    uploadMutation: PropTypes.func,
 }
 
 export default DoingButton;

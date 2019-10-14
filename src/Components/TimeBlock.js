@@ -5,14 +5,11 @@ import TextRegular from './TextRegular';
 import Score from './Score';
 import SmallButton from './SmallButton';
 import Words from '../Lang/Words.json';
-import SetScore, { EDIT_POST } from './SetScore';
+import SetScore from './SetScore';
 import Icon from './Icon';
 import TextSmall from './TextSmall';
 import Theme from '../Styles/Theme';
-import { useMutation } from 'react-apollo-hooks';
-import { TODAY_QUERY } from './TodayQueries';
 import EditLocation from './EditLocation';
-import { getCutTopEndAt, getCutTopStartAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
 import { getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
@@ -135,42 +132,14 @@ const CountNum = styled(TextSmall)`
 
 
 const TimeBlock = ({
-    id, index, block, doing, color, score, location, blocks, likesCount, commentsCount, 
-    lang, className, focusedBlock, recent, setFocused }) => {
+    id, index, block, doing, color, score, location, blocks, 
+    likesCount, commentsCount, lang, className, 
+    deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
     const [ locationPopup, setLocationPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
-
-    const cutTopStartAt = getCutTopStartAt( focusedBlock, recent );
-    const cutTopEndAt = getCutTopEndAt( focusedBlock, recent );
-    const cutTopType = getCutTopType( focusedBlock, recent )
-    const cutBottomEndAt = getCutBottomEndAt( focusedBlock, recent );
-
-    const [ deletePostMutation ] = useMutation( EDIT_POST, { 
-        variables : { id, type: "delete" },
-        refetchQueries: [{ query: TODAY_QUERY }]
-    })
-
-    const [ cutTopMutation ] = useMutation( EDIT_POST, { 
-        variables : { 
-            id,
-            startAt: cutTopStartAt,
-            endAt: cutTopEndAt,
-            type: cutTopType
-        },
-        refetchQueries: [{ query: TODAY_QUERY }]
-    })
-
-    const [ cutBottomMutation ] = useMutation( EDIT_POST, { 
-        variables : { 
-            id,
-            endAt: cutBottomEndAt,
-            type: "endAt"
-        },
-        refetchQueries: [{ query: TODAY_QUERY }]
-    })
 
     const onScorePopup = () => {
         setScorePopup(true);
@@ -186,16 +155,10 @@ const TimeBlock = ({
     }
 
     const onClickDelete = () => {
-        if ( confirmDelete ) { deletePostMutation(); } 
+        if ( confirmDelete ) { 
+            deletePost(id);
+        } 
         else { setConfirmDelete(true); }
-    }
-
-    const onClickCutTop = () => {
-        cutTopMutation();
-    }
-
-    const onClickCutBottom = () => {
-        cutBottomMutation();
     }
 
     const selection = (e) => {
@@ -241,10 +204,10 @@ const TimeBlock = ({
             </TimePrint>
             { !doing && id &&
                 <Side className="cut-post">
-                    <button onClick={onClickCutTop} >
+                    <button onClick={onClickCutTop.bind(this, id)} >
                         <Icon icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
                     </button>
-                    <button onClick={onClickCutBottom} >
+                    <button onClick={onClickCutBottom.bind(this, id)} >
                         <Icon icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
                     </button>
                 </Side>
