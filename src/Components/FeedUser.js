@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Avatar from './Avatar';
 import Username from './Username';
 import TextSmall from './TextSmall';
 import { dateConvertor } from '../Util/Convertors';
 import Icon from './Icon';
 import Theme from '../Styles/Theme';
+import { getLangArray } from '../Util/Languages';
 
 const Container = styled.div`
     display: flex;
@@ -34,7 +35,7 @@ const Icons = styled.div`
     }
 `;
 
-export default ({ id, author, avatar, location, createdAt, toggleLike, isLikedState, disableComment, lang }) => {
+const FeedUser = ({ id, author, avatar, location, createdAt, toggleLike, isLikedState, disableComment, lang }) => {
     return (
         <Container>
             <UserInfo>
@@ -58,3 +59,17 @@ export default ({ id, author, avatar, location, createdAt, toggleLike, isLikedSt
         </Container>
     )
 }
+
+FeedUser.propTypes = {
+    id: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
+    location: PropTypes.string,
+    createdAt: PropTypes.string,
+    toggleLike: PropTypes.func,
+    isLikedState: PropTypes.bool,
+    disableComment: PropTypes.bool,
+    lang: PropTypes.oneOf( getLangArray() )
+}
+
+export default FeedUser;
