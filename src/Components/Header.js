@@ -52,7 +52,7 @@ export default withRouter(({ history }) => {
     if ( !loading && data && data.me ) {
         const route = history.location.pathname.split('/')[1];
         const action = history.location.pathname.split('/')[3];
-        const lang = getLang();
+        const lang = getLang( data.me.lang );
         let isDepth, text;
         
         if ( route === "log" && action && action === "edit" ) {
