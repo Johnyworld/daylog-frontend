@@ -62,6 +62,21 @@ export default {
         overscroll-behavior: contain;
         max-height: 60vh;
     `,
+    sidePopup:`
+        position: fixed;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        padding: 30px;
+        background-color: white;
+        transition: 1s;
+        transform: translateX(100%);
+        &.show {
+            transform: translateX(0);
+        }
+    `,
     inputUnderline: `
         border: 0;
         border-bottom: 1px solid;

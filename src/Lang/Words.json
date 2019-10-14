@@ -51,6 +51,10 @@
         "kr" : "새로 추가하기",
         "en" : "Add a new Doing"
     },
+    "enterManually" : {
+        "kr" : "직접 입력하기",
+        "en" : "Enter Manually"
+    },
     "select" : {
         "kr" : "선택",
         "en" : "select"
@@ -118,6 +122,10 @@
     "upload" : {
         "kr" : "파일 업로드",
         "en" : "Upload photo"
+    },
+    "uploadManually" : {
+        "kr" : "직접 업로드",
+        "en" : "Upload manually"
     },
     "failToUpload" : {
         "kr" : "사진 업로드에 실패했습니다.",

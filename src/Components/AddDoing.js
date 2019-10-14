@@ -15,6 +15,9 @@ import Theme from '../Styles/Theme';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import LoaderRelative from './LoaderRelative';
+import PickColor from './PickColor';
+import PickIcon from './PickIcon';
+import IconImage from './IconImage';
 
 const SEE_CATEGORY_LIST = gql`
     {
@@ -83,50 +86,6 @@ const LargeButtonStyled = styled(LargeButton)`
     display: block;
     margin-left: auto;
     margin-top: 50px;
-`;
-
-const SideWindow = styled.div`
-    position: fixed;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 30px;
-    background-color: white;
-    transition: 1s;
-    transform: translateX(100%);
-    &.show {
-        transform: translateX(0);
-    }
-`;
-
-const Items = styled.ul`
-    ${({ theme })=> theme.popupContent }
-    max-height: 82%;
-    margin-bottom: 30px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 30px;
-    justify-content: space-evenly;
-    align-items: center;
-`;
-
-const Item = styled.li`
-    width: 20px;
-    height: 20px;
-    margin: auto;
-    ${({ type, value })=> {
-        if (type === "icon") return `
-            background: url(${ value });
-            width: 24px;
-            height: 24px;
-        `;
-        else if (type === "color") return `
-            background: ${ value };
-            border-radius: 50%;
-        `;
-    }}
 `;
 
 const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lang }) => {
@@ -206,7 +165,7 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                         <Row>
                             <TextRegular text={Words.icon} lang={lang} weight="bold" />
                             <Column>
-                                <CustomIcon icon={icon} />
+                                <IconImage url={icon} size="medium" />
                                 <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "icon")} />
                             </Column>
                         </Row>
@@ -220,43 +179,29 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
                     </> }
                 </PopupContent>
-                <SideWin 
-                    type="color"
-                    array={Colors}
-                    sideWindow={sideWindow}
-                    closePopup={closeSideWindow}
-                    onClick={pickColor}
-                    text={Words.colors}
-                    lang={lang}
-                />
-                <SideWin 
-                    type="icon"
-                    array={Icons}
-                    sideWindow={sideWindow}
-                    closePopup={closeSideWindow}
-                    onClick={pickIcon}
-                    text={Words.icon}
-                    lang={lang}
-                />
+                { sideWindow && <> 
+                    <PickColor 
+                        type="color"
+                        array={Colors}
+                        sideWindow={sideWindow}
+                        closePopup={closeSideWindow}
+                        onClick={pickColor}
+                        text={Words.colors}
+                        lang={lang}
+                    />
+                    <PickIcon
+                        type="icon"
+                        array={Icons}
+                        sideWindow={sideWindow}
+                        closePopup={closeSideWindow}
+                        onClick={pickIcon}
+                        text={Words.icon}
+                        lang={lang}
+                    />
+                </>}
             </Popup>
         </Container>
     )
 }
-
-const SideWin = ({ type, array, sideWindow, closePopup, onClick, text, lang }) => {
-    return (
-        <SideWindow className={ sideWindow === type ? "show" : "" } >
-            <PopupHeader text={text} lang={lang} closePopup={closePopup} />
-            <Items>
-                { array.map( item => (
-                    <button onClick={onClick.bind(this, item.value)} key={item.value} >
-                        <Item value={item.value} type={type} />
-                    </button>
-                ))}
-            </Items>
-        </SideWindow>
-    )
-}
-
 
 export default AddDoing;
