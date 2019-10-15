@@ -8,6 +8,7 @@ const Container = styled.span`
     font-size: 14px;
     font-weight: 300;
     line-height: 1.4;
+    word-break: break-word;
     ${({ weight }) => weight === 'bold' && ` 
         font-weight: 700;
     `}

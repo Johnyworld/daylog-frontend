@@ -10,6 +10,7 @@ import { SEE_POST } from '../Routes/Post.js';
 import { blockToTimeFor, blockToTimeStart, scoreZero } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
 import { FEED_QUERY } from '../Routes/Feed.js';
+import FeedItemComments from './FeedItemComments';
 
 export const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -63,14 +64,13 @@ export default ({
     isLiked,
     location,
     likesCount,
+    comments,
     commentsCount,
     startAt,
-    endAt,
     score,
     createdAt,
     lang,
     blocks,
-    disableComment=false,
 }) => {
     useQuery( SEE_POST, {variables: {id}} );
     const [ isLikedState, setIsLiked ] = useState(isLiked);
@@ -125,6 +125,14 @@ export default ({
                 isLikedState={isLikedState}
                 lang={lang}
             />
+            { comments[0] && 
+                <FeedItemComments
+                    id={id}
+                    comments={comments}
+                    commentsCount={commentsCount}
+                    lang={lang}
+                />
+            }
         </Container>
         )
     )

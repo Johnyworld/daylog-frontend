@@ -129,7 +129,7 @@ export default () => {
                 <Heading>
                     <TextSmall string={blockToTimeFor(data.seePost.blocks, lang, "isFor")} />
                     <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
-                    <Username username={data.seePost.user.username} inline="true" />
+                    <Username username={data.seePost.user.username} />
                 </Heading>
                 { !meLoading && meData && meData.me &&
                     <>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Avatar from './Avatar';
 import TextRegular from './TextRegular';
 import TextSmall from './TextSmall';
@@ -9,6 +10,7 @@ import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post';
 import Icon from './Icon';
 import Username from './Username';
+import { getLangArray } from '../Util/Languages';
 
 const EDIT_COMMENT = gql`
     mutation editComment( $id:String!, $text:String, $action:String! ) {
@@ -23,11 +25,13 @@ const Container = styled.li`
 const Box = styled.div`
     position: relative;
     padding: 10px 30px;
-    border-top: 1px solid ${({ theme })=> theme.c_lightGray }
+    border-top: 1px solid ${({ theme })=> theme.c_lightGray };
     background-color: white;
     display: flex;
     transition: .5s;
     right: 0;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
     > div:first-child {
         margin-right: 20px;
     }
@@ -36,11 +40,14 @@ const Box = styled.div`
     }
 `;
 
-const Texts = styled.article`
-    > p {
-        margin-bottom: 3px;
-    }
+const Texts = styled.article``;
+const UserAndText = styled.div`
+    margin-bottom: 3px;
 `;
+
+const MainText = styled(TextRegular)`
+    display: inline;
+`
 
 const Delete = styled.button`
     position: absolute;
@@ -92,18 +99,29 @@ const Comment = ({
             <Delete onClick={deleteComment}>
                 <Icon icon="x" size="small" color="white" />
             </Delete>
-            <Box onClick={boxSlide}>
+            <Box onClick={username && boxSlide}>
                 <Avatar avatar={avatar} size="small" />
                 <Texts>
-                    <p>
-                        <Username username={author} inline={"inline"} />
-                        <TextRegular string={text} />
-                    </p>
+                    <UserAndText>
+                        <Username username={author} inline="true" />
+                        <MainText string={text} />
+                    </UserAndText>
                     <TextSmall string={dateConvertor(createdAt, lang)} />
                 </Texts>
             </Box>
         </Container>
     ))
+}
+
+Comment.propTypes = {
+    id: PropTypes.string,
+    postId: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    lang: PropTypes.oneOf( getLangArray() ).isRequired,
+    username: PropTypes.string
 }
 
 export default Comment;

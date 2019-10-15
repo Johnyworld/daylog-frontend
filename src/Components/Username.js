@@ -22,7 +22,7 @@ const Username = ({ username, inline }) => {
 
 Username.propTypes = {
     username: PropTypes.string.isRequired,
-    inline: PropTypes.bool
+    inline: PropTypes.string
 }
 
 export default Username;

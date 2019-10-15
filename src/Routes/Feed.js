@@ -93,6 +93,11 @@ const NoFeedMessage = styled(TextSmall)`
     padding-bottom: 0;
 `
 
+const getFeed = ({ posts, reviews }) => {
+    return [ ...posts, ...reviews ].sort((a, b) => 
+    a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 );
+}
+
 export default () => {
     const { data, loading } = useQuery(FEED_QUERY);
     const { data: meData, loading: meLoading } = useQuery(ME);
@@ -100,9 +105,7 @@ export default () => {
     
     if ( !loading && data && data.seeFeed ) {
         const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
-        let Feed=[];
-        Feed = [ ...data.seeFeed.posts, ...data.seeFeed.reviews ];
-        Feed.sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 );
+        const Feed = getFeed( data.seeFeed );
 
         return <>
             <Container>
@@ -128,6 +131,7 @@ export default () => {
                                     isLiked={post.isLiked}
                                     location={post.location}
                                     likesCount={post.likesCount}
+                                    comments={post.comments}
                                     commentsCount={post.commentsCount}
                                     startAt={post.startAt}
                                     endAt={post.endAt}

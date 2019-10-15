@@ -79,6 +79,14 @@
         "kr" : "댓글이 없습니다.",
         "en" : "No comments."
     },
+    "view" : {
+        "kr" : "",
+        "en" : "view "
+    }, 
+    "moreComments" : {
+        "kr" : "개의 댓글 더 보기",
+        "en" : " more comments"
+    },
     "selectCategory" : {
         "kr" : "카테고리를 선택하세요.",
         "en" : "Select a category"
