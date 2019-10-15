@@ -12,6 +12,7 @@ export default {
     c_lightGrayDarker1: "#dbe1e6",
     c_gray: "#a4b4c1",
     size_doingButton: 72,
+    size_iconLarge: 40,
     size_iconMedium: 24,
     size_iconSmall: 16,
     f_regular: `
