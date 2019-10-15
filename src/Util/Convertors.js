@@ -31,12 +31,26 @@ export const blockToTimeFor = ( blocks, lang, option ) => {
 
 export const blockToTimeStart = ( blocks ) => {
     const time = blockConvertor(blocks);
-    return `${time.h > 9 ? time.h : `0${time.h}`}:${time.m > 9 ? time.m : `0${time.m}`} - `
+    return `${timeZero(time.h)}:${timeZero(time.m)} - `
+}
+
+export const blockToTimeFull = ( startAt, endAt ) => {
+    const start = blockConvertor(startAt);
+    const end = blockConvertor(endAt);
+    return `
+        ${timeZero(start.h)}:${timeZero(start.m)} - 
+        ${timeZero(end.h)}:${timeZero(end.m)}`;
 }
 
 export const getYyyymmdd = ( year, month, date ) => {
     month += 1;
     return `${year}-${(month>9?'':"0")+month}-${(date>9?'':"0")+date}`;
+}
+
+export const getYesterday = (yyyymmdd) => {
+    const today = new Date( yyyymmdd && yyyymmdd );
+    today.setDate( today.getDate() -1 );
+    return getYyyymmdd( today.getFullYear(), today.getMonth(), today.getDate() ); 
 }
 
 export const blockToTime = ( blocks ) => {
