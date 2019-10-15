@@ -8,8 +8,8 @@ import Log from './Routes/Log';
 import Post from './Routes/Post';
 import Search from './Routes/Search';
 import Header from './Components/Header';
-import EditProfile from './Routes/EditProfile';
 import EditDoings from './Routes/EditDoings';
+import EditProfileContainer from './Routes/EditProfileContainer';
 
 const LoggedInRoutes = () => {
     return (
@@ -19,7 +19,7 @@ const LoggedInRoutes = () => {
                 <Route exact path='/' component={Today} />
                 <Route path='/feed/:username' component={Log} />
                 <Route path='/feed' component={Feed} />
-                <Route path='/log/:username/edit' component={EditProfile} />
+                <Route path='/log/:username/edit' component={EditProfileContainer} />
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
                 <Route path='/search'component={Search} />
