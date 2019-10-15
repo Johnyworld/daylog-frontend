@@ -362,5 +362,9 @@
     "colors" : {
         "kr" : "색상 선택",
         "en" : "Colors"
+    },
+    "timeTable" : {
+        "kr" : "시간표",
+        "en" : "Time table"
     }
 }

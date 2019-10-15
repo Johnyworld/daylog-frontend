@@ -7,6 +7,7 @@ import GraphContainer from './GraphContainer';
 import Review from './Review';
 import LoaderRelative from './LoaderRelative';
 import { getLangArray } from '../Util/Languages';
+import TimeTable from './TimeTable';
 
 const SEE_DAYLOG = gql`
     query seeDayLog( $username: String!, $yyyymmdd: String! ) {
@@ -22,6 +23,17 @@ const SEE_DAYLOG = gql`
                 blocks
                 percent
                 postsCount
+            }
+            posts {
+                id
+                startAt
+                endAt
+                yyyymmdd
+                doing {
+                    id
+                    name
+                    color
+                }
             }
         }
     }
@@ -40,6 +52,9 @@ const Daylog = ({ username, yyyymmdd, colors, lang }) => {
             { !loading && data && data.seeDayLog && <>
                 <GraphContainer data={data.seeDayLog.doingLogs} colors={colors} lang={lang} />
                 <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} username={username} date={yyyymmdd} lang={lang} QUERY={SEE_DAYLOG} />
+                { data.seeDayLog.posts[0] &&
+                    <TimeTable posts={data.seeDayLog.posts} yyyymmdd={yyyymmdd} lang={lang} />
+                }
             </>}
         </Container>
     )
