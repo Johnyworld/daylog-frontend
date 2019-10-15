@@ -67,7 +67,7 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
     return (
         <SideWindow className={ className + (sideWindow === "icon" ? " show" : "") } >
             <PopupHeader text={text} lang={lang} closePopup={closePopup} />
-            <PickGrid type={sideWindow} array={array} onClick={onClick} />
+            <PickGrid type='icon' array={array} onClick={onClick} />
             <MenualUpload>
                 <label htmlFor="iconFile">
                     <TextRegular text={Words.uploadManually} lang={lang} weight="bold" color={Theme.c_blue} />
@@ -84,7 +84,7 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
 
 PickIcon.propTypes = {
     array: PropTypes.array.isRequired,
-    sideWindow: PropTypes.oneOf([ 'icon', 'color' ]).isRequired,
+    sideWindow: PropTypes.oneOf([ 'icon', 'color' ]),
     closePopup: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     text: PropTypes.object.isRequired,

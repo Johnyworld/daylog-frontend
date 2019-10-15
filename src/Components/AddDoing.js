@@ -76,12 +76,6 @@ const Palette = styled.div`
     margin-right: 2px;
 `;
 
-const CustomIcon = styled.div`
-    background: ${({ icon })=> `url(${icon})` };
-    width: 24px;
-    height: 24px;
-`;
-
 const LargeButtonStyled = styled(LargeButton)`
     display: block;
     margin-left: auto;
@@ -179,26 +173,24 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
                     </> }
                 </PopupContent>
-                { sideWindow && <> 
-                    <PickColor 
-                        type="color"
-                        array={Colors}
-                        sideWindow={sideWindow}
-                        closePopup={closeSideWindow}
-                        onClick={pickColor}
-                        text={Words.colors}
-                        lang={lang}
-                    />
-                    <PickIcon
-                        type="icon"
-                        array={Icons}
-                        sideWindow={sideWindow}
-                        closePopup={closeSideWindow}
-                        onClick={pickIcon}
-                        text={Words.icon}
-                        lang={lang}
-                    />
-                </>}
+                <PickColor 
+                    type="color"
+                    array={Colors}
+                    sideWindow={sideWindow}
+                    closePopup={closeSideWindow}
+                    onClick={pickColor}
+                    text={Words.colors}
+                    lang={lang}
+                />
+                <PickIcon
+                    type="icon"
+                    array={Icons}
+                    sideWindow={sideWindow}
+                    closePopup={closeSideWindow}
+                    onClick={pickIcon}
+                    text={Words.icon}
+                    lang={lang}
+                />
             </Popup>
         </Container>
     )

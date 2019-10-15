@@ -48,7 +48,7 @@ const PickGrid = ({ type, array, onClick }) => {
 }
 
 PickGrid.propTypes = {
-    type: PropTypes.string.isRequired,
+    type: PropTypes.string,
     array: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired
 }

@@ -44,7 +44,7 @@ const PickColor = ({ array, sideWindow, closePopup, onClick, text, lang, classNa
     return (
         <SideWindow className={ className + (sideWindow === "color" ? " show" : "") } >
             <PopupHeader text={text} lang={lang} closePopup={closePopup} />
-            <PickGrid type={sideWindow} array={array} onClick={onClick} />
+            <PickGrid type="color" array={array} onClick={onClick} />
             <MenualUpload>
                 <TextRegular text={Words.enterManually} lang={lang} weight="bold" />
                 <InputField>
@@ -61,7 +61,7 @@ const PickColor = ({ array, sideWindow, closePopup, onClick, text, lang, classNa
 
 PickColor.propTypes = {
     array: PropTypes.array.isRequired,
-    sideWindow: PropTypes.oneOf([ 'icon', 'color' ]).isRequired,
+    sideWindow: PropTypes.oneOf([ 'icon', 'color' ]),
     closePopup: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     text: PropTypes.object.isRequired,
