@@ -13,7 +13,7 @@ const Container = styled.button`
     transition: .5s;
     color: ${({ color }) => color };
     ${({ className })=> {
-        if ( className.includes("disabled") ) {
+        if ( className && className.includes("disabled") ) {
             return `
                 opacity: .3;
                 border: 0;

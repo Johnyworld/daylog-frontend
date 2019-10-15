@@ -7,7 +7,7 @@ import Theme from '../Styles/Theme.js';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
-import { blockToTimeFor, blockToTimeStart } from '../Util/Convertors.js';
+import { blockToTimeFor, blockToTimeStart, scoreZero } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
 import { FEED_QUERY } from '../Routes/Feed.js';
 
@@ -31,10 +31,26 @@ const Info = styled.div`
 
 const Heading = styled.div`
     margin-bottom: 20px;
-    span {
-        display: inline-block;
-        margin-top: 3px;
+`;
+
+const DoingName = styled(TextLarge)`
+    position: relative;
+    display: inline-block;
+
+    &::after {
+        content: ${({ score })=> score && `"(${score})"` };
+        position: absolute;
+        right: -5px;
+        top: 0;
+        opacity: .5;
+        transform: translateX(100%);
+        ${({ theme })=> theme.f_regular }
     }
+`;
+
+const Likes = styled(TextSmall)`
+    display: block;
+    margin-top: 3px;
 `;
 
 export default ({
@@ -50,6 +66,7 @@ export default ({
     commentsCount,
     startAt,
     endAt,
+    score,
     createdAt,
     lang,
     blocks,
@@ -93,9 +110,9 @@ export default ({
                 <TextSmall text={category} lang={lang} />
             </Info>
             <Heading>
-                <TextLarge string={doing} lang={lang} color={color}/>
+                <DoingName string={doing} lang={lang} color={color} score={ score && scoreZero(score.toString()) } />
                 { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
+                    <Likes string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                 }
             </Heading>
             <FeedUser

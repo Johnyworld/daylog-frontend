@@ -53,6 +53,7 @@ export const FEED_QUERY = gql`
                 commentsCount
                 startAt
                 endAt
+                score
                 createdAt
                 blocks
                 comments {
@@ -130,6 +131,7 @@ export default () => {
                                     commentsCount={post.commentsCount}
                                     startAt={post.startAt}
                                     endAt={post.endAt}
+                                    score={post.score}
                                     createdAt={post.createdAt}
                                     blocks={post.blocks}
                                     lang={lang}
