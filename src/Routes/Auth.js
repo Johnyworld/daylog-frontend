@@ -10,6 +10,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { getLang, languages } from '../Util/Languages';
 import Icon from '../Components/Icon';
+import Version from '../Components/Version';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -101,6 +102,12 @@ const ButtonContainer = styled.div`
         margin-left: auto;
         margin-bottom: 20px;
     }
+`;
+
+const VersionStyled = styled(Version)`
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
 `;
 
 let canClick = true;
@@ -272,6 +279,7 @@ export default () => {
                         </form>
                     </>
                 )}
+                <VersionStyled />
             </FirstSection>
         </Wrapper>
     )
