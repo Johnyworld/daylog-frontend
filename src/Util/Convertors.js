@@ -31,15 +31,9 @@ export const blockToTimeFor = ( blocks, lang, option ) => {
 
 export const blockToTimeStart = ( blocks ) => {
     const time = blockConvertor(blocks);
-    return `${timeZero(time.h)}:${timeZero(time.m)} - `
-}
-
-export const blockToTimeFull = ( startAt, endAt ) => {
-    const start = blockConvertor(startAt);
-    const end = blockConvertor(endAt);
-    return `
-        ${timeZero(start.h)}:${timeZero(start.m)} - 
-        ${timeZero(end.h)}:${timeZero(end.m)}`;
+    const H = time.h < 0 ? time.h + 24 : time.h;
+    const M = time.m;
+    return `${timeZero(H)}:${timeZero(M)}, `
 }
 
 export const getYyyymmdd = ( year, month, date ) => {
@@ -48,7 +42,7 @@ export const getYyyymmdd = ( year, month, date ) => {
 }
 
 export const getYesterday = (yyyymmdd) => {
-    const today = new Date( yyyymmdd && yyyymmdd );
+    const today = new Date( yyyymmdd );
     today.setDate( today.getDate() -1 );
     return getYyyymmdd( today.getFullYear(), today.getMonth(), today.getDate() ); 
 }
@@ -88,8 +82,8 @@ export const scoreZero = ( score ) => {
 }
 
 export const timePresenter = ( startAt, endAt ) => {
-    const start = blockToTime( startAt );
-    const end = blockToTime( endAt );
+    const start = blockToTime( startAt < 0 ? startAt + 96 : startAt );
+    const end = blockToTime( endAt > 96 ? endAt - 96 : endAt );
     const SH = timeZero( start.hours );
     const SM = timeZero( start.minutes );
     const EH = timeZero( end.hours );
