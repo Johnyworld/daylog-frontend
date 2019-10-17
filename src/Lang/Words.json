@@ -1,4 +1,16 @@
 {
+    "feed" : {
+        "kr" : "FEED",
+        "en" : "FEED"
+    },
+    "today" : {
+        "kr" : "TODAY",
+        "en" : "TODAY"
+    },
+    "log" : {
+        "kr" : "LOG",
+        "en" : "LOG"
+    },
     "inputEmail" : {
         "kr" : "이메일",
         "en" : "Email"
@@ -10,6 +22,10 @@
     "inputFullname" : {
         "kr" : "이름",
         "en" : "Fullname"
+    },
+    "sir" : {
+        "kr" : "님",
+        "en" : ""
     },
     "bio" : {
         "kr" : "소개글",
@@ -66,6 +82,26 @@
     "color" : {
         "kr" : "색상",
         "en" : "Color"
+    },
+    "tutorial00" : {
+        "kr" : "오늘 얼마나\n시간을 낭비했나요?",
+        "en" : "How many time\ndid you waste today?"
+    }, 
+    "tutorial01" : {
+        "kr" : "하루의 일과를\n기록하세요.",
+        "en" : "Write\nwhat you did."
+    }, 
+    "tutorial02" : {
+        "kr" : "일간, 주간, 월간, 연간\n통계를 확인하세요.",
+        "en" : "Check your report."
+    },
+    "tutorial03" : {
+        "kr" : "친구들과 기록을\n공유하세요.",
+        "en" : "Share your log\nwith your friends."
+    },
+    "tutorial04" : {
+        "kr" : "나만의 일과를\n만드세요.",
+        "en" : "Create\nyour routine."
     },
     "comments" : {
         "kr" : "댓글",
@@ -344,15 +380,15 @@
         "en" : "Doing name"
     },
     "editDoing" : {
-        "kr" : "일과 수정하기",
+        "kr" : "일과 수정",
         "en" : "Edit Doings"
     },
     "addDoing" : {
-        "kr" : "일과 추가하기",
+        "kr" : "일과 추가",
         "en" : "Add"
     },
     "enterDoingName" : {
-        "kr" : "일과 입력하기",
+        "kr" : "일과 입력",
         "en" : "Enter a doing name"
     },
     "addDoingRemark" : {

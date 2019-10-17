@@ -118,7 +118,7 @@ export default withRouter(({ history }) => {
                         <HeaderIcon icon="hamburger" size="medium" color={Theme.c_blue} />
                     </button>
                 </Container>
-                { sidemenu && <SideMenu closePopup={closeSideMenu} lang={lang} /> }
+                { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} lang={lang} /> }
             </>
         )
     } else return null;
