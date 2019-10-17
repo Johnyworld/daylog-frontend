@@ -15,13 +15,19 @@ const Canvas = styled.canvas`
     transform: rotate(-90deg);
 `;
 
-const drawTimes = ( ctx, radius, start, end, color ) => {
-    ctx.beginPath();
-    ctx.moveTo( 0, 0 );
-    ctx.arc( 0, 0, radius, start, end, false );
-    ctx.closePath();
-    ctx.fillStyle = color;
-    ctx.fill();
+const drawTimes = ( ctx, radius, data ) => {
+    data.forEach(item => {
+        const start = (Math.PI/24) * item.startAt;
+        const end = (Math.PI/24) * item.endAt;
+        const color = item.color;
+
+        ctx.beginPath();
+        ctx.moveTo( 0, 0 );
+        ctx.arc( 0, 0, radius, start, end, false );
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+    });
 }
 
 const drawLines = ( ctx, radius ) => {
@@ -49,12 +55,9 @@ const Clock = ({ data, type }) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.translate( radius, radius );
         
-        data.forEach(item => {
-            const start = (Math.PI/24) * item.startAt;
-            const end = (Math.PI/24) * item.endAt;
-            drawTimes( ctx, radius*0.9, start, end, item.color );
-        });
+        drawTimes(ctx, radius*0.9, data);
         drawLines(ctx, radius);
+        
         ctx.translate( -radius, -radius );
     }
 

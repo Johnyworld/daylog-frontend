@@ -117,7 +117,6 @@ export default () => {
                 <WhatNow
                     doings={meData.me.doings}
                     lang={lang}
-                    focused={focused}
                     focusedBlock={focusedBlock}
                     recent={recent}
                     now={now}

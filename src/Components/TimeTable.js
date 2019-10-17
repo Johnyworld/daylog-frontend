@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Clock from './Clock';
-import { getYesterday, blockToTimeFull } from '../Util/Convertors';
+import { getYesterday, timePresenter } from '../Util/Convertors';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
 import Words from '../Lang/Words.json'
@@ -57,11 +57,12 @@ const Color = styled.div`
 const getAm = ( posts, yyyymmdd ) => {
     const yesterday = getYesterday(yyyymmdd);
     return posts.filter( post => {
-        if ( post.endAt < 48 ) return true;
+        if ( post.yyyymmdd !== yesterday && post.startAt < 48 ) return true;
         if ( post.yyyymmdd === yesterday && post.endAt >= 96 ) return true;
         else return false;
     })
     .map( post => {
+        console.log(post)
         if ( post.yyyymmdd === yesterday && post.endAt > 96 ) {
             return {
                 name: post.doing.name,
@@ -77,7 +78,7 @@ const getAm = ( posts, yyyymmdd ) => {
             return {
                 name: post.doing.name,
                 color: post.doing.color,
-                startAt: post.startAt,
+                startAt: post.startAt < 0 ? 0 : post.startAt,
                 endAt: endAt
             };
         } else return null;
@@ -86,7 +87,9 @@ const getAm = ( posts, yyyymmdd ) => {
 
 const getPm = ( posts, yyyymmdd ) => {
     const yesterday = getYesterday(yyyymmdd);
-    return posts.filter( post => post.endAt > 48 && post.yyyymmdd !== yesterday ).map( post => {
+    return posts
+        .filter( post => post.yyyymmdd !== yesterday && post.endAt > 48 )
+        .map( post => {
         if ( post.startAt < 48 && post.endAt > 48 ) {
             return {
                 name: post.doing.name,
@@ -129,13 +132,18 @@ const TimeTable = ({ posts, yyyymmdd, lang }) => {
                     </Column>
                 </TimeGraphic>
                 <TimeList>
-                    { posts.map( item => (
-                        <ListItem key={item.id} >
-                            <TextSmall string={blockToTimeFull(item.startAt, item.endAt)} />
-                            <Color color={item.doing.color} />
-                            <TextRegular string={item.doing.name} />
-                        </ListItem>
-                    ))}
+                    { posts.map( item => {
+                        const isToday = item.yyyymmdd === yyyymmdd;
+                        const isOverFromYesterday = item.yyyymmdd !== yyyymmdd && item.endAt > 96;
+                        return (
+                            isToday || isOverFromYesterday ?
+                            <ListItem key={item.id} >
+                                <TextSmall string={ timePresenter( item.startAt, item.endAt ) }/>
+                                <Color color={item.doing.color} />
+                                <TextRegular string={item.doing.name} />
+                            </ListItem> : null
+                        )
+                    })}
                 </TimeList>
             </Content>
         </Container>
