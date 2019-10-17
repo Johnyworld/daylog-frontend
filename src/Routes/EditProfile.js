@@ -20,6 +20,7 @@ import TextMedium from '../Components/TextMedium';
 import SmallButton from '../Components/SmallButton';
 import PopupHeader from '../Components/PopupHeader';
 import InputLabel from '../Components/InputLabel';
+import InputDisabled from '../Components/InputDisabed';
 
 const EDIT_USER = gql`
     mutation editUser( $id: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
@@ -67,15 +68,13 @@ const InputLabelStyled = styled(InputLabel)`
     margin-bottom: 15px; 
 `;
 
+const InputDisabledStyled = styled(InputDisabled)`
+    margin-bottom: 15px; 
+`;
+
 const Label = styled(TextRegular)`
     margin-top: 10px;
 `;
-
-const DisabledText = styled(TextRegular)`
-    display: block;
-    padding: 10px 4px;
-    ${({ theme })=> theme.inputUnderline };
-`
 
 const Textarea = styled(TextareaAutosize)`
     ${({ theme })=> theme.f_regular };
@@ -186,10 +185,7 @@ export default ({ me }) => {
                 <InputField>
                     <InputLabelStyled label={Words.inputUsername} placeholder={Words.inputUsername} lang={lang} {...username} />
                     <InputLabelStyled label={Words.inputFullname} placeholder={Words.inputFullname} lang={lang} {...fullname} />
-                    <Row>
-                        <Label text={Words.inputEmail} lang={lang} weight='bold' />
-                        <DisabledText string={me.email} color={Theme.c_gray} />
-                    </Row> 
+                    <InputDisabledStyled label={Words.inputEmail} field={me.email} lang={lang} />
                     <Row>
                         <Label text={Words.lang} lang={lang} weight='bold' />
                         <Select list={langList} value={language.value} onChange={onChangeSelect} />
