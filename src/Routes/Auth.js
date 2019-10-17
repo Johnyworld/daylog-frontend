@@ -11,6 +11,8 @@ import { useMutation } from 'react-apollo-hooks';
 import { getLang, languages } from '../Util/Languages';
 import Icon from '../Components/Icon';
 import Version from '../Components/Version';
+import Theme from '../Styles/Theme';
+import TextLarge from '../Components/TextLarge';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -36,11 +38,15 @@ const CREATE_ACCOUNT = gql`
     }
 `;
 
-const Wrapper = styled.div`
-
+const Wrapper = styled.main`
+    overflow: auto;
+    scroll-snap-type: y mandatory;
+    height: 100vh;
 `
 
-const FirstSection = styled.div`
+const Section = styled.section`
+    scroll-snap-align: start;
+    position: relative;
     height: 100vh;
     background-color: ${props=> props.theme.c_blue};
     padding: 30px;
@@ -207,7 +213,7 @@ export default () => {
     
     return (
         <Wrapper>
-            <FirstSection>
+            <Section>
                 { action === "logIn" && (
                     <>
                         <Logo>Daylog</Logo>
@@ -280,7 +286,73 @@ export default () => {
                     </>
                 )}
                 <VersionStyled />
-            </FirstSection>
+            </Section>
+            <SectionTutorial
+                text={Words.tutorial00}
+                lang={lang}
+                color={Theme.c_blue}
+                background="white"
+            />
+            <SectionTutorial
+                text={Words.tutorial01}
+                lang={lang}
+                color="white"
+                background={Theme.c_blue}
+                screen="https://daylog.s3.ap-northeast-2.amazonaws.com/tutorials/tutToday.png"
+            />
+            <SectionTutorial
+                text={Words.tutorial02}
+                lang={lang}
+                color="white"
+                background="#085fb9"
+                screen="https://daylog.s3.ap-northeast-2.amazonaws.com/tutorials/tutLog1.png"
+            />
+            <SectionTutorial
+                text={Words.tutorial03}
+                lang={lang}
+                color="white"
+                background="#198f88"
+                screen="https://daylog.s3.ap-northeast-2.amazonaws.com/tutorials/tutFeed.png"
+            />
+            <SectionTutorial
+                text={Words.tutorial04}
+                lang={lang}
+                color="white"
+                background="#a55af8"
+                screen="https://daylog.s3.ap-northeast-2.amazonaws.com/tutorials/tutAddDoing.png"
+            />
         </Wrapper>
+    )
+}
+
+const SectionTut = styled(Section)`
+    background-color: ${({ background })=> background };
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const TextStyled = styled(TextLarge)`
+    ${({ center })=> !center && `
+        position: absolute;
+        top: 12vh;
+    `}
+    white-space: pre;
+    line-height: 1.4;
+    width: 250px;
+`;
+
+const Screen = styled.img`
+    position: absolute;
+    bottom: 0;
+    width: 270px;
+`;
+
+const SectionTutorial = ({ text, lang, color, background, screen }) => {
+    return (
+        <SectionTut color={color} background={background}>
+            { screen && <Screen src={screen} /> }
+            <TextStyled text={text} lang={lang} color={color} center={!screen} />
+        </SectionTut>
     )
 }
