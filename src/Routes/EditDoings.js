@@ -46,6 +46,12 @@ const ADD_DOING = gql`
     }
 `;
 
+const EDIT_DOING = gql`
+    mutation editDoing( $id: String!, $color: String, $icon: String ) {
+        editDoing( id: $id, color: $color, icon: $icon )
+    }
+`;
+
 const PIN_DOING = gql`
     mutation addPin( $doingId: String! ) {
         addPin( doingId: $doingId )
@@ -95,6 +101,10 @@ export default () => {
         refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
     
+    const [ editDoingMutation ] = useMutation(EDIT_DOING, {
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+    });
+
     if ( !loading && data && data.seeFollowedDoings && meData && meData.me && !meLoading ) {
         const categories = getCategories( data.seeFollowedDoings );
         const lang = getLang( meData.me.lang );
@@ -125,12 +135,12 @@ export default () => {
                         category={category}
                         doings={data.seeFollowedDoings}
                         me={meData.me}
+                        editDoingMutation={editDoingMutation}
                         lang={lang}
                     />
                 ))}
                 { addDoingPopup && 
                     <AddDoing
-                        categories={[ {name:"default", lang: Words.selectCategory }, ...categories]}
                         closePopup={closePopup}
                         onSelectDoing={onSelectDoing}
                         addDoingMutation={addDoingMutation}

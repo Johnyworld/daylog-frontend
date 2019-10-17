@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextMedium from './TextMedium';
 import Icon from './Icon';
 import Theme from '../Styles/Theme';
 import IconButton from './IconButton';
-import Button from './Button';
-import Words from '../Lang/Words.json';
 import IconImage from './IconImage';
+import EditDoing from './EditDoing';
 
 const Container = styled.li`
     position: relative;
@@ -50,7 +49,20 @@ const IconContainer = styled.div`
     }
 `;
 
-const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) => {
+const DoingItem = ({ 
+    id, name, category, color, icon, author, me, lang, 
+    onSelectDoing, editDoingMutation 
+}) => {
+    const [ editDoing, setEditDoing ] = useState(false);
+
+    const editDoingPopup = () => {
+        setEditDoing(true);
+    }
+
+    const closePopup = () => {
+        setEditDoing(false);
+    }
+
     return (
         <Container>
             <Column>
@@ -63,14 +75,26 @@ const DoingItem = ({ id, name, color, icon, author, me, lang, onSelectDoing }) =
                 </IconContainer>
                 { me &&
                     ( me.id === author.id
-                        ? <IconButton icon="pencel" size="medium" />
+                        ? <IconButton icon="pencel" size="medium" onClick={editDoingPopup} />
                         : <EditIcon icon="pencel" size="medium" color={Theme.c_lightGray} />
                     )
                 }
-                { id &&
+                {/* { id &&
                     <Button text={Words.select} lang={lang} className="narrow" onClick={onSelectDoing.bind(this, id)} />
-                }
+                } */}
             </Column>
+            { editDoing && 
+                <EditDoing
+                    id={id}
+                    category={category}
+                    doingName={name}
+                    defaultIcon={icon}
+                    defaultColor={color}
+                    closePopup={closePopup}
+                    editDoingMutation={editDoingMutation}
+                    lang={lang}
+                /> 
+            }
         </Container>
     )
 }

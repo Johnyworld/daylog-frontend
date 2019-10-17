@@ -62,7 +62,6 @@ const getAm = ( posts, yyyymmdd ) => {
         else return false;
     })
     .map( post => {
-        console.log(post)
         if ( post.yyyymmdd === yesterday && post.endAt > 96 ) {
             return {
                 name: post.doing.name,

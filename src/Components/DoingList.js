@@ -13,7 +13,7 @@ const CategoryName = styled(TextSmall)`
     margin-bottom: 10px;
 `;
 
-export default ({ category, doings, me, lang }) => {
+export default ({ category, doings, me, editDoingMutation, lang }) => {
     return (
         <Container>
             <CategoryName text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
@@ -21,11 +21,14 @@ export default ({ category, doings, me, lang }) => {
                 doing.category.name === category.name &&
                 <DoingItem 
                     key={doing.id}
+                    id={doing.id}
                     name={doing.name}
+                    category={category}
                     color={doing.color}
                     icon={doing.icon}
                     author={doing.author}
                     me={me}
+                    editDoingMutation={editDoingMutation}
                     lang={lang}
                 />
             ))}

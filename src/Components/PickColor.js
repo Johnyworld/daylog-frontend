@@ -37,7 +37,7 @@ const PickColor = ({ array, sideWindow, closePopup, onClick, text, lang, classNa
     const hex = useInput('000000');
 
     const hexSubmit = () => {
-        const isHex = /^[a-f0-9]{3,6}$/;
+        const isHex = /^[a-f0-9]{6}$/;
         if ( isHex.test(hex.value) ) onClick(`#${hex.value}`);
     }
 
