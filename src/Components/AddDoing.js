@@ -6,10 +6,8 @@ import useInput from '../Hooks/useInput';
 import Select from './Select';
 import CategoryList from './CategoryList';
 import InputLabel from './InputLabel';
-import TextRegular from './TextRegular';
 import Colors from '../Util/Colors';
 import Icons from '../Util/Icons';
-import IconButton from './IconButton';
 import LargeButton from './LargeButton';
 import Theme from '../Styles/Theme';
 import { useQuery } from 'react-apollo-hooks';
@@ -17,7 +15,7 @@ import { gql } from 'apollo-boost';
 import LoaderRelative from './LoaderRelative';
 import PickColor from './PickColor';
 import PickIcon from './PickIcon';
-import IconImage from './IconImage';
+import Picker from './Picker';
 
 const SEE_CATEGORY_LIST = gql`
     {
@@ -49,31 +47,8 @@ const Name = styled.div`
     margin: 15px 0 10px;
 `;
 
-const Row = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
+const PickerStyled = styled(Picker)`
     margin-top: 5px;
-`;
-
-const Column = styled.div`
-    display: flex;
-    align-items: center;
-    button {
-        margin-left: 15px;
-        padding-left: 15px;
-        box-sizing: content-box;
-        border-left: 1px solid ${({ theme })=> theme.c_lightGray };
-    }
-`;
-
-const Palette = styled.div`
-    background: ${({ color })=> color };
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 2px;
 `;
 
 const LargeButtonStyled = styled(LargeButton)`
@@ -82,7 +57,7 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-top: 50px;
 `;
 
-const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lang }) => {
+const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
     const { data, loading } = useQuery(SEE_CATEGORY_LIST);
 
     const [ sideWindow, setSideWindow ] = useState(null);
@@ -139,11 +114,22 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                 { loading && <LoaderRelative /> }
                 <PopupContent>
                     { !loading && data && data.seeCategoryList &&
-                        <Select list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]} onChange={onChangeCategory} lang={lang} className="left-align" />
+                        <Select
+                            list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]}
+                            onChange={onChangeCategory}
+                            lang={lang}
+                            className="left-align" 
+                        />
                     }
                     { category.value !== "default" &&
                         <Name>
-                            <InputLabel label={Words.doingName} value={term.value} onChange={onChangeTerm} placeholder={Words.enterDoingName} lang={lang} />
+                            <InputLabel
+                                label={Words.doingName}
+                                value={term.value}
+                                onChange={onChangeTerm}
+                                placeholder={Words.enterDoingName}
+                                lang={lang}
+                            />
                         </Name>
                     }
                     { term.value !== "" && !adding &&
@@ -156,20 +142,8 @@ const AddDoing = ({ categories, closePopup, onSelectDoing, addDoingMutation, lan
                         />
                     }
                     { adding && <>
-                        <Row>
-                            <TextRegular text={Words.icon} lang={lang} weight="bold" />
-                            <Column>
-                                <IconImage url={icon} size="medium" />
-                                <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "icon")} />
-                            </Column>
-                        </Row>
-                        <Row>
-                            <TextRegular text={Words.color} lang={lang} weight="bold" />
-                            <Column>
-                                <Palette color={color} />
-                                <IconButton icon="pencel" size="medium" onClick={onClickSideWindow.bind(this, "color")} />
-                            </Column>
-                        </Row>
+                        <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} />
+                        <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} />
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
                     </> }
                 </PopupContent>
