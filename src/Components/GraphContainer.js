@@ -25,21 +25,24 @@ const Lists = styled.ul`
 
 const GraphContainer = ({ data, colors, lang }) => {
     const [ unit, setUnit ] = useState('percent');
-
-    const slide = (delay) => {
-        if ( unit === 'percent' ) {
-            setTimeout(()=> { setUnit( 'time' ); }, delay);
-        } else if ( unit === 'time' ) {
-            setTimeout(()=> { setUnit( 'percent' ); }, delay);
-        }
-    }
     
     useEffect(()=> {
-        slide(5000);
+        if ( unit === 'percent' ) {
+            const showTheTime = setTimeout(()=> { setUnit( 'time' ); }, 5000);
+            return () => { clearTimeout(showTheTime); }
+
+        } else if ( unit === 'time' ) {
+            const showPercent = setTimeout(()=> { setUnit( 'percent' ); }, 5000);
+            return () => { clearTimeout(showPercent); }
+        }
     });
 
     const toggleUnit = () => {
-        slide();
+        if ( unit === 'percent' ) {
+            setUnit( 'time' );
+        } else if ( unit === 'time' ) {
+            setUnit( 'percent' );
+        }
     }
 
     return (

@@ -63,7 +63,7 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ doings, lang, recent, focused, focusedBlock, now, next, className }) => {
+export default ({ doings, lang, recent, focusedBlock, next, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
 
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
