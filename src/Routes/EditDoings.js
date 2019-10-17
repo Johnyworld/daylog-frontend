@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextLarge from '../Components/TextLarge';
 import Words from '../Lang/Words.json';
-import { ME } from '../Components/TodayQueries';
+import { ME, TODAY_QUERY } from '../Components/TodayQueries';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';
@@ -88,11 +88,11 @@ export default () => {
     const [ addDoingPopup, setAddDoingPopup ] = useState(false);
 
     const [ addPinMutation ] = useMutation(PIN_DOING, { 
-        refetchQueries: [{ query: SEE_MY_DOINGS }]
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
 
     const [ addDoingMutation ] = useMutation(ADD_DOING, {
-        refetchQueries : [{ query: SEE_MY_DOINGS }]
+        refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
     
     if ( !loading && data && data.seeFollowedDoings && meData && meData.me && !meLoading ) {
