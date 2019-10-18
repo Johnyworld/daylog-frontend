@@ -61,7 +61,17 @@ export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, av
     const [ toggleLikeReviewMutation ] = useMutation( 
         TOGGLE_LIKE_REVIEW, {
             variables: { reviewId : id },
-            refetchQueries: [{ query: SEE_REVIEW, variables: { id }}]
+            update: (cache, {data: { toggleLike }})=>{
+                const { seeReview } = cache.readQuery({ query: SEE_REVIEW, variables: {id} })
+                seeReview.isLiked = toggleLike;
+                if ( toggleLike ) seeReview.likesCount += 1;
+                else seeReview.likesCount -= 1;;
+                cache.writeQuery({
+                    query: SEE_REVIEW,
+                    variables: { id },
+                    data: { seeReview }
+                })
+            }
         }
     );
 

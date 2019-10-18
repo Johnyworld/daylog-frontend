@@ -9,7 +9,7 @@ import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
 import { blockToTimeFor, blockToTimeStart, scoreZero } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
-import { FEED_QUERY } from '../Routes/Feed.js';
+import { FEED_POST } from '../Routes/Feed.js';
 import FeedItemComments from './FeedItemComments';
 
 export const TOGGLE_LIKE = gql`
@@ -78,9 +78,17 @@ export default ({
     const [ toggleLikeMutation ] = useMutation( 
         TOGGLE_LIKE, { 
             variables: { postId : id },
-            refetchQueries: [
-                { query: FEED_QUERY }
-            ]
+            update: (cache, {data: { toggleLike }})=>{
+                const { seePost } = cache.readQuery({ query: SEE_POST, variables: {id} })
+                seePost.isLiked = toggleLike;
+                if ( toggleLike ) seePost.likesCount += 1;
+                else seePost.likesCount -= 1;
+                cache.writeQuery({
+                    query: SEE_POST,
+                    variables: { id },
+                    data: { seePost }
+                })
+            }
         }
     );
 
