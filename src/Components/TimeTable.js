@@ -58,7 +58,7 @@ const getAm = ( posts, yyyymmdd ) => {
     const yesterday = getYesterday(yyyymmdd);
     return posts.filter( post => {
         if ( post.yyyymmdd !== yesterday && post.startAt < 48 ) return true;
-        if ( post.yyyymmdd === yesterday && post.endAt >= 96 ) return true;
+        if ( post.yyyymmdd === yesterday && post.endAt > 96 ) return true;
         else return false;
     })
     .map( post => {
