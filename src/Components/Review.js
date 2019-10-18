@@ -12,7 +12,7 @@ import LargeButton from './LargeButton';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 import { languages } from '../Util/Languages';
 import TextSmall from './TextSmall';
-import { FEED_QUERY } from '../Routes/Feed';
+import { FEED_POST } from '../Routes/Feed';
 import PopupHeader from './PopupHeader';
 
 const ADD_REVIEW = gql`
@@ -107,7 +107,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
         variables: { text: reviewText.value, yyyymmdd: weekDate ? weekDate : date },
         refetchQueries: [
             { query: QUERY, variables: { username, yyyymmdd: date }},
-            { query: FEED_QUERY }
+            { query: FEED_POST }
         ]
     });
 
@@ -115,7 +115,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
         variables: { text: reviewText.value, id: review ? review.id : "" },
         refetchQueries: [
             { query: QUERY, variables: { username, yyyymmdd: date }},
-            { query: FEED_QUERY }
+            { query: FEED_POST }
         ]
     });
 
@@ -123,7 +123,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
         variables: { id: review ? review.id : "" }, 
         refetchQueries: [
             { query: QUERY, variables: { username, yyyymmdd: date }},
-            { query: FEED_QUERY }
+            { query: FEED_POST }
         ]
     })
 

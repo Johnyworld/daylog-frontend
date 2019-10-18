@@ -13,6 +13,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
 import { TODAY_QUERY } from './TodayQueries';
 import { getStillEndAt, getPullStartAt } from '../Util/Util';
+import { FEED_POST } from '../Routes/Feed';
 
 export const UPLOAD = gql`
     mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float, $option: String ) {
@@ -74,7 +75,7 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
             startAt: focusedBlock && focusedBlock.block,
             option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
         },
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
     });
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
@@ -83,7 +84,7 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
             endAt: stillEndAt,
             type: "endAt" 
         },
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
     });
 
     const [ pullMutation ] = useMutation( EDIT_POST, {
@@ -92,7 +93,7 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
             startAt: pullStartAt,
             type: "startAt" 
         },
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
     });
 
     const onClickNowPopup = () => {
