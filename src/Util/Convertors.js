@@ -41,6 +41,11 @@ export const getYyyymmdd = ( year, month, date ) => {
     return `${year}-${(month>9?'':"0")+month}-${(date>9?'':"0")+date}`;
 }
 
+export const getToday = () => {
+    const today = new Date();
+    return getYyyymmdd( today.getFullYear(), today.getMonth(), today.getDate() ); 
+}
+
 export const getYesterday = (yyyymmdd) => {
     const today = new Date( yyyymmdd );
     today.setDate( today.getDate() -1 );
@@ -99,6 +104,6 @@ export const getWeek = (yyyymmdd) => {
 
     const whatFirstDay = new Date( Y, M, 1 ).getDay();
     const whatWeek = Math.floor(( D + whatFirstDay -1 ) / 7);
-
-    return `${Y}-${(M>9?'':"0")+(M+1)}-W${whatWeek}`;
+    
+    return `${Y}-${M+1 < 9 ? `0${M+1}` : M+1}-W${whatWeek}`;
 }
