@@ -171,7 +171,8 @@ export default ({ me }) => {
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         };
-        axios.post("http://localhost:4000/upload", formData, config )
+        const url = process.env.REACT_APP_BACKEND_URL + "/upload"
+        axios.post(url, formData, config )
             .then((response) => { 
                 setAvatarState(response.data.Location);
                 setOnPopup(false);

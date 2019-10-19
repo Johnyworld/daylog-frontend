@@ -56,7 +56,9 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
         const config = {
             headers: { 'content-type' : 'multipart/form-data'}
         };
-        axios.post("http://localhost:4000/upload-icon", formData, config)
+
+        const url = process.env.REACT_APP_BACKEND_URL + "/upload-icon"
+        axios.post(url, formData, config)
             .then(response => {
                 fileUrl.setValue(response.data.Location);
                 setFileName(response.data.originalname);
