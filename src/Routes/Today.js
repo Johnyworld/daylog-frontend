@@ -5,7 +5,7 @@ import Loader from '../Components/Loader';
 import { TODAY_QUERY, ME } from '../Components/TodayQueries';
 import { getLang } from '../Util/Languages';
 import TimeBlocks from '../Components/TimeBlocks';
-import { getNowBlock, getYyyymmdd } from '../Util/Convertors';
+import { getNowBlock, getYesterday, getToday } from '../Util/Convertors';
 import WhatNow from '../Components/WhatNow';
 import Icon from '../Components/Icon';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
@@ -47,29 +47,28 @@ const blocksFoundation = ( now ) => {
             block += 96;
             isYesterday = true;
         } 
-        blocks = [ { block, isYesterday }, ...blocks ];
+        blocks = [ { block, isYesterday, selection:[] }, ...blocks ];
     }
     return blocks;
 }
 
-const initBlocks = ( todayPosts, foundation, now ) => {
-    const yesterday = new Date();
-    yesterday.setDate( yesterday.getDate() -1 );
-    const yyyymmddYesterday = getYyyymmdd( yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate() );
+const getIsYesterday = ( yymd, yesterday ) => {
+    if ( yymd === yesterday ) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    todayPosts.forEach( post => {
+const initPostsToBlocks = ({ todayPosts, yesterday, now, foundation }) => {
+    todayPosts.forEach(post => {
         let startAt = post.startAt;
-        if ( post.yyyymmdd === yyyymmddYesterday ) startAt -= 96;
-
+        if ( post.yyyymmdd === yesterday ) startAt -= 96;
         const num = 95 - ( now - startAt );
+
         foundation[num] = { ...foundation[num], ...post };
-
-        if ( post.yyyymmdd === yyyymmddYesterday ) {
-            foundation[num].postYesterday = true;
-        } else {
-            foundation[num].postYesterday = false;
-        }
-
+        foundation[num].postYesterday = getIsYesterday( post.yyyymmdd, yesterday );
+        
         for ( let i=1; i<post.blocks; i++ ) {
             if ( foundation[num+i] ) {
                 foundation[num+i].id = foundation[num].id;
@@ -77,6 +76,38 @@ const initBlocks = ( todayPosts, foundation, now ) => {
             }
         }
     })
+}
+
+const initSelection = ({ foundation, focused }) => {
+    foundation[focused].selection = [ ...foundation[focused].selection, "focused" ]
+
+    if ( foundation[focused].id ) {
+        let first = true;
+        let last = null;
+
+        foundation.forEach((item, index) => {
+            if ( item.id === foundation[focused].id ) {
+                if ( first ) {
+                    item.selection = [ ...item.selection, "first" ];
+                    first = false;
+                }
+                item.selection = [ ...item.selection, "selected" ];
+                last = index;
+            }
+        });
+        if ( last ) foundation[last].selection = [ ...foundation[last].selection, "last" ];
+    } else {
+        foundation[focused].selection = [ "focused", "selected", "first", "last" ];
+    }
+}
+
+const initBlocks = ( todayPosts, foundation, now, focused ) => {
+    const today = getToday();
+    const yesterday = getYesterday( today );
+
+    initPostsToBlocks({ todayPosts, yesterday, now, foundation }) 
+    initSelection({ foundation, focused });
+    
     return foundation;
 }
 
@@ -91,7 +122,7 @@ export default () => {
         const lang = getLang( meData.me.lang );
 
         let foundation = blocksFoundation(now);
-        let blocks = initBlocks(data.seeTodayPosts, foundation, now);
+        let blocks = initBlocks(data.seeTodayPosts, foundation, now, focused);
 
         const focusedBlock = blocks[focused];
         const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );

@@ -11,17 +11,24 @@ import TextSmall from './TextSmall';
 import Theme from '../Styles/Theme';
 import EditLocation from './EditLocation';
 import { getLangArray } from '../Util/Languages';
+import IconButton from './IconButton';
 
 const Container = styled.li`
     position: relative;
     display: flex;
-    padding: 0 5px;
-    width: 55vw;
+    width: 100%;
     height: 32px;
+`;
+
+const Inner = styled.div`
+    padding: 0 5px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 64%;
+    border-top: 1px solid white;
     background-color: ${({ theme })=> theme.c_lightGrayBrighter1 };
-    &:not(:first-child) { border-top: 1px solid white; }
-    &.hour { border-top: 3px solid white; }
-    &.hour:first-child { border-top: 0; }
     ${({ color, doing })=> {
         if ( color && !doing ) return `
         border-color: #0000000f !important;
@@ -29,6 +36,7 @@ const Container = styled.li`
         `
         else if ( color ) return `background-color: ${color}; `
     }};
+    ${({ hour })=> hour && `border-top: 3px solid white;` };
     &.focused:after {
         background-color: #fff3;
         pointer-events: none;
@@ -53,24 +61,10 @@ const Container = styled.li`
     &.selected.last:after {
         border-bottom: 2px solid ${({ theme })=> theme.c_black };
     }
-    &.selected .likes-and-comments {
-        opacity: 0;
-        pointer-events: none; 
-    }
-    &.selected.focused .cut-post {
-        opacity: 1;
-        pointer-events: all;
-    }
 `;
 
-const Inner = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    .small-button {
-        width: 30px;
-    }
+const ScoreButton = styled(SmallButton)`
+    width: 30px;
 `;
 
 const Name = styled(TextRegular)`
@@ -93,34 +87,47 @@ const Side = styled.div`
     justify-content: space-evenly;
     align-items: center;
     right: 0;
-    transform: translateX(105%);
     height: 100%;
-    width: 30vw;
-    &.likes-and-comments {
-        transition: .5s;
-        background-color: white;
-    }
+    width: 35%;
+`;
 
-    &.cut-post {
+const SideCutPost = styled(Side)`
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    &.selected.focused {
+        opacity: 1;
+        pointer-events: all;
+    }
+`;
+
+const SideLikesAndComments = styled(Side)`
+    transition: .5s;
+    background-color: white;
+    &.selected {
         opacity: 0;
-        pointer-events: none;
-        transition: .3s;
+        pointer-events: none; 
     }
+`;
 
-    &.cut-post,
-    &.edit-and-delete {
-        button {
-            display: flex;
-            justify-content: center;
-            width: 45%;
-            height: 90%;
-            border: 1px solid ${({ theme })=> theme.c_blueDarker2 };
-            transition: .3s;
-            &.confirm-delete {
-                border: none;
-                background-color: ${({ theme })=> theme.c_red };
-            }
-        }
+const Column = styled.div`
+    display: flex;
+    align-items: center;
+    svg {
+        margin-right: 5px;
+    }
+`;
+
+const EditButton = styled(IconButton)`
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    height: 90%;
+    border: 1px solid ${({ theme })=> theme.c_blueDarker2 };
+    transition: .3s;
+    &.confirm-delete {
+        border: none;
+        background-color: ${({ theme })=> theme.c_red };
     }
 `;
 
@@ -130,10 +137,17 @@ const CountNum = styled(TextSmall)`
     }
 `;
 
+const getSelectionClassName = (selection) => {
+    let classNameString = "";
+    selection.forEach( item => {
+        classNameString = classNameString + ` ${item}`
+    })
+    return classNameString;
+}
 
 const TimeBlock = ({
     id, index, block, doing, color, score, location, blocks, 
-    likesCount, commentsCount, lang, className, 
+    likesCount, commentsCount, lang, className, selection,
     deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
@@ -161,72 +175,47 @@ const TimeBlock = ({
         else { setConfirmDelete(true); }
     }
 
-    const selection = (e) => {
-        const target = e.currentTarget;
-        const parent = target.parentNode;
-        const children = parent.childNodes;
-        
-        let first = true;
-        let last = null;
-
-        children.forEach((child, index) => { 
-            child.classList.remove("selected", "focused", "first", "last");
-            if ( target.dataset.id && child.dataset.id === target.dataset.id ) {
-                child.classList.add("selected");
-                if ( first ) {
-                    child.classList.add("first"); 
-                    first = false;
-                }
-                last = index;
-            }
-        });
-
+    const select = () => {
         setFocused(index);
-
-        if ( last ) { children[last].classList.add("last"); }
-        else { target.classList.add("last", "first"); }
-        target.classList.add("selected", "focused");      
     }
 
+    const selectionClassName = selection ? getSelectionClassName(selection) : false;
+
     return (
-        <Container className={ `${className} ${block%4 === 0 ? "hour" : "" }` } color={color} doing={doing} data-id={id} data-index={index} onClick={selection} >
-            { doing && (
-                <Inner>
+        <Container className={className} onClick={select} >
+            <Inner className={"inner" + (selectionClassName && selectionClassName)} color={color} doing={doing} hour={block%4 === 0} >
+                { doing && (<>
                     <Name string={doing} color="white" />
                     { scoreState
                         ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
-                        : <SmallButton onClick={onScorePopup} text={Words.setScore} lang={lang} color="white" />
+                        : <ScoreButton onClick={onScorePopup} text={Words.setScore} lang={lang} color="white" />
                     }
-                </Inner>
-            )}
+                </>)}
+            </Inner>
             <TimePrint>
                 { block%4 === 0 && ( block/4 > 9 ? block/4 : `0${block/4}` )}
             </TimePrint>
             { !doing && id &&
-                <Side className="cut-post">
-                    <button onClick={onClickCutTop.bind(this, id)} >
-                        <Icon icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
-                    </button>
-                    <button onClick={onClickCutBottom.bind(this, id)} >
-                        <Icon icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
-                    </button>
-                </Side>
+                <SideCutPost className={selectionClassName}>
+                    <EditButton onClick={onClickCutTop.bind(this, id)} icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
+                    <EditButton onClick={onClickCutBottom.bind(this, id)} icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
+                </SideCutPost>
             }
             { doing && <>
                 <Side className="edit-and-delete">
-                    <button onClick={onLocationPopup}>
-                        <Icon icon="location" size="small" color={Theme.c_blueDarker2} />
-                    </button>
-                    <button onClick={onClickDelete} className={`delete ${ confirmDelete && 'confirm-delete'}`} >
-                        <Icon icon="x" size="small" color={ !confirmDelete ? Theme.c_blueDarker2 : "white" } />
-                    </button>
+                    <EditButton onClick={onLocationPopup} icon="location" size="small" color={Theme.c_blueDarker2} />
+                    <EditButton onClick={onClickDelete} icon="x" size="small" color={!confirmDelete ? Theme.c_blueDarker2 : "white"} className={`delete ${ confirmDelete && 'confirm-delete'}`} />
                 </Side>
-                <Side className="likes-and-comments">
-                    <Icon icon="clap" size="small" />
-                    <CountNum string={likesCount} />
-                    <Icon icon="bubble" size="small" />
-                    <CountNum string={commentsCount} />
-                </Side>
+                <SideLikesAndComments className={selectionClassName}>
+                    <Column>
+                        <Icon icon="clap" size="small" />
+                        <CountNum string={likesCount} />
+                    </Column>
+                    <Column>
+                        <Icon icon="bubble" size="small" />
+                        <CountNum string={commentsCount} />
+                    </Column>
+                </SideLikesAndComments>
             </> }
             { scorePopup && 
                 <SetScore
