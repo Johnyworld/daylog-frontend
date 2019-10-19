@@ -14,13 +14,17 @@ const Container = styled.header`
     position: sticky;
     top: 0;
     background-color: white;
-    height: 64px;
+    z-index: 999;
+`;
+
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper };
     padding: 20px;
-    padding-bottom: 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    z-index: 999;
+    padding-bottom: 0;
+    height: 64px;
 `;
 
 const Gnb = styled.nav`
@@ -94,8 +98,8 @@ export default withRouter(({ history }) => {
         }
     
         return (  
-            <>
-                <Container>
+            <Container>
+                <Wrapper>
                     { !isDepth ? 
                         <Link to="/search">
                             <HeaderIcon icon="search" size="medium" color={Theme.c_blue} />
@@ -117,9 +121,9 @@ export default withRouter(({ history }) => {
                     <button onClick={callSideMenu}>
                         <HeaderIcon icon="hamburger" size="medium" color={Theme.c_blue} />
                     </button>
-                </Container>
+                </Wrapper>
                 { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} lang={lang} /> }
-            </>
+            </Container>
         )
     } else return null;
 });

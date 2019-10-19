@@ -12,15 +12,22 @@ import Yearlog from './Yearlog';
 import Icon from './Icon';
 
 const Container = styled.section`
+    ${({ theme })=> theme.wrapper };
     padding: 40px 30px;
     > *:not(:last-child) {
         margin-bottom: 20px;
+        @media screen and ( min-width: 768px ) {
+            margin-bottom: 30px;
+        }
     }
 `;
 
 const DateTab = styled.div`
     button {
         margin-right: 20px;
+        @media screen and ( min-width: 768px ) {
+            margin-right: 30px;
+        }
     }
 `;
 

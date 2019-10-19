@@ -59,6 +59,16 @@ const PIN_DOING = gql`
 `;
 
 const Container = styled.main`
+    background-color: ${({ theme })=> theme.c_lightGray };
+    @media screen and ( min-width: 768px ) {
+        padding: 30px 0 50px;
+    }
+`;
+
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper };
+    ${({ theme })=> theme.box };
+    background-color: white;
     padding: 30px;
 `;
 
@@ -125,28 +135,30 @@ export default () => {
         window.scrollTo( 0, 0 );
         return (
             <Container>
-                <Header>
-                    <TextLarge text={Words.editDoing} lang={lang} />
-                    <IconButton icon="plus" size="medium" onClick={onAddDoingPopup} />
-                </Header>
-                { categories.map( category => (
-                    <DoingList
-                        key={category.name}
-                        category={category}
-                        doings={data.seeFollowedDoings}
-                        me={meData.me}
-                        editDoingMutation={editDoingMutation}
-                        lang={lang}
-                    />
-                ))}
-                { addDoingPopup && 
-                    <AddDoing
-                        closePopup={closePopup}
-                        onSelectDoing={onSelectDoing}
-                        addDoingMutation={addDoingMutation}
-                        lang={lang}
-                    />
-                }
+                <Wrapper>
+                    <Header>
+                        <TextLarge text={Words.editDoing} lang={lang} />
+                        <IconButton icon="plus" size="medium" onClick={onAddDoingPopup} />
+                    </Header>
+                    { categories.map( category => (
+                        <DoingList
+                            key={category.name}
+                            category={category}
+                            doings={data.seeFollowedDoings}
+                            me={meData.me}
+                            editDoingMutation={editDoingMutation}
+                            lang={lang}
+                        />
+                    ))}
+                    { addDoingPopup && 
+                        <AddDoing
+                            closePopup={closePopup}
+                            onSelectDoing={onSelectDoing}
+                            addDoingMutation={addDoingMutation}
+                            lang={lang}
+                        />
+                    }
+                </Wrapper>
             </Container>
         )
     } else return <Loader />

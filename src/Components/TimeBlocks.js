@@ -14,6 +14,12 @@ const Container = styled.ul`
     &.appear {
         opacity: 1;
     }
+    @media screen and ( min-width: 768px ) {
+        ${({ theme })=> theme.wrapper };
+        margin-bottom: 30px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
 `;
 
 const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
@@ -85,6 +91,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
                         lang={lang}
                         setFocused={setFocused}
                         className={index === blocks.length-1 ? "selected first last" : ""}
+                        selection={block.selection}
                         deletePost={deletePost}
                         onClickCutTop={onClickCutTop}
                         onClickCutBottom={onClickCutBottom}

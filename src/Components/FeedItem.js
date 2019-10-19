@@ -9,7 +9,6 @@ import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
 import { blockToTimeFor, blockToTimeStart, scoreZero } from '../Util/Convertors.js';
 import FeedUser from './FeedUser.js';
-import { FEED_POST } from '../Routes/Feed.js';
 import FeedItemComments from './FeedItemComments';
 
 export const TOGGLE_LIKE = gql`

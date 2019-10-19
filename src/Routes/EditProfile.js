@@ -35,6 +35,8 @@ const DELETE_AVATAR = gql`
 `;
 
 const Container = styled.main`
+    max-width: 768px;
+    margin: auto;
     padding: 30px;
 `;
 
@@ -44,6 +46,9 @@ const Profile = styled.section`
     align-items: center;
     margin-bottom: 40px;
     padding-right: 30px;
+    @media screen and ( min-width: 768px ) {
+        justify-content: flex-start;
+    }
 `;
 
 const InputField = styled.section``;
@@ -57,19 +62,26 @@ const Username = styled(TextMedium)`
     margin-bottom: 5px;
 `;
 
+const GAP = `
+    margin-bottom: 15px;
+    @media screen and ( min-width: 768px ) {
+        margin-bottom: 25px;
+    }
+`;
+
 const Row = styled.section`
     display: grid;
     grid-template-columns: 2fr 5fr;
     grid-gap: 20px;
-    margin-bottom: 15px;
+    ${ GAP };
 `;
 
 const InputLabelStyled = styled(InputLabel)`
-    margin-bottom: 15px; 
+    ${ GAP };
 `;
 
 const InputDisabledStyled = styled(InputDisabled)`
-    margin-bottom: 15px; 
+    ${ GAP };
 `;
 
 const Label = styled(TextRegular)`

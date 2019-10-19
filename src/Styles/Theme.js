@@ -15,6 +15,10 @@ export default {
     size_iconLarge: 40,
     size_iconMedium: 24,
     size_iconSmall: 16,
+    wrapper: `
+        max-width: 768px;
+        margin: 0 auto;
+    `,
     f_regular: `
         font-size: 14px;
         line-height: 1.4;
@@ -35,10 +39,6 @@ export default {
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         background-color: white;
     `,
-    wrap: `
-        max-width: 768px;
-        margin: 0 auto;
-    `,
     popupContainer:`
         position: fixed;
         top: 0;
@@ -52,11 +52,14 @@ export default {
         position: absolute;
         padding: 30px;
         width: 100%;
+        max-width: 500px;
         max-height: 90vh;
         margin: auto;
         top: 50%;
-        transform: translateY(-50%);
+        left: 50%;
+        transform: translate(-50%, -50%);
         background-color: white;
+        overflow: hidden;
     `,
     popupContent:`
         overflow-y: scroll;

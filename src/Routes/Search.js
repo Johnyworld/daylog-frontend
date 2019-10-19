@@ -25,6 +25,7 @@ const SEARCH_USER = gql`
 `;
 
 const Container = styled.main`
+    ${({ theme })=> theme.wrapper };
     padding: 30px;
     .search-input {
         margin-bottom: 30px;

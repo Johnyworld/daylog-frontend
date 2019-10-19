@@ -29,6 +29,9 @@ const TimeGraphic = styled.div`
 
 const Column = styled.div`
     width: 45%;
+    @media screen and ( min-width: 768px ) {
+        padding: 30px; 
+    }
 `;
 
 const Remark = styled(TextRegular)`

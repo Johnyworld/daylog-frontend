@@ -27,15 +27,18 @@ const Container = styled.div`
     position: fixed;
     bottom: 0;
     width: 100%;
-    padding: 30px;
     z-index: 999;
     background-color: white;
     transition: .5s;
     border-top: 1px solid ${({ theme })=> theme.c_lightGray };
-
     &.disabled {
         transform: translateY(100%);
     }
+`;
+
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper };
+    padding: 30px;
 `;
 
 const Header = styled.header`
@@ -125,74 +128,76 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
 
     return (
         <Container className={className} >
-            <Header>
-                <Column>
-                    <TextLarge text={ Words.whatNow } lang={lang} />
-                    <TextSmall text={Words.whatNowRemark} lang={lang} />
-                </Column>
-                <Column>
-                    <Link to={`/doing`}>
-                        <Icon icon="nut" size="medium" />
-                    </Link>
-                    <button onClick={onClickNowPopup}>
-                        <Icon icon="gridMenu" size="medium" />
-                    </button>
-                </Column>
-            </Header>
-            <ScrollContainer>
-                <DoingButtons width={width}>
-                    { recent && recent.doing &&
-                        <DoingButton
-                            key={recent.doing.id}
-                            id={recent.doing.id}
-                            name={recent.doing.name}
-                            icon={recent.doing.icon}
-                            color={recent.doing.color}
-                            lang={lang}
-                            onClick={onClickStill}
-                            className="recent"
-                        /> 
-                    } 
-                    { next && next.doing &&
-                        <DoingButton
-                            key={next.doing.id}
-                            id={next.doing.id}
-                            name={next.doing.name}
-                            icon={next.doing.icon}
-                            color={next.doing.color}
-                            lang={lang}
-                            onClick={onClickPull}
-                            className="next"
-                        /> 
-                    }
-                    { doings[0] && doings.map( doing => (
-                        doing.id !== recentDoingId && doing.id !== nextDoingId &&
-                        <DoingButton
-                            key={doing.id}
-                            id={doing.id}
-                            name={doing.name}
-                            icon={doing.icon}
-                            color={doing.color}
-                            lang={lang}
-                            onClick={onClickUpload}
-                        />
-                    ))}
-                </DoingButtons>
-            </ScrollContainer>
-            { nowPopup && 
-                <NowPopup 
-                    doings={doings}
-                    recent={recent}
-                    closePopup={closePopup}
-                    lang={lang}
-                    focusedBlock={focusedBlock}
-                    next={next}
-                    recentDoingId={recentDoingId}
-                    nextDoingId={nextDoingId}
-                    stillMutation={stillMutation}
-                    pullMutation={pullMutation}
-                    onClickUpload={onClickUpload}
-                /> }
+            <Wrapper>
+                <Header>
+                    <Column>
+                        <TextLarge text={ Words.whatNow } lang={lang} />
+                        <TextSmall text={Words.whatNowRemark} lang={lang} />
+                    </Column>
+                    <Column>
+                        <Link to={`/doing`}>
+                            <Icon icon="nut" size="medium" />
+                        </Link>
+                        <button onClick={onClickNowPopup}>
+                            <Icon icon="gridMenu" size="medium" />
+                        </button>
+                    </Column>
+                </Header>
+                <ScrollContainer>
+                    <DoingButtons width={width}>
+                        { recent && recent.doing &&
+                            <DoingButton
+                                key={recent.doing.id}
+                                id={recent.doing.id}
+                                name={recent.doing.name}
+                                icon={recent.doing.icon}
+                                color={recent.doing.color}
+                                lang={lang}
+                                onClick={onClickStill}
+                                className="recent"
+                            /> 
+                        } 
+                        { next && next.doing &&
+                            <DoingButton
+                                key={next.doing.id}
+                                id={next.doing.id}
+                                name={next.doing.name}
+                                icon={next.doing.icon}
+                                color={next.doing.color}
+                                lang={lang}
+                                onClick={onClickPull}
+                                className="next"
+                            /> 
+                        }
+                        { doings[0] && doings.map( doing => (
+                            doing.id !== recentDoingId && doing.id !== nextDoingId &&
+                            <DoingButton
+                                key={doing.id}
+                                id={doing.id}
+                                name={doing.name}
+                                icon={doing.icon}
+                                color={doing.color}
+                                lang={lang}
+                                onClick={onClickUpload}
+                            />
+                        ))}
+                    </DoingButtons>
+                </ScrollContainer>
+                { nowPopup && 
+                    <NowPopup 
+                        doings={doings}
+                        recent={recent}
+                        closePopup={closePopup}
+                        lang={lang}
+                        focusedBlock={focusedBlock}
+                        next={next}
+                        recentDoingId={recentDoingId}
+                        nextDoingId={nextDoingId}
+                        stillMutation={stillMutation}
+                        pullMutation={pullMutation}
+                        onClickUpload={onClickUpload}
+                    /> }
+            </Wrapper>
         </Container>
     )
 }
