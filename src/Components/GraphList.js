@@ -8,6 +8,9 @@ import { getLangArray } from '../Util/Languages';
 const Container = styled.li`
     display: flex;
     justify-content: space-between;
+    @media screen and ( min-width: 768px ) {
+        margin-bottom: 5px;
+    }
 `;
 
 const Name = styled.div`
