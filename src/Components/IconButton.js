@@ -9,14 +9,14 @@ const Container = styled.button`
     height: ${({ size })=> size }px;
 `;
 
-const IconButton = ({ icon, size, color, onClick }) => {
+const IconButton = ({ className, icon, size, color, onClick }) => {
 
     let sizeNum;
     if ( size === "small" ) sizeNum = Theme.size_iconSmall;
     if ( size === "medium" ) sizeNum = Theme.size_iconMedium;
 
     return (
-        <Container size={sizeNum} onClick={onClick} >
+        <Container className={className} size={sizeNum} onClick={onClick} >
             <Icon icon={icon} size={size} color={color} />
         </Container>
     )
