@@ -13,11 +13,16 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-    ${({ theme })=> theme.popup }
-    max-height: 100%;
-    height: 100%;
-    width: 80%;
+    position: absolute;
     right: 0;
+    width: 80%;
+    height: 100%;
+    padding: 30px;
+    background-color: white;
+    overflow: hidden;
+    @media screen and ( min-width: 768px ) {
+        width: 50%; 
+    }
 `;
 
 const Name = styled(TextMedium)`
