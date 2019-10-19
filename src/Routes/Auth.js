@@ -38,7 +38,7 @@ const CREATE_ACCOUNT = gql`
     }
 `;
 
-const Wrapper = styled.main`
+const Container = styled.main`
     overflow: auto;
     scroll-snap-type: y mandatory;
     height: 100vh;
@@ -50,6 +50,10 @@ const Section = styled.section`
     height: 100vh;
     background-color: ${props=> props.theme.c_blue};
     padding: 30px;
+`;
+
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper }
 `;
 
 const Logo = styled.p`
@@ -212,80 +216,82 @@ export default () => {
     }
     
     return (
-        <Wrapper>
+        <Container>
             <Section>
-                { action === "logIn" && (
-                    <>
-                        <Logo>Daylog</Logo>
+                <Wrapper>
+                    { action === "logIn" && (
+                        <>
+                            <Logo>Daylog</Logo>
+                            <form onSubmit={onSubmit}>
+                                <InputContainer>
+                                    <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                </InputContainer>
+                                <MessageContainer>
+                                    { email.value === "" && <Message text={Words.account} lang={lang} /> }
+                                    { print === "noAccount" && <Message text={Words.noAccount} lang={lang} /> }
+                                </MessageContainer>                        
+                                <ButtonContainer>
+                                    { print !== "noAccount" ?
+                                        email.value === "" 
+                                        ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
+                                        : <LargeButton text={Words.logIn} lang={lang} color="white" />
+                                    : null }
+                                </ButtonContainer>
+                            </form>
+                        </>
+                    )}
+
+                    { action === "signUp" && (
                         <form onSubmit={onSubmit}>
                             <InputContainer>
-                                <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                <InputItem text={Words.checkUsername} lang={lang} >
+                                    <Input placeholder={Words.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
+                                    { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
+                                </InputItem>
+                                <InputItem text={Words.checkFullname} lang={lang} >
+                                    <Input placeholder={Words.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
+                                    { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
+                                </InputItem>
+                                <InputItem>
+                                    <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                    { checkEmail() && <Icon icon="check" size="medium" color={'white'} /> }
+                                </InputItem>
                             </InputContainer>
                             <MessageContainer>
-                                { email.value === "" && <Message text={Words.account} lang={lang} /> }
-                                { print === "noAccount" && <Message text={Words.noAccount} lang={lang} /> }
-                            </MessageContainer>                        
-                            <ButtonContainer>
-                                { print !== "noAccount" ?
-                                    email.value === "" 
-                                    ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
-                                    : <LargeButton text={Words.logIn} lang={lang} color="white" />
-                                : null }
+                                { print === "fieldsRequired" && <Message text={Words.fieldsRequired} lang={lang} /> }
+                                { print === "alreadyTaken" && <Message text={Words.alreadyTaken} lang={lang} /> }
+                                { print === "createdAccount" && <Message text={Words.createdAccount} lang={lang} /> }
+                            </MessageContainer>  
+                            <ButtonContainer> 
+                                { print !== "alreadyTaken" && ( <>
+                                    <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
+                                    <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
+                                </> )}
                             </ButtonContainer>
                         </form>
-                    </>
-                )}
+                    )}
 
-                { action === "signUp" && (
-                    <form onSubmit={onSubmit}>
-                        <InputContainer>
-                            <InputItem text={Words.checkUsername} lang={lang} >
-                                <Input placeholder={Words.inputUsername} className="large" type="text" color="white" lang={lang} {...username} />
-                                { checkUsername() && <Icon icon="check" size="medium" color={'white'} /> }
-                            </InputItem>
-                            <InputItem text={Words.checkFullname} lang={lang} >
-                                <Input placeholder={Words.inputFullname} className="large" type="text" color="white" lang={lang} {...fullname} />
-                                { checkFullname() && <Icon icon="check" size="medium" color={'white'} /> }
-                            </InputItem>
-                            <InputItem>
-                                <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
-                                { checkEmail() && <Icon icon="check" size="medium" color={'white'} /> }
-                            </InputItem>
-                        </InputContainer>
-                        <MessageContainer>
-                            { print === "fieldsRequired" && <Message text={Words.fieldsRequired} lang={lang} /> }
-                            { print === "alreadyTaken" && <Message text={Words.alreadyTaken} lang={lang} /> }
-                            { print === "createdAccount" && <Message text={Words.createdAccount} lang={lang} /> }
-                        </MessageContainer>  
-                        <ButtonContainer> 
-                            { print !== "alreadyTaken" && ( <>
-                                <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
-                                <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
-                            </> )}
-                        </ButtonContainer>
-                    </form>
-                )}
-
-                { action === "confirm" && (
-                    <>
-                        <Logo>Daylog</Logo> 
-                        <form onSubmit={onSubmit}>
-                            <InputContainer>
-                                <Input placeholder={Words.inputSecret} type="text" className="large" color="white" lang={lang} {...secret} />
-                            </InputContainer>
-                            <MessageContainer>
-                                { print !== "cantConfirm" 
-                                    ? <Message text={Words.secret} lang={lang} />
-                                    : <Message text={Words.cantConfirm} lang={lang} /> 
-                                }
-                            </MessageContainer>                        
-                            <ButtonContainer>
-                                <LargeButton text={Words.okay} lang={lang} color="white" />
-                            </ButtonContainer>
-                        </form>
-                    </>
-                )}
-                <VersionStyled />
+                    { action === "confirm" && (
+                        <>
+                            <Logo>Daylog</Logo> 
+                            <form onSubmit={onSubmit}>
+                                <InputContainer>
+                                    <Input placeholder={Words.inputSecret} type="text" className="large" color="white" lang={lang} {...secret} />
+                                </InputContainer>
+                                <MessageContainer>
+                                    { print !== "cantConfirm" 
+                                        ? <Message text={Words.secret} lang={lang} />
+                                        : <Message text={Words.cantConfirm} lang={lang} /> 
+                                    }
+                                </MessageContainer>                        
+                                <ButtonContainer>
+                                    <LargeButton text={Words.okay} lang={lang} color="white" />
+                                </ButtonContainer>
+                            </form>
+                        </>
+                    )}
+                    <VersionStyled />
+                </Wrapper>
             </Section>
             <SectionTutorial
                 text={Words.tutorial00}
@@ -321,7 +327,7 @@ export default () => {
                 background="#a55af8"
                 screen="https://daylog.s3.ap-northeast-2.amazonaws.com/tutorials/tutAddDoing.png"
             />
-        </Wrapper>
+        </Container>
     )
 }
 
