@@ -86,7 +86,7 @@ const Container = styled.main`
         margin-bottom: 10px;
     }
     article {
-        ${({ theme })=> theme.wrap };
+        ${({ theme })=> theme.wrapper };
     }
     @media screen and ( min-width: 768px ) {
         padding-top: 30px;
@@ -100,24 +100,24 @@ const NoFeedMessage = styled(TextSmall)`
     padding-bottom: 0;
 `
 
-const getFeed = ( posts, reviews, offset, limit ) => {
-    let postsCount = 0;
-    let reviewsCount = 0;
+// const getFeed = ( posts, reviews, offset, limit ) => {
+//     let postsCount = 0;
+//     let reviewsCount = 0;
 
-    const feed = [ ...posts, ...reviews ]
-        .sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 )
-        .slice( 0, offset + limit )
+//     const feed = [ ...posts, ...reviews ]
+//         .sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 )
+//         .slice( 0, offset + limit )
 
-    for ( var i in feed ) {
-        if ( i < offset + limit ) {
-            feed[i].blocks ? postsCount += 1 : reviewsCount +=1;
-        } else {
-            break;
-        }
-    }
+//     for ( var i in feed ) {
+//         if ( i < offset + limit ) {
+//             feed[i].blocks ? postsCount += 1 : reviewsCount +=1;
+//         } else {
+//             break;
+//         }
+//     }
 
-    return { feed, postsCount, reviewsCount };
-}
+//     return { feed, postsCount, reviewsCount };
+// }
 
 export default () => {
     const { data, loading, fetchMore } = useQuery(FEED_POST);
