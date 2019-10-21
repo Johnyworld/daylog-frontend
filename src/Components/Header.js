@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../Components/Icon';
 import Theme from '../Styles/Theme';
@@ -10,81 +10,77 @@ import SideMenu from './SideMenu';
 import { ME } from './TodayQueries';
 import { useQuery } from 'react-apollo-hooks';
 import IconButton from './IconButton';
+import TextSmall from './TextSmall';
+import GlobalNav from './GlobalNav';
 
 const Container = styled.header`
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 999;
-    padding: 20px;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     padding-bottom: 0;
     height: 64px;
-    @media screen and (min-width: 768px) {
+    z-index: 999;
+    @media screen and (min-width: 900px) {
         position: fixed;
         width: 100%;
-        background: none;
         padding: 50px;
-        justify-content: flex-end;
+        background: none;
+        pointer-events: none;
+    }
+`;
+
+const LogoContainer = styled.div`
+    display: none;
+    pointer-events: all;
+    @media screen and (min-width: 900px) {
+        display: block;
+    } 
+`;
+
+const Logo = styled(Icon)``;
+
+const Slogan = styled(TextSmall)`
+    display: inline-block;
+    white-space: pre;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid ${({ theme })=> theme.c_lightGray };
+    @media screen and (max-width: 1339px) {
+        display: none;
+    }
+`;
+
+const Inner = styled.div`
+    display: flex;
+    justify-content: space-between;
+    pointer-events: all;
+    width: 100%;
+    @media screen and (min-width: 900px) {
         align-items: center;
+        justify-content: center;
+        width: auto;
     }
 `;
 
 const PageTitle = styled(TextMedium)`
     display: ${({ isDepth })=> isDepth? 'block' : 'none' };
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 900px) {
         display: none;
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 899px) {
         position: absolute;
-        text-align: center;
-        width: 100%;
-    }
-`;
-
-const Gnb = styled.nav`
-    display: ${({ isDepth })=> isDepth? 'none' : 'block' };
-    @media screen and (max-width: 767px) {
-        position: absolute;
-        bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
-        margin-top: 18px;
-    }
-    @media screen and (min-width: 768px) {
-        display: none;
-        margin-right: 30px;
-    }
-    @media screen and (min-width: 1340px) {
-        display: block;
-    }
-`;
-
-const GnbLink = styled(Link)`
-    padding-bottom: 4px;
-    font-size: 16px;
-    font-weight: 700;
-    color: ${({ theme })=> theme.c_gray };
-    &:not(:last-child) {
-        margin-right: 20px;
-    }
-    &.selected {
-        border-bottom: 3px solid ${({ theme })=> theme.c_blue };
-        color: ${({ theme })=> theme.c_black };
-    }
-    @media screen and (min-width: 768px) {
-        padding-bottom: 2px;
-        &.selected {
-            border-width: 1px; 
-        }
     }
 `;
 
 const SearchLink = styled(IconButton)`
     display: ${({ isDepth })=> isDepth? 'none' : 'block' };
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 900px) {
         display: block;
         margin-right: 20px
     }
@@ -92,14 +88,14 @@ const SearchLink = styled(IconButton)`
 
 const BackButton = styled(IconButton)`
     display: ${({ isDepth })=> isDepth? 'block' : 'none' };
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 900px) {
         display: none;
     }
 `;
 
 const HamburgerMenu = styled(IconButton)`
     padding-bottom: 20px;
-`
+`;
 
 export default withRouter(({ history }) => {
     const [ sidemenu, setSidemenu ] = useState(false);
@@ -122,7 +118,7 @@ export default withRouter(({ history }) => {
             if ( route === "search" ) text = Words.search;
             if ( route === "doing" ) text = Words.editDoing;
         }
-    
+
         const changeTab = (e) => {
             e.currentTarget.parentNode.childNodes.forEach( element => {
                 element.classList.remove("selected");
@@ -151,22 +147,23 @@ export default withRouter(({ history }) => {
     
         return (  
             <Container>
-                {/* <Center> */}
-                    <Gnb isDepth={isDepth}>
-                        <GnbLink onClick={changeTab} to="/feed" className={ route === "feed" && "selected" } >FEED</GnbLink>
-                        <GnbLink onClick={changeTab} to="/" className={ route === "" && "selected" } >TODAY</GnbLink>
-                        <GnbLink onClick={changeTab} to={`/log/${data.me.username}`} className={ route === "log" && "selected" } >LOG</GnbLink>
-                    </Gnb>
-                    <PageTitle isDepth={isDepth} text={text} lang={lang} />
-                {/* </Center> */}
-                {/* <Side> */}
-                    {/* <> */}
+                <LogoContainer>
+                    <Logo icon="logo" size="medium" color={Theme.c_blue} />
+                    <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
+                </LogoContainer>
+                <Inner>
+                    <>
+                        <GlobalNav isDepth={isDepth} onClick={changeTab} route={route} username={data.me.username} />
+                        <PageTitle isDepth={isDepth} text={text} lang={lang} />
+                    </>
+                    
+                    <>
                         <SearchLink isDepth={isDepth} to="/search" icon="search" size="medium" color={Theme.c_blue} />
                         <BackButton isDepth={isDepth} onClick={onGoBack} icon="back" size="medium" color={Theme.c_blue} />
-                    {/* </> */}
+                    </>
                     <HamburgerMenu onClick={callSideMenu} icon="hamburger" size="medium" color={Theme.c_blue} />
-                {/* </Side> */}
-                { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} lang={lang} /> }
+                </Inner>
+                { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} avatar={data.me.avatar} route={route} lang={lang} /> }
             </Container>
         )
     } else return null;
