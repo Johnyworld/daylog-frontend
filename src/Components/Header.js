@@ -148,7 +148,7 @@ export default withRouter(({ history }) => {
         return (  
             <Container>
                 <LogoContainer>
-                    <Logo icon="logo" size="medium" color={Theme.c_blue} />
+                    <Logo icon="symbol" size="medium" color={Theme.c_blue} />
                     <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
                 </LogoContainer>
                 <Inner>
