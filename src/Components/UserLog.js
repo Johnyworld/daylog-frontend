@@ -31,6 +31,9 @@ export const UNFOLLOW = gql`
 const Container = styled.section`
     background-color: white;
     ${({ theme })=> theme.box };
+    @media screen and (min-width: 768px) {
+        padding-top: 50px;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -48,6 +51,12 @@ const Wrapper = styled.div`
 const AvatarStyled = styled(Avatar)`
     margin-right: 20px;
 `;
+
+const Username = styled(TextRegular)`
+    @media screen and (min-width: 768px) {
+        font-size: 20px;
+    }
+`
 
 const Info = styled.div`
     width: 100%;
@@ -138,7 +147,7 @@ const UserLog = ({
                 <AvatarStyled avatar={avatar} size="large" />
                 <Info>
                     <User>
-                        <TextRegular string={username} weight="bold" />
+                        <Username string={username} weight="bold" />
                         <Likes>
                             <Icon icon="clap" size="small" />
                             <TextRegular string={likesTotal} />

@@ -89,15 +89,21 @@ const Container = styled.main`
         ${({ theme })=> theme.wrapper };
     }
     @media screen and ( min-width: 768px ) {
-        padding-top: 30px;
+        padding-top: 100px;
     }
 `;
 
 const NoFeedMessage = styled(TextSmall)`
     ${({ theme })=> theme.wrapper };
     display: block;
-    padding: 30px;
+    padding: 100px 30px;
     padding-bottom: 0;
+`
+
+const SearchStyled = styled(Search)`
+    @media screen and ( min-width: 768px ) {
+        padding-top: 30px;
+    }
 `
 
 // const getFeed = ( posts, reviews, offset, limit ) => {
@@ -204,12 +210,11 @@ export default () => {
                     ?
                         <>
                             <NoFeedMessage text={Words.noFeed} lang={lang} />
-                            <Search />
+                            <SearchStyled />
                         </>
                     :
-                        !loadedPost 
-                            ? <LoaderRelative /> 
-                            : Feed.map(post => (
+                        <>
+                            { Feed.map(post => (
                                 post.blocks // 리뷰인지 포스트인지 체트
                                 ?
                                     <FeedItem
@@ -245,7 +250,9 @@ export default () => {
                                         avatar={post.user.avatar}
                                         lang={lang}
                                     />
-                            ))
+                            ))}
+                            {!loadedPost ? <LoaderRelative /> : null}
+                        </>
                 }
             </Container>
         </>

@@ -30,9 +30,12 @@ const Container = styled.main`
     .search-input {
         margin-bottom: 30px;
     }
+    @media screen and (min-width: 768px) {
+        padding-top: 100px;
+    }
 `;
 
-export default () => {
+export default ({ className }) => {
     const term = useInput("");
     const { data: meData, loading: meLoading } = useQuery(ME);
     const { data, loading } = useQuery( SEARCH_USER, { variables: { term: term.value }} );
@@ -41,7 +44,7 @@ export default () => {
         const lang = getLang( meData.me.lang );
     
         return (
-            <Container>
+            <Container className={className}>
                 <Input {...term} placeholder={Words.inputSearch} lang={lang} className="search-input" />
                 { loading && <LoaderRelative /> }
                 { !loading && data && data.searchUser && term.value !== "" &&
