@@ -237,7 +237,7 @@
     },
     "noFeed" : {
         "kr" : "처음이신가요? 친구가 있다면, 찾아보세요!",
-        "en" : "Is this your first time? You can search your friends!"
+        "en" : "Is this your first time? You can find your friends!"
     },
     "day" : {
         "kr" : "Day",
@@ -351,9 +351,13 @@
         "kr" : "얼마나 집중했고, 얼마나 만족했는지 0점부터 5점까지의 점수로 평가해주세요.",
         "en" : "Rate from 0 to 5 points how focused and satisfied you are." 
     },
+    "quickAdd" : {
+        "kr" : "빠른 추가",
+        "en" : "Quick add"
+    },
     "whatNow" : {
         "kr" : "새로운 기록 추가하기",
-        "en" : "Add an new log"
+        "en" : "Add a new log"
     },
     "whatNowRemark" : {
         "kr" : "일과를 선택하세요.",
@@ -386,6 +390,10 @@
     "editDoing" : {
         "kr" : "일과 수정",
         "en" : "Edit Doings"
+    },
+    "editDoingSub" : {
+        "kr" : "자주 하는 일과를 등록하세요.",
+        "en" : "Add your routine."
     },
     "addDoing" : {
         "kr" : "일과 추가",
