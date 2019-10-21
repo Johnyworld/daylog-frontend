@@ -10,6 +10,7 @@ import { gql } from 'apollo-boost';
 import DoingList from '../Components/DoingList';
 import IconButton from '../Components/IconButton';
 import AddDoing from '../Components/AddDoing';
+import TextRegular from '../Components/TextRegular';
 
 export const SEE_MY_DOINGS = gql`
     {
@@ -59,16 +60,15 @@ const PIN_DOING = gql`
 `;
 
 const Container = styled.main`
-    background-color: ${({ theme })=> theme.c_lightGray };
+    ${({ theme })=> theme.mainContainer };
     @media screen and ( min-width: 768px ) {
+        background-color: ${({ theme })=> theme.c_lightGray };
         padding: 30px 0 50px;
     }
 `;
 
 const Wrapper = styled.div`
     ${({ theme })=> theme.wrapper };
-    ${({ theme })=> theme.box };
-    background-color: white;
     padding: 30px;
 `;
 
@@ -137,7 +137,10 @@ export default () => {
             <Container>
                 <Wrapper>
                     <Header>
-                        <TextLarge text={Words.editDoing} lang={lang} />
+                        <p>
+                            <TextLarge text={Words.editDoing} lang={lang} />
+                            <TextRegular text={Words.editDoingSub} lang={lang} />
+                        </p>
                         <IconButton icon="plus" size="medium" onClick={onAddDoingPopup} />
                     </Header>
                     { categories.map( category => (

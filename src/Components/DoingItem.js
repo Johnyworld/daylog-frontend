@@ -18,6 +18,12 @@ const Container = styled.li`
     &:last-child {
         border-bottom: 1px solid ${({ theme })=> theme.c_lightGray }; 
     }
+    @media screen and (min-width: 768px) {
+        margin: 0;
+        &:last-child {
+            border-bottom: 0; 
+        }
+    }
 `;
 
 const Column = styled.div`
