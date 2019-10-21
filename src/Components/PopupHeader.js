@@ -13,9 +13,9 @@ const Container = styled.div`
     align-items: flex-start;
 `;
 
-const PopupHeader = ({ text, remark, closePopup, lang }) => {
+const PopupHeader = ({ className, text, remark, closePopup, lang }) => {
     return (
-        <Container className="popup-header">
+        <Container className={className}>
             <div>
                 <TextLarge text={text} lang={lang} />
                 { remark && <TextSmall text={remark} lang={lang} /> }

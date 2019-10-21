@@ -43,6 +43,10 @@ const DoingGrid = styled.div`
     @media screen and ( max-width: 374px ) {
         grid-template-columns: repeat(3, 1fr); 
     }
+
+    @media screen and ( min-width: 500px ) {
+        grid-template-columns: repeat(5, 1fr); 
+    }
 `;
 
 const LocationInput = styled(InputLabel)``;
