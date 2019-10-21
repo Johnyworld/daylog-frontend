@@ -15,16 +15,29 @@ const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
 `;
 
+const QuickAdd = styled(WhatNow)`
+    @media screen and (min-width: 768px) {
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: 1px solid ${({ theme })=> theme.c_lightGray };
+    }
+`
+
 const Bottom = styled.div`
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
+`;
+
+const Buttons = styled.div`
+    ${({ theme })=> theme.wrapper };
     display: flex;
     justify-content: space-between;
-    position: fixed;
-    bottom: 0;
+    position: relative;
     height: 64px;
-    width: 100%;
     border-top: 1px solid ${({ theme })=> theme.c_lightGray };
     background-color: white;
-    z-index: 150;
     > * {
         width: 50%;
         &:not(:last-child) {
@@ -35,6 +48,10 @@ const Bottom = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    @media screen and (min-width: 768px) {
+        border: 1px solid ${({ theme })=> theme.c_lightGray };
+        border-radius: 10px 10px 0 0;
     }
 `;
 
@@ -145,15 +162,25 @@ export default () => {
                     recent={recent}
                     setFocused={setFocused} 
                 />
-                <WhatNow
-                    doings={meData.me.doings}
-                    lang={lang}
-                    focusedBlock={focusedBlock}
-                    recent={recent}
-                    now={now}
-                    next={next}
-                    className={ blocks[focused].doing ? "disabled" : "" } 
-                />
+                <Bottom>
+                    <QuickAdd
+                        doings={meData.me.doings}
+                        lang={lang}
+                        focusedBlock={focusedBlock}
+                        recent={recent}
+                        now={now}
+                        next={next}
+                        className={ blocks[focused].doing ? "disabled" : "" } 
+                    />
+                    <Buttons>
+                        <button onClick={onPopupDayComment} >
+                            <Icon icon="bubble" size="medium" />
+                        </button>
+                        <Link to={`/doing`}>
+                            <Icon icon="nut" size="medium" />
+                        </Link>
+                    </Buttons>
+                </Bottom>
                 { popupDayComment && 
                     <DayComment
                         lang={lang}
@@ -161,14 +188,6 @@ export default () => {
                         me={meData.me}
                     /> 
                 }
-                <Bottom>
-                    <button onClick={onPopupDayComment} >
-                        <Icon icon="bubble" size="medium" />
-                    </button>
-                    <Link to={`/doing`}>
-                        <Icon icon="nut" size="medium" />
-                    </Link>
-                </Bottom>
             </Container>
         )
     } else return <Loader />
