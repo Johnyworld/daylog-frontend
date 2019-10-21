@@ -79,6 +79,14 @@ const TimePrint = styled.div`
     left: 0;
     top: 0;
     transform: translate( -150%, -50% );
+    @media screen and (min-width: 768px) {
+        transform: translate( -120%, -50% );
+    }
+    span {
+        @media screen and (max-width: 767px) {
+            display: none; 
+        }
+    }
 `;
 
 const Side = styled.div`
@@ -193,7 +201,10 @@ const TimeBlock = ({
                 </>)}
             </Inner>
             <TimePrint>
-                { block%4 === 0 && ( block/4 > 9 ? block/4 : `0${block/4}` )}
+                { block%4 === 0 && <>
+                    {block/4 > 9 ? block/4 : `0${block/4}`}
+                    <span>:00</span>
+                </>}
             </TimePrint>
             { !doing && id &&
                 <SideCutPost className={selectionClassName}>
