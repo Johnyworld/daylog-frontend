@@ -93,8 +93,8 @@ const Container = styled.main`
     }
 `;
 
-const NoFeed = styled.main``;
 const NoFeedMessage = styled(TextSmall)`
+    ${({ theme })=> theme.wrapper };
     display: block;
     padding: 30px;
     padding-bottom: 0;
@@ -202,50 +202,51 @@ export default () => {
                 {
                     !Feed[0]
                     ?
-                        <NoFeed>
+                        <>
                             <NoFeedMessage text={Words.noFeed} lang={lang} />
                             <Search />
-                        </NoFeed>
-                    : 
-                        Feed.map(post => (
-                            post.blocks // 리뷰인지 포스트인지 체트
-                            ?
-                                <FeedItem
-                                    id={post.id}
-                                    key={post.id}
-                                    doing={post.doing.name}
-                                    color={post.doing.color}
-                                    category={post.doing.category.lang}
-                                    author={post.user.username}
-                                    avatar={post.user.avatar}
-                                    isLiked={post.isLiked}
-                                    location={post.location}
-                                    likesCount={post.likesCount}
-                                    comments={post.comments}
-                                    commentsCount={post.commentsCount}
-                                    startAt={post.startAt}
-                                    endAt={post.endAt}
-                                    score={post.score}
-                                    createdAt={post.createdAt}
-                                    blocks={post.blocks}
-                                    lang={lang}
-                                />
-                            :
-                                <FeedReview
-                                    id={post.id}
-                                    key={post.id}
-                                    text={post.text}
-                                    yyyymmdd={post.yyyymmdd}
-                                    createdAt={post.createdAt}
-                                    isLiked={post.isLiked}
-                                    likesCount={post.likesCount}
-                                    author={post.user.username}
-                                    avatar={post.user.avatar}
-                                    lang={lang}
-                                />
-                        ))
+                        </>
+                    :
+                        !loadedPost 
+                            ? <LoaderRelative /> 
+                            : Feed.map(post => (
+                                post.blocks // 리뷰인지 포스트인지 체트
+                                ?
+                                    <FeedItem
+                                        id={post.id}
+                                        key={post.id}
+                                        doing={post.doing.name}
+                                        color={post.doing.color}
+                                        category={post.doing.category.lang}
+                                        author={post.user.username}
+                                        avatar={post.user.avatar}
+                                        isLiked={post.isLiked}
+                                        location={post.location}
+                                        likesCount={post.likesCount}
+                                        comments={post.comments}
+                                        commentsCount={post.commentsCount}
+                                        startAt={post.startAt}
+                                        endAt={post.endAt}
+                                        score={post.score}
+                                        createdAt={post.createdAt}
+                                        blocks={post.blocks}
+                                        lang={lang}
+                                    />
+                                :
+                                    <FeedReview
+                                        id={post.id}
+                                        key={post.id}
+                                        text={post.text}
+                                        yyyymmdd={post.yyyymmdd}
+                                        createdAt={post.createdAt}
+                                        isLiked={post.isLiked}
+                                        likesCount={post.likesCount}
+                                        author={post.user.username}
+                                        avatar={post.user.avatar}
+                                        lang={lang}
+                                    />
+                            ))
                 }
-                { !loadedPost ? <LoaderRelative /> : null }
             </Container>
         </>
     } else return <Loader />
