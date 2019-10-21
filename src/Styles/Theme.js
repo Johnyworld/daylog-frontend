@@ -93,6 +93,9 @@ export default {
     mainContainer: `
         position: relative;
         min-height: calc(100vh - 64px);
+        @media screen and (min-width: 768px) {
+            min-height: calc(100vh);
+        }
     `,
     miniFeedTitle: `
         display: inline-block;
