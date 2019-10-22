@@ -14,6 +14,7 @@ import Version from '../Components/Version';
 import Theme from '../Styles/Theme';
 import TextLarge from '../Components/TextLarge';
 import LoaderButton from '../Components/LoaderButton';
+import Logo from '../Components/Logo';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -57,15 +58,11 @@ const Wrapper = styled.div`
     ${({ theme })=> theme.wrapper }
 `;
 
-const Logo = styled.p`
+const LogoStyled = styled(Logo)`
     position: absolute;
     top: 25vh;
-    left: 0;
-    right: 0;
-    font-family: 'Lobster', cursive;
-    text-align: center;
-    font-size: 46px;
-    color: white;
+    left: 50%;
+    transform: translateX(-50%);
 `;
 
 const InputContainer = styled.div`
@@ -231,7 +228,7 @@ export default () => {
                 <Wrapper>
                     { action === "logIn" && (
                         <>
-                            <Logo>Daylog</Logo>
+                            <LogoStyled size="medium" color="negative" />
                             <form onSubmit={onSubmit}>
                                 <InputContainer>
                                     <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
@@ -291,7 +288,7 @@ export default () => {
 
                     { action === "confirm" && (
                         <>
-                            <Logo>Daylog</Logo> 
+                            <LogoStyled size="medium" color="negative" />
                             <form onSubmit={onSubmit}>
                                 <InputContainer>
                                     <Input placeholder={Words.inputSecret} type="text" className="large" color="white" lang={lang} {...secret} />

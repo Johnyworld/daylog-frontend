@@ -13,6 +13,7 @@ import IconButton from './IconButton';
 import TextSmall from './TextSmall';
 import GlobalNav from './GlobalNav';
 import { HeaderBreakPointMax, HeaderBreakPoint } from '../Styles/Theme';
+import Logo from './Logo';
 
 const Container = styled.header`
     position: sticky;
@@ -38,18 +39,22 @@ const LogoContainer = styled.div`
     display: none;
     pointer-events: all;
     @media screen and (${HeaderBreakPoint}) {
-        display: block;
+        display: flex;
+        align-items: center;
     } 
 `;
 
-const Logo = styled(Icon)``;
+const LogoStyled = styled(Logo)`
+    display: inline-block;
+`
 
 const Slogan = styled(TextSmall)`
     display: inline-block;
     white-space: pre;
-    margin-left: 20px;
-    padding-left: 20px;
-    border-left: 1px solid ${({ theme })=> theme.c_lightGray };
+    font-size: 11px;
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid ${({ theme })=> theme.c_lightGrayDarker1 };
     @media screen and (max-width: 1339px) {
         display: none;
     }
@@ -149,7 +154,7 @@ export default withRouter(({ history }) => {
         return (  
             <Container>
                 <LogoContainer>
-                    <Logo icon="symbol" size="medium" color={Theme.c_blue} />
+                    <LogoStyled size="small" color="positive" />
                     <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
                 </LogoContainer>
                 <Inner>
