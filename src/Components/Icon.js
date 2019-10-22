@@ -22,6 +22,16 @@ export default ({ icon, size, color="#222" }) => {
             <path fill={color} d="M12.7,28.7c-0.6,0.8-1.9,1.4-1.9,1.4c2.8-7.6,8.1-11.5,12.4-13.3C21.6,17.8,14.5,23.5,12.7,28.7z"/>
         </svg>
     )
+
+    if ( icon === "loading" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum}  
+            height={sizeNum}
+            viewBox={`0 0 24 24`}>
+            <circle fill={color} cx="12" cy="3.4" r="2.2"/>
+            <circle fill={color} cx="12" cy="21.5" r="1.3"/>
+        </svg>
+    )
     
     if ( icon === "search" ) return (
         <svg xmlns="http://www.w3.org/2000/svg" 

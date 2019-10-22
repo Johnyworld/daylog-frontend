@@ -13,14 +13,18 @@ const Container = styled.div`
     }
 `;
 
-export default () => {
-    const color = Theme.c_gray;
+export default ({ color=Theme.c_gray, size="medium", className }) => {
+    let sizeNum;
+
+    if ( size === "small" ) sizeNum = Theme.size_iconSmall;
+    if ( size === "medium" ) sizeNum = Theme.size_iconMedium;
+    if ( size === "large" ) sizeNum = Theme.size_iconLarge;
 
     return (
-        <Container>
+        <Container className={className}>
             <svg xmlns="http://www.w3.org/2000/svg" 
-                width="40" 
-                height="40"
+                width={sizeNum}
+                height={sizeNum}
                 viewBox={`0 0 32 32`}>
                 <path fill={color} d="M11.8,28.6l0.8-2.1c4.4-10.7,12-13.4,18.9-14.7l0.5-0.1v0.5c0,4.4-1.8,9.9-10.2,10.8c-5.4,0.5-6.8,2.1-8.1,3.5
                     c-0.1,0.1-0.3,0.3-0.4,0.4L11.8,28.6z M31.2,12.7c-6,1.2-12.6,3.6-16.8,12c1.3-1.1,3.2-2.1,7.4-2.5C27.8,21.6,31,18.4,31.2,12.7z"/>

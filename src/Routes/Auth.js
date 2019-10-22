@@ -13,6 +13,7 @@ import Icon from '../Components/Icon';
 import Version from '../Components/Version';
 import Theme from '../Styles/Theme';
 import TextLarge from '../Components/TextLarge';
+import LoaderButton from '../Components/LoaderButton';
 
 const LOG_IN = gql`
     mutation requestSecret( $email: String! ) {
@@ -120,11 +121,10 @@ const VersionStyled = styled(Version)`
     bottom: 10px;
 `;
 
-let canClick = true;
-
 export default () => {
     const [ action, setAction ] = useState('logIn');
     const [ print, setPrint ] = useState(false);
+    const [ canClick, setCanClick ] = useState(true);
 
     const lang = getLang();
 
@@ -160,56 +160,66 @@ export default () => {
         e.preventDefault();
 
         if ( action === 'logIn' && canClick ) {
-            canClick = false;
+            setCanClick(false);
             try {
-                const { data: { requestSecret }} = await requestSecretMutation();
+                const { data: { requestSecret } } = await requestSecretMutation();
                 if ( !requestSecret ) {
                     setPrint( 'noAccount' );
-                    setTimeout(()=>{ canClick = true }, 1000);
-                    setTimeout(()=>{ setAction( 'signUp' )}, 2000);
+                    setTimeout(()=>{
+                        setCanClick( true );
+                        setAction( 'signUp' );
+                    }, 2000);
                 } else {
-                    setAction( 'confirm' ); 
-                    setTimeout(()=>{ canClick = true }, 1000);
+                    setAction( 'confirm' );
+                    setCanClick( true );
                 }
             } catch(e) {
-                setTimeout(()=>{ canClick = true }, 1000);
+                setCanClick( true );
+                alert(e);
             }
         } 
         
         else if ( action === 'signUp' && canClick ) {
-            canClick = false;
+            setCanClick(false);
             try {
                 const { data: { createAccount }} = await createAccountMutation();
                 if ( !createAccount ) {
                     setPrint( 'alreadyTaken' );
-                    setTimeout(()=>{ canClick = true }, 1000);
-                    setTimeout(()=>{ setPrint(false) }, 2000);
+                    setTimeout(()=>{ 
+                        setCanClick( true ); 
+                        setPrint(false);
+                    }, 3000);
                 } else {
                     setPrint( 'createdAccount' );
-                    setTimeout(()=>{ setAction( 'logIn' ); setPrint(false); }, 2000);
-                    setTimeout(()=>{ canClick = true }, 1000);
+                    setTimeout(()=>{ 
+                        setCanClick( true ); 
+                        setAction( 'logIn' ); 
+                        setPrint(false);
+                    }, 2000);
                 }
             } catch(e) {
                 setPrint( 'alreadyTaken' );;
-                setTimeout(()=>{ canClick = true }, 1000);
-                setTimeout(()=>{ setPrint(false) }, 2000);
+                setTimeout(()=>{ 
+                    setCanClick( true );
+                    setPrint(false);
+                }, 3000);
             }
         } 
         
         else if ( action === 'confirm' && canClick ) {
-            canClick = false;
+            setCanClick(false);
             if ( secret.value !== '' ) {
                 try {
                     const { data: { confirmSecret: token }} = await confirmSecretMutation();
                     if ( token !== "" && token !== undefined ) {
                         localLogInMutation({ variables: {token} });
                     } else {
-                        setTimeout(()=>{ canClick = true }, 1000); 
+                        setCanClick( true );
                         throw Error();
                     }                    
                 } catch {
                     setPrint('cantConfirm');
-                    setTimeout(()=>{ canClick = true }, 1000); 
+                    setCanClick( true );
                 }
             }
         }
@@ -232,9 +242,11 @@ export default () => {
                                 </MessageContainer>                        
                                 <ButtonContainer>
                                     { print !== "noAccount" ?
-                                        email.value === "" 
-                                        ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
-                                        : <LargeButton text={Words.logIn} lang={lang} color="white" />
+                                        canClick ?
+                                            email.value === "" 
+                                            ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
+                                            : <LargeButton text={Words.logIn} lang={lang} color="white" />
+                                        : <LoaderButton color="white" />
                                     : null }
                                 </ButtonContainer>
                             </form>
@@ -263,10 +275,16 @@ export default () => {
                                 { print === "createdAccount" && <Message text={Words.createdAccount} lang={lang} /> }
                             </MessageContainer>  
                             <ButtonContainer> 
-                                { print !== "alreadyTaken" && ( <>
-                                    <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
-                                    <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
-                                </> )}
+                                { print !== "alreadyTaken" || print !== "createdAccount" ? ( <>
+                                    { canClick 
+                                        ? 
+                                        <>
+                                            <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
+                                            <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
+                                        </>
+                                        : <LoaderButton color="white" />
+                                    }
+                                </> ) : null }
                             </ButtonContainer>
                         </form>
                     )}
@@ -285,7 +303,10 @@ export default () => {
                                     }
                                 </MessageContainer>                        
                                 <ButtonContainer>
-                                    <LargeButton text={Words.okay} lang={lang} color="white" />
+                                    { canClick 
+                                        ? <LargeButton text={Words.okay} lang={lang} color="white" />
+                                        : <LoaderButton color="white" />
+                                    }
                                 </ButtonContainer>
                             </form>
                         </>
