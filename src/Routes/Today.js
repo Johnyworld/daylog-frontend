@@ -37,12 +37,11 @@ const Buttons = styled.div`
     justify-content: space-between;
     position: relative;
     height: 64px;
-    border-top: 1px solid ${({ theme })=> theme.c_lightGray };
-    background-color: white;
+    background-color: ${({ theme })=> theme.c_blueDarker1 };
     > * {
         width: 50%;
         &:not(:last-child) {
-            border-right: 1px solid ${({ theme })=> theme.c_lightGray };
+            border-right: 1px solid ${({ theme })=> theme.c_blueDarker2 };
         }
     }
     a {
@@ -51,7 +50,6 @@ const Buttons = styled.div`
         justify-content: center;
     }
     @media screen and ( ${BreakPoint} ) {
-        border: 1px solid ${({ theme })=> theme.c_lightGray };
         border-radius: 10px 10px 0 0;
     }
 `;
@@ -175,10 +173,10 @@ export default () => {
                     />
                     <Buttons>
                         <button onClick={onPopupDayComment} >
-                            <Icon icon="bubble" size="medium" />
+                            <Icon icon="bubble" size="medium" color="white" />
                         </button>
                         <Link to={`/doing`}>
-                            <Icon icon="nut" size="medium" />
+                            <Icon icon="nut" size="medium" color="white" />
                         </Link>
                     </Buttons>
                 </Bottom>
