@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Clock from './Clock';
 import { getYesterday, timePresenter } from '../Util/Convertors';
 import TextRegular from './TextRegular';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import Words from '../Lang/Words.json'
 import TextSmall from './TextSmall';
 import { getLangArray } from '../Util/Languages';
@@ -29,7 +29,7 @@ const TimeGraphic = styled.div`
 
 const Column = styled.div`
     width: 45%;
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         padding: 30px; 
     }
 `;

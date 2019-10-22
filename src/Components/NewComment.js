@@ -4,6 +4,7 @@ import TextareaAutosize from 'react-autosize-textarea'
 import Avatar from './Avatar';
 import Words from '../Lang/Words.json';
 import { languages } from '../Util/Languages';
+import { BreakPoint } from '../Styles/Theme';
 
 const Form = styled.form`
     display: flex;
@@ -17,7 +18,7 @@ const Form = styled.form`
     > div:first-child {
         margin-right: 15px;
     }
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         ${({ theme })=> theme.wrap };
         ${({ theme })=> theme.box };
         position: sticky;

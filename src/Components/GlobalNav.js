@@ -2,17 +2,18 @@ import React from 'react';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { HeaderBreakPointMax, HeaderBreakPoint } from '../Styles/Theme';
 
 const Container = styled.nav`
     display: ${({ isDepth })=> isDepth? 'none' : 'block' };
-    @media screen and (max-width: 899px) {
+    @media screen and (${HeaderBreakPointMax}) {
         position: absolute;
         bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
         margin-top: 18px;
     }
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         display: none;
         margin-right: 30px;
     }
@@ -33,7 +34,8 @@ const GnbLink = styled(Link)`
         border-bottom: 3px solid ${({ theme })=> theme.c_blue };
         color: ${({ theme })=> theme.c_black };
     }
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
+        font-size: 14px;
         padding-bottom: 2px;
         &.selected {
             border-width: 1px; 

@@ -8,7 +8,7 @@ import Words from '../Lang/Words.json';
 import SetScore from './SetScore';
 import Icon from './Icon';
 import TextSmall from './TextSmall';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint, BreakPointMax } from '../Styles/Theme';
 import EditLocation from './EditLocation';
 import { getLangArray } from '../Util/Languages';
 import IconButton from './IconButton';
@@ -79,11 +79,11 @@ const TimePrint = styled.div`
     left: 0;
     top: 0;
     transform: translate( -150%, -50% );
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         transform: translate( -120%, -50% );
     }
     span {
-        @media screen and (max-width: 767px) {
+        @media screen and ( ${BreakPointMax} ) {
             display: none; 
         }
     }

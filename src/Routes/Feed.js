@@ -11,6 +11,7 @@ import Search from './Search';
 import Words from '../Lang/Words.json';
 import TextSmall from '../Components/TextSmall';
 import LoaderRelative from '../Components/LoaderRelative';
+import { BreakPoint } from '../Styles/Theme';
 
 export const FEED_POST = gql`
     query seeFeedPost( $limit: Int, $offset: Int ) {
@@ -88,7 +89,7 @@ const Container = styled.main`
     article {
         ${({ theme })=> theme.wrapper };
     }
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;
     }
 `;
@@ -101,7 +102,7 @@ const NoFeedMessage = styled(TextSmall)`
 `
 
 const SearchStyled = styled(Search)`
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         padding-top: 30px;
     }
 `

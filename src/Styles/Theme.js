@@ -1,3 +1,8 @@
+export const BreakPoint = 'min-width: 768px';
+export const BreakPointMax = 'max-width: 767px';
+export const HeaderBreakPoint = 'min-width: 960px';
+export const HeaderBreakPointMax = 'max-width: 959px';
+
 export default {
     c_blue: "#1a9df9",
     c_blueBrighter1: "#61bffb",
@@ -93,7 +98,7 @@ export default {
     mainContainer: `
         position: relative;
         min-height: calc(100vh - 64px);
-        @media screen and (min-width: 768px) {
+        @media screen and (${BreakPoint}) {
             min-height: calc(100vh);
         }
     `,

@@ -8,7 +8,7 @@ import Input from '../Components/Input';
 import useInput from '../Hooks/useInput';
 import { useMutation } from 'react-apollo-hooks';
 import { ME } from '../Components/TodayQueries';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import Select from '../Components/Select';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 import LargeButton from '../Components/LargeButton';
@@ -46,7 +46,7 @@ const Profile = styled.section`
     align-items: center;
     margin-bottom: 40px;
     padding-right: 30px;
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         justify-content: flex-start;
     }
 `;
@@ -64,7 +64,7 @@ const Username = styled(TextMedium)`
 
 const GAP = `
     margin-bottom: 15px;
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         margin-bottom: 25px;
     }
 `;

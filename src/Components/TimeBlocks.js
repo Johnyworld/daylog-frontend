@@ -5,6 +5,7 @@ import { TODAY_QUERY } from './TodayQueries';
 import { EDIT_POST } from './SetScore';
 import { useMutation } from 'react-apollo-hooks';
 import { getCutTopStartAt, getCutTopEndAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';
+import { BreakPoint } from '../Styles/Theme';
 
 const Container = styled.ul`
     margin-left: 35px;
@@ -14,7 +15,7 @@ const Container = styled.ul`
     &.appear {
         opacity: 1;
     }
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         ${({ theme })=> theme.wrapper };
         margin-bottom: 30px;
         padding-left: 50px;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SmallButton from './SmallButton';
 import TextLarge from './TextLarge';
 import Words from '../Lang/Words.json';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import { getPrintDate, getPrintWeek } from '../Util/Languages';
 import Daylog from './Daylog';
 import Weeklog from './Weeklog';
@@ -16,7 +16,7 @@ const Container = styled.section`
     padding: 40px 30px;
     > *:not(:last-child) {
         margin-bottom: 20px;
-        @media screen and ( min-width: 768px ) {
+        @media screen and ( ${BreakPoint} ) {
             margin-bottom: 30px;
         }
     }
@@ -25,7 +25,7 @@ const Container = styled.section`
 const DateTab = styled.div`
     button {
         margin-right: 20px;
-        @media screen and ( min-width: 768px ) {
+        @media screen and ( ${BreakPoint} ) {
             margin-right: 30px;
         }
     }

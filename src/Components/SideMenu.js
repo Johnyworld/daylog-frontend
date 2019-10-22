@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom';
 import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import Avatar from './Avatar';
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const Container = styled.div`
 const MenuHeader = styled(PopupHeader)`
     padding: 30px 30px 0 0;
     margin-bottom: 0;
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         padding: 50px 50px 0 0;
     }
 `
@@ -29,7 +29,7 @@ const Box = styled.div`
     height: 100%;
     background-color: white;
     overflow: hidden;
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         width: 50%; 
     }
 `;

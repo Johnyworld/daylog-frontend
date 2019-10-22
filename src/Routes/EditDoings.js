@@ -11,6 +11,7 @@ import DoingList from '../Components/DoingList';
 import IconButton from '../Components/IconButton';
 import AddDoing from '../Components/AddDoing';
 import TextRegular from '../Components/TextRegular';
+import { BreakPoint } from '../Styles/Theme';
 
 export const SEE_MY_DOINGS = gql`
     {
@@ -67,7 +68,7 @@ const REMOVE_PIN = gql`
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         background-color: ${({ theme })=> theme.c_lightGray };
         padding: 30px 0 50px;
     }

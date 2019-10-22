@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import TextSmall from './TextSmall';
 import { blockToTimeFor } from '../Util/Convertors';
 import { getLangArray } from '../Util/Languages';
+import { BreakPoint } from '../Styles/Theme';
 
 const Container = styled.li`
     display: flex;
     justify-content: space-between;
-    @media screen and ( min-width: 768px ) {
+    @media screen and ( ${BreakPoint} ) {
         margin-bottom: 5px;
     }
 `;

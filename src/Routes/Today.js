@@ -10,13 +10,14 @@ import WhatNow from '../Components/WhatNow';
 import Icon from '../Components/Icon';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import DayComment from '../Components/DayComment';
+import { BreakPoint } from '../Styles/Theme';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
 `;
 
 const QuickAdd = styled(WhatNow)`
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         margin-bottom: 10px;
         border-radius: 10px;
         border: 1px solid ${({ theme })=> theme.c_lightGray };
@@ -49,7 +50,7 @@ const Buttons = styled.div`
         align-items: center;
         justify-content: center;
     }
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         border: 1px solid ${({ theme })=> theme.c_lightGray };
         border-radius: 10px 10px 0 0;
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DoingItem from './DoingItem';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import TextSmall from './TextSmall';
 
 const Container = styled.div`
@@ -11,7 +11,7 @@ const Container = styled.div`
 const DoingItems = styled.ul`
     margin: 0 -30px;
     border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         margin: 0;
         background-color: white;
         border-bottom: 0;

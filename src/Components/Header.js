@@ -12,6 +12,7 @@ import { useQuery } from 'react-apollo-hooks';
 import IconButton from './IconButton';
 import TextSmall from './TextSmall';
 import GlobalNav from './GlobalNav';
+import { HeaderBreakPointMax, HeaderBreakPoint } from '../Styles/Theme';
 
 const Container = styled.header`
     position: sticky;
@@ -24,7 +25,7 @@ const Container = styled.header`
     padding-bottom: 0;
     height: 64px;
     z-index: 999;
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         position: fixed;
         width: 100%;
         padding: 50px;
@@ -36,7 +37,7 @@ const Container = styled.header`
 const LogoContainer = styled.div`
     display: none;
     pointer-events: all;
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         display: block;
     } 
 `;
@@ -59,7 +60,7 @@ const Inner = styled.div`
     justify-content: space-between;
     pointer-events: all;
     width: 100%;
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         align-items: center;
         justify-content: center;
         width: auto;
@@ -68,10 +69,10 @@ const Inner = styled.div`
 
 const PageTitle = styled(TextMedium)`
     display: ${({ isDepth })=> isDepth? 'block' : 'none' };
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         display: none;
     }
-    @media screen and (max-width: 899px) {
+    @media screen and (${HeaderBreakPointMax}) {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -80,7 +81,7 @@ const PageTitle = styled(TextMedium)`
 
 const SearchLink = styled(IconButton)`
     display: ${({ isDepth })=> isDepth? 'none' : 'block' };
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         display: block;
         margin-right: 20px
     }
@@ -88,7 +89,7 @@ const SearchLink = styled(IconButton)`
 
 const BackButton = styled(IconButton)`
     display: ${({ isDepth })=> isDepth? 'block' : 'none' };
-    @media screen and (min-width: 900px) {
+    @media screen and (${HeaderBreakPoint}) {
         display: none;
     }
 `;

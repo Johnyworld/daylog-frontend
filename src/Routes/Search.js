@@ -11,6 +11,7 @@ import UserList from '../Components/UserList';
 import { gql } from 'apollo-boost';
 import LoaderRelative from '../Components/LoaderRelative';
 import TextMedium from '../Components/TextMedium';
+import { BreakPoint } from '../Styles/Theme';
 
 const SEARCH_USER = gql`
     query searchUser( $term: String! ) {
@@ -30,7 +31,7 @@ const Container = styled.main`
     .search-input {
         margin-bottom: 30px;
     }
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;
     }
 `;

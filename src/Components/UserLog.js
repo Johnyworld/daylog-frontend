@@ -7,7 +7,7 @@ import Icon from './Icon';
 import TextSmall from './TextSmall';
 import Button from './Button';
 import Words from '../Lang/Words.json';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_USER } from '../Routes/Log';
@@ -31,7 +31,7 @@ export const UNFOLLOW = gql`
 const Container = styled.section`
     background-color: white;
     ${({ theme })=> theme.box };
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         padding-top: 50px;
     }
 `;
@@ -53,7 +53,7 @@ const AvatarStyled = styled(Avatar)`
 `;
 
 const Username = styled(TextRegular)`
-    @media screen and (min-width: 768px) {
+    @media screen and ( ${BreakPoint} ) {
         font-size: 20px;
     }
 `
