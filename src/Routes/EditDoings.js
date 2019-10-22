@@ -59,6 +59,12 @@ const PIN_DOING = gql`
     }
 `;
 
+const REMOVE_PIN = gql`
+    mutation removePin( $doingId: String! ) {
+        removePin( doingId: $doingId )
+    }
+`;
+
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     @media screen and ( min-width: 768px ) {
@@ -107,6 +113,10 @@ export default () => {
         refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
 
+    const [ removePinMutation ] = useMutation(REMOVE_PIN, {
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+    });
+
     const [ addDoingMutation ] = useMutation(ADD_DOING, {
         refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
@@ -137,10 +147,10 @@ export default () => {
             <Container>
                 <Wrapper>
                     <Header>
-                        <p>
+                        <div>
                             <TextLarge text={Words.editDoing} lang={lang} />
                             <TextRegular text={Words.editDoingSub} lang={lang} />
-                        </p>
+                        </div>
                         <IconButton icon="plus" size="medium" onClick={onAddDoingPopup} />
                     </Header>
                     { categories.map( category => (
@@ -150,6 +160,7 @@ export default () => {
                             doings={data.seeFollowedDoings}
                             me={meData.me}
                             editDoingMutation={editDoingMutation}
+                            removePinMutation={removePinMutation}
                             lang={lang}
                         />
                     ))}
