@@ -97,7 +97,7 @@ const Container = styled.main`
 const NoFeedMessage = styled(TextSmall)`
     ${({ theme })=> theme.wrapper };
     display: block;
-    padding: 100px 30px;
+    padding: 30px;
     padding-bottom: 0;
 `
 

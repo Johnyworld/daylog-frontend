@@ -28,7 +28,7 @@ const Container = styled.div`
     ${({ theme })=> theme.wrapper };
     padding: 20px;
     &.disabled {
-        transform: translateY(100%);
+        transform: translateY(110%);
     }
 `;
 
