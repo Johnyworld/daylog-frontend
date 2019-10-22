@@ -28,9 +28,15 @@ const SEARCH_DOING = gql`
 `;
 
 
-const Container = styled.ul`
+const Container = styled.div`
     margin-top: 30px;
     max-height: 50vh;
+`;
+
+const DoingItems = styled.ul`
+    ${({ theme })=> theme.popupContent };
+    border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
+    margin: 0 -30px;
 `;
 
 const ButtonStyled = styled(Button)`
@@ -52,18 +58,20 @@ const CategoryList = ({ term, category, list, lang, onSelectDoing, setAdding }) 
             { loading && <LoaderRelative /> }
             { !loading && data && data.searchDoing && ( <>
                 { data.searchDoing[0]
-                    ? 
-                    data.searchDoing.map( doing => (
-                        <DoingItem
-                            key={doing.id}
-                            id={doing.id}
-                            name={doing.name}
-                            color={doing.color}
-                            author={doing.author}
-                            onSelectDoing={onSelectDoing}
-                            lang={lang}
-                        />
-                    ))
+                    ?
+                    <DoingItems>
+                        { data.searchDoing.map( doing => (
+                            <DoingItem
+                                key={doing.id}
+                                id={doing.id}
+                                name={doing.name}
+                                color={doing.color}
+                                author={doing.author}
+                                onSelectDoing={onSelectDoing}
+                                lang={lang}
+                            />
+                        ))}
+                    </DoingItems>
                     : 
                     <TextMedium text={Words.noSearchResult} lang={lang} /> 
                 }

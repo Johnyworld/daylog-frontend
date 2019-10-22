@@ -39,9 +39,7 @@ const Popup = styled.div`
     ${({ theme })=> theme.popup };
 `;
 
-const PopupContent = styled.section`
-   ${({ theme })=> theme.popupContent }; 
-`;
+const PopupContent = styled.section``;
 
 const Name = styled.div`
     margin: 15px 0 10px;
@@ -142,8 +140,8 @@ const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
                         />
                     }
                     { adding && <>
-                        <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} />
-                        <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} />
+                        <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} isMine={true} />
+                        <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} isMine={true} />
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
                     </> }
                 </PopupContent>

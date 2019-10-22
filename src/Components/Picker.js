@@ -33,7 +33,7 @@ const Palette = styled.div`
     margin-right: 2px;
 `;
 
-const Picker = ({ className, onClick, type, icon, color, lang }) => {
+const Picker = ({ className, onClick, type, icon, color, lang, isMine }) => {
     return (
         <Container className={className} >
             <TextRegular text={ type === "icon" ? Words.icon : Words.color } lang={lang} weight="bold" />
@@ -42,7 +42,7 @@ const Picker = ({ className, onClick, type, icon, color, lang }) => {
                     ? <IconImage url={icon} size="medium" />
                     : <Palette color={color} />
                 }
-                <IconButton icon="pencel" size="medium" onClick={onClick.bind(this, type)} />
+                { isMine && <IconButton icon="pencel" size="medium" onClick={onClick.bind(this, type)} /> }
             </Column>
         </Container>
     )
@@ -55,6 +55,7 @@ Picker.propTypes = {
     icon: PropTypes.string,
     color: PropTypes.string,
     lang: PropTypes.oneOf( getLangArray() ).isRequired,
+    isMine: PropTypes.bool
 }
 
 export default Picker;

@@ -2,28 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextMedium from './TextMedium';
 import Icon from './Icon';
-import Theme from '../Styles/Theme';
+import Words from '../Lang/Words.json';
 import IconButton from './IconButton';
 import IconImage from './IconImage';
 import EditDoing from './EditDoing';
+import Button from './Button';
 
 const Container = styled.li`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 -30px;
     padding: 10px 30px;
     border-top: 1px solid ${({ theme })=> theme.c_lightGray };
-    &:last-child {
-        border-bottom: 1px solid ${({ theme })=> theme.c_lightGray }; 
-    }
-    @media screen and (min-width: 768px) {
-        margin: 0;
-        &:last-child {
-            border-bottom: 0; 
-        }
-    }
 `;
 
 const Column = styled.div`
@@ -42,10 +33,6 @@ const Color = styled.div`
     background-color: ${({ color })=> color };
 `;
 
-const EditIcon = styled(Icon)`
-
-`;
-
 const IconContainer = styled.div`
     &:not(:last-child) {
         margin-right: 15px;
@@ -57,7 +44,7 @@ const IconContainer = styled.div`
 
 const DoingItem = ({ 
     id, name, category, color, icon, author, me, lang, 
-    onSelectDoing, editDoingMutation 
+    onSelectDoing, editDoingMutation, removePinMutation
 }) => {
     const [ editDoing, setEditDoing ] = useState(false);
 
@@ -67,6 +54,10 @@ const DoingItem = ({
 
     const closePopup = () => {
         setEditDoing(false);
+    }
+
+    const selectingDoing = () => {
+        onSelectDoing(id)
     }
 
     return (
@@ -79,25 +70,23 @@ const DoingItem = ({
                 <IconContainer>
                     <IconImage url={icon} size="medium" />
                 </IconContainer>
-                { me &&
-                    ( me.id === author.id
-                        ? <IconButton icon="pencel" size="medium" onClick={editDoingPopup} />
-                        : <EditIcon icon="pencel" size="medium" color={Theme.c_lightGray} />
-                    )
+                { ! onSelectDoing 
+                    ? <IconButton icon="pencel" size="medium" onClick={editDoingPopup} />
+                    : <Button text={Words.select} lang={lang} className="narrow" onClick={selectingDoing} />
                 }
-                {/* { id &&
-                    <Button text={Words.select} lang={lang} className="narrow" onClick={onSelectDoing.bind(this, id)} />
-                } */}
             </Column>
             { editDoing && 
                 <EditDoing
                     id={id}
+                    author={author}
                     category={category}
                     doingName={name}
                     defaultIcon={icon}
                     defaultColor={color}
                     closePopup={closePopup}
                     editDoingMutation={editDoingMutation}
+                    removePinMutation={removePinMutation}
+                    me={me}
                     lang={lang}
                 /> 
             }

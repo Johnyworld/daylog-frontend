@@ -10,7 +10,7 @@ const Container = styled.button`
 
 const SmallButton = ({ className, onClick, data, text, lang, color=Theme.c_gray }) => {
     return (
-        <Container onClick={onClick} data-data={data} className="small-button" >
+        <Container onClick={onClick} data-data={data} className={className} >
             <TextRegular text={text} lang={lang} color={color} weight="bold" />
         </Container>
     )

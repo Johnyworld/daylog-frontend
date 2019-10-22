@@ -9,8 +9,12 @@ const Container = styled.div`
 `;
 
 const DoingItems = styled.ul`
+    margin: 0 -30px;
+    border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
     @media screen and (min-width: 768px) {
+        margin: 0;
         background-color: white;
+        border-bottom: 0;
         ${({ theme })=> theme.box };
     }
 `;
@@ -20,7 +24,7 @@ const CategoryName = styled(TextSmall)`
     margin-bottom: 10px;
 `;
 
-export default ({ category, doings, me, editDoingMutation, lang }) => {
+export default ({ category, doings, me, editDoingMutation, removePinMutation, lang }) => {
     return (
         <Container>
             <CategoryName text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
@@ -37,6 +41,7 @@ export default ({ category, doings, me, editDoingMutation, lang }) => {
                         author={doing.author}
                         me={me}
                         editDoingMutation={editDoingMutation}
+                        removePinMutation={removePinMutation}
                         lang={lang}
                     />
                 ))}
