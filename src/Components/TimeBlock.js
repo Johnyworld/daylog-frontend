@@ -63,10 +63,6 @@ const Inner = styled.div`
     }
 `;
 
-const ScoreButton = styled(SmallButton)`
-    width: 30px;
-`;
-
 const Name = styled(TextRegular)`
     ${({ theme })=> theme.f_small };
 `;
@@ -196,7 +192,7 @@ const TimeBlock = ({
                     <Name string={doing} color="white" />
                     { scoreState
                         ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
-                        : <ScoreButton onClick={onScorePopup} text={Words.setScore} lang={lang} color="white" />
+                        : <button onClick={onScorePopup}><TextSmall text={Words.setScore} lang={lang} color="white" /></button>
                     }
                 </>)}
             </Inner>
