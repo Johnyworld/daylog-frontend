@@ -11,7 +11,7 @@ import TextRegular from '../Components/TextRegular';
 import TextLarge from '../Components/TextLarge';
 import TextSmall from '../Components/TextSmall';
 import { blockToTimeFor } from '../Util/Convertors';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import { ME } from '../Components/TodayQueries';
 import Comments from '../Components/Comments.js';
 import Username from '../Components/Username.js';
@@ -78,6 +78,14 @@ const Container = styled.main`
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-bottom: 70px;
     min-height: calc(100vh - 70px);
+    @media screen and ( ${BreakPoint} ) {
+        padding-top: 100px;
+        min-height: 100vh; 
+    }
+`;
+
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper }
 `;
 
 const Heading = styled.div`
@@ -126,30 +134,32 @@ export default () => {
         { loading && <Loader />}
         { !loading && data && data.seePost && (
             <Container>
-                <Heading>
-                    <TextSmall string={blockToTimeFor(data.seePost.blocks, lang, "isFor")} />
-                    <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
-                    <Username username={data.seePost.user.username} />
-                </Heading>
-                { !meLoading && meData && meData.me &&
-                    <>
-                        { data.seePost.comments[0] 
-                            ? 
-                            <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
-                            : 
-                            <NoCommentMessage>
-                                <TextRegular text={Words.noComments} lang={lang} />
-                            </NoCommentMessage>
-                        }
-                        <NewComment
-                            lang={lang}
-                            onKeyPress={onKeyPress}
-                            value={newComment.value}
-                            onChange={newComment.onChange}
-                            avatar={meData.me.avatar}
-                        />
-                    </>
-                }
+                <Wrapper>
+                    <Heading>
+                        <TextSmall string={blockToTimeFor(data.seePost.blocks, lang, "isFor")} />
+                        <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
+                        <Username username={data.seePost.user.username} inline="true" />
+                    </Heading>
+                    { !meLoading && meData && meData.me &&
+                        <>
+                            { data.seePost.comments[0] 
+                                ? 
+                                <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
+                                : 
+                                <NoCommentMessage>
+                                    <TextRegular text={Words.noComments} lang={lang} />
+                                </NoCommentMessage>
+                            }
+                            <NewComment
+                                lang={lang}
+                                onKeyPress={onKeyPress}
+                                value={newComment.value}
+                                onChange={newComment.onChange}
+                                avatar={meData.me.avatar}
+                            />
+                        </>
+                    }
+                </Wrapper>
             </Container>
         )}
     </>

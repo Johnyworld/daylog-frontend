@@ -70,13 +70,16 @@ const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     @media screen and ( ${BreakPoint} ) {
         background-color: ${({ theme })=> theme.c_lightGray };
-        padding: 30px 0 50px;
+        padding: 100px 0;
     }
 `;
 
 const Wrapper = styled.div`
     ${({ theme })=> theme.wrapper };
     padding: 30px;
+    @media screen and ( ${BreakPoint} ) {
+        padding: 0;
+    }
 `;
 
 const Header = styled.header`

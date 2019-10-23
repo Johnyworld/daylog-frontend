@@ -35,9 +35,11 @@ const DELETE_AVATAR = gql`
 `;
 
 const Container = styled.main`
-    max-width: 768px;
-    margin: auto;
+    ${({ theme })=> theme.wrapper };
     padding: 30px;
+    @media screen and ( ${BreakPoint} ) {
+        padding-top: 100px; 
+    }
 `;
 
 const Profile = styled.section`

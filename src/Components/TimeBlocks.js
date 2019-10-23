@@ -9,7 +9,7 @@ import { BreakPoint } from '../Styles/Theme';
 
 const Container = styled.ul`
     margin-left: 35px;
-    padding-bottom: 40vh;
+    padding-bottom: 50vh;
     opacity: 0;
     transition: .3s;
     &.appear {
@@ -18,8 +18,7 @@ const Container = styled.ul`
     @media screen and ( ${BreakPoint} ) {
         ${({ theme })=> theme.wrapper };
         margin-bottom: 30px;
-        padding-left: 50px;
-        padding-right: 50px;
+        padding: 0 50px 40vh;
     }
 `;
 

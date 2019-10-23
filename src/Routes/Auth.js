@@ -11,7 +11,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { getLang, languages } from '../Util/Languages';
 import Icon from '../Components/Icon';
 import Version from '../Components/Version';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import TextLarge from '../Components/TextLarge';
 import LoaderButton from '../Components/LoaderButton';
 import Logo from '../Components/Logo';
@@ -41,17 +41,21 @@ const CREATE_ACCOUNT = gql`
 `;
 
 const Container = styled.main`
-    overflow: auto;
-    scroll-snap-type: y mandatory;
-    height: 100vh;
+    @media screen and ( ${BreakPoint} ) {
+        height: 100vh;
+        scroll-snap-type: y mandatory;
+        overflow: auto;
+    }
 `
 
 const Section = styled.section`
-    scroll-snap-align: start;
     position: relative;
     height: 100vh;
     background-color: ${props=> props.theme.c_blue};
     padding: 30px;
+    @media screen and ( ${BreakPoint} ) {
+        scroll-snap-align: start;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -369,7 +373,7 @@ const TextStyled = styled(TextLarge)`
 const Screen = styled.img`
     position: absolute;
     bottom: 0;
-    width: 270px;
+    max-height: 70vh;
 `;
 
 const SectionTutorial = ({ text, lang, color, background, screen }) => {
