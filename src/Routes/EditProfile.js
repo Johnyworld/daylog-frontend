@@ -115,6 +115,10 @@ const Popup = styled.div`
     }
 `;
 
+const UploadLabel = styled.label`
+    cursor: pointer;
+`;
+
 export default ({ me }) => {
     const [ editDone, setEditDone ] = useState(false);
     const [ onPopup, setOnPopup ] = useState(false);
@@ -221,9 +225,9 @@ export default ({ me }) => {
                 <PopupContainer>
                     <Popup>
                         <PopupHeader text={Words.editAvatar} lang={lang} closePopup={()=>{ setOnPopup(false) }} />
-                        <label htmlFor="avatar">
+                        <UploadLabel htmlFor="avatar">
                             <TextRegular text={Words.upload} lang={lang} color={Theme.c_blue} weight="bold" />
-                        </label>
+                        </UploadLabel>
                         <Input placeholder={Words.upload} onChange={onChangeAvatar} lang={lang} type="file" accept="image/*" name="avatar" id="avatar" />
                         <SmallButton text={Words.deleteAvatar} lang={lang} onClick={onDeleteAvatar} color={Theme.c_red} />
                     </Popup>

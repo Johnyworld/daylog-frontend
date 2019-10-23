@@ -12,6 +12,7 @@ const Items = styled.ul`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 35px;
+    padding-right: 30px;
     justify-content: space-evenly;
     align-items: center;
 `;
