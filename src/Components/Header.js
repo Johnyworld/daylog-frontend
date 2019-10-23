@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Icon from '../Components/Icon';
 import Theme from '../Styles/Theme';
 import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
@@ -14,6 +13,7 @@ import TextSmall from './TextSmall';
 import GlobalNav from './GlobalNav';
 import { HeaderBreakPointMax, HeaderBreakPoint } from '../Styles/Theme';
 import Logo from './Logo';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const Container = styled.header`
     position: sticky;
@@ -29,7 +29,7 @@ const Container = styled.header`
     @media screen and (${HeaderBreakPoint}) {
         position: fixed;
         width: 100%;
-        padding: 50px;
+        padding: 40px;
         background: none;
         pointer-events: none;
     }
@@ -152,25 +152,29 @@ export default withRouter(({ history }) => {
         }
     
         return (  
-            <Container>
-                <LogoContainer>
-                    <LogoStyled size="small" color="positive" />
-                    <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
-                </LogoContainer>
-                <Inner>
-                    <>
-                        <GlobalNav isDepth={isDepth} onClick={changeTab} route={route} username={data.me.username} />
-                        <PageTitle isDepth={isDepth} text={text} lang={lang} />
-                    </>
-                    
-                    <>
-                        <SearchLink isDepth={isDepth} to="/search" icon="search" size="medium" color={Theme.c_blue} />
-                        <BackButton isDepth={isDepth} onClick={onGoBack} icon="back" size="medium" color={Theme.c_blue} />
-                    </>
-                    <HamburgerMenu onClick={callSideMenu} icon="hamburger" size="medium" color={Theme.c_blue} />
-                </Inner>
+            <>
+                <Container>
+                    <LogoContainer>
+                        <Link to='/'>
+                            <LogoStyled size="small" color="positive" />
+                        </Link>
+                        <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
+                    </LogoContainer>
+                    <Inner>
+                        <>
+                            <GlobalNav isDepth={isDepth} onClick={changeTab} route={route} username={data.me.username} />
+                            <PageTitle isDepth={isDepth} text={text} lang={lang} />
+                        </>
+                        
+                        <>
+                            <SearchLink isDepth={isDepth} to="/search" icon="search" size="medium" color={Theme.c_blue} />
+                            <BackButton isDepth={isDepth} onClick={onGoBack} icon="back" size="medium" color={Theme.c_blue} />
+                        </>
+                        <HamburgerMenu onClick={callSideMenu} icon="hamburger" size="medium" color={Theme.c_blue} />
+                    </Inner>
+                </Container>
                 { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} avatar={data.me.avatar} route={route} lang={lang} /> }
-            </Container>
+            </>
         )
     } else return null;
 });
