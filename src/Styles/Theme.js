@@ -1,5 +1,5 @@
-export const BreakPoint = 'min-width: 768px';
-export const BreakPointMax = 'max-width: 767px';
+export const BreakPoint = 'min-width: 769px';
+export const BreakPointMax = 'max-width: 768px';
 export const HeaderBreakPoint = 'min-width: 960px';
 export const HeaderBreakPointMax = 'max-width: 959px';
 
@@ -86,6 +86,7 @@ export default {
         ${ SCROLL_MOBILE };
         ${ HIDDEN_SCROLL_BAR };
         overflow-y: scroll;
+        overflow-x: hidden;
         overscroll-behavior: contain;
         max-height: 60vh;
     `,
