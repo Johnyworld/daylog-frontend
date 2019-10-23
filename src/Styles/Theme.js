@@ -3,6 +3,18 @@ export const BreakPointMax = 'max-width: 767px';
 export const HeaderBreakPoint = 'min-width: 960px';
 export const HeaderBreakPointMax = 'max-width: 959px';
 
+const SCROLL_MOBILE = `
+    -webkit-overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    -ms-overflow-scrolling: touch;
+`;
+
+const HIDDEN_SCROLL_BAR = `
+    -moz-overflow-style: none; 
+    -ms-overflow-style: none; 
+    &::-webkit-scrollbar { display:none; }
+`;
+
 export default {
     c_blue: "#1a9df9",
     c_blueBrighter1: "#61bffb",
@@ -20,6 +32,10 @@ export default {
     size_iconLarge: 40,
     size_iconMedium: 24,
     size_iconSmall: 16,
+    scrollMobile: `
+        ${ SCROLL_MOBILE };
+        ${ HIDDEN_SCROLL_BAR };
+    `,
     wrapper: `
         max-width: 768px;
         margin: 0 auto;
@@ -67,6 +83,8 @@ export default {
         overflow: hidden;
     `,
     popupContent:`
+        ${ SCROLL_MOBILE };
+        ${ HIDDEN_SCROLL_BAR };
         overflow-y: scroll;
         overscroll-behavior: contain;
         max-height: 60vh;

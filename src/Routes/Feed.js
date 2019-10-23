@@ -82,8 +82,6 @@ export const FEED_REVIEW = gql`
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     background-color: ${({ theme })=> theme.c_lightGray };
-    max-height: calc(100vh - 64px);
-    overflow: auto;
     padding-top: 1px;
     @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;

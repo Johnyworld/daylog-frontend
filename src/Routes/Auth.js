@@ -41,11 +41,11 @@ const CREATE_ACCOUNT = gql`
 `;
 
 const Container = styled.main`
-    @media screen and ( ${BreakPoint} ) {
-        height: 100vh;
-        scroll-snap-type: y mandatory;
-        overflow: auto;
-    }
+    height: 100vh;
+    max-width: 100vw;
+    scroll-snap-type: y mandatory;
+    overflow: auto;
+    ${({ theme })=> theme.scrollMobile };
 `
 
 const Section = styled.section`
@@ -53,9 +53,7 @@ const Section = styled.section`
     height: 100vh;
     background-color: ${props=> props.theme.c_blue};
     padding: 30px;
-    @media screen and ( ${BreakPoint} ) {
-        scroll-snap-align: start;
-    }
+    scroll-snap-align: start;
 `;
 
 const Wrapper = styled.div`

@@ -42,8 +42,7 @@ const ScrollContainer = styled.section`
     padding: 20px 20px 30px;
     overflow-x: scroll;
     overflow-y: hidden;
-    -ms-overflow-style: none; 
-    &::-webkit-scrollbar { display:none; }
+    ${({ theme })=> theme.scrollMobile };
 `;
 
 const DoingButtons = styled.div`
