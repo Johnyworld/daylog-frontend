@@ -163,7 +163,7 @@ export default () => {
                 />
                 <Bottom>
                     <QuickAdd
-                        doings={meData.me.doings}
+                        pins={meData.me.pins}
                         lang={lang}
                         focusedBlock={focusedBlock}
                         recent={recent}

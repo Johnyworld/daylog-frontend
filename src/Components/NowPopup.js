@@ -58,7 +58,7 @@ const DoneButton = styled(LargeButton)`
 `;
 
 export default ({ 
-    doings, recent, closePopup, next, lang, recentDoingId, nextDoingId,
+    pins, recent, closePopup, next, lang, recentDoingId, nextDoingId,
     stillMutation, pullMutation, onClickUpload }) => {
         
     const [ selectedDoing, setSelectedDoing ] = useState(null);
@@ -152,18 +152,21 @@ export default ({
                             /> 
                         }
                         {/* 나머지 버튼들 배열 */}
-                        { doings[0] && doings.map( doing => (
-                            doing.id !== recentDoingId && doing.id !== nextDoingId &&
-                            <DoingButton
-                                key={doing.id}
-                                id={doing.id}
-                                name={doing.name}
-                                icon={doing.icon}
-                                color={doing.color}
-                                onClick={onClickButton}
-                                lang={lang} 
-                            />
-                        ))}
+                        { pins[0] && pins.map( pin => {
+                            const { doing } = pin;
+                            return (
+                                doing.id !== recentDoingId && doing.id !== nextDoingId &&
+                                <DoingButton
+                                    key={doing.id}
+                                    id={doing.id}
+                                    name={doing.name}
+                                    icon={doing.icon}
+                                    color={doing.color}
+                                    onClick={onClickButton}
+                                    lang={lang} 
+                                />
+                            )
+                        })}
                     </DoingGrid>
                 </PopupContent>
                 <LocationInput label={Words.location} placeholder={Words.location} {...location} lang={lang} />

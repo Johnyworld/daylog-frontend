@@ -13,11 +13,13 @@ export const ME = gql`
             followersCount
             followingCount
             likesTotal
-            doings {
-                id
-                name
-                color
-                icon
+            pins {
+                doing {
+                    id
+                    name
+                    color
+                    icon
+                }
             }
         }
     }

@@ -52,7 +52,7 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ doings, lang, recent, focusedBlock, next, className }) => {
+export default ({ pins, lang, recent, focusedBlock, next, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
 
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
@@ -107,7 +107,7 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
         }});
     }
 
-    const width = (doings.length + 1) * (Theme.size_doingButton + 10);
+    const width = (pins.length + 1) * (Theme.size_doingButton + 10);
     const recentDoingId = recent ? recent.doing.id : "";
     const nextDoingId = next ? next.doing.id : "";
 
@@ -143,23 +143,26 @@ export default ({ doings, lang, recent, focusedBlock, next, className }) => {
                             className="next"
                         /> 
                     }
-                    { doings[0] && doings.map( doing => (
-                        doing.id !== recentDoingId && doing.id !== nextDoingId &&
-                        <DoingButton
-                            key={doing.id}
-                            id={doing.id}
-                            name={doing.name}
-                            icon={doing.icon}
-                            color={doing.color}
-                            lang={lang}
-                            onClick={onClickUpload}
-                        />
-                    ))}
+                    { pins[0] && pins.map( pin => {
+                        const { doing } = pin;
+                        return (
+                            doing.id !== recentDoingId && doing.id !== nextDoingId &&
+                            <DoingButton
+                                key={doing.id}
+                                id={doing.id}
+                                name={doing.name}
+                                icon={doing.icon}
+                                color={doing.color}
+                                lang={lang}
+                                onClick={onClickUpload}
+                            />
+                        )
+                    })}
                 </DoingButtons>
             </ScrollContainer>
             { nowPopup && 
                 <NowPopup 
-                    doings={doings}
+                    pins={pins}
                     recent={recent}
                     closePopup={closePopup}
                     lang={lang}
