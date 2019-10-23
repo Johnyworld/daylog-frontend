@@ -36,7 +36,7 @@ export default createGlobalStyle`
         outline: none;
     }
 
-    select {
+    input, select {
         appearance:none;
         -webkit-appearance:none;
         -moz-appearance:none;

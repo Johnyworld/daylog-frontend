@@ -9,6 +9,7 @@ const Container = styled.input`
     background: none;
     transition: .5s;
     outline: none;
+    border-radius: 0;
     width: 100%;
     padding: 10px 3px 9px;
     color: ${({ theme })=> theme.c_black};
