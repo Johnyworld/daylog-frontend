@@ -8,7 +8,7 @@ import TextRegular from './TextRegular';
 import Theme, { BreakPoint } from '../Styles/Theme';
 import Avatar from './Avatar';
 
-const Container = styled.div`
+const Container = styled.aside`
     ${({ theme })=> theme.popupContainer }
     animation-duration: .5s;
     pointer-events: all;
@@ -34,7 +34,7 @@ const Box = styled.div`
     }
 `;
 
-const User = styled.div`
+const User = styled.section`
     display: flex;
     align-items: center;
     padding: 30px;
@@ -49,7 +49,7 @@ const Name = styled(TextMedium)`
     letter-spacing: 0;
 `;
 
-const Gnb = styled.div`
+const Gnb = styled.nav`
     padding: 30px;
     border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
 `;
@@ -61,7 +61,7 @@ const LinkGnb = styled(Link)`
     }
 `
 
-const Menu = styled.div`
+const Menu = styled.section`
     padding: 30px;
 `;
 
