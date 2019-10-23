@@ -10,8 +10,8 @@ import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
 import { TODAY_QUERY } from './TodayQueries';
 import { getStillEndAt, getPullStartAt } from '../Util/Util';
-import { FEED_POST } from '../Routes/Feed';
 import IconButton from './IconButton';
+import { getToday, getYesterday } from '../Util/Convertors';
 
 export const UPLOAD = gql`
     mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float, $option: String ) {
@@ -51,8 +51,10 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ pins, lang, recent, focusedBlock, next, className }) => {
+export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, className }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
+    const [ newId, setNewId ] = useState(false);
+    const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
 
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
     const pullStartAt = getPullStartAt( focusedBlock, next );
@@ -62,7 +64,7 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
             startAt: focusedBlock && focusedBlock.block,
             option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
         },
-        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
+        refetchQueries: [{ query: TODAY_QUERY }]
     });
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
@@ -71,7 +73,7 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
             endAt: stillEndAt,
             type: "endAt" 
         },
-        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
+        refetchQueries : [{ query: TODAY_QUERY }]
     });
 
     const [ pullMutation ] = useMutation( EDIT_POST, {
@@ -80,7 +82,7 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
             startAt: pullStartAt,
             type: "startAt" 
         },
-        refetchQueries: [{ query: TODAY_QUERY }, { query: FEED_POST }]
+        refetchQueries: [{ query: TODAY_QUERY }]
     });
 
     const onClickNowPopup = () => {
@@ -93,17 +95,49 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
 
     const onClickStill = () => {
         stillMutation();
+        updateTodayPosts({ 
+            id: recent && recent.id, 
+            endAt: stillEndAt,
+        });
     }
 
     const onClickPull = () => {
         pullMutation();
+        updateTodayPosts({ 
+            id: next && next.id,
+            startAt: pullStartAt,
+            type: "pull"
+        });
     }
 
-    const onClickUpload = ({id, location}) => {
-        uploadMutation({ variables: {
+    const onClickUpload = ({id, location, name, icon, color}) => {
+        updateTodayPosts({ create: { 
+            id: randomId,
             doingId: id,
-            location: location ? location : ""
+            name,
+            icon,
+            color,
+            location: location ? location : "",
+            startAt: focusedBlock && focusedBlock.block,
+            endAt: focusedBlock && focusedBlock.block + 1,
+            yyyymmdd: focusedBlock.isYesterday ? getYesterday() : getToday()
         }});
+        
+        uploadMutation({ 
+            variables: {
+                doingId: id,
+                location: location ? location : ""
+            }, 
+            update: (_, {data: { upload }}) => {
+                setNewId( upload.id );
+            }
+        });
+    }
+
+    if ( newId ) {
+        updateTodayPosts({ id: randomId, newId: newId });
+        setRandomId( Math.floor(Math.random()*10000).toString() );
+        setNewId(false);
     }
 
     const width = (pins.length + 1) * (Theme.size_doingButton + 10);
@@ -126,6 +160,7 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
                             icon={recent.doing.icon}
                             color={recent.doing.color}
                             lang={lang}
+                            isCreating={recent.isCreating}
                             onClick={onClickStill}
                             className="recent"
                         /> 
@@ -138,6 +173,7 @@ export default ({ pins, lang, recent, focusedBlock, next, className }) => {
                             icon={next.doing.icon}
                             color={next.doing.color}
                             lang={lang}
+                            isCreating={next.isCreating}
                             onClick={onClickPull}
                             className="next"
                         /> 

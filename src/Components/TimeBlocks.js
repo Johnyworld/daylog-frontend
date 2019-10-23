@@ -22,7 +22,7 @@ const Container = styled.ul`
     }
 `;
 
-const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
+const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateTodayPosts }) => {
     let timeblocks = React.createRef();
 
     const cutTopStartAt = getCutTopStartAt( focusedBlock, recent );
@@ -47,6 +47,10 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
             id,
             type: "delete"
         }});
+        updateTodayPosts({
+            id,
+            deletePost: true
+        })
     }
 
     const onClickCutTop = (id) => {
@@ -56,6 +60,12 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
             endAt: cutTopEndAt,
             type: cutTopType
         }});
+        updateTodayPosts({
+            id,
+            startAt: cutTopStartAt,
+            endAt: cutTopEndAt,
+            type: cutTopType
+        })
     }
 
     const onClickCutBottom = (id) => {
@@ -64,6 +74,10 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
             endAt: cutBottomEndAt,
             type: "endAt"
         }});
+        updateTodayPosts({
+            id,
+            endAt: cutBottomEndAt
+        })
     }
 
     useEffect(()=> {
@@ -71,7 +85,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
         timeblocks.current.classList.add('appear');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
+    
     return (
         <Container ref={timeblocks}>
             { blocks.map((block, index) => {
@@ -87,6 +101,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
                         score={block.score}
                         location={block.location}
                         blocks={block.blocks}
+                        isCreating={block.isCreating}
                         likesCount={block.likesCount}
                         commentsCount={block.commentsCount}
                         lang={lang}

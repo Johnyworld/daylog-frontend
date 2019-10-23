@@ -133,6 +133,7 @@ export default ({
                                 name={recent.doing.name}
                                 icon={recent.doing.icon}
                                 color={recent.doing.color}
+                                isCreating={recent.isCreating}
                                 onClick={onClickButton}
                                 lang={lang}
                                 className="recent"
@@ -147,6 +148,7 @@ export default ({
                                 icon={next.doing.icon}
                                 color={next.doing.color}
                                 lang={lang}
+                                isCreating={next.isCreating}
                                 onClick={onClickButton}
                                 className="next"
                             /> 

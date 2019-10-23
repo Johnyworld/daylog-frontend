@@ -6,6 +6,7 @@ import TextSmall from './TextSmall';
 import { languages, getLangArray } from '../Util/Languages';
 import Words from '../Lang/Words.json'
 import Theme from '../Styles/Theme';
+import LoaderButton from './LoaderButton';
 
 const Container = styled.button`
     display: flex;
@@ -75,13 +76,18 @@ const Name = styled(TextSmall)`
 `
 
 const DoingButton = ({
-    id, name, icon, color, className, lang,
+    id, name, icon, color, className, lang, isCreating,
     onClick }) => {
 
     return (
-        <Container className={className} onClick={ onClick.bind(this, {id}) } data-id={id} lang={lang} >
-            <IconImage url={icon} size="medium" />
-            <Name string={name} color={color} />
+        <Container className={className} onClick={ !isCreating ? onClick.bind(this, {id, name, color, icon}) : null } data-id={id} lang={lang} >
+            { isCreating 
+                ? <LoaderButton />
+                : <>
+                    <IconImage url={icon} size="medium" />
+                    <Name string={name} color={color} />
+                </>
+            }
         </Container>
     )
 }

@@ -9,7 +9,7 @@ import LoaderRelative from './LoaderRelative';
 import { getLangArray } from '../Util/Languages';
 import TimeTable from './TimeTable';
 
-const SEE_DAYLOG = gql`
+export const SEE_DAYLOG = gql`
     query seeDayLog( $username: String!, $yyyymmdd: String! ) {
         seeDayLog( username: $username, yyyymmdd: $yyyymmdd ) {
             dayReviews {

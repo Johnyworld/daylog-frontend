@@ -20,6 +20,8 @@ export const EDIT_POST = gql`
     mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $type: String! ) {
         editPost( id: $id, doingId: $doingId, location: $location, score: $score, startAt: $startAt, endAt: $endAt, type: $type ) {
             id
+            startAt
+            endAt
         }
     }
 `;

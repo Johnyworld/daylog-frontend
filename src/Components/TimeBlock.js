@@ -11,6 +11,7 @@ import Theme, { BreakPoint, BreakPointMax } from '../Styles/Theme';
 import EditLocation from './EditLocation';
 import { getLangArray } from '../Util/Languages';
 import IconButton from './IconButton';
+import LoaderButton from './LoaderButton';
 
 const Container = styled.li`
     position: relative;
@@ -138,6 +139,10 @@ const Column = styled.div`
     }
 `;
 
+const LoaderButtonStyled = styled(LoaderButton)`
+    margin: auto;
+`
+
 const EditButton = styled(IconButton)`
     display: flex;
     justify-content: center;
@@ -166,7 +171,7 @@ const getSelectionClassName = (selection) => {
 }
 
 const TimeBlock = ({
-    id, index, block, doing, color, icon, score, location, blocks, 
+    id, index, block, doing, color, icon, score, location, blocks, isCreating,
     likesCount, commentsCount, lang, className, selection,
     deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
 
@@ -191,6 +196,7 @@ const TimeBlock = ({
     const onClickDelete = () => {
         if ( confirmDelete ) { 
             deletePost(id);
+            setConfirmDelete(false);
         } 
         else { setConfirmDelete(true); }
     }
@@ -209,9 +215,11 @@ const TimeBlock = ({
                         { icon && <DoingIcon icon={icon} /> }
                         <Name string={doing} color="white" />
                     </DoingName>
-                    { scoreState
-                        ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
-                        : <button onClick={onScorePopup}><TextSmall text={Words.setScore} lang={lang} color="white" /></button>
+                    { !isCreating 
+                        ? scoreState
+                            ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
+                            : <button onClick={onScorePopup}><TextSmall text={Words.setScore} lang={lang} color="white" /></button>
+                        : <LoaderButton color="white" />
                     }
                 </>)}
             </Inner>
@@ -221,28 +229,34 @@ const TimeBlock = ({
                     <span>:00</span>
                 </>}
             </TimePrint>
-            { !doing && id &&
-                <SideCutPost className={selectionClassName}>
-                    <EditButton onClick={onClickCutTop.bind(this, id)} icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
-                    <EditButton onClick={onClickCutBottom.bind(this, id)} icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
-                </SideCutPost>
-            }
-            { doing && <>
-                <Side className="edit-and-delete">
-                    <EditButton onClick={onLocationPopup} icon="location" size="small" color={Theme.c_blueDarker2} />
-                    <EditButton onClick={onClickDelete} icon="x" size="small" color={!confirmDelete ? Theme.c_blueDarker2 : "white"} className={`delete ${ confirmDelete && 'confirm-delete'}`} />
-                </Side>
-                <SideLikesAndComments className={selectionClassName}>
-                    <Column>
-                        <Icon icon="clap" size="small" />
-                        <CountNum string={likesCount} />
-                    </Column>
-                    <Column>
-                        <Icon icon="bubble" size="small" />
-                        <CountNum string={commentsCount} />
-                    </Column>
-                </SideLikesAndComments>
-            </> }
+
+            { !isCreating ? <>
+
+                { !doing && id &&
+                    <SideCutPost className={selectionClassName}>
+                        <EditButton onClick={onClickCutTop.bind(this, id)} icon="cutTop" size="small" color={ Theme.c_blueDarker2 } />
+                        <EditButton onClick={onClickCutBottom.bind(this, id)} icon="cutBottom" size="small" color={ Theme.c_blueDarker2 } />
+                    </SideCutPost>
+                }
+
+                { doing && <>
+                    <Side className="edit-and-delete">
+                        <EditButton onClick={onLocationPopup} icon="location" size="small" color={Theme.c_blueDarker2} />
+                        <EditButton onClick={onClickDelete} icon="x" size="small" color={!confirmDelete ? Theme.c_blueDarker2 : "white"} className={`delete ${ confirmDelete && 'confirm-delete'}`} />
+                    </Side>
+                    <SideLikesAndComments className={selectionClassName}>
+                        <Column>
+                            <Icon icon="clap" size="small" />
+                            <CountNum string={likesCount} />
+                        </Column>
+                        <Column>
+                            <Icon icon="bubble" size="small" />
+                            <CountNum string={commentsCount} />
+                        </Column>
+                    </SideLikesAndComments>
+                </> }
+
+            </> : <LoaderButtonStyled /> }
             { scorePopup && 
                 <SetScore
                     id={id}
