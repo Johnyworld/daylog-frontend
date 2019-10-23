@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Icon from './Icon';
 
 const Container = styled.div`
-    margin: 10px 20px;
     width: 24px;
     height: 24px;
     animation: spin 1s infinite;
@@ -16,9 +15,9 @@ const Container = styled.div`
     }
 `
 
-export default ({ color }) => {
+export default ({ className, color }) => {
     return (
-        <Container>
+        <Container className={className}>
             <Icon icon="loading" size="medium" color={color} />
         </Container>
     )
