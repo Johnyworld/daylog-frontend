@@ -11,7 +11,7 @@ const Container = styled.section`
 const Items = styled.ul`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 35px;
+    grid-gap: 20px;
     justify-content: space-evenly;
     align-items: center;
 `;
