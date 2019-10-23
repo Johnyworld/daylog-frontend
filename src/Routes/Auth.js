@@ -11,7 +11,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { getLang, languages } from '../Util/Languages';
 import Icon from '../Components/Icon';
 import Version from '../Components/Version';
-import Theme, { BreakPoint } from '../Styles/Theme';
+import Theme from '../Styles/Theme';
 import TextLarge from '../Components/TextLarge';
 import LoaderButton from '../Components/LoaderButton';
 import Logo from '../Components/Logo';
@@ -112,6 +112,10 @@ const ButtonContainer = styled.div`
         margin-left: auto;
         margin-bottom: 20px;
     }
+`;
+
+const LoaderButtonStyled = styled(LoaderButton)`
+    margin: 10px 20px;
 `;
 
 const VersionStyled = styled(Version)`
@@ -245,7 +249,7 @@ export default () => {
                                             email.value === "" 
                                             ? <LargeButton text={Words.signUp} lang={lang} color="white" onClick={onClickSignUp} />
                                             : <LargeButton text={Words.logIn} lang={lang} color="white" />
-                                        : <LoaderButton color="white" />
+                                        : <LoaderButtonStyled color="white" />
                                     : null }
                                 </ButtonContainer>
                             </form>
@@ -281,7 +285,7 @@ export default () => {
                                             <LargeButton text={Words.signUp} lang={lang} color={ "white" } className={ checkSignUp() ? "" : "disabled" } /> 
                                             <LargeButton text={Words.back} lang={lang} color="white" onClick={onClickLogIn} />
                                         </>
-                                        : <LoaderButton color="white" />
+                                        : <LoaderButtonStyled color="white" />
                                     }
                                 </> ) : null }
                             </ButtonContainer>
@@ -304,7 +308,7 @@ export default () => {
                                 <ButtonContainer>
                                     { canClick 
                                         ? <LargeButton text={Words.okay} lang={lang} color="white" />
-                                        : <LoaderButton color="white" />
+                                        : <LoaderButtonStyled color="white" />
                                     }
                                 </ButtonContainer>
                             </form>
