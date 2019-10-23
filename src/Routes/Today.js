@@ -11,6 +11,8 @@ import Icon from '../Components/Icon';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import DayComment from '../Components/DayComment';
 import { BreakPoint } from '../Styles/Theme';
+import Words from '../Lang/Words.json';
+import TextRegular from '../Components/TextRegular';
 
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
@@ -38,21 +40,33 @@ const Buttons = styled.div`
     position: relative;
     height: 64px;
     background-color: ${({ theme })=> theme.c_blueDarker1 };
-    > * {
-        width: 50%;
-        &:not(:last-child) {
-            border-right: 1px solid ${({ theme })=> theme.c_blueDarker2 };
-        }
-    }
-    a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
     @media screen and ( ${BreakPoint} ) {
         border-radius: 10px 10px 0 0;
     }
 `;
+
+const ButtonItem = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border-right: 1px solid ${({ theme })=> theme.c_blueDarker2 };
+`;
+
+const LinkItem = styled(Link)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+`
+
+const ButtonText = styled(TextRegular)`
+    display: none;
+    @media screen and ( ${BreakPoint} ) {
+        display: inline-block;
+        margin-left: 10px;
+    } 
+`
 
 const blocksFoundation = ( now ) => {
     let blocks = [];
@@ -172,12 +186,14 @@ export default () => {
                         className={ blocks[focused].doing ? "disabled" : "" } 
                     />
                     <Buttons>
-                        <button onClick={onPopupDayComment} >
+                        <ButtonItem onClick={onPopupDayComment} >
                             <Icon icon="bubble" size="medium" color="white" />
-                        </button>
-                        <Link to={`/doing`}>
+                            <ButtonText text={Words.dayComments} lang={lang} color="white" />
+                        </ButtonItem>
+                        <LinkItem to={`/doing`}>
                             <Icon icon="nut" size="medium" color="white" />
-                        </Link>
+                            <ButtonText text={Words.doingList} lang={lang} color="white" />
+                        </LinkItem>
                     </Buttons>
                 </Bottom>
                 { popupDayComment && 

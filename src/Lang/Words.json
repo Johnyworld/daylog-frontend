@@ -383,6 +383,10 @@
         "kr" : "당기기",
         "en" : "Pull"
     },
+    "doingList" : {
+        "kr" : "일과 리스트 보기",
+        "en" : "Doing list"
+    },
     "doingName" : {
         "kr" : "일과 이름",
         "en" : "Doing name"
