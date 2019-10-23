@@ -81,8 +81,9 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused }) => {
                         id={block.id}
                         index={index}
                         block={block.block}
-                        doing={block.doing ? block.doing.name : null}
-                        color={block.doing ? block.doing.color : null}
+                        doing={block.doing && block.doing.name}
+                        color={block.doing && block.doing.color}
+                        icon={block.doing && block.doing.icon}
                         score={block.score}
                         location={block.location}
                         blocks={block.blocks}

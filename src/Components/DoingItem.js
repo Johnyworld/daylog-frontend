@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextMedium from './TextMedium';
-import Icon from './Icon';
 import Words from '../Lang/Words.json';
 import IconButton from './IconButton';
 import IconImage from './IconImage';

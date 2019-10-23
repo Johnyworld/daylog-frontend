@@ -63,6 +63,23 @@ const Inner = styled.div`
     }
 `;
 
+const DoingName = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const DoingIcon = styled.div`
+    width: ${({ theme })=> theme.size_iconMedium + "px" };
+    height: ${({ theme })=> theme.size_iconMedium + "px" };
+    background-color: white;
+    ${({ icon })=> icon && `background-image: url(${icon});`};
+    border-radius: 50%;
+    margin-right: 10px;
+    @media screen and ( ${BreakPointMax} ) {
+        display: none; 
+    }
+`;
+
 const Name = styled(TextRegular)`
     ${({ theme })=> theme.f_small };
 `;
@@ -150,7 +167,7 @@ const getSelectionClassName = (selection) => {
 }
 
 const TimeBlock = ({
-    id, index, block, doing, color, score, location, blocks, 
+    id, index, block, doing, color, icon, score, location, blocks, 
     likesCount, commentsCount, lang, className, selection,
     deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
 
@@ -189,7 +206,10 @@ const TimeBlock = ({
         <Container className={className} onClick={select} >
             <Inner className={"inner" + (selectionClassName && selectionClassName)} color={color} doing={doing} hour={block%4 === 0} >
                 { doing && (<>
-                    <Name string={doing} color="white" />
+                    <DoingName>
+                        { icon && <DoingIcon icon={icon} /> }
+                        <Name string={doing} color="white" />
+                    </DoingName>
                     { scoreState
                         ? <button onClick={onScorePopup}><Score score={scoreState} size="small" color="white" /></button>
                         : <button onClick={onScorePopup}><TextSmall text={Words.setScore} lang={lang} color="white" /></button>
