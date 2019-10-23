@@ -17,7 +17,7 @@ export const TOGGLE_LIKE = gql`
     }
 `;
 
-const Container = styled.article`
+const Container = styled.li`
     width: 100%;
     padding: 30px;
     ${({ theme })=> theme.box };
@@ -54,6 +54,7 @@ const Likes = styled(TextSmall)`
 `;
 
 export default ({
+    className,
     id,
     doing,
     color,
@@ -108,7 +109,7 @@ export default ({
     
     return (
         (
-        <Container>
+        <Container className={className}>
             <Info>
                 <p>
                     <TextSmall string={blockToTimeStart(startAt)} />

@@ -32,7 +32,7 @@ export const TOGGLE_LIKE_REVIEW = gql`
     }
 `;
 
-const Container = styled.article`
+const Container = styled.li`
     ${({ theme })=> theme.box }
     width: 100%;
     padding: 30px;
@@ -53,7 +53,7 @@ const Article = styled(TextRegular)`
 `
 
 
-export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, avatar, lang }) => {
+export default ({ className, id, text, yyyymmdd, createdAt, isLiked, likesCount, author, avatar, lang }) => {
     useQuery(SEE_REVIEW, {variables: {id}});
     const [ isLikedState, setIsLiked ] = useState(isLiked);
     const [ likesCountState, setLikesCount ] = useState(likesCount);
@@ -93,7 +93,7 @@ export default ({ id, text, yyyymmdd, createdAt, isLiked, likesCount, author, av
     }
 
     return (
-        <Container>
+        <Container className={className} >
             <Text>
                 <Date string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
                 <Article string={text} lang={lang} />

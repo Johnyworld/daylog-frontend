@@ -418,5 +418,13 @@
     "timeTable" : {
         "kr" : "시간표",
         "en" : "Time table"
+    },
+    "feedTitle" : {
+        "kr" : "피드",
+        "en" : "Feed"
+    },
+    "feedTitleRemark" : {
+        "kr" : "팔로우한 유저들을 응원해주세요!",
+        "en" : "Please support the users you followed!"
     }
 }

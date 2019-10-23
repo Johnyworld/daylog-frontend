@@ -12,6 +12,8 @@ import Words from '../Lang/Words.json';
 import TextSmall from '../Components/TextSmall';
 import LoaderRelative from '../Components/LoaderRelative';
 import { BreakPoint } from '../Styles/Theme';
+import TextLarge from '../Components/TextLarge';
+import TextRegular from '../Components/TextRegular';
 
 export const FEED_POST = gql`
     query seeFeedPost( $limit: Int, $offset: Int ) {
@@ -83,14 +85,17 @@ const Container = styled.main`
     max-height: calc(100vh - 64px);
     overflow: auto;
     padding-top: 1px;
-    >*:not(:last-child) {
-        margin-bottom: 10px;
-    }
-    article {
-        ${({ theme })=> theme.wrapper };
-    }
     @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;
+    }
+`;
+
+const Header = styled.div`
+    ${({ theme })=> theme.wrapper }
+    display: none;
+    @media screen and ( ${BreakPoint} ) {
+        display: block;
+        margin-bottom: 30px;
     }
 `;
 
@@ -125,6 +130,18 @@ const SearchStyled = styled(Search)`
 
 //     return { feed, postsCount, reviewsCount };
 // }
+
+const FeedItems = styled.ul`
+    ${({ theme })=> theme.wrapper };
+`;
+
+const FeedItemStyled = styled(FeedItem)`
+    margin-bottom: 10px;
+`;
+
+const FeedReviewStyled = styled(FeedReview)`
+    margin-bottom: 10px;
+`;
 
 export default () => {
     const { data, loading, fetchMore } = useQuery(FEED_POST);
@@ -206,6 +223,10 @@ export default () => {
 
         return <>
             <Container onScroll={handleScroll}>
+                <Header>
+                    <TextLarge text={Words.feedTitle} lang={lang} />
+                    <TextRegular text={Words.feedTitleRemark} lang={lang} />
+                </Header>
                 {
                     !Feed[0]
                     ?
@@ -214,11 +235,11 @@ export default () => {
                             <SearchStyled />
                         </>
                     :
-                        <>
+                        <FeedItems>
                             { Feed.map(post => (
                                 post.blocks // 리뷰인지 포스트인지 체트
                                 ?
-                                    <FeedItem
+                                    <FeedItemStyled
                                         id={post.id}
                                         key={post.id}
                                         doing={post.doing.name}
@@ -239,7 +260,7 @@ export default () => {
                                         lang={lang}
                                     />
                                 :
-                                    <FeedReview
+                                    <FeedReviewStyled
                                         id={post.id}
                                         key={post.id}
                                         text={post.text}
@@ -253,7 +274,7 @@ export default () => {
                                     />
                             ))}
                             {!loadedPost ? <LoaderRelative /> : null}
-                        </>
+                        </FeedItems>
                 }
             </Container>
         </>
