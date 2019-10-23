@@ -43,6 +43,10 @@
         "kr" : "로그인",
         "en" : "Login"
     },
+    "logOut" : {
+        "kr" : "로그아웃",
+        "en" : "Log out"
+    },
     "signUp" : {
         "kr" : "가입하기",
         "en" : "Signup"

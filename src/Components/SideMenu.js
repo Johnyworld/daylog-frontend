@@ -7,6 +7,15 @@ import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
 import Theme, { BreakPoint } from '../Styles/Theme';
 import Avatar from './Avatar';
+import { gql } from 'apollo-boost';
+import { useMutation } from 'react-apollo-hooks';
+import SmallButton from './SmallButton';
+
+const LOCAL_LOG_OUT = gql`
+    mutation logUserOut {
+        logUserOut @client
+    }
+`;
 
 const Container = styled.aside`
     ${({ theme })=> theme.popupContainer }
@@ -71,6 +80,12 @@ const LinkStyled = styled(Link)`
 `;
 
 export default ({ closePopup, username, avatar, lang }) => {
+    const [ localLogOutMutation ] = useMutation( LOCAL_LOG_OUT );
+
+    const localLogOut = () => {
+        localLogOutMutation();
+        closePopup();
+    }
 
     return (
         <Container className="fadeIn">
@@ -98,6 +113,7 @@ export default ({ closePopup, username, avatar, lang }) => {
                     <LinkStyled to={`/doing`} onClick={closePopup} >
                         <TextRegular text={Words.editDoing} weight="bold" lang={lang} color={Theme.c_blueDarker2} />
                     </LinkStyled>
+                    <SmallButton onClick={localLogOut} text={Words.logOut} lang={lang} color={Theme.c_red} />
                 </Menu>
             </Box>
         </Container>
