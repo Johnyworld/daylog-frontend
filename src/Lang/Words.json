@@ -83,6 +83,10 @@
         "kr" : "색상",
         "en" : "Color"
     },
+    "author" : {
+        "kr" : "작성자: ",
+        "en" : "Author: "
+    },
     "tutorial00" : {
         "kr" : "오늘 얼마나\n시간을 낭비했나요?",
         "en" : "How many time\ndid you waste today?"

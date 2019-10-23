@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TextRegular from './TextRegular';
 import Score from './Score';
-import SmallButton from './SmallButton';
 import Words from '../Lang/Words.json';
 import SetScore from './SetScore';
 import Icon from './Icon';

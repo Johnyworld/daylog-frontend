@@ -68,6 +68,7 @@ const CategoryList = ({ term, category, list, lang, onSelectDoing, setAdding }) 
                                 color={doing.color}
                                 author={doing.author}
                                 onSelectDoing={onSelectDoing}
+                                isAdding={true}
                                 lang={lang}
                             />
                         ))}

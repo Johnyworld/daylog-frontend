@@ -6,6 +6,8 @@ import IconButton from './IconButton';
 import IconImage from './IconImage';
 import EditDoing from './EditDoing';
 import Button from './Button';
+import Username from './Username';
+import TextSmall from './TextSmall';
 
 const Container = styled.li`
     position: relative;
@@ -19,6 +21,11 @@ const Container = styled.li`
 const Column = styled.div`
     display: flex;
     align-items: center;
+`;
+
+const Author = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const Color = styled.div`
@@ -42,7 +49,7 @@ const IconContainer = styled.div`
 `;
 
 const DoingItem = ({ 
-    id, name, category, color, icon, author, me, lang, 
+    id, name, category, color, icon, author, me, lang, isAdding,
     onSelectDoing, editDoingMutation, removePinMutation
 }) => {
     const [ editDoing, setEditDoing ] = useState(false);
@@ -63,13 +70,21 @@ const DoingItem = ({
         <Container>
             <Column>
                 <Color color={color} />
-                <TextMedium string={name} lang={lang} />
+                <Author>
+                    <TextMedium string={name} lang={lang} />
+                    { isAdding &&
+                        <div>
+                            <TextSmall text={Words.author} lang={lang} />
+                            <Username username={author.username} inline="true" size="small" />
+                        </div>
+                    }
+                </Author>
             </Column>
             <Column>
                 <IconContainer>
                     <IconImage url={icon} size="medium" />
                 </IconContainer>
-                { ! onSelectDoing 
+                { ! isAdding 
                     ? <IconButton icon="pencel" size="medium" onClick={editDoingPopup} />
                     : <Button text={Words.select} lang={lang} className="narrow" onClick={selectingDoing} />
                 }
