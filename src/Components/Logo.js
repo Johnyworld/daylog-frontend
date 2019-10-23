@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    .logotype {
-        @media screen and ( max-width: 1200px ) {
-            display: none;
+    ${({ responsive })=> responsive && `
+        .logotype {
+            @media screen and ( max-width: 1200px ) {
+                display: none;
+            }
         }
-    }
+    `};
 `;
 
 const getSize = (size) => {
@@ -27,12 +29,12 @@ const getColor = (color) => {
     }
 }
 
-export default ({ className, size, color }) => {
+export default ({ className, size, color, responsive }) => {
     const sizeNum = getSize( size );
     const colors = getColor( color );
         
     return (
-        <Container className={className}>
+        <Container className={className} responsive={responsive} >
             <svg xmlns="http://www.w3.org/2000/svg" 
                 width={ sizeNum.width }
                 height={ sizeNum.height }

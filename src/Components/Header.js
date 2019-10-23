@@ -156,7 +156,7 @@ export default withRouter(({ history }) => {
                 <Container>
                     <LogoContainer>
                         <Link to='/'>
-                            <LogoStyled size="small" color="positive" />
+                            <LogoStyled size="small" color="positive" responsive="true" />
                         </Link>
                         <Slogan text={Words.tutorial00} lang={lang} color={Theme.c_gray} weight="bold" />
                     </LogoContainer>
