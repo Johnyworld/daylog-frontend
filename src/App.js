@@ -14,6 +14,16 @@ const QUERY = gql`
 
 export default () => {
   const { data: { isLoggedIn }} = useQuery(QUERY);
+
+  let lastTouchEnd = 0;
+  
+  document.documentElement.addEventListener('touchend', function (event) {
+      var now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+      }
+      lastTouchEnd = now;
+  }, false);
   
   return (
       <ThemeProvider theme={Theme}>
