@@ -35,7 +35,7 @@ const DoingGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 8px;
-    padding-top: 10px;
+    padding-top: 15px;
     button {
         margin-right: 0;
     }
@@ -59,7 +59,7 @@ const DoneButton = styled(LargeButton)`
 
 export default ({ 
     pins, recent, closePopup, next, lang, recentDoingId, nextDoingId,
-    stillMutation, pullMutation, onClickUpload }) => {
+    onClickPull, onClickStill, onClickUpload }) => {
         
     const [ selectedDoing, setSelectedDoing ] = useState(null);
     const [ isStill, setIsStill ] = useState(false);
@@ -67,9 +67,9 @@ export default ({
     
     const location = useInput('');
 
-    const onClickButton = ({id}, e) => {
+    const onClickButton = ({id, name, color, icon}, e) => {
         const childNodes = e.currentTarget.parentNode.childNodes;
-        setSelectedDoing(id);
+        setSelectedDoing({id, name, color, icon});
         
         // Set classname for style
         childNodes.forEach( node => {
@@ -95,22 +95,21 @@ export default ({
     }
 
     const onClickSubmit = () => {
-        if ( recent && recent.doing.id === selectedDoing && isStill ) {
-            stillMutation({ variables: { 
-                location: location.value 
-            }});
+        if ( recent && recent.doing.id === selectedDoing.id && isStill ) {
+            onClickStill({ location: location.value });
             closePopup();
 
-        } else if ( next && next.doing.id === selectedDoing && isPull ) {
-            pullMutation({ variables: { 
-                location: location.value 
-            }});
+        } else if ( next && next.doing.id === selectedDoing.id && isPull ) {
+            onClickPull({ location: location.value });
             closePopup();
 
         } else {
             onClickUpload({
-                id: selectedDoing,
-                location: location.value
+                id: selectedDoing.id,
+                location: location.value,
+                name: selectedDoing.name,
+                icon: selectedDoing.icon,
+                color: selectedDoing.color
             });
             closePopup();
         }

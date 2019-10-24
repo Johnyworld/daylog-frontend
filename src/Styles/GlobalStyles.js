@@ -36,7 +36,7 @@ export default createGlobalStyle`
         outline: none;
     }
 
-    input, select {
+    input, select, textarea {
         appearance:none;
         -webkit-appearance:none;
         -moz-appearance:none;

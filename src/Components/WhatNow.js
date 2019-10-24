@@ -102,20 +102,24 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
         setNowPopup(false);
     }
 
-    const onClickStill = () => {
-        stillMutation();
+    const onClickStill = ({ location }) => {
+        const loc = location ? location : ""
+        stillMutation({ variables: { location: loc }});
         updateTodayPosts({ 
             id: recent && recent.id, 
             endAt: stillEndAt,
+            location: loc,
         });
     }
 
-    const onClickPull = () => {
-        pullMutation();
+    const onClickPull = ({ location }) => {
+        const loc = location ? location : ""
+        pullMutation({ variables: { location: loc }});
         updateTodayPosts({ 
             id: next && next.id,
             startAt: pullResults && pullResults.startAt,
             endAt: pullResults && pullResults.endAt,
+            location: loc,
             type: pullResults && pullResults.type
         });
     }
@@ -219,6 +223,8 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                     nextDoingId={nextDoingId}
                     stillMutation={stillMutation}
                     pullMutation={pullMutation}
+                    onClickPull={onClickPull}
+                    onClickStill={onClickStill}
                     onClickUpload={onClickUpload}
                 /> 
             }
