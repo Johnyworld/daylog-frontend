@@ -4,7 +4,7 @@ import { BreakPoint } from '../Styles/Theme';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_MY_DOINGS } from '../Routes/EditDoings';
-import { TODAY_QUERY } from './TodayQueries';
+import { TODAY_QUERY } from '../Routes/Today';
 import TextLarge from './TextLarge';
 import TextRegular from './TextRegular';
 import IconButton from './IconButton';

@@ -9,7 +9,7 @@ import NewComment from '../Components/NewComment';
 import useInput from '../Hooks/useInput';
 import TextRegular from '../Components/TextRegular';
 import { BreakPoint } from '../Styles/Theme';
-import { ME } from '../Components/TodayQueries';
+import { ME } from './Today';
 import Comments from '../Components/Comments.js';
 import PostInfo from '../Components/PostInfo.js';
 

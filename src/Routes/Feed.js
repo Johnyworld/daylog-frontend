@@ -6,7 +6,7 @@ import Loader from '../Components/Loader';
 import FeedItem from '../Components/FeedItem';
 import { getLang } from '../Util/Languages';
 import FeedReview from '../Components/FeedReview';
-import { ME } from '../Components/TodayQueries';
+import { ME } from './Today';
 import Search from './Search';
 import Words from '../Lang/Words.json';
 import TextSmall from '../Components/TextSmall';

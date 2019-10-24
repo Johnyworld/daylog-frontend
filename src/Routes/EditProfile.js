@@ -7,7 +7,7 @@ import { getLang, langList, languages } from '../Util/Languages';
 import Input from '../Components/Input';
 import useInput from '../Hooks/useInput';
 import { useMutation } from 'react-apollo-hooks';
-import { ME } from '../Components/TodayQueries';
+import { ME } from './Today';
 import Theme, { BreakPoint } from '../Styles/Theme';
 import Select from '../Components/Select';
 import TextareaAutosize from 'react-autosize-textarea/lib';

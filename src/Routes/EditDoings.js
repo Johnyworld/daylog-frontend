@@ -1,5 +1,5 @@
 import React from 'react';
-import { ME } from '../Components/TodayQueries';
+import { ME } from '../Routes/Today';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';

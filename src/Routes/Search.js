@@ -4,7 +4,7 @@ import useInput from '../Hooks/useInput';
 import Input from '../Components/Input';
 import { getLang } from '../Util/Languages';
 import Words from '../Lang/Words.json';
-import { ME } from '../Components/TodayQueries';
+import { ME } from './Today';
 import Loader from '../Components/Loader';
 import { useQuery } from 'react-apollo-hooks';
 import UserList from '../Components/UserList';

@@ -8,7 +8,7 @@ import { gql } from 'apollo-boost';
 import Theme, { BreakPoint } from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
-import { TODAY_QUERY } from './TodayQueries';
+import { TODAY_QUERY } from '../Routes/Today';
 import { getStillEndAt, getPullResults } from '../Util/Util';
 import IconButton from './IconButton';
 import { getToday, getYesterday } from '../Util/Convertors';

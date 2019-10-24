@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import TimeBlock from './TimeBlock';
-import { TODAY_QUERY } from './TodayQueries';
+import { TODAY_QUERY } from '../Routes/Today';
 import { EDIT_POST } from './SetScore';
 import { useMutation } from 'react-apollo-hooks';
 import { getCutTopStartAt, getCutTopEndAt, getCutTopType, getCutBottomEndAt } from '../Util/Util';

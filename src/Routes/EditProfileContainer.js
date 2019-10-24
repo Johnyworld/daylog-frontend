@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from '../Components/Loader';
 import EditProfile from './EditProfile';
 import { useQuery } from 'react-apollo-hooks';
-import { ME } from '../Components/TodayQueries';
+import { ME } from './Today';
 
 export default () => {
     const { data, loading } = useQuery(ME);

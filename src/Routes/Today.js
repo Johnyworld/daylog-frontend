@@ -1,8 +1,56 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
-import { TODAY_QUERY, ME } from '../Components/TodayQueries';
 import TodayPresenter from '../Components/TodayPresenter';
+import { gql } from 'apollo-boost';
+
+export const ME = gql`
+    {
+        me {
+            id
+            username
+            avatar
+            fullname
+            email
+            bio
+            lang
+            followersCount
+            followingCount
+            likesTotal
+            pins {
+                doing {
+                    id
+                    name
+                    color
+                    icon
+                }
+            }
+        }
+    }
+`;
+
+export const TODAY_QUERY = gql`
+{
+   seeTodayPosts {
+        id
+        doing {
+            id
+            name
+            icon
+            color
+        }
+        location
+        likesCount
+        commentsCount
+        isLiked
+        blocks
+        score
+        startAt
+        endAt
+        yyyymmdd
+    }
+} 
+`;
 
 export default () => {
     const { data, loading } = useQuery( TODAY_QUERY );

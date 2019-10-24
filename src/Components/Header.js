@@ -6,7 +6,7 @@ import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
 import { getLang } from '../Util/Languages';
 import SideMenu from './SideMenu';
-import { ME } from './TodayQueries';
+import { ME } from '../Routes/Today';
 import { useQuery } from 'react-apollo-hooks';
 import IconButton from './IconButton';
 import TextSmall from './TextSmall';

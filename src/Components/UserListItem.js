@@ -11,7 +11,7 @@ import { useMutation } from 'react-apollo-hooks';
 import { FEED_POST } from '../Routes/Feed';
 import { SEE_FOLLOWERS } from './Followers';
 import { SEE_FOLLOWING } from './Following';
-import { ME } from './TodayQueries';
+import { ME } from '../Routes/Today';
 import { getLangArray } from '../Util/Languages';
 
 const Container = styled.li`
