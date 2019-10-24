@@ -5,7 +5,7 @@ import Words from '../Lang/Words.json';
 import DoingButton from './DoingButton';
 import NowPopup from './NowPopup';
 import { gql } from 'apollo-boost';
-import Theme from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
 import { TODAY_QUERY } from './TodayQueries';
@@ -22,13 +22,21 @@ export const UPLOAD = gql`
 `;
 
 const Container = styled.div`
-    background-color: white;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
     transition: .5s;
+    background-color: white;
     border-top: 1px solid ${({ theme })=> theme.c_lightGray };
     ${({ theme })=> theme.wrapper };
     padding: 20px;
+    transform: translateY(-100%);
+    @media screen and ( ${BreakPoint} ) {
+        transform: translateY(-110%);
+    }
     &.disabled {
-        transform: translateY(110%);
+        transform: translateY(0);
     }
 `;
 
@@ -147,56 +155,58 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     const nextDoingId = next ? next.doing.id : "";
 
     return (
-        <Container className={className} >
-            <Header>
-                <TextLarge text={Words.quickAdd} lang={lang} />
-                <IconButton onClick={onClickNowPopup} icon="gridMenu" size="medium" />
-            </Header>
-            <ScrollContainer>
-                <DoingButtons width={width}>
-                    { recent && recent.doing &&
-                        <DoingButton
-                            key={recent.doing.id}
-                            id={recent.doing.id}
-                            name={recent.doing.name}
-                            icon={recent.doing.icon}
-                            color={recent.doing.color}
-                            lang={lang}
-                            isCreating={recent.isCreating}
-                            onClick={onClickStill}
-                            className="recent"
-                        /> 
-                    } 
-                    { next && next.doing &&
-                        <DoingButton
-                            key={next.doing.id}
-                            id={next.doing.id}
-                            name={next.doing.name}
-                            icon={next.doing.icon}
-                            color={next.doing.color}
-                            lang={lang}
-                            isCreating={next.isCreating}
-                            onClick={onClickPull}
-                            className="next"
-                        /> 
-                    }
-                    { pins[0] && pins.map( pin => {
-                        const { doing } = pin;
-                        return (
-                            doing.id !== recentDoingId && doing.id !== nextDoingId &&
+        <>
+            <Container className={className} >
+                <Header>
+                    <TextLarge text={Words.quickAdd} lang={lang} />
+                    <IconButton onClick={onClickNowPopup} icon="gridMenu" size="medium" />
+                </Header>
+                <ScrollContainer>
+                    <DoingButtons width={width}>
+                        { recent && recent.doing &&
                             <DoingButton
-                                key={doing.id}
-                                id={doing.id}
-                                name={doing.name}
-                                icon={doing.icon}
-                                color={doing.color}
+                                key={recent.doing.id}
+                                id={recent.doing.id}
+                                name={recent.doing.name}
+                                icon={recent.doing.icon}
+                                color={recent.doing.color}
                                 lang={lang}
-                                onClick={onClickUpload}
-                            />
-                        )
-                    })}
-                </DoingButtons>
-            </ScrollContainer>
+                                isCreating={recent.isCreating}
+                                onClick={onClickStill}
+                                className="recent"
+                            /> 
+                        } 
+                        { next && next.doing &&
+                            <DoingButton
+                                key={next.doing.id}
+                                id={next.doing.id}
+                                name={next.doing.name}
+                                icon={next.doing.icon}
+                                color={next.doing.color}
+                                lang={lang}
+                                isCreating={next.isCreating}
+                                onClick={onClickPull}
+                                className="next"
+                            /> 
+                        }
+                        { pins[0] && pins.map( pin => {
+                            const { doing } = pin;
+                            return (
+                                doing.id !== recentDoingId && doing.id !== nextDoingId &&
+                                <DoingButton
+                                    key={doing.id}
+                                    id={doing.id}
+                                    name={doing.name}
+                                    icon={doing.icon}
+                                    color={doing.color}
+                                    lang={lang}
+                                    onClick={onClickUpload}
+                                />
+                            )
+                        })}
+                    </DoingButtons>
+                </ScrollContainer>
+            </Container>
             { nowPopup && 
                 <NowPopup 
                     pins={pins}
@@ -210,7 +220,8 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                     stillMutation={stillMutation}
                     pullMutation={pullMutation}
                     onClickUpload={onClickUpload}
-                /> }
-        </Container>
+                /> 
+            }
+        </>
     )
 }
