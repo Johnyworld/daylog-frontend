@@ -186,6 +186,13 @@ export default ({ data, meData, focused, setFocused }) => {
                 target.startAt = startAt;
                 target.endAt = endAt;
                 target.blocks = target.endAt - startAt;
+
+            } else if ( type === "pullToYesterday" ) {
+                target.yyyymmdd = getYesterday();
+                target.startAt = startAt;
+                target.endAt = endAt;
+                target.blocks = target.endAt - startAt; 
+
             } else {
                 if (startAt) { 
                     target.startAt = startAt;

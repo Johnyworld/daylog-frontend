@@ -9,7 +9,7 @@ import Theme from '../Styles/Theme';
 import { useMutation } from 'react-apollo-hooks';
 import { EDIT_POST } from './SetScore';
 import { TODAY_QUERY } from './TodayQueries';
-import { getStillEndAt, getPullStartAt } from '../Util/Util';
+import { getStillEndAt, getPullResults } from '../Util/Util';
 import IconButton from './IconButton';
 import { getToday, getYesterday } from '../Util/Convertors';
 
@@ -57,7 +57,7 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
 
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
-    const pullStartAt = getPullStartAt( focusedBlock, next );
+    const pullResults = getPullResults( focusedBlock, next );
 
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
@@ -79,8 +79,9 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     const [ pullMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: next && next.id,
-            startAt: pullStartAt,
-            type: "startAt" 
+            startAt: pullResults && pullResults.startAt,
+            endAt: pullResults && pullResults.endAt,
+            type: pullResults && pullResults.type 
         },
         refetchQueries: [{ query: TODAY_QUERY }]
     });
@@ -105,8 +106,9 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
         pullMutation();
         updateTodayPosts({ 
             id: next && next.id,
-            startAt: pullStartAt,
-            type: "pull"
+            startAt: pullResults && pullResults.startAt,
+            endAt: pullResults && pullResults.endAt,
+            type: pullResults && pullResults.type
         });
     }
 
