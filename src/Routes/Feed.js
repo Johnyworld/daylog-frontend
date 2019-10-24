@@ -16,45 +16,60 @@ import TextLarge from '../Components/TextLarge';
 import TextRegular from '../Components/TextRegular';
 
 export const FEED_POST = gql`
-    query seeFeedPost( $limit: Int, $offset: Int ) {
-        seeFeedPost( limit: $limit, offset: $offset ) {
-            id
-            doing {
-                id
-                name
-                color
-                category {
-                    id
-                    lang {
-                        id
-                        kr
-                        en
-                    }
-                }
-            }
-            user {
-                id
-                username
-                avatar
-            }
-            isLiked
-            location
-            likesCount
-            commentsCount
-            startAt
-            endAt
-            score
-            createdAt
-            updatedAt
-            blocks
-            comments {
+    query seeFeed( $limit: Int, $offset: Int ) {
+        seeFeed( limit: $limit, offset: $offset ) {
+            reviews {
                 id
                 text
+                yyyymmdd
                 createdAt
+                isLiked
+                likesCount
                 user {
                     id
                     username
                     avatar
+                }
+            }
+            posts {
+                id
+                doing {
+                    id
+                    name
+                    color
+                    category {
+                        id
+                        lang {
+                            id
+                            kr
+                            en
+                        }
+                    }
+                }
+                user {
+                    id
+                    username
+                    avatar
+                }
+                isLiked
+                location
+                likesCount
+                commentsCount
+                startAt
+                endAt
+                score
+                createdAt
+                updatedAt
+                blocks
+                comments {
+                    id
+                    text
+                    createdAt
+                    user {
+                        id
+                        username
+                        avatar
+                    }
                 }
             }
         }
@@ -83,6 +98,9 @@ const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-top: 1px;
+    max-height: 100vh;
+    overflow: scroll;
+    ${({ theme })=> theme.scrollMobile };
     @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;
     }
@@ -110,27 +128,9 @@ const SearchStyled = styled(Search)`
     }
 `
 
-// const getFeed = ( posts, reviews, offset, limit ) => {
-//     let postsCount = 0;
-//     let reviewsCount = 0;
-
-//     const feed = [ ...posts, ...reviews ]
-//         .sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 )
-//         .slice( 0, offset + limit )
-
-//     for ( var i in feed ) {
-//         if ( i < offset + limit ) {
-//             feed[i].blocks ? postsCount += 1 : reviewsCount +=1;
-//         } else {
-//             break;
-//         }
-//     }
-
-//     return { feed, postsCount, reviewsCount };
-// }
-
 const FeedItems = styled.ul`
     ${({ theme })=> theme.wrapper };
+    li:last-child { margin-bottom: 0; }
 `;
 
 const FeedItemStyled = styled(FeedItem)`
@@ -141,79 +141,57 @@ const FeedReviewStyled = styled(FeedReview)`
     margin-bottom: 10px;
 `;
 
+const getFeed = ( posts, reviews ) => {
+    return [ ...posts, ...reviews ]
+        .sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 )
+}
+
 export default () => {
     const { data, loading, fetchMore } = useQuery(FEED_POST);
-    // const { data: dataReviews, loading: loadingReviews, fetchMore: fetchMoreReviews } = useQuery(FEED_REVIEW);
     const { data: meData, loading: meLoading } = useQuery(ME);
-    const [ loadedPost, setLoadedPost ] = useState(false);
-    // const [ loadedReview, setLoadedReview ] = useState(false);
+    const [ isFetching, setIsFetching ] = useState(false);
+    const [ fetchingDone, setFetchingDone ] = useState(false);
 
     useEffect(()=>{
         window.scrollTo(0, 0);
     }, []);
-    
-    if ( !loading && data && data.seeFeedPost ) {
+
+    if ( !loading && data && data.seeFeed && meData && meData.me ) {
         const lang = getLang( meData && meData.me && !meLoading && meData.me.lang );
-        // const Feed = getFeed( data.seeFeedPost, dataReviews.seeFeedReview, prevData.offset, limit );
-        // const Feed = [ ...data.seeFeedPost, ...dataReviews.seeFeedReview ]
-        //     .sort((a, b) => a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0 )
-        const Feed = data.seeFeedPost;
-
-        let fetching = false
-
-        // console.log("피드: ", Feed);
-        // console.log("피드 길이: ", Feed.length, "전체 길이: ", data.seeFeedPost.length + dataReviews.seeFeedReview.length)
-        // console.log("포스트 길이: ", data.seeFeedPost.length, "리뷰 길이: ", dataReviews.seeFeedReview.length)
-        // console.log("로디드 포스트: ", loadedPost);
-        // console.log("로디드 리뷰: ", loadedReview);
+        const Feed = getFeed( data.seeFeed.posts, data.seeFeed.reviews );
         
         const onLoadMore = () => {
-            if ( !fetching ) {
+            if ( !isFetching ) {
                 console.log("fetching more...");
-                fetching = true;
+                setIsFetching(true);
+                fetchMore ({
+                    variables: {
+                        offset: data.seeFeed.posts.length + data.seeFeed.reviews.length
+                    },
+                    updateQuery: (prev, { fetchMoreResult }) => {
+                        const prevLastPost = prev.seeFeed.posts[prev.seeFeed.posts.length-1];
+                        const resultLastPost = fetchMoreResult.seeFeed.posts[fetchMoreResult.seeFeed.posts.length-1];
+                        const prevLastReview = prev.seeFeed.reviews[prev.seeFeed.reviews.length-1];
+                        const resultLastReview = fetchMoreResult.seeFeed.reviews[fetchMoreResult.seeFeed.reviews.length-1];
 
-                if ( !loadedPost ) {
-                    fetchMore ({
-                        variables: {
-                            offset: data.seeFeedPost.length
-                        },
-                        updateQuery: (prev, { fetchMoreResult }) => {
-                            if (!fetchMoreResult.seeFeedPost[0] ) {
-                                setLoadedPost(true);
-                                console.log("POST DONE")
-                                return prev;
-                            }
-                            return Object.assign({}, prev, {
-                                seeFeedPost : [ ...prev.seeFeedPost, ...fetchMoreResult.seeFeedPost ]
-                            });
+                        if ( prevLastPost.id === resultLastPost.id && prevLastReview.id === resultLastReview.id ) {
+                            setIsFetching(true);
+                            setFetchingDone(true);
+                            console.log("Fetching DONE");
+                            return prev;
+                        } else {
+                            setIsFetching(false);
+                            return Object.assign({}, prev, fetchMoreResult);
                         }
-                    });
-                }
-
-                // if ( !loadedReview ) {
-                //     await fetchMoreReviews ({
-                //         variables: {
-                //             offset: dataReviews.seeFeedReview.length
-                //         },
-                //         updateQuery: (prev, { fetchMoreResult }) => {
-                //             if (!fetchMoreResult.seeFeedReview[0] ) {
-                //                 setLoadedReview(true);
-                //                 console.log("REV DONE")
-                //                 return prev;
-                //             }
-                //             return Object.assign({}, prev, {
-                //                 seeFeedReview : [ ...prev.seeFeedReview, ...fetchMoreResult.seeFeedReview ]
-                //             });
-                //         }
-                //     });
-                // }
+                    }
+                });
             }
         }
     
         const handleScroll = ({ currentTarget }) => {
             const scrollBottom = currentTarget.scrollTop + currentTarget.clientHeight >= currentTarget.scrollHeight;
             if ( scrollBottom ) {
-                if ( !loadedPost ) {
+                if ( !fetchingDone ) {
                     onLoadMore();
                 }
             }
@@ -271,7 +249,7 @@ export default () => {
                                         lang={lang}
                                     />
                             ))}
-                            {!loadedPost ? <LoaderRelative /> : null}
+                            {!fetchingDone && isFetching ? <LoaderRelative /> : null}
                         </FeedItems>
                 }
             </Container>
