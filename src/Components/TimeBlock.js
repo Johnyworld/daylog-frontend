@@ -146,6 +146,7 @@ const LoaderButtonStyled = styled(LoaderButton)`
 const EditButton = styled(IconButton)`
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 45%;
     height: 90%;
     border: 1px solid ${({ theme })=> theme.c_blueDarker2 };
