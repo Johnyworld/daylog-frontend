@@ -33,7 +33,7 @@ const Container = styled.div`
     padding: 20px;
     transform: translateY(-100%);
     @media screen and ( ${BreakPoint} ) {
-        transform: translateY(-110%);
+        transform: translateY(-105%);
     }
     &.disabled {
         transform: translateY(0);

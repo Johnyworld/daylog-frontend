@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getLang } from '../Util/Languages';
 import { getToday, getYesterday, getNowBlock } from '../Util/Convertors';
-import WhatNow from './WhatNow';
+import QuickAdd from './QuickAdd';
 import { BreakPoint } from '../Styles/Theme';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import TextRegular from './TextRegular';
@@ -15,7 +15,7 @@ const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
 `;
 
-const QuickAdd = styled(WhatNow)`
+const QuickAddStyled = styled(QuickAdd)`
     @media screen and ( ${BreakPoint} ) {
         margin-bottom: 10px;
         border-radius: 10px;
@@ -36,6 +36,7 @@ const Buttons = styled.div`
     justify-content: space-between;
     position: relative;
     height: 64px;
+    border-top: 1px solid white;
     background-color: ${({ theme })=> theme.c_blueDarker1 };
     @media screen and ( ${BreakPoint} ) {
         border-radius: 10px 10px 0 0;
@@ -235,7 +236,7 @@ export default ({ data, meData, focused, setFocused }) => {
                 updateTodayPosts={updateTodayPosts}
             />
             <Bottom>
-                <QuickAdd
+                <QuickAddStyled
                     pins={meData.me.pins}
                     lang={lang}
                     focusedBlock={focusedBlock}
