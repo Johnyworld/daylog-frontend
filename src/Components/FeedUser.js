@@ -47,9 +47,11 @@ const FeedUser = ({ id, author, avatar, location, createdAt, toggleLike, isLiked
                 </UserText>
             </UserInfo>
             <Icons>
-                <button onClick={toggleLike} >
-                    <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
-                </button> 
+                { toggleLike && 
+                    <button onClick={toggleLike} >
+                        <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
+                    </button> 
+                }
                 { !disableComment && (
                     <Link to={`/post/${id}`}>
                         <Icon icon="bubble" size="medium" />

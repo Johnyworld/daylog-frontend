@@ -7,7 +7,7 @@ const Container = styled.ul`
     ${({ theme })=> theme.box };
 `;
 
-export default ({ comments, me, lang }) => {
+export default ({ comments, newComments, me, lang, editCommentMutation }) => {
     return (
         <Container>
             { comments.map(comment => (
@@ -19,8 +19,25 @@ export default ({ comments, me, lang }) => {
                     author={comment.user.username}
                     avatar={comment.user.avatar}
                     createdAt={comment.createdAt}
+                    isCreating={comment.isCreating}
                     lang={lang}
                     username={me.username}
+                    editCommentMutation={editCommentMutation}
+                />
+            ))}
+            { newComments.map(comment => (
+                <Comment
+                    key={comment.id}
+                    id={comment.id}
+                    postId={comment.post.id}
+                    text={comment.text}
+                    author={comment.user.username}
+                    avatar={comment.user.avatar}
+                    createdAt={comment.createdAt}
+                    isCreating={comment.isCreating}
+                    lang={lang}
+                    username={me.username}
+                    editCommentMutation={editCommentMutation}
                 />
             ))}
         </Container>

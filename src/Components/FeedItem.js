@@ -1,15 +1,10 @@
 import React, { useState }from 'react';
 import styled from 'styled-components';
-import Words from '../Lang/Words.json';
-import TextSmall from './TextSmall.js';
-import TextLarge from './TextLarge.js';
-import Theme from '../Styles/Theme.js';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 import { SEE_POST } from '../Routes/Post.js';
-import { blockToTimeFor, blockToTimeStart, scoreZero } from '../Util/Convertors.js';
-import FeedUser from './FeedUser.js';
 import FeedItemComments from './FeedItemComments';
+import PostInfo from './PostInfo.js';
 
 export const TOGGLE_LIKE = gql`
     mutation toggleLike( $postId: String! ) {
@@ -21,36 +16,6 @@ const Container = styled.li`
     width: 100%;
     padding: 30px;
     ${({ theme })=> theme.box };
-`;
-
-const Info = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3px;
-`;
-
-const Heading = styled.div`
-    margin-bottom: 20px;
-`;
-
-const DoingName = styled(TextLarge)`
-    position: relative;
-    display: inline-block;
-
-    &::after {
-        content: ${({ score })=> score && `"(${score})"` };
-        position: absolute;
-        right: -5px;
-        top: 0;
-        opacity: .5;
-        transform: translateX(100%);
-        ${({ theme })=> theme.f_regular }
-    }
-`;
-
-const Likes = styled(TextSmall)`
-    display: block;
-    margin-top: 3px;
 `;
 
 export default ({
@@ -110,20 +75,15 @@ export default ({
     return (
         (
         <Container className={className}>
-            <Info>
-                <p>
-                    <TextSmall string={blockToTimeStart(startAt)} />
-                    <TextSmall string={blockToTimeFor(blocks, lang, "isFor")} lang={lang} />
-                </p>
-                <TextSmall text={category} lang={lang} />
-            </Info>
-            <Heading>
-                <DoingName string={doing} lang={lang} color={color} score={ score && scoreZero(score.toString()) } />
-                { likesCountState !== 0 &&
-                    <Likes string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
-                }
-            </Heading>
-            <FeedUser
+            <PostInfo 
+                doing={doing}
+                color={color}
+                score={score}
+                category={category}
+                startAt={startAt}
+                blocks={blocks}
+                lang={lang}
+                likesCountState={likesCountState}
                 id={id}
                 author={author}
                 avatar={avatar}
@@ -131,8 +91,7 @@ export default ({
                 createdAt={createdAt}
                 toggleLike={toggleLike}
                 isLikedState={isLikedState}
-                lang={lang}
-            />
+            /> 
             { comments[0] && 
                 <FeedItemComments
                     id={id}

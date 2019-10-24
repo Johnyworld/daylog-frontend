@@ -8,13 +8,10 @@ import Loader from '../Components/Loader';
 import NewComment from '../Components/NewComment';
 import useInput from '../Hooks/useInput';
 import TextRegular from '../Components/TextRegular';
-import TextLarge from '../Components/TextLarge';
-import TextSmall from '../Components/TextSmall';
-import { blockToTimeFor } from '../Util/Convertors';
-import Theme, { BreakPoint } from '../Styles/Theme';
+import { BreakPoint } from '../Styles/Theme';
 import { ME } from '../Components/TodayQueries';
 import Comments from '../Components/Comments.js';
-import Username from '../Components/Username.js';
+import PostInfo from '../Components/PostInfo.js';
 
 const ADD_COMMENT = gql`
     mutation addComment( $postId: String!, $text: String! ) {
@@ -27,6 +24,12 @@ const ADD_COMMENT = gql`
                 avatar
             }
         }
+    }
+`;
+
+const EDIT_COMMENT = gql`
+    mutation editComment( $id:String!, $text:String, $action:String! ) {
+        editComment( id: $id, text: $text, action: $action )
     }
 `;
 
@@ -78,19 +81,22 @@ const Container = styled.main`
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-bottom: 70px;
     min-height: calc(100vh - 70px);
+    padding-top: 1px;
     @media screen and ( ${BreakPoint} ) {
         padding-top: 100px;
         min-height: 100vh; 
     }
 `;
 
-const Wrapper = styled.div`
-    ${({ theme })=> theme.wrapper }
+const PostInfoStyled = styled(PostInfo)`
+    width: 100%;
+    padding: 30px;
+    margin-bottom: 10px;
+    ${({ theme })=> theme.box };
 `;
 
-const Heading = styled.div`
-    ${({ theme })=> theme.wrap };
-    padding: 20px;
+const Wrapper = styled.div`
+    ${({ theme })=> theme.wrapper }
 `;
 
 const NoCommentMessage = styled.p`
@@ -102,32 +108,70 @@ export default () => {
     const id = window.location.hash.split("/")[2];
     const newComment = useInput('');
     
+    const [ newComments, setNewComments ] = useState([]);
+    const [ newId, setNewId ] = useState(false);
+    const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
+    const [ creating, setCreating ] = useState(false);
+    
     const { data, loading } = useQuery(SEE_POST, { variables: { id }});
     const { data: meData, loading: meLoading } = useQuery(ME);
-    
-    const [ selfComments, setSelfComments ] = useState('');
-    const [ addCommentMutation ] = useMutation( 
-        ADD_COMMENT, { 
-            variables: { postId: id, text: newComment.value },
-            refetchQueries: [{ query: SEE_POST, variables: { id }}]
-        }
-    );
         
     const lang = getLang( !meLoading && meData && meData.me && meData.me.lang );
     const failToSend = languages(Words.failToSend, lang);
+
+    const [ addCommentMutation ] = useMutation( ADD_COMMENT, { 
+        variables: { postId: id, text: newComment.value }
+    });
+
+    const [ editCommentMutation ] = useMutation(EDIT_COMMENT);
 
     const onKeyPress = async e => {
         const { which } = e;
         if ( which === 13 ) {
             e.preventDefault();
             try {
-                const { data: { addComment }} = await addCommentMutation();
-                setSelfComments([...selfComments, addComment]);
+                const newOne = {
+                    id: randomId,
+                    text: newComment.value,
+                    createdAt: new Date().toISOString(),
+                    post: { id },
+                    isCreating: true,
+                    user: {
+                        id: meData && meData.me && meData.me.username, 
+                        username: meData && meData.me && meData.me.username,
+                        avatar: meData && meData.me && meData.me.avatar,
+                    }
+                }
+                setNewComments([ ...newComments, newOne ]);
+
                 newComment.setValue("");
+                setCreating(true);
+
+                await addCommentMutation({ 
+                    update: (_, { data: { addComment }}) => {
+                        setNewId(addComment.id);
+                    }
+                });
+
             } catch {
                 alert(failToSend);
             }
         }
+    }
+
+    const updateCommentId = (randomId, newId) => {
+        const array = newComments.slice();
+        const target = array.find( comment => comment.id === randomId );
+        target.id = newId;
+        target.isCreating = false;
+        setNewComments(array);
+    }
+
+    if ( newId ) {
+        updateCommentId(randomId, newId);
+        setRandomId( Math.floor(Math.random()*10000).toString() );
+        setNewId(false);
+        setCreating(false);
     }
 
     return <>
@@ -135,16 +179,33 @@ export default () => {
         { !loading && data && data.seePost && (
             <Container>
                 <Wrapper>
-                    <Heading>
-                        <TextSmall string={blockToTimeFor(data.seePost.blocks, lang, "isFor")} />
-                        <TextLarge string={data.seePost.doing.name} lang={lang} color={Theme.c_blueDarker2}/>
-                        <Username username={data.seePost.user.username} inline="true" />
-                    </Heading>
+                    <PostInfoStyled
+                        doing={data.seePost.doing.name}
+                        color={data.seePost.doing.color}
+                        category={data.seePost.doing.category}
+                        score={data.seePost.score}
+                        startAt={data.seePost.startAt}
+                        blocks={data.seePost.blocks}
+                        likesCountState={data.seePost.likesCount}
+                        lang={lang}
+                        id={id}
+                        author={data.seePost.user.username}
+                        avatar={data.seePost.user.avatar}
+                        location={data.seePost.location}
+                        createdAt={data.seePost.createdAt}
+                        disableComment={true}
+                    />
                     { !meLoading && meData && meData.me &&
                         <>
-                            { data.seePost.comments[0] 
+                            { data.seePost.comments[0] || newComments[0]
                                 ? 
-                                <Comments comments={data.seePost.comments} me={meData.me} lang={lang} />
+                                <Comments
+                                    comments={data.seePost.comments}
+                                    newComments={newComments}
+                                    me={meData.me}
+                                    lang={lang} 
+                                    editCommentMutation={editCommentMutation}
+                                />
                                 : 
                                 <NoCommentMessage>
                                     <TextRegular text={Words.noComments} lang={lang} />
@@ -156,6 +217,7 @@ export default () => {
                                 value={newComment.value}
                                 onChange={newComment.onChange}
                                 avatar={meData.me.avatar}
+                                creating={creating}
                             />
                         </>
                     }

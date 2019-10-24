@@ -5,6 +5,7 @@ import Avatar from './Avatar';
 import Words from '../Lang/Words.json';
 import { languages } from '../Util/Languages';
 import { BreakPoint } from '../Styles/Theme';
+import LoaderButton from './LoaderButton';
 
 const Form = styled.form`
     display: flex;
@@ -34,19 +35,21 @@ const Textarea = styled(TextareaAutosize)`
     width: 100%;
 `;
 
-const NewComment = ({ lang, onKeyPress, value, onChange, avatar }) => {
+const NewComment = ({ lang, onKeyPress, value, onChange, avatar, creating }) => {
      const placeholder = languages(Words.newComment, lang);
 
     return (
         <Form>
             <>
                 <Avatar avatar={avatar} size="medium" />
-                <Textarea 
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
-                    onKeyPress={onKeyPress}
-                />
+                { !creating ? 
+                    <Textarea 
+                        placeholder={placeholder}
+                        value={value}
+                        onChange={onChange}
+                        onKeyPress={onKeyPress}
+                    />
+                : <LoaderButton /> }
             </>
         </Form>
     )

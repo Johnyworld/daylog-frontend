@@ -5,18 +5,11 @@ import Avatar from './Avatar';
 import TextRegular from './TextRegular';
 import TextSmall from './TextSmall';
 import { dateConvertor } from '../Util/Convertors';
-import { useMutation } from 'react-apollo-hooks';
-import { gql } from 'apollo-boost';
-import { SEE_POST } from '../Routes/Post';
 import Icon from './Icon';
 import Username from './Username';
 import { getLangArray } from '../Util/Languages';
-
-const EDIT_COMMENT = gql`
-    mutation editComment( $id:String!, $text:String, $action:String! ) {
-        editComment( id: $id, text: $text, action: $action )
-    }
-`;
+import LoaderButton from './LoaderButton';
+import { SEE_POST } from '../Routes/Post';
 
 const Container = styled.li`
     position: relative;
@@ -24,7 +17,7 @@ const Container = styled.li`
 
 const Box = styled.div`
     position: relative;
-    padding: 10px 30px;
+    padding: 10px 15px;
     border-top: 1px solid ${({ theme })=> theme.c_lightGray };
     background-color: white;
     display: flex;
@@ -69,14 +62,12 @@ const Comment = ({
     author,
     avatar,
     createdAt,
+    isCreating,
     lang,
-    username
+    username,
+    editCommentMutation
 }) => {
     const [ isDelete, setIsDelete ] = useState(false);
-    const [ editCommentMutation ] = useMutation(EDIT_COMMENT, { 
-        variables: { id, action: "DELETE" },
-        refetchQueries: [{ query: SEE_POST, variables: { id: postId }}]
-    });
 
     const boxSlide = (e) => {
         if ( username === author ) {
@@ -91,13 +82,18 @@ const Comment = ({
 
     const deleteComment = async() => {
         setIsDelete(true);
-        await editCommentMutation();
+        editCommentMutation({
+            variables: { id, action: "DELETE" },
+            refetchQueries: [{ query: SEE_POST, variables: { id: postId }}]
+        });
     }
 
     return ( !isDelete && (
         <Container>
             <Delete onClick={deleteComment}>
-                <Icon icon="x" size="small" color="white" />
+                { !isCreating ?
+                    <Icon icon="x" size="small" color="white" />
+                : <LoaderButton color="white" /> }
             </Delete>
             <Box onClick={username && boxSlide}>
                 <Avatar avatar={avatar} size="small" />
