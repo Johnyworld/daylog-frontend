@@ -152,7 +152,7 @@ export default ({ data, meData, focused, setFocused }) => {
     const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );
     const next = blocks.find(( post, index ) => post.blocks && index > focused );
 
-    const updateTodayPosts = ({ id, startAt, endAt, create, newId, deletePost, type }) => {
+    const updateTodayPosts = ({ id, startAt, endAt, create, newId, location, deletePost, type }) => {
         const posts = todayPosts.slice();   
 
         if ( create ) {
@@ -186,12 +186,14 @@ export default ({ data, meData, focused, setFocused }) => {
                 target.startAt = startAt;
                 target.endAt = endAt;
                 target.blocks = target.endAt - startAt;
+                target.location = location && location;
 
             } else if ( type === "pullToYesterday" ) {
                 target.yyyymmdd = getYesterday();
                 target.startAt = startAt;
                 target.endAt = endAt;
                 target.blocks = target.endAt - startAt; 
+                target.location = location && location;
 
             } else {
                 if (startAt) { 
@@ -206,6 +208,9 @@ export default ({ data, meData, focused, setFocused }) => {
                     target.endAt = endAt;
                     target.blocks = endAt - target.startAt;
                 };
+                if (location) {
+                    target.location = location;
+                }; 
             }
             setTodayPosts(posts);
         }

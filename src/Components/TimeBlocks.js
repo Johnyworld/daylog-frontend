@@ -30,6 +30,10 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
     const cutTopType = getCutTopType( focusedBlock, recent )
     const cutBottomEndAt = getCutBottomEndAt( focusedBlock, recent );
 
+    const [ editLocationMutation ] = useMutation( EDIT_POST, {
+        refetchQueries: [{ query: TODAY_QUERY }]
+    });
+
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
         refetchQueries: [{ query: TODAY_QUERY }]
     })
@@ -42,6 +46,20 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
         refetchQueries: [{ query: TODAY_QUERY }]
     })
 
+    const editLocation = (id, location) => {
+        editLocationMutation({
+            variables: { 
+                id,
+                location,
+                type: "location"
+            },
+        });
+        updateTodayPosts({
+            id,
+            location
+        });
+    }
+
     const deletePost = (id) => {
         deletePostMutation({ variables : { 
             id,
@@ -50,7 +68,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
         updateTodayPosts({
             id,
             deletePost: true
-        })
+        });
     }
 
     const onClickCutTop = (id) => {
@@ -65,7 +83,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
             startAt: cutTopStartAt,
             endAt: cutTopEndAt,
             type: cutTopType
-        })
+        });
     }
 
     const onClickCutBottom = (id) => {
@@ -77,7 +95,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
         updateTodayPosts({
             id,
             endAt: cutBottomEndAt
-        })
+        });
     }
 
     useEffect(()=> {
@@ -108,6 +126,7 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
                         setFocused={setFocused}
                         className={index === blocks.length-1 ? "selected first last" : ""}
                         selection={block.selection}
+                        editLocation={editLocation}
                         deletePost={deletePost}
                         onClickCutTop={onClickCutTop}
                         onClickCutBottom={onClickCutBottom}

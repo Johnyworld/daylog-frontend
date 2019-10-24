@@ -173,7 +173,7 @@ const getSelectionClassName = (selection) => {
 const TimeBlock = ({
     id, index, block, doing, color, icon, score, location, blocks, isCreating,
     likesCount, commentsCount, lang, className, selection,
-    deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
+    editLocation, deletePost, onClickCutTop, onClickCutBottom, setFocused }) => {
 
     const [ scoreState, setScoreState ] = useState(score ? score : null);
     const [ scorePopup, setScorePopup ] = useState(false);
@@ -269,7 +269,13 @@ const TimeBlock = ({
                     setScoreState={setScoreState}
             />}
             { locationPopup && 
-                <EditLocation id={id} location={location} lang={lang} closePopup={closePopup} />
+                <EditLocation
+                    id={id}
+                    location={location}
+                    lang={lang}
+                    editLocation={editLocation}
+                    closePopup={closePopup}
+                />
             }
         </Container>
     )

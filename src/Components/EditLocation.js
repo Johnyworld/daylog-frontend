@@ -6,9 +6,6 @@ import useInput from '../Hooks/useInput';
 import Input from './Input';
 import Theme from '../Styles/Theme';
 import LargeButton from './LargeButton';
-import { useMutation } from 'react-apollo-hooks';
-import { EDIT_POST } from './SetScore';
-import { TODAY_QUERY } from './TodayQueries';
 
 const Container = styled.div`
     ${({ theme })=> theme.popupContainer };
@@ -24,20 +21,11 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-left: auto;
 `;
 
-export default ({ id, location, lang, closePopup }) => {
+export default ({ id, location, lang, editLocation, closePopup }) => {
     const inputLocation = useInput(location);
 
-    const [ editLocationMutation ] = useMutation( EDIT_POST, {
-        variables: { 
-            id: id, 
-            location: inputLocation.value,
-            type: "location" 
-        },
-        refetchQueries: [{ query: TODAY_QUERY }]
-    });
-
     const onClickSubmit = () => {
-        editLocationMutation();
+        editLocation( id, inputLocation.value );
         closePopup();
     }
 
