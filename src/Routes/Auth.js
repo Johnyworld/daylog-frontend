@@ -116,6 +116,7 @@ const ButtonContainer = styled.div`
 
 const LoaderButtonStyled = styled(LoaderButton)`
     margin: 10px 20px;
+    margin-left: auto;
 `;
 
 const VersionStyled = styled(Version)`
