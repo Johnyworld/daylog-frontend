@@ -10,26 +10,9 @@ import Colors from '../Util/Colors';
 import Icons from '../Util/Icons';
 import LargeButton from './LargeButton';
 import Theme from '../Styles/Theme';
-import { useQuery } from 'react-apollo-hooks';
-import { gql } from 'apollo-boost';
-import LoaderRelative from './LoaderRelative';
 import PickColor from './PickColor';
 import PickIcon from './PickIcon';
 import Picker from './Picker';
-
-const SEE_CATEGORY_LIST = gql`
-    {
-        seeCategoryList {
-            id
-            name
-            lang {
-                id
-                kr
-                en
-            }
-        }
-    }
-`;
 
 const Container = styled.section`
     ${({ theme })=> theme.popupContainer };
@@ -55,15 +38,13 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-top: 50px;
 `;
 
-const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
-    const { data, loading } = useQuery(SEE_CATEGORY_LIST);
-
+const AddDoing = ({ me, categories, closePopup, addPin, addDoing, lang }) => {
     const [ sideWindow, setSideWindow ] = useState(null);
     const [ adding, setAdding ] = useState(false);
     const [ icon, setIcon ] = useState("");
     const [ color, setColor ] = useState("#555555");
-    const category = useInput("default");
     const term = useInput("");
+    const category = useInput("default");
 
     const onChangeCategory = (e) => {
         category.onChange(e);
@@ -94,14 +75,14 @@ const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
     }
 
     const onClickSubmit = () => {
-        addDoingMutation({ variables : { 
+        addDoing({
             name: term.value,
-            categoryId: 
-                data && data.seeCategoryList ?
-                data.seeCategoryList.find( item => item.name === category.value ).id : "",
             icon,
-            color
-        }});
+            color,
+            authorId: me.id,
+            authorName: me.username,
+            category: categories.find( categoryItem => categoryItem.name === category.value )
+        });
         closePopup();
     }
 
@@ -109,16 +90,13 @@ const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
         <Container>
             <Popup>
                 <PopupHeader text={Words.addDoing} remark={Words.addDoingRemark} lang={lang} closePopup={closePopup} />
-                { loading && <LoaderRelative /> }
                 <PopupContent>
-                    { !loading && data && data.seeCategoryList &&
-                        <Select
-                            list={[ { name: "default", lang: Words.selectCategory }, ...data.seeCategoryList ]}
-                            onChange={onChangeCategory}
-                            lang={lang}
-                            className="left-align" 
-                        />
-                    }
+                    <Select
+                        list={[ { name: "default", lang: Words.selectCategory }, ...categories ]}
+                        onChange={onChangeCategory}
+                        lang={lang}
+                        className="left-align" 
+                    />
                     { category.value !== "default" &&
                         <Name>
                             <InputLabel
@@ -135,7 +113,7 @@ const AddDoing = ({ closePopup, onSelectDoing, addDoingMutation, lang }) => {
                             category={category.value}
                             term={term.value}
                             lang={lang}
-                            onSelectDoing={onSelectDoing} 
+                            addPin={addPin} 
                             setAdding={setAdding}
                         />
                     }

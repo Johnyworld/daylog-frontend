@@ -50,20 +50,24 @@ const IconContainer = styled.div`
 
 const DoingItem = ({ 
     id, name, category, color, icon, author, me, lang, isAdding,
-    onSelectDoing, editDoingMutation, removePinMutation
+    addPin, editDoing, removePin
 }) => {
-    const [ editDoing, setEditDoing ] = useState(false);
+    const [ editDoingPopup, setEditDoingPopup ] = useState(false);
 
-    const editDoingPopup = () => {
-        setEditDoing(true);
+    const onEditDoingPopup = () => {
+        setEditDoingPopup(true);
     }
 
     const closePopup = () => {
-        setEditDoing(false);
+        setEditDoingPopup(false);
     }
 
     const selectingDoing = () => {
-        onSelectDoing(id)
+        addPin({
+            id, name, icon, color, category,
+            authorId: author.id,
+            authorName: author.username,
+        });
     }
 
     return (
@@ -85,11 +89,11 @@ const DoingItem = ({
                     <IconImage url={icon} size="medium" />
                 </IconContainer>
                 { ! isAdding 
-                    ? <IconButton icon="pencel" size="medium" onClick={editDoingPopup} />
+                    ? <IconButton icon="pencel" size="medium" onClick={onEditDoingPopup} />
                     : <Button text={Words.select} lang={lang} className="narrow" onClick={selectingDoing} />
                 }
             </Column>
-            { editDoing && 
+            { editDoingPopup && 
                 <EditDoing
                     id={id}
                     author={author}
@@ -98,8 +102,8 @@ const DoingItem = ({
                     defaultIcon={icon}
                     defaultColor={color}
                     closePopup={closePopup}
-                    editDoingMutation={editDoingMutation}
-                    removePinMutation={removePinMutation}
+                    editDoing={editDoing}
+                    removePin={removePin}
                     me={me}
                     lang={lang}
                 /> 

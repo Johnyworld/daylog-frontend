@@ -149,7 +149,7 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     }
 
     if ( newId ) {
-        updateTodayPosts({ id: randomId, newId: newId });
+        updateTodayPosts({ id: randomId, newId });
         setRandomId( Math.floor(Math.random()*10000).toString() );
         setNewId(false);
     }

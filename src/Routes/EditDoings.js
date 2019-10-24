@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import TextLarge from '../Components/TextLarge';
-import Words from '../Lang/Words.json';
-import { ME, TODAY_QUERY } from '../Components/TodayQueries';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import React from 'react';
+import { ME } from '../Components/TodayQueries';
+import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
 import { getLang } from '../Util/Languages';
 import { gql } from 'apollo-boost';
-import DoingList from '../Components/DoingList';
-import IconButton from '../Components/IconButton';
-import AddDoing from '../Components/AddDoing';
-import TextRegular from '../Components/TextRegular';
-import { BreakPoint } from '../Styles/Theme';
+import EditDoingsPresenter from '../Components/EditDoingsPresenter';
 
 export const SEE_MY_DOINGS = gql`
     {
@@ -40,144 +33,37 @@ export const SEE_MY_DOINGS = gql`
     }
 `;
 
-const ADD_DOING = gql`
-    mutation addDoing( $name: String!, $color: String!, $icon: String!, $categoryId: String! ) {
-        addDoing ( name: $name, color: $color, icon: $icon, categoryId: $categoryId ) {
+const SEE_CATEGORY_LIST = gql`
+    {
+        seeCategoryList {
             id
+            name
+            lang {
+                id
+                kr
+                en
+            }
         }
     }
 `;
-
-const EDIT_DOING = gql`
-    mutation editDoing( $id: String!, $color: String, $icon: String ) {
-        editDoing( id: $id, color: $color, icon: $icon )
-    }
-`;
-
-const PIN_DOING = gql`
-    mutation addPin( $doingId: String! ) {
-        addPin( doingId: $doingId )
-    }
-`;
-
-const REMOVE_PIN = gql`
-    mutation removePin( $doingId: String! ) {
-        removePin( doingId: $doingId )
-    }
-`;
-
-const Container = styled.main`
-    ${({ theme })=> theme.mainContainer };
-    @media screen and ( ${BreakPoint} ) {
-        background-color: ${({ theme })=> theme.c_lightGray };
-        padding: 100px 0;
-    }
-`;
-
-const Wrapper = styled.div`
-    ${({ theme })=> theme.wrapper };
-    padding: 30px;
-    @media screen and ( ${BreakPoint} ) {
-        padding: 0;
-    }
-`;
-
-const Header = styled.header`
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-`;
-
-const getCategories = ( doings ) => {
-    let categories = [];
-    doings.forEach( doing => {
-        categories = [ 
-            ...categories, 
-            { 
-                name: doing.category.name, 
-                lang: doing.category.lang,
-                id: doing.category.id
-            }
-        ];
-    });
-    return categories.filter((category, index) => {
-        return categories.findIndex( item => {
-            return category.name === item.name;
-        }) === index;
-    });
-}
 
 export default () => {
     const { data, loading } = useQuery(SEE_MY_DOINGS);
+    const { data: categoryData, loading: categoryLoading } = useQuery(SEE_CATEGORY_LIST);
     const { data: meData, loading: meLoading } = useQuery(ME);
-    const [ addDoingPopup, setAddDoingPopup ] = useState(false);
 
-    const [ addPinMutation ] = useMutation(PIN_DOING, { 
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
-    });
-
-    const [ removePinMutation ] = useMutation(REMOVE_PIN, {
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
-    });
-
-    const [ addDoingMutation ] = useMutation(ADD_DOING, {
-        refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
-    });
-    
-    const [ editDoingMutation ] = useMutation(EDIT_DOING, {
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
-    });
-
-    if ( !loading && data && data.seeFollowedDoings && meData && meData.me && !meLoading ) {
-        const categories = getCategories( data.seeFollowedDoings );
+    if ( !loading && data && data.seeFollowedDoings && 
+        !meLoading && meData && meData.me &&  
+        !categoryLoading && categoryData && categoryData.seeCategoryList ) 
+    {
         const lang = getLang( meData.me.lang );
-
-        const onAddDoingPopup = () => {
-            setAddDoingPopup(true);
-        }
-
-        const closePopup = () => {
-            setAddDoingPopup(false);
-        }
-
-        const onSelectDoing = (doingId) => {
-            closePopup();
-            addPinMutation({ variables: { doingId }});
-        }
-
-        window.scrollTo( 0, 0 );
         return (
-            <Container>
-                <Wrapper>
-                    <Header>
-                        <div>
-                            <TextLarge text={Words.editDoing} lang={lang} />
-                            <TextRegular text={Words.editDoingSub} lang={lang} />
-                        </div>
-                        <IconButton icon="plus" size="medium" onClick={onAddDoingPopup} />
-                    </Header>
-                    { categories.map( category => (
-                        <DoingList
-                            key={category.name}
-                            category={category}
-                            doings={data.seeFollowedDoings}
-                            me={meData.me}
-                            editDoingMutation={editDoingMutation}
-                            removePinMutation={removePinMutation}
-                            lang={lang}
-                        />
-                    ))}
-                    { addDoingPopup && 
-                        <AddDoing
-                            closePopup={closePopup}
-                            onSelectDoing={onSelectDoing}
-                            addDoingMutation={addDoingMutation}
-                            lang={lang}
-                        />
-                    }
-                </Wrapper>
-            </Container>
+            <EditDoingsPresenter 
+                data={data.seeFollowedDoings}
+                me={meData.me}
+                categories={categoryData.seeCategoryList}
+                lang={lang}
+            />
         )
     } else return <Loader />
 }

@@ -46,7 +46,7 @@ const LargeButtonStyled = styled(LargeButton)`
 
 const EditDoing = ({ 
     id, author, category, doingName, defaultIcon, defaultColor, me, lang,
-    editDoingMutation, removePinMutation, closePopup }) => {
+    editDoing, removePin, closePopup }) => {
     const [ sideWindow, setSideWindow ] = useState(null);
     const [ icon, setIcon ] = useState(defaultIcon);
     const [ color, setColor ] = useState(defaultColor);
@@ -70,12 +70,12 @@ const EditDoing = ({
     }
 
     const onClickDelete = () => {
-        removePinMutation({ variables: { doingId: id }});
+        removePin({ doingId: id });
         closePopup();
     }
 
     const onClickSubmit = () => {
-        editDoingMutation({ variables: { id, color, icon }});
+        editDoing({ id, color, icon });
         closePopup();
     }
 

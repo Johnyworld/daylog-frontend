@@ -175,8 +175,7 @@ export default ({ data, meData, focused, setFocused }) => {
         } 
 
         else if ( deletePost ) {
-            const newPosts = posts.filter( post => post.id !== id );
-            setTodayPosts( newPosts );
+            setTodayPosts( posts.filter( post => post.id !== id ));
         }
 
         else {

@@ -43,6 +43,7 @@ const Popup = styled.div`
 const Comments = styled.ul`
     ${({ theme })=> theme.popupContent }
     margin: 0 -30px;
+    border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
 `;
 
 const DayComment = ({ lang, closePopup, me }) => {
