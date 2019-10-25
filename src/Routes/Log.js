@@ -50,7 +50,7 @@ export default () => {
         date.setMonth( monthSum );
         date.setDate( dateSum );
         
-        const yyyymmdd = getYyyymmdd(date.getFullYear(), date.getMonth(), date.getDate());
+        const yyyymmdd = getYyyymmdd( date );
         
         const lang = getLang( meData.me.lang );
 

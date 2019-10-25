@@ -30,6 +30,10 @@ const MenualUpload = styled.div`
     }
 `;
 
+const Label = styled.label`
+    cursor: pointer;
+`;
+
 const InputFile = styled(Input)`
     margin-right: 30px;
 `;
@@ -71,9 +75,9 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
             <PopupHeader text={text} lang={lang} closePopup={closePopup} />
             <PickGrid type='icon' array={array} onClick={onClick} />
             <MenualUpload>
-                <label htmlFor="iconFile">
+                <Label htmlFor="iconFile">
                     <TextRegular text={Words.uploadManually} lang={lang} weight="bold" color={Theme.c_blue} />
-                </label>
+                </Label>
                 <InputFile placeholder={Words.uploadManually} onChange={onChangeIconFile} lang={lang} type="file" accept="image/*" name="iconFile" id="iconFile" />
                 <UrlView string={fileName} />
                 <button onClick={urlSubmit}>

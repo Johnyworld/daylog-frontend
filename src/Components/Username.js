@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TextRegular from './TextRegular';
 import TextSmall from './TextSmall';
+import Theme from '../Styles/Theme';
 
 const Anchor = styled(Link)`
     display: block;
@@ -17,7 +18,7 @@ const Username = ({ username, inline, size }) => {
     return (
         <Anchor to={`/feed/${username}`} inline={inline} >
             { size 
-                ? size === "small" && <TextSmall string={username} />
+                ? size === "small" && <TextSmall string={username} weight="bold" color={Theme.c_blueDarker1} />
                 : <TextRegular string={username} weight="bold" />
             }
         </Anchor>

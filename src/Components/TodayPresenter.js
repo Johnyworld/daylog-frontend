@@ -59,11 +59,8 @@ const LinkItem = styled(Link)`
 `;
 
 const ButtonText = styled(TextRegular)`
-    display: none;
-    @media screen and ( ${BreakPoint} ) {
-        display: inline-block;
-        margin-left: 10px;
-    } 
+    display: inline-block;
+    margin-left: 10px;
 `;
 
 const blocksFoundation = ( now ) => {
@@ -147,7 +144,7 @@ export default ({ data, meData, focused, setFocused }) => {
     const lang = getLang( meData.me.lang );
 
     let foundation = blocksFoundation(now);
-    let blocks = initBlocks(todayPosts, foundation, now, focused);
+    let blocks = initBlocks(todayPosts, foundation, now, focused).slice(0, 96);
 
     const focusedBlock = blocks[focused];
     const recent = blocks.slice().reverse().find(( post, index ) => post.blocks && index + focused >= 95 );

@@ -6,6 +6,7 @@ import Languages from '../Util/Languages';
 const Container = styled.span`
     font-size: 12px;
     line-height: 1.4;
+    word-break: keep-all;
     color: ${({ theme })=> theme.c_gray };
     ${({ weight }) => weight === 'bold' && ` 
         font-weight: 700;
