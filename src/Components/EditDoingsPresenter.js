@@ -174,7 +174,7 @@ export default ({ data, me, categories, lang }) => {
             <Wrapper>
                 <Header>
                     <div>
-                        <TextLarge text={Words.editDoing} lang={lang} />
+                        <TextLarge text={Words.doingList} lang={lang} />
                         <TextRegular text={Words.editDoingSub} lang={lang} />
                     </div>
                     { !creating 

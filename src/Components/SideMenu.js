@@ -111,7 +111,7 @@ export default ({ closePopup, username, avatar, lang }) => {
                         <TextRegular text={Words.editProfile} weight="bold" lang={lang} color={Theme.c_blueDarker2} /> 
                     </LinkStyled>
                     <LinkStyled to={`/doing`} onClick={closePopup} >
-                        <TextRegular text={Words.editDoing} weight="bold" lang={lang} color={Theme.c_blueDarker2} />
+                        <TextRegular text={Words.doingList} weight="bold" lang={lang} color={Theme.c_blueDarker2} />
                     </LinkStyled>
                     <SmallButton onClick={localLogOut} text={Words.logOut} lang={lang} color={Theme.c_red} />
                 </Menu>

@@ -7,6 +7,7 @@ import DoingItem from './DoingItem';
 import TextMedium from './TextMedium';
 import Words from '../Lang/Words.json';
 import Button from './Button';
+import TextSmall from './TextSmall';
 
 const SEARCH_DOING = gql`
     query searchDoing( $term: String!, $category: String ) {
@@ -38,6 +39,11 @@ const DoingItems = styled.ul`
     border-bottom: 1px solid ${({ theme })=> theme.c_lightGray };
     margin: 0 -30px;
 `;
+
+const NoResult = styled(TextMedium)`
+    display: block;
+    margin-bottom: 5px;
+`
 
 const ButtonStyled = styled(Button)`
     display: block;
@@ -74,8 +80,10 @@ const CategoryList = ({ term, category, lang, addPin, setAdding }) => {
                             />
                         ))}
                     </DoingItems>
-                    : 
-                    <TextMedium text={Words.noSearchResult} lang={lang} /> 
+                    :<>
+                        <NoResult text={Words.noSearchResult} lang={lang} /> 
+                        <TextSmall text={Words.addDoingDesc} lang={lang} /> 
+                    </>
                 }
                 <ButtonStyled text={Words.addNew} lang={lang} onClick={onClickAdd} />
             </>)}

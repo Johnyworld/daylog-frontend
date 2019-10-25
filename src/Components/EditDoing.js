@@ -11,6 +11,8 @@ import Theme from '../Styles/Theme';
 import InputDisabled from './InputDisabed';
 import Picker from './Picker';
 import SmallButton from './SmallButton';
+import TextSmall from './TextSmall';
+import Username from './Username';
 
 const Container = styled.section`
     ${({ theme })=> theme.popupContainer };
@@ -32,6 +34,11 @@ const PickerStyled = styled(Picker)`
     margin-top: 5px;
 `;
 
+const Desc = styled(TextSmall)`
+    display: block;
+    margin-top: 20px;
+`;
+
 const Buttons = styled.div`
     display: flex;
     justify-content: space-between;
@@ -41,7 +48,7 @@ const Buttons = styled.div`
 const LargeButtonStyled = styled(LargeButton)`
     display: block;
     margin-left: auto;
-    margin-top: 50px;
+    margin-top: 30px;
 `;
 
 const EditDoing = ({ 
@@ -88,6 +95,7 @@ const EditDoing = ({
                     <Field label={Words.doingName} field={doingName} lang={lang} />
                     <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} isMine={me.id===author.id} />
                     <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} isMine={me.id===author.id} />
+                    <Desc text={Words.editDoingDesc} lang={lang} />
                     <Buttons>
                         <SmallButton text={Words.delete} lang={lang} color={Theme.c_red} onClick={onClickDelete} />
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
