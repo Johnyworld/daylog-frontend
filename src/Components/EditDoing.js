@@ -39,6 +39,10 @@ const Desc = styled(TextSmall)`
     margin-top: 20px;
 `;
 
+const Author = styled.div`
+    margin-top: 20px;
+`;
+
 const Buttons = styled.div`
     display: flex;
     justify-content: space-between;
@@ -96,6 +100,10 @@ const EditDoing = ({
                     <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} isMine={me.id===author.id} />
                     <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} isMine={me.id===author.id} />
                     <Desc text={Words.editDoingDesc} lang={lang} />
+                    <Author>
+                        <TextSmall text={Words.author} lang={lang} />
+                        <Username username={author.username} inline="true" size="small" />
+                    </Author>
                     <Buttons>
                         <SmallButton text={Words.delete} lang={lang} color={Theme.c_red} onClick={onClickDelete} />
                         <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
