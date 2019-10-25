@@ -38,13 +38,14 @@ const LargeButtonStyled = styled(LargeButton)`
     margin-top: 50px;
 `;
 
-const AddDoing = ({ me, categories, closePopup, addPin, addDoing, lang }) => {
+const AddDoing = ({ me, categories, myDoings, closePopup, addPin, addDoing, lang }) => {
     const [ sideWindow, setSideWindow ] = useState(null);
     const [ adding, setAdding ] = useState(false);
     const [ icon, setIcon ] = useState("");
     const [ color, setColor ] = useState("#555555");
     const term = useInput("");
     const category = useInput("default");
+    const categoryObj = categories.find( categoryItem => categoryItem.name === category.value );
 
     const onChangeCategory = (e) => {
         category.onChange(e);
@@ -81,7 +82,7 @@ const AddDoing = ({ me, categories, closePopup, addPin, addDoing, lang }) => {
             color,
             authorId: me.id,
             authorName: me.username,
-            category: categories.find( categoryItem => categoryItem.name === category.value )
+            category: categoryObj
         });
         closePopup();
     }
@@ -110,7 +111,8 @@ const AddDoing = ({ me, categories, closePopup, addPin, addDoing, lang }) => {
                     }
                     { term.value !== "" && !adding &&
                         <CategoryList
-                            category={category.value}
+                            category={categoryObj}
+                            myDoings={myDoings}
                             term={term.value}
                             lang={lang}
                             addPin={addPin} 

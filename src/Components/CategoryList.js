@@ -52,43 +52,42 @@ const ButtonStyled = styled(Button)`
     padding: 10px;
 `;
 
-const CategoryList = ({ term, category, lang, addPin, setAdding }) => {
-    const { data, loading } = useQuery( SEARCH_DOING, { variables: { term, category }});
+const CategoryList = ({ term, category, myDoings, lang, addPin, setAdding }) => {
+    const { data, loading } = useQuery( SEARCH_DOING, { variables: { term, category: category.name }});
+    const onClickAdd = () => { setAdding(true); }
     
-    const onClickAdd = () => {
-        setAdding(true);
-    }
+    if ( !loading && data && data.searchDoing ) {
+        const doings = data.searchDoing.filter( doing => !myDoings.some( myDoing => myDoing.id === doing.id ));
 
-    return (
-        <Container>
-            { loading && <LoaderRelative /> }
-            { !loading && data && data.searchDoing && ( <>
-                { data.searchDoing[0]
+        return (
+            <Container>
+                { doings[0]
                     ?
                     <DoingItems>
-                        { data.searchDoing.map( doing => (
-                            <DoingItem
-                                key={doing.id}
-                                id={doing.id}
-                                name={doing.name}
-                                color={doing.color}
-                                author={doing.author}
-                                category={category}
-                                addPin={addPin}
-                                isAdding={true}
-                                lang={lang}
-                            />
-                        ))}
+                        { doings.map( doing => (
+                                <DoingItem
+                                    key={doing.id}
+                                    id={doing.id}
+                                    name={doing.name}
+                                    color={doing.color}
+                                    author={doing.author}
+                                    category={category}
+                                    addPin={addPin}
+                                    isAdding={true}
+                                    lang={lang}
+                                />
+                            ))
+                        }
                     </DoingItems>
-                    :<>
+                    : <>
                         <NoResult text={Words.noSearchResult} lang={lang} /> 
                         <TextSmall text={Words.addDoingDesc} lang={lang} /> 
                     </>
                 }
                 <ButtonStyled text={Words.addNew} lang={lang} onClick={onClickAdd} />
-            </>)}
-        </Container>
-    )
+            </Container>
+        )
+    } else return <LoaderRelative />;    
 }
 
 

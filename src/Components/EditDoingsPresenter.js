@@ -200,6 +200,7 @@ export default ({ data, me, categories, lang }) => {
                     <AddDoing
                         me={me}
                         categories={categories}
+                        myDoings={myDoings}
                         closePopup={closePopup}
                         addPin={addPin}
                         addDoing={addDoing}
