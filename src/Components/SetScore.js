@@ -38,10 +38,21 @@ const Doing = styled.div`
     text-align: center;
 `;
 
+const Title = styled.div`
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+`;
+
 const Rating = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px 0;
+`;
+
+const RatingBar = styled.input`
+    margin-bottom: 50px;
 `;
 
 const TextSmallStyled = styled(TextSmall)`
@@ -75,13 +86,15 @@ const SetScore = ({ id, doing, closePopup, lang, blocks, color, scoreState, setS
                 <PopupHeader text={Words.setScoreTitle} closePopup={closePopup} lang={lang} />
                 <TextRegular text={Words.setScoreDesc} lang={lang} color={Theme.c_gray} />
                 <Doing>
-                    <TextSmall string={time} lang={lang} />
-                    <TextLarge string={doing} color={color} lang={lang} />
+                    <Title>
+                        <TextSmall string={time} lang={lang} />
+                        <TextLarge string={doing} color={color} lang={lang} />
+                    </Title>
                     <Rating>
                         <TextSmallStyled text={Words.satisfaction} lang={lang} />
                         <Score score={scoreFloat} size="large" />
                     </Rating>
-                    <input type="range" value={slider.value} onChange={slider.onChange} min={0} max={5} step={0.5} />
+                    <RatingBar type="range" value={slider.value} onChange={slider.onChange} min={0} max={5} step={0.5} />
                 </Doing>
                 <LargeButtonStyled onClick={onClick} text={Words.okay} lang={lang} color={Theme.c_blue} />
             </Popup>
