@@ -24,7 +24,7 @@ const CategoryName = styled(TextSmall)`
     margin-bottom: 10px;
 `;
 
-export default ({ category, doings, me, editDoing, removePin, lang }) => {
+export default ({ category, doings, pins, me, editDoing, toggleFavorite, removePin, lang }) => {
     return (
         <Container>
             <CategoryName text={category.lang} lang={lang} weight="bold" color={Theme.c_black} />
@@ -39,8 +39,11 @@ export default ({ category, doings, me, editDoing, removePin, lang }) => {
                         color={doing.color}
                         icon={doing.icon}
                         author={doing.author}
+                        pinsCount={doing.pinsCount}
+                        pins={pins}
                         me={me}
                         editDoing={editDoing}
+                        toggleFavorite={toggleFavorite}
                         removePin={removePin}
                         lang={lang}
                     />

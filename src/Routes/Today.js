@@ -18,6 +18,8 @@ export const ME = gql`
             followingCount
             likesTotal
             pins {
+                id
+                isFavorite
                 doing {
                     id
                     name

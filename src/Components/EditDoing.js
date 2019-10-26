@@ -13,6 +13,7 @@ import Picker from './Picker';
 import SmallButton from './SmallButton';
 import TextSmall from './TextSmall';
 import Username from './Username';
+import IconButton from './IconButton';
 
 const Container = styled.section`
     ${({ theme })=> theme.popupContainer };
@@ -34,9 +35,17 @@ const PickerStyled = styled(Picker)`
     margin-top: 5px;
 `;
 
-const Desc = styled(TextSmall)`
-    display: block;
+const Desc = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-top: 20px;
+`;
+
+const FavoriteButton = styled(IconButton)`
+    margin-left: 15%;
+    animation-duration: .5s;
+    animation-timing-function: cubic-bezier(.19,.52,.41,1.31);
 `;
 
 const Author = styled.div`
@@ -56,11 +65,13 @@ const LargeButtonStyled = styled(LargeButton)`
 `;
 
 const EditDoing = ({ 
-    id, author, category, doingName, defaultIcon, defaultColor, me, lang,
-    editDoing, removePin, closePopup }) => {
+    id, author, category, doingName, defaultIcon, defaultColor, me, lang, pins, pinsCount,
+    editDoing, toggleFavorite, removePin, closePopup }) => {
     const [ sideWindow, setSideWindow ] = useState(null);
     const [ icon, setIcon ] = useState(defaultIcon);
     const [ color, setColor ] = useState(defaultColor);
+
+    const pin = pins.find( pin => pin.doing.id === id );
 
     const onClickSideWindow = (option) => {
         setSideWindow(option);
@@ -85,6 +96,17 @@ const EditDoing = ({
         closePopup();
     }
 
+    const onClickFavorite = ({ currentTarget }) => {
+        if ( pin.isFavorite ) {
+            currentTarget.classList.add("pop");
+            currentTarget.classList.remove("unpop");
+        } else {
+            currentTarget.classList.remove("pop");
+            currentTarget.classList.add("unpop");
+        }
+        toggleFavorite({ pinId: pin.id });
+    }
+
     const onClickSubmit = () => {
         editDoing({ id, color, icon });
         closePopup();
@@ -99,10 +121,18 @@ const EditDoing = ({
                     <Field label={Words.doingName} field={doingName} lang={lang} />
                     <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} isMine={me.id===author.id} />
                     <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} isMine={me.id===author.id} />
-                    <Desc text={Words.editDoingDesc} lang={lang} />
+                    <Desc>
+                        <TextSmall text={Words.editDoingDesc} lang={lang} />
+                        { pin.isFavorite 
+                            ? <FavoriteButton icon="favorite" size="medium" color={Theme.c_blue} onClick={onClickFavorite} />
+                            : <FavoriteButton icon="favorite" size="medium" color={Theme.c_gray} onClick={onClickFavorite} />
+                        }
+                    </Desc>
                     <Author>
                         <TextSmall text={Words.author} lang={lang} />
                         <Username username={author.username} inline="true" size="small" />
+                        <TextSmall string={pinsCount} />
+                        <TextSmall string={"명 사용"} />
                     </Author>
                     <Buttons>
                         <SmallButton text={Words.delete} lang={lang} color={Theme.c_red} onClick={onClickDelete} />

@@ -49,8 +49,8 @@ const IconContainer = styled.div`
 `;
 
 const DoingItem = ({ 
-    id, name, category, color, icon, author, me, lang, isAdding,
-    addPin, editDoing, removePin
+    id, name, category, color, icon, author, me, lang, isAdding, pins, pinsCount,
+    addPin, editDoing, toggleFavorite, removePin
 }) => {
     const [ editDoingPopup, setEditDoingPopup ] = useState(false);
 
@@ -80,6 +80,8 @@ const DoingItem = ({
                         <div>
                             <TextSmall text={Words.author} lang={lang} />
                             <Username username={author.username} inline="true" size="small" />
+                            <TextSmall string={pinsCount} />
+                            <TextSmall string={"명 사용"} />
                         </div>
                     }
                 </Author>
@@ -103,7 +105,10 @@ const DoingItem = ({
                     defaultColor={color}
                     closePopup={closePopup}
                     editDoing={editDoing}
+                    toggleFavorite={toggleFavorite}
                     removePin={removePin}
+                    pinsCount={pinsCount}
+                    pins={pins}
                     me={me}
                     lang={lang}
                 /> 

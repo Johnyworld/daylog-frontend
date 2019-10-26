@@ -52,7 +52,7 @@ const ButtonStyled = styled(Button)`
     padding: 10px;
 `;
 
-const CategoryList = ({ term, category, myDoings, lang, addPin, setAdding }) => {
+const CategoryList = ({ term, category, myDoings, lang, pinsCount, addPin, setAdding }) => {
     const { data, loading } = useQuery( SEARCH_DOING, { variables: { term, category: category.name }});
     const onClickAdd = () => { setAdding(true); }
     
@@ -72,6 +72,7 @@ const CategoryList = ({ term, category, myDoings, lang, addPin, setAdding }) => 
                                     color={doing.color}
                                     author={doing.author}
                                     category={category}
+                                    pinsCount={doing.pinsCount}
                                     addPin={addPin}
                                     isAdding={true}
                                     lang={lang}

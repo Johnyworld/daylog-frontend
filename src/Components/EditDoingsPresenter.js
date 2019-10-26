@@ -4,7 +4,7 @@ import { BreakPoint } from '../Styles/Theme';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_MY_DOINGS } from '../Routes/EditDoings';
-import { TODAY_QUERY } from '../Routes/Today';
+import { TODAY_QUERY, ME } from '../Routes/Today';
 import TextLarge from './TextLarge';
 import TextRegular from './TextRegular';
 import IconButton from './IconButton';
@@ -39,6 +39,12 @@ const REMOVE_PIN = gql`
     }
 `;
 
+const TOGGLE_FAVORITE = gql`
+    mutation toggleFavorite( $pinId: String! ) {
+        toggleFavorite( pinId: $pinId )
+    }
+`;
+
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     @media screen and ( ${BreakPoint} ) {
@@ -65,6 +71,7 @@ const Header = styled.header`
 export default ({ data, me, categories, lang }) => {
     const [ addDoingPopup, setAddDoingPopup ] = useState(false);
     const [ myDoings, setMyDoings ] = useState(data);
+    const [ myPins, setMyPins ] = useState(me.pins);
     const [ newId, setNewId ] = useState(false);
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
     const [ creating, setCreating ] = useState(false);
@@ -85,7 +92,11 @@ export default ({ data, me, categories, lang }) => {
         refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
     });
 
-    const updateMyDoings = ({ id, newId, create, icon, color, removeDoing }) => {
+    const [ toggleFavoriteMutation ] = useMutation(TOGGLE_FAVORITE, {
+        refetchQueries: [{ query: ME }]
+    });
+
+    const updateMyDoings = ({ id, newId, create, icon, color, removeDoing, toggleFavorite }) => {
         const array = myDoings.slice();
 
         if (create) {
@@ -116,6 +127,13 @@ export default ({ data, me, categories, lang }) => {
             if (color) target.color = color;
             setMyDoings(array);
         }
+    }
+
+    const updateMyPins = ({ pinId }) => {
+        const array = myPins.slice(); 
+        const target = array.find( pin => pin.id === pinId );
+        target.isFavorite = !target.isFavorite;
+        setMyPins(array);
     }
 
     const addPin = ({ id, name, icon, color, authorId, authorName, category }) => {
@@ -150,8 +168,13 @@ export default ({ data, me, categories, lang }) => {
     }
 
     const editDoing = ({ id, color, icon }) => {
-        editDoingMutation({ variables: { id, color, icon } })
+        editDoingMutation({ variables: { id, color, icon } });
         updateMyDoings({ id, color, icon });
+    }
+
+    const toggleFavorite = ({ pinId }) => {
+        toggleFavoriteMutation({ variables: { pinId }});
+        updateMyPins({ pinId });
     }
 
     const onAddDoingPopup = () => {
@@ -189,8 +212,10 @@ export default ({ data, me, categories, lang }) => {
                                             key={category.name}
                                             category={category}
                                             doings={myDoings}
+                                            pins={myPins}
                                             me={me}
                                             editDoing={editDoing}
+                                            toggleFavorite={toggleFavorite}
                                             removePin={removePin}
                                             lang={lang}
                                         />

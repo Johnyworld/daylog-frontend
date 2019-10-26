@@ -175,6 +175,7 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                                 icon={recent.doing.icon}
                                 color={recent.doing.color}
                                 lang={lang}
+                                isFavorite={pins.some( pin => pin.doing.id === recent.doing.id && pin.isFavorite )}
                                 isCreating={recent.isCreating}
                                 onClick={onClickStill}
                                 className="recent"
@@ -188,12 +189,13 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                                 icon={next.doing.icon}
                                 color={next.doing.color}
                                 lang={lang}
+                                isFavorite={pins.some( pin => pin.doing.id === next.doing.id && pin.isFavorite )}
                                 isCreating={next.isCreating}
                                 onClick={onClickPull}
                                 className="next"
                             /> 
                         }
-                        { pins[0] && pins.map( pin => {
+                        { pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
                             const { doing } = pin;
                             return (
                                 doing.id !== recentDoingId && doing.id !== nextDoingId &&
@@ -203,6 +205,7 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                                     name={doing.name}
                                     icon={doing.icon}
                                     color={doing.color}
+                                    isFavorite={pin.isFavorite}
                                     lang={lang}
                                     onClick={onClickUpload}
                                 />

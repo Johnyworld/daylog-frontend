@@ -7,6 +7,7 @@ import { languages, getLangArray } from '../Util/Languages';
 import Words from '../Lang/Words.json'
 import Theme from '../Styles/Theme';
 import LoaderButton from './LoaderButton';
+import Icon from './Icon';
 
 const Container = styled.button`
     display: flex;
@@ -53,18 +54,14 @@ const Container = styled.button`
         top: -2px;
         left: -2px;
     }
+`;
 
-    &.pinned:after {
-        content: ' ';
-        display: block;
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        top: 0;
-        right: 0;
-        background-color: red;
-        transform: translate(0, -50%);
-    }
+const Favorite = styled.div`
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(33%, -47%);
 `;
 
 const Name = styled(TextSmall)`
@@ -76,7 +73,7 @@ const Name = styled(TextSmall)`
 `
 
 const DoingButton = ({
-    id, name, icon, color, className, lang, isCreating,
+    id, name, icon, color, className, lang, isCreating, isFavorite,
     onClick }) => {
 
     return (
@@ -87,6 +84,11 @@ const DoingButton = ({
                     <IconImage url={icon} size="medium" />
                     <Name string={name} color={color} />
                 </>
+            }
+            { isFavorite && 
+                <Favorite>
+                    <Icon icon="favorite" size="medium" color={Theme.c_blue} />
+                </Favorite> 
             }
         </Container>
     )

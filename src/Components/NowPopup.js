@@ -132,6 +132,7 @@ export default ({
                                 name={recent.doing.name}
                                 icon={recent.doing.icon}
                                 color={recent.doing.color}
+                                isFavorite={pins.some( pin => pin.doing.id === recent.doing.id && pin.isFavorite )}
                                 isCreating={recent.isCreating}
                                 onClick={onClickButton}
                                 lang={lang}
@@ -147,13 +148,14 @@ export default ({
                                 icon={next.doing.icon}
                                 color={next.doing.color}
                                 lang={lang}
+                                isFavorite={pins.some( pin => pin.doing.id === next.doing.id && pin.isFavorite )}
                                 isCreating={next.isCreating}
                                 onClick={onClickButton}
                                 className="next"
                             /> 
                         }
                         {/* 나머지 버튼들 배열 */}
-                        { pins[0] && pins.map( pin => {
+                        { pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
                             const { doing } = pin;
                             return (
                                 doing.id !== recentDoingId && doing.id !== nextDoingId &&
@@ -163,6 +165,7 @@ export default ({
                                     name={doing.name}
                                     icon={doing.icon}
                                     color={doing.color}
+                                    isFavorite={pin.isFavorite}
                                     onClick={onClickButton}
                                     lang={lang} 
                                 />
