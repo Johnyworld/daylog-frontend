@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import Loader from '../Components/Loader';
 import TodayPresenter from '../Components/TodayPresenter';
 import { gql } from 'apollo-boost';
+import { getToday } from '../Util/Convertors';
 
 export const ME = gql`
     {
@@ -32,8 +33,8 @@ export const ME = gql`
 `;
 
 export const TODAY_QUERY = gql`
-{
-   seeTodayPosts {
+query seeTodayPosts( $yyyymmdd: String! ) { 
+   seeTodayPosts( yyyymmdd: $yyyymmdd ) {
         id
         doing {
             id
@@ -55,7 +56,8 @@ export const TODAY_QUERY = gql`
 `;
 
 export default () => {
-    const { data, loading } = useQuery( TODAY_QUERY );
+    const yyyymmdd = getToday();
+    const { data, loading } = useQuery( TODAY_QUERY, { variables: { yyyymmdd }});
     const { data: meData, loading: meLoading } = useQuery(ME);
     const [ focused, setFocused ] = useState( 95 );
     
@@ -66,6 +68,7 @@ export default () => {
                 meData={meData}
                 focused={focused}
                 setFocused={setFocused}
+                yyyymmdd={yyyymmdd}
             />
         )
     } else return <Loader />

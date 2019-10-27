@@ -136,7 +136,7 @@ const initBlocks = ( todayPosts, foundation, now, focused ) => {
     return foundation;
 }
 
-export default ({ data, meData, focused, setFocused }) => {
+export default ({ data, meData, focused, setFocused, yyyymmdd }) => {
     const [ todayPosts, setTodayPosts ] = useState( data.seeTodayPosts );
     const [ popupDayComment, setPopupDayComment ] = useState(false);
 
@@ -231,6 +231,7 @@ export default ({ data, meData, focused, setFocused }) => {
                 recent={recent}
                 setFocused={setFocused}
                 updateTodayPosts={updateTodayPosts}
+                yyyymmdd={yyyymmdd}
             />
             <Bottom>
                 <QuickAddStyled
@@ -242,6 +243,7 @@ export default ({ data, meData, focused, setFocused }) => {
                     next={next}
                     updateTodayPosts={updateTodayPosts}
                     className={ focusedBlock.doing ? "disabled" : "" } 
+                    yyyymmdd={yyyymmdd}
                 />
                 <Buttons>
                     <ButtonItem onClick={onPopupDayComment} >

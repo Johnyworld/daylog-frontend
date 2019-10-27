@@ -12,6 +12,7 @@ import DoingList from './DoingList';
 import AddDoing from './AddDoing';
 import Words from '../Lang/Words.json';
 import LoaderButton from './LoaderButton';
+import { getToday } from '../Util/Convertors';
 
 const ADD_DOING = gql`
     mutation addDoing( $name: String!, $color: String!, $icon: String!, $categoryId: String! ) {
@@ -76,20 +77,22 @@ export default ({ data, me, categories, lang }) => {
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
     const [ creating, setCreating ] = useState(false);
 
+    const yyyymmdd = getToday();
+
     const [ addPinMutation ] = useMutation(PIN_DOING, { 
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ removePinMutation ] = useMutation(REMOVE_PIN, {
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ addDoingMutation ] = useMutation(ADD_DOING, {
-        refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+        refetchQueries : [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
     
     const [ editDoingMutation ] = useMutation(EDIT_DOING, {
-        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY }]
+        refetchQueries: [{ query: SEE_MY_DOINGS }, { query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ toggleFavoriteMutation ] = useMutation(TOGGLE_FAVORITE, {

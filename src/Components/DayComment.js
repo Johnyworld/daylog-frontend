@@ -7,10 +7,11 @@ import { useQuery } from 'react-apollo-hooks';
 import LoaderRelative from './LoaderRelative';
 import Comment from './Comment';
 import TextRegular from './TextRegular';
+import { getToday } from '../Util/Convertors';
 
 const SEE_DAY_COMMENTS = gql`
-    {
-        seeDayComments {
+    query seeDayComments( $yyyymmdd: String! ) {
+        seeDayComments( yyyymmdd: $yyyymmdd ) {
             id
             text
             createdAt
@@ -47,7 +48,8 @@ const Comments = styled.ul`
 `;
 
 const DayComment = ({ lang, closePopup, me }) => {
-    const { data, loading } = useQuery(SEE_DAY_COMMENTS);
+    const yyyymmdd = getToday();
+    const { data, loading } = useQuery(SEE_DAY_COMMENTS, { variables:{ yyyymmdd }});
 
     return (
         <Container>

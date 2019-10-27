@@ -22,7 +22,7 @@ const Container = styled.ul`
     }
 `;
 
-const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateTodayPosts }) => {
+const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateTodayPosts, yyyymmdd }) => {
     let timeblocks = React.createRef();
 
     const cutTopStartAt = getCutTopStartAt( focusedBlock, recent );
@@ -31,19 +31,20 @@ const TimeBlocks = ({ blocks, lang, focusedBlock, recent, setFocused, updateToda
     const cutBottomEndAt = getCutBottomEndAt( focusedBlock, recent );
 
     const [ editLocationMutation ] = useMutation( EDIT_POST, {
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ deletePostMutation ] = useMutation( EDIT_POST, { 
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     })
 
-    const [ cutTopMutation ] = useMutation( EDIT_POST, { 
-        refetchQueries: [{ query: TODAY_QUERY }]
+    const [ cutTopMutation ] = useMutation( EDIT_POST, {
+        variables: { yyyymmdd },
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     })
 
     const [ cutBottomMutation ] = useMutation( EDIT_POST, { 
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     })
 
     const editLocation = (id, location) => {

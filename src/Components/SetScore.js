@@ -5,7 +5,7 @@ import PopupHeader from './PopupHeader';
 import Words from '../Lang/Words.json';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
-import { blockToTimeFor } from '../Util/Convertors';
+import { blockToTimeFor, getToday } from '../Util/Convertors';
 import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import Score from './Score';
@@ -17,8 +17,8 @@ import { SEE_POST } from '../Routes/Post';
 import { getLangArray } from '../Util/Languages';
 
 export const EDIT_POST = gql`
-    mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $type: String! ) {
-        editPost( id: $id, doingId: $doingId, location: $location, score: $score, startAt: $startAt, endAt: $endAt, type: $type ) {
+    mutation editPost( $id: String!, $doingId: String, $location: String, $score: Float, $startAt: Int, $endAt: Int, $yyyymmdd: String, $type: String! ) {
+        editPost( id: $id, doingId: $doingId, location: $location, score: $score, startAt: $startAt, endAt: $endAt, yyyymmdd: $yyyymmdd, type: $type ) {
             id
             startAt
             endAt
@@ -69,9 +69,11 @@ const SetScore = ({ id, doing, closePopup, lang, blocks, color, scoreState, setS
     const scoreFloat = parseFloat(slider.value);
     const time = blockToTimeFor(blocks, lang, "isFor");
 
+    const yyyymmdd = getToday();
+
     const [ editPostMutation ] = useMutation( EDIT_POST, {
         variables: { id, score: scoreFloat, type:"score" },
-        refetchQueries: [{ query: SEE_POST, variables: { id } }]
+        refetchQueries: [{ query: SEE_POST, variables: { id, yyyymmdd } }]
     })
 
     const onClick = () => {

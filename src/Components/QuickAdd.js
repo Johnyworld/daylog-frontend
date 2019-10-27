@@ -14,8 +14,8 @@ import IconButton from './IconButton';
 import { getToday, getYesterday } from '../Util/Convertors';
 
 export const UPLOAD = gql`
-    mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float, $option: String ) {
-        upload( doingId: $doingId, location: $location, startAt: $startAt, score: $score, option: $option ) {
+    mutation upload( $doingId: String!, $location: String, $startAt: Int!, $score: Float, $yyyymmdd:String!, $option: String ) {
+        upload( doingId: $doingId, location: $location, startAt: $startAt, score: $score, yyyymmdd: $yyyymmdd, option: $option ) {
             id
         }
     }
@@ -59,7 +59,7 @@ const DoingButtons = styled.div`
     align-items: center;
 `;
 
-export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, className }) => {
+export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, className, yyyymmdd }) => {
     const [ nowPopup, setNowPopup ] = useState(false);
     const [ newId, setNewId ] = useState(false);
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
@@ -70,18 +70,19 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
             startAt: focusedBlock && focusedBlock.block,
+            yyyymmdd,
             option: focusedBlock && focusedBlock.isYesterday ? "yesterday" : null
         },
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ stillMutation ] = useMutation( EDIT_POST, {
         variables: { 
             id: recent && recent.id, 
             endAt: stillEndAt,
-            type: "endAt" 
+            type: "endAt"
         },
-        refetchQueries : [{ query: TODAY_QUERY }]
+        refetchQueries : [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const [ pullMutation ] = useMutation( EDIT_POST, {
@@ -89,9 +90,10 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
             id: next && next.id,
             startAt: pullResults && pullResults.startAt,
             endAt: pullResults && pullResults.endAt,
-            type: pullResults && pullResults.type 
+            type: pullResults && pullResults.type,
+            yyyymmdd
         },
-        refetchQueries: [{ query: TODAY_QUERY }]
+        refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
     const onClickNowPopup = () => {
