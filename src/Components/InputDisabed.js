@@ -16,6 +16,7 @@ const Field = styled(TextRegular)`
     display: block;
     padding: 10px 4px;
     ${({ theme })=> theme.inputUnderline };
+    border-color: ${({ theme })=> theme.c_lightGray };
 `;
 
 const InputDisabled = ({ className, label, field, lang }) => {
