@@ -64,9 +64,18 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
     const [ newId, setNewId ] = useState(false);
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
 
+    // still, pull 버튼 클릭시 전송될 startAt, EndAt 값들
     const stillEndAt = getStillEndAt( focusedBlock, recent ); 
     const pullResults = getPullResults( focusedBlock, next );
 
+    // 버튼들 Container의 가로 스크롤 최대 너비값
+    const width = (pins.length + 1) * (Theme.size_doingButton + 10);
+
+    // 커서의 Recent, Next Post의 아이디값 
+    const recentDoingId = recent ? recent.doing.id : "";
+    const nextDoingId = next ? next.doing.id : "";
+
+    // Apollo Mutations
     const [ uploadMutation ] = useMutation( UPLOAD, {
         variables: { 
             startAt: focusedBlock && focusedBlock.block,
@@ -96,14 +105,7 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
         refetchQueries: [{ query: TODAY_QUERY, variables: { yyyymmdd }}]
     });
 
-    const onClickNowPopup = () => {
-        setNowPopup(true);
-    }
-
-    const closePopup = () => {
-        setNowPopup(false);
-    }
-
+    // Button Click Events
     const onClickStill = ({ location }) => {
         const loc = location ? location : ""
         stillMutation({ variables: { location: loc }});
@@ -150,15 +152,21 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
         });
     }
 
+    // Popup Events
+    const onClickNowPopup = () => {
+        setNowPopup(true);
+    }
+
+    const closePopup = () => {
+        setNowPopup(false);
+    }
+
+    // 업로드가 완료되면 임시 랜덤 ID를 GraphQL DB의 정식 ID로 교체해줍니다.
     if ( newId ) {
         updateTodayPosts({ id: randomId, newId });
         setRandomId( Math.floor(Math.random()*10000).toString() );
         setNewId(false);
     }
-
-    const width = (pins.length + 1) * (Theme.size_doingButton + 10);
-    const recentDoingId = recent ? recent.doing.id : "";
-    const nextDoingId = next ? next.doing.id : "";
 
     return (
         <>
@@ -169,7 +177,8 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                 </Header>
                 <ScrollContainer>
                     <DoingButtons width={width}>
-                        { recent && recent.doing &&
+                        { /* "이어서" 버튼 (현재 커서 위치 기준, 이전 기록이 있을 경우) */
+                        recent && recent.doing &&
                             <DoingButton
                                 key={recent.doing.id}
                                 id={recent.doing.id}
@@ -183,7 +192,8 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                                 className="recent"
                             /> 
                         } 
-                        { next && next.doing &&
+                        { /* "당기기" 버튼 (현재 커서 위치 기준, 다음 기록이 있을 경우) */
+                        next && next.doing &&
                             <DoingButton
                                 key={next.doing.id}
                                 id={next.doing.id}
@@ -197,7 +207,8 @@ export default ({ pins, lang, recent, focusedBlock, next, updateTodayPosts, clas
                                 className="next"
                             /> 
                         }
-                        { pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
+                        { /* 나머지 버튼들 배열 */
+                        pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
                             const { doing } = pin;
                             return (
                                 doing.id !== recentDoingId && doing.id !== nextDoingId &&
