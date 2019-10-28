@@ -25,12 +25,6 @@ const PopupContent = styled.section`
    padding: 0 30px;
 `;
 
-const LinkStyled = styled(Link)`
-    position: absolute;
-    top: 30px;
-    right: 64px;
-`;
-
 const DoingGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -71,14 +65,11 @@ export default ({
         const childNodes = e.currentTarget.parentNode.childNodes;
         setSelectedDoing({id, name, color, icon});
         
-        // Set classname for style
-        childNodes.forEach( node => {
-            node.classList.remove('selected');
-        });
-
+        // Selected 클래스 네임 부여
+        childNodes.forEach( node => { node.classList.remove('selected'); });
         e.currentTarget.classList.add('selected');
 
-        // Set location value of recent (or next) post.
+        // recent (또는 next) 타임라인의 location 값으로 현재 location input 값 설정
         if ( e.currentTarget.classList.contains('recent') ) {
             location.setValue(recent.location);
             setIsStill(true);
@@ -119,13 +110,10 @@ export default ({
         <Container>
             <Popup>
                 <PopupHeader text={Words.whatNow} remark={Words.whatNowRemark} lang={lang} closePopup={closePopup} />
-                <LinkStyled to={`/doing`}>
-                    <Icon icon="nut" size="medium" />
-                </LinkStyled>
                 <PopupContent>
                     <DoingGrid>
-                        {/* 이전 타임라인에 기록이 있을 경우 "이어서" 버튼 */}
-                        { recent && recent.doing &&
+                        { /* "이어서" 버튼 (현재 커서 위치 기준, 이전 기록이 있을 경우) */
+                        recent && recent.doing &&
                             <DoingButton
                                 key={recent.doing.id}
                                 id={recent.doing.id}
@@ -139,8 +127,8 @@ export default ({
                                 className="recent"
                             /> 
                         }
-                        {/* 다음 타임라인에 기록이 있을 경우 "당기기" 버튼 */}
-                        { next && next.doing &&
+                        { /* "당기기" 버튼 (현재 커서 위치 기준, 다음 기록이 있을 경우) */
+                        next && next.doing &&
                             <DoingButton
                                 key={next.doing.id}
                                 id={next.doing.id}
@@ -154,8 +142,8 @@ export default ({
                                 className="next"
                             /> 
                         }
-                        {/* 나머지 버튼들 배열 */}
-                        { pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
+                        { /* 나머지 버튼들 배열 */
+                        pins[0] && pins.sort(a=>a.isFavorite?-1:0).map( pin => {
                             const { doing } = pin;
                             return (
                                 doing.id !== recentDoingId && doing.id !== nextDoingId &&
