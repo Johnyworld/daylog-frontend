@@ -81,7 +81,7 @@ const DoingItem = ({
                             <TextSmall text={Words.author} lang={lang} />
                             <Username username={author.username} inline="true" size="small" />
                             <TextSmall string={pinsCount} />
-                            <TextSmall string={"명 사용"} />
+                            <TextSmall text={Words.using} lang={lang} />
                         </div>
                     }
                 </Author>

@@ -431,6 +431,10 @@
         "kr" : "직접 만든 일과만 수정 가능하며 카테고리, 일과 이름은 수정할 수 없습니다. 여러분이 만든 일과를 삭제하더라도 사용중인 다른 사람들에게 영향을 주지 않습니다.",
         "en" : "You can only edit your own routines, not categories nor names. Deleting a routine you created does not affect others in use."
     },
+    "using" : {
+        "kr" : "명 사용",
+        "en" : " users"
+    },
     "colors" : {
         "kr" : "색상 선택",
         "en" : "Colors"

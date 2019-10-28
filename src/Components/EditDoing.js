@@ -23,9 +23,7 @@ const Popup = styled.div`
     ${({ theme })=> theme.popup };
 `;
 
-const PopupContent = styled.section`
-   ${({ theme })=> theme.popupContent }; 
-`;
+const PopupContent = styled.section` `;
 
 const Field = styled(InputDisabled)`
     margin-top: 10px;
@@ -35,21 +33,23 @@ const PickerStyled = styled(Picker)`
     margin-top: 5px;
 `;
 
-const Desc = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 20px;
-`;
-
 const FavoriteButton = styled(IconButton)`
     margin-left: 15%;
     animation-duration: .5s;
     animation-timing-function: cubic-bezier(.19,.52,.41,1.31);
 `;
 
-const Author = styled.div`
+const AuthorInfo = styled.div`
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const Author = styled.div``;
+
+const Users = styled.div`
+    margin-left: 10px;
 `;
 
 const Buttons = styled.div`
@@ -61,7 +61,7 @@ const Buttons = styled.div`
 const LargeButtonStyled = styled(LargeButton)`
     display: block;
     margin-left: auto;
-    margin-top: 30px;
+    margin-top: 50px;
 `;
 
 const EditDoing = ({ 
@@ -121,24 +121,25 @@ const EditDoing = ({
                     <Field label={Words.doingName} field={doingName} lang={lang} />
                     <PickerStyled onClick={onClickSideWindow} type="icon" icon={icon} lang={lang} isMine={me.id===author.id} />
                     <PickerStyled onClick={onClickSideWindow} type="color" color={color} lang={lang} isMine={me.id===author.id} />
-                    <Desc>
-                        <TextSmall text={Words.editDoingDesc} lang={lang} />
+                    <AuthorInfo>
+                        <Author>
+                            <TextSmall text={Words.author} lang={lang} />
+                            <Username username={author.username} inline="true" size="small" />
+                        </Author>
+                        <Users>
+                            <TextSmall string={pinsCount} />
+                            <TextSmall text={Words.using} lang={lang} />
+                        </Users>
                         { pin.isFavorite 
                             ? <FavoriteButton icon="favorite" size="medium" color={Theme.c_blue} onClick={onClickFavorite} />
                             : <FavoriteButton icon="favorite" size="medium" color={Theme.c_gray} onClick={onClickFavorite} />
                         }
-                    </Desc>
-                    <Author>
-                        <TextSmall text={Words.author} lang={lang} />
-                        <Username username={author.username} inline="true" size="small" />
-                        <TextSmall string={pinsCount} />
-                        <TextSmall string={"명 사용"} />
-                    </Author>
-                    <Buttons>
-                        <SmallButton text={Words.delete} lang={lang} color={Theme.c_red} onClick={onClickDelete} />
-                        <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
-                    </Buttons>
+                    </AuthorInfo>
                 </PopupContent>
+                <Buttons>
+                    <SmallButton text={Words.delete} lang={lang} color={Theme.c_red} onClick={onClickDelete} />
+                    <LargeButtonStyled text={Words.okay} lang={lang} color={Theme.c_blue} onClick={onClickSubmit} />
+                </Buttons>
                 <PickColor
                     type="color"
                     array={Colors}
