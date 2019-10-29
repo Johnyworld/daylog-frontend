@@ -8,6 +8,7 @@ import EditDoing from './EditDoing';
 import Button from './Button';
 import Username from './Username';
 import TextSmall from './TextSmall';
+import LoaderButton from './LoaderButton';
 
 const Container = styled.li`
     position: relative;
@@ -49,7 +50,7 @@ const IconContainer = styled.div`
 `;
 
 const DoingItem = ({ 
-    id, name, category, color, icon, author, me, lang, isAdding, pins, pinsCount,
+    id, name, category, color, icon, author, me, lang, isAdding, isCreating, pins, pinsCount,
     addPin, editDoing, toggleFavorite, removePin
 }) => {
     const [ editDoingPopup, setEditDoingPopup ] = useState(false);
@@ -90,9 +91,11 @@ const DoingItem = ({
                 <IconContainer>
                     <IconImage url={icon} size="medium" />
                 </IconContainer>
-                { ! isAdding 
-                    ? <IconButton icon="pencel" size="medium" onClick={onEditDoingPopup} />
-                    : <Button text={Words.select} lang={lang} className="narrow" onClick={selectingDoing} />
+                { !isCreating
+                    ? !isAdding 
+                        ? <IconButton icon="pencel" size="medium" onClick={onEditDoingPopup} />
+                        : <Button text={Words.select} lang={lang} className="narrow" onClick={selectingDoing} />
+                    : <LoaderButton />
                 }
             </Column>
             { editDoingPopup && 

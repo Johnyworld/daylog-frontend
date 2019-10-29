@@ -17,7 +17,12 @@ import { getToday } from '../Util/Convertors';
 const ADD_DOING = gql`
     mutation addDoing( $name: String!, $color: String!, $icon: String!, $categoryId: String! ) {
         addDoing ( name: $name, color: $color, icon: $icon, categoryId: $categoryId ) {
-            id
+            doing {
+                id
+            }
+            pin {
+                id
+            }
         }
     }
 `;
@@ -74,7 +79,9 @@ export default ({ data, me, categories, lang }) => {
     const [ myDoings, setMyDoings ] = useState(data);
     const [ myPins, setMyPins ] = useState(me.pins);
     const [ newId, setNewId ] = useState(false);
+    const [ newPinId, setNewPinId ] = useState(false);
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
+    const [ randomPinId, setRandomPinId ] = useState( Math.floor(Math.random()*10000).toString() );
     const [ creating, setCreating ] = useState(false);
 
     const yyyymmdd = getToday();
@@ -99,7 +106,7 @@ export default ({ data, me, categories, lang }) => {
         refetchQueries: [{ query: ME }]
     });
 
-    const updateMyDoings = ({ id, newId, create, icon, color, removeDoing, toggleFavorite }) => {
+    const updateMyDoings = ({ id, newId, create, icon, color, removeDoing }) => {
         const array = myDoings.slice();
 
         if (create) {
@@ -132,18 +139,26 @@ export default ({ data, me, categories, lang }) => {
         }
     }
 
-    const updateMyPins = ({ pinId }) => {
+    const updateMyPins = ({ pinId, newPinId, doingId, createPin, toggleFavorite }) => {
         const array = myPins.slice(); 
-        const target = array.find( pin => pin.id === pinId );
-        target.isFavorite = !target.isFavorite;
-        setMyPins(array);
+
+        if ( createPin ) {
+            setMyPins([ ...array, createPin ]);
+
+        } else {
+            const target = array.find( pin => pin.id === pinId );
+            if (toggleFavorite) target.isFavorite = !target.isFavorite;
+            if (newPinId) target.id = newPinId;
+            if (doingId) target.doing = { id: doingId };
+            setMyPins(array);
+        }
     }
 
     const addPin = ({ id, name, icon, color, authorId, authorName, category }) => {
         addPinMutation({ variables: { doingId: id }});
         const create = {
             id, name, icon, color, authorId, authorName, category,
-            isCreating:false
+            isCreating: false
         }
         updateMyDoings({ create });
         closePopup();
@@ -156,18 +171,30 @@ export default ({ data, me, categories, lang }) => {
 
     const addDoing = ({ name, icon, color, authorId, authorName, category }) => {
         setCreating(true);
+
         addDoingMutation({ 
             variables: { name, icon, color, categoryId: category.id },
             update: (_, { data: { addDoing }}) => {
-                setNewId(addDoing.id);
+                setNewId(addDoing.doing.id);
+                setNewPinId(addDoing.pin.id);
             }
         });
+
         const create = {
             name, icon, color, authorId, authorName, category,
             id: randomId, 
             isCreating: true,
         }
+
+        const createPin = {
+            id: randomPinId,
+            isFavorite: false,
+            doing: { id: randomId },
+            user: { id: authorId, name: authorName } 
+        }
+
         updateMyDoings({ create });
+        updateMyPins({ createPin });
     }
 
     const editDoing = ({ id, color, icon }) => {
@@ -177,7 +204,7 @@ export default ({ data, me, categories, lang }) => {
 
     const toggleFavorite = ({ pinId }) => {
         toggleFavoriteMutation({ variables: { pinId }});
-        updateMyPins({ pinId });
+        updateMyPins({ pinId, toggleFavorite: true });
     }
 
     const onAddDoingPopup = () => {
@@ -188,10 +215,17 @@ export default ({ data, me, categories, lang }) => {
         setAddDoingPopup(false);
     }
 
-    if ( newId ) {
+    if ( newId && newPinId ) {
         updateMyDoings({ id: randomId, newId });
+        updateMyPins({ pinId: randomPinId, newPinId, doingId: newId });
+
+        // 임시 ID 초기화
         setNewId(false);
+        setNewPinId(false);
         setRandomId( Math.floor(Math.random()*10000).toString() );
+        setRandomPinId( Math.floor(Math.random()*10000).toString() );
+
+        // 새로 추가 클릭 금지 초기화
         setCreating(false);
     }
 

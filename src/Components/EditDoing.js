@@ -126,14 +126,17 @@ const EditDoing = ({
                             <TextSmall text={Words.author} lang={lang} />
                             <Username username={author.username} inline="true" size="small" />
                         </Author>
-                        <Users>
-                            <TextSmall string={pinsCount} />
-                            <TextSmall text={Words.using} lang={lang} />
-                        </Users>
-                        { pin.isFavorite 
-                            ? <FavoriteButton icon="favorite" size="medium" color={Theme.c_blue} onClick={onClickFavorite} />
-                            : <FavoriteButton icon="favorite" size="medium" color={Theme.c_gray} onClick={onClickFavorite} />
+                        { pinsCount && 
+                            <Users>
+                                <TextSmall string={pinsCount} />
+                                <TextSmall text={Words.using} lang={lang} />
+                            </Users>
                         }
+                        { pin && (
+                            pin.isFavorite 
+                                ? <FavoriteButton icon="favorite" size="medium" color={Theme.c_blue} onClick={onClickFavorite} />
+                                : <FavoriteButton icon="favorite" size="medium" color={Theme.c_gray} onClick={onClickFavorite} />
+                        )}
                     </AuthorInfo>
                 </PopupContent>
                 <Buttons>

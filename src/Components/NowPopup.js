@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PopupHeader from './PopupHeader';
 import Words from '../Lang/Words.json'
-import Icon from './Icon';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import DoingButton from './DoingButton';
 import useInput from '../Hooks/useInput';
 import LargeButton from './LargeButton';

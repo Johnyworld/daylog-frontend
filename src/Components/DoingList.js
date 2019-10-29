@@ -39,6 +39,7 @@ export default ({ category, doings, pins, me, editDoing, toggleFavorite, removeP
                         color={doing.color}
                         icon={doing.icon}
                         author={doing.author}
+                        isCreating={doing.isCreating}
                         pinsCount={doing.pinsCount}
                         pins={pins}
                         me={me}
