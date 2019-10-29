@@ -44,7 +44,7 @@ const Heading = styled.div`
     
 `;
 
-export default ({ username, lang, yyyymmdd, setTheDate }) => {
+export default ({ username, lang, yyyymmdd, setTheDate, me }) => {
     const [ logState, setLogState ] = useState("day");
 
     const colors = [ "#61bffb", "#1a9df9", "#1585d4", "#085fb9", "#1738c6", "#7047e5",
@@ -115,10 +115,10 @@ export default ({ username, lang, yyyymmdd, setTheDate }) => {
                     <button onClick={changeDateNext}><Icon icon="next" color={Theme.c_blue} size="medium" /></button>
                 </div>
             </Heading>
-            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
-            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
-            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
-            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} /> }
+            { logState === "day" && <Daylog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} me={me} /> }
+            { logState === "week" && <Weeklog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} me={me} /> }
+            { logState === "month" && <Monthlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} me={me} /> }
+            { logState === "year" && <Yearlog username={username} yyyymmdd={yyyymmdd} colors={colors} lang={lang} me={me} /> }
         </Container>
     )
 }

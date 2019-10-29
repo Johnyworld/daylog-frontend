@@ -43,7 +43,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-const Daylog = ({ username, yyyymmdd, colors, lang }) => {
+const Daylog = ({ username, yyyymmdd, colors, lang, me }) => {
     const { data, loading } = useQuery( SEE_DAYLOG, { variables: { username, yyyymmdd }});
 
     return (
@@ -51,7 +51,7 @@ const Daylog = ({ username, yyyymmdd, colors, lang }) => {
             { loading && <LoaderRelative /> }
             { !loading && data && data.seeDayLog && <>
                 <GraphContainer data={data.seeDayLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} username={username} date={yyyymmdd} lang={lang} QUERY={SEE_DAYLOG} />
+                <Review review={data.seeDayLog.dayReviews[0]} averageScore={data.seeDayLog.averageScore} username={username} date={yyyymmdd} lang={lang} QUERY={SEE_DAYLOG} me={me} />
                 { data.seeDayLog.posts[0] &&
                     <TimeTable posts={data.seeDayLog.posts} yyyymmdd={yyyymmdd} lang={lang} />
                 }

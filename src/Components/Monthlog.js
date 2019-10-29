@@ -38,7 +38,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-const Monthlog = ({ username, yyyymmdd, colors, lang }) => {
+const Monthlog = ({ username, yyyymmdd, colors, lang, me }) => {
     const yyyymm = yyyymmdd.substr(0, 7);
     const { data, loading } = useQuery( SEE_MONTHLOG, { variables: { username, yyyymmdd: yyyymm }});
 
@@ -47,7 +47,7 @@ const Monthlog = ({ username, yyyymmdd, colors, lang }) => {
             { loading && <LoaderRelative /> }
             { !loading && data && data.seeMonthLog && <>
                 <GraphContainer data={data.seeMonthLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} username={username} date={yyyymm} lang={lang} QUERY={SEE_MONTHLOG} />
+                <Review review={data.seeMonthLog.monthReview[0]} averageScore={data.seeMonthLog.averageScore} username={username} date={yyyymm} lang={lang} QUERY={SEE_MONTHLOG} me={me} />
                 { data.seeMonthLog.eachReviews[0] &&
                     <Reviews reviews={data.seeMonthLog.eachReviews} date={yyyymm} lang={lang} />
                 }

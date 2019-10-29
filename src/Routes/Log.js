@@ -87,6 +87,7 @@ export default () => {
                         lang={lang}
                         yyyymmdd={yyyymmdd}
                         setTheDate={setTheDate}
+                        me={meData.me}
                     />
                 </>
             </Container>

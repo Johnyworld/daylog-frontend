@@ -16,8 +16,8 @@ import { FEED_POST } from '../Routes/Feed';
 import PopupHeader from './PopupHeader';
 
 const ADD_REVIEW = gql`
-    mutation addReview( $text: String!, $yyyymmdd: String! ) {
-        addReview( text: $text, yyyymmdd: $yyyymmdd ) {
+    mutation addReview( $username: String!, $text: String!, $yyyymmdd: String! ) {
+        addReview( username: $username, text: $text, yyyymmdd: $yyyymmdd ) {
             id
         }
     }
@@ -95,7 +95,7 @@ const Textarea = styled(TextareaAutosize)`
     border-bottom: 1px solid ${({ theme })=> theme.c_gray };
 `;
 
-export default ({ review, averageScore, username, date, weekDate, lang, QUERY }) => {
+export default ({ review, averageScore, username, date, weekDate, lang, QUERY, me }) => {
     const [ onPopup, setOnPopup ] = useState(false);
     const [ confirmDelete, setConfirmDelete ] = useState(false);
     const [ reviewTextDone, SetReviewTextDone ] = useState(review ? review.text : "");
@@ -104,7 +104,11 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
     const placeholder = languages(Words.inputReview);
 
     const [ addReviewMutation ] = useMutation(ADD_REVIEW, { 
-        variables: { text: reviewText.value, yyyymmdd: weekDate ? weekDate : date },
+        variables: { 
+            username,
+            text: reviewText.value,
+            yyyymmdd: weekDate ? weekDate : date
+        },
         refetchQueries: [
             { query: QUERY, variables: { username, yyyymmdd: date }},
             { query: FEED_POST }
@@ -164,19 +168,21 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY })
                         ? <TextRegular string={ reviewTextDone } lang={lang} />
                         : <TextRegular text={ Words.noReview } color={Theme.c_gray} lang={lang} />
                     }
-                    <Buttons>
-                        { !reviewTextDone
-                            ? <SmallButton onClick={onWrite} text={Words.write} lang={lang} /> 
-                            : (<>
-                                <SmallButton onClick={onEdit} text={Words.edit} lang={lang} />
-                                <SmallButton onClick={onDelete} text={Words.delete} lang={lang} />
-                                { confirmDelete && <>
-                                    <SmallButton onClick={cancelDelete} text={Words.cancel} lang={lang} />
-                                    <ConfirmDeleteMessage text={Words.confirmDelete} lang={lang} color={Theme.c_red} />
-                                </>}
-                            </>)
-                        }
-                    </Buttons>
+                    { me.username === username &&
+                        <Buttons>
+                            { !reviewTextDone
+                                ? <SmallButton onClick={onWrite} text={Words.write} lang={lang} /> 
+                                : (<>
+                                    <SmallButton onClick={onEdit} text={Words.edit} lang={lang} />
+                                    <SmallButton onClick={onDelete} text={Words.delete} lang={lang} />
+                                    { confirmDelete && <>
+                                        <SmallButton onClick={cancelDelete} text={Words.cancel} lang={lang} />
+                                        <ConfirmDeleteMessage text={Words.confirmDelete} lang={lang} color={Theme.c_red} />
+                                    </>}
+                                </>)
+                            }
+                        </Buttons>
+                    }
                 </Inner>
             </Box>
             { onPopup &&

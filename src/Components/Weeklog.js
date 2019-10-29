@@ -36,7 +36,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-const Weeklog = ({ username, yyyymmdd, colors, lang }) => {
+const Weeklog = ({ username, yyyymmdd, colors, lang, me }) => {
     const { data, loading } = useQuery( SEE_WEEKLOG, { variables: { username, yyyymmdd }});
     const yyyymmWeek = getWeek(yyyymmdd);
 
@@ -46,7 +46,7 @@ const Weeklog = ({ username, yyyymmdd, colors, lang }) => {
                 { loading && <LoaderRelative /> }
                 { !loading && data && data.seeWeekLog && <>
                     <GraphContainer data={data.seeWeekLog.doingLogs} colors={colors} lang={lang} />
-                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmdd} weekDate={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} />
+                    <Review review={data.seeWeekLog.weekReviews[0]} averageScore={data.seeWeekLog.averageScore} username={username} date={yyyymmdd} weekDate={yyyymmWeek} lang={lang} QUERY={SEE_WEEKLOG} me={me} />
                     <EachPosts posts={data.seeWeekLog.eachDays} username={username} lang={lang} />
                 </>}
             </Container>

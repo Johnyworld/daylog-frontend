@@ -31,7 +31,7 @@ const Container = styled.section`
     position: relative;
 `;
 
-const Yearlog = ({ username, yyyymmdd, colors, lang }) => {
+const Yearlog = ({ username, yyyymmdd, colors, lang, me }) => {
     const yyyy = yyyymmdd.substr(0, 4);
     const { data, loading } = useQuery( SEE_YEARLOG, { variables: { username, yyyymmdd: yyyy }});
 
@@ -40,7 +40,7 @@ const Yearlog = ({ username, yyyymmdd, colors, lang }) => {
             { loading && <LoaderRelative /> }
             { !loading && data && data.seeYearLog && <>
                 <GraphContainer data={data.seeYearLog.doingLogs} colors={colors} lang={lang} />
-                <Review review={data.seeYearLog.yearReview[0]} averageScore={data.seeYearLog.averageScore} username={username} date={yyyy} lang={lang} QUERY={SEE_YEARLOG} />
+                <Review review={data.seeYearLog.yearReview[0]} averageScore={data.seeYearLog.averageScore} username={username} date={yyyy} lang={lang} QUERY={SEE_YEARLOG} me={me} />
             </>}
         </Container>
     )
