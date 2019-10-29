@@ -238,7 +238,7 @@ export default () => {
                             <LogoStyled size="medium" color="negative" />
                             <form onSubmit={onSubmit}>
                                 <InputContainer>
-                                    <Input placeholder={Words.inputEmail} className="large" type="email" color="white" lang={lang} {...email} />
+                                    <Input placeholder={Words.emailToLogin} className="large" type="email" color="white" lang={lang} {...email} />
                                 </InputContainer>
                                 <MessageContainer>
                                     { email.value === "" && <Message text={Words.account} lang={lang} /> }

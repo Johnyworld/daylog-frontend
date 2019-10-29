@@ -12,11 +12,12 @@ const Container = styled.p`
     ${({ lang }) => lang === 'kr' && ` 
         letter-spacing: -.03em;
     `}
+    ${({ color }) => color && `color: ${color};` };
 `;
 
-const Message = ({ text, lang }) => {
+const Message = ({ className, text, color, lang }) => {
     return (
-        <Container lang={lang}>
+        <Container className={className} lang={lang} color={color} >
             <Languages text={text} lang={lang} />
         </Container>
     )

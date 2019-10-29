@@ -11,6 +11,10 @@
         "kr" : "LOG",
         "en" : "LOG"
     },
+    "emailToLogin" : {
+        "kr" : "로그인 이메일을 입력하세요.",
+        "en" : "Enter your email to log in."
+    },
     "inputEmail" : {
         "kr" : "이메일",
         "en" : "Email"
