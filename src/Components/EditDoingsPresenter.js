@@ -74,6 +74,54 @@ const Header = styled.header`
     align-items: flex-start;
 `;
 
+const updateMyDoings = ({ myDoings, setMyDoings, id, newId, create, icon, color, removeDoing }) => {
+    const array = myDoings.slice();
+
+    if (create) {
+        const newOne = {
+            id: create.id,
+            name: create.name,
+            icon: create.icon,
+            color: create.color,
+            isCreating: create.isCreating,
+            author: {
+                id: create.authorId,
+                username: create.authorName
+            },
+            category: create.category
+        }
+        setMyDoings([ ...array, newOne ]);
+
+    } else if ( removeDoing ) {
+        setMyDoings( array.filter( doing => doing.id !== id ));
+
+    } else {
+        const target = array.find( doing => doing.id === id );
+        if (newId) {
+            target.id = newId;
+            target.isCreating = false;
+        }
+        if (icon) target.icon = icon;
+        if (color) target.color = color;
+        setMyDoings(array);
+    }
+}
+
+const updateMyPins = ({ myPins, setMyPins, pinId, newPinId, doingId, createPin, toggleFavorite }) => {
+    const array = myPins.slice(); 
+
+    if ( createPin ) {
+        setMyPins([ ...array, createPin ]);
+
+    } else {
+        const target = array.find( pin => pin.id === pinId );
+        if (toggleFavorite) target.isFavorite = !target.isFavorite;
+        if (newPinId) target.id = newPinId;
+        if (doingId) target.doing = { id: doingId };
+        setMyPins(array);
+    }
+}
+
 export default ({ data, me, categories, lang }) => {
     const [ addDoingPopup, setAddDoingPopup ] = useState(false);
     const [ myDoings, setMyDoings ] = useState(data);
@@ -106,67 +154,19 @@ export default ({ data, me, categories, lang }) => {
         refetchQueries: [{ query: ME }]
     });
 
-    const updateMyDoings = ({ id, newId, create, icon, color, removeDoing }) => {
-        const array = myDoings.slice();
-
-        if (create) {
-            const newOne = {
-                id: create.id,
-                name: create.name,
-                icon: create.icon,
-                color: create.color,
-                isCreating: create.isCreating,
-                author: {
-                    id: create.authorId,
-                    username: create.authorName
-                },
-                category: create.category
-            }
-            setMyDoings([ ...array, newOne ]);
-
-        } else if ( removeDoing ) {
-            setMyDoings( array.filter( doing => doing.id !== id ));
-
-        } else {
-            const target = array.find( doing => doing.id === id );
-            if (newId) {
-                target.id = newId;
-                target.isCreating = false;
-            }
-            if (icon) target.icon = icon;
-            if (color) target.color = color;
-            setMyDoings(array);
-        }
-    }
-
-    const updateMyPins = ({ pinId, newPinId, doingId, createPin, toggleFavorite }) => {
-        const array = myPins.slice(); 
-
-        if ( createPin ) {
-            setMyPins([ ...array, createPin ]);
-
-        } else {
-            const target = array.find( pin => pin.id === pinId );
-            if (toggleFavorite) target.isFavorite = !target.isFavorite;
-            if (newPinId) target.id = newPinId;
-            if (doingId) target.doing = { id: doingId };
-            setMyPins(array);
-        }
-    }
-
     const addPin = ({ id, name, icon, color, authorId, authorName, category }) => {
         addPinMutation({ variables: { doingId: id }});
         const create = {
             id, name, icon, color, authorId, authorName, category,
             isCreating: false
         }
-        updateMyDoings({ create });
+        updateMyDoings({ myDoings, setMyDoings, create });
         closePopup();
     }
 
     const removePin = ({ doingId }) => {
         removePinMutation({ variables: { doingId } })
-        updateMyDoings({ id: doingId, removeDoing: true }); 
+        updateMyDoings({ myDoings, setMyDoings, id: doingId, removeDoing: true }); 
     }
 
     const addDoing = ({ name, icon, color, authorId, authorName, category }) => {
@@ -193,18 +193,18 @@ export default ({ data, me, categories, lang }) => {
             user: { id: authorId, name: authorName } 
         }
 
-        updateMyDoings({ create });
-        updateMyPins({ createPin });
+        updateMyDoings({ myDoings, setMyDoings, create });
+        updateMyPins({ myPins, setMyPins, createPin });
     }
 
     const editDoing = ({ id, color, icon }) => {
         editDoingMutation({ variables: { id, color, icon } });
-        updateMyDoings({ id, color, icon });
+        updateMyDoings({ myDoings, setMyDoings, id, color, icon });
     }
 
     const toggleFavorite = ({ pinId }) => {
         toggleFavoriteMutation({ variables: { pinId }});
-        updateMyPins({ pinId, toggleFavorite: true });
+        updateMyPins({ myPins, setMyPins, pinId, toggleFavorite: true });
     }
 
     const onAddDoingPopup = () => {
@@ -216,8 +216,8 @@ export default ({ data, me, categories, lang }) => {
     }
 
     if ( newId && newPinId ) {
-        updateMyDoings({ id: randomId, newId });
-        updateMyPins({ pinId: randomPinId, newPinId, doingId: newId });
+        updateMyDoings({ myDoings, setMyDoings, id: randomId, newId });
+        updateMyPins({ myPins, setMyPins, pinId: randomPinId, newPinId, doingId: newId });
 
         // 임시 ID 초기화
         setNewId(false);
