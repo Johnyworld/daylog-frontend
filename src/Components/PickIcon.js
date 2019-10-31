@@ -12,6 +12,7 @@ import IconImage from './IconImage';
 import TextSmall from './TextSmall';
 import TextRegular from './TextRegular';
 import Theme from '../Styles/Theme';
+import LoaderButton from './LoaderButton';
 
 const SideWindow = styled.div`
     ${({ theme })=> theme.sidePopup };
@@ -43,9 +44,57 @@ const UrlView = styled(TextSmall)`
     overflow-x: scroll;
 `;
 
+const UplodedImage = styled.button`
+    position: relative;
+
+    &::after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        border-right: 2px solid ${({ theme })=> theme.c_red };
+        border-bottom: 2px solid ${({ theme })=> theme.c_red };
+        transform: rotate(45deg) translateX(-50%);
+        top: -5px;
+        left: 45%;
+        width: 5px;
+        height: 5px;
+        visibility: hidden;
+    }
+
+    &::before {
+        content: 'click';
+        font-size: 10px;
+        color: ${({ theme })=> theme.c_red }; 
+        position: absolute;
+        transform: translate(-50%, 0);
+        top: -20px;
+        left: 50%;
+        visibility: hidden;
+        animation: floating 2s infinite;
+    }
+
+    ${({ url })=> url && `
+        &::after { visibility: visible; }
+        &::before { visibility: visible; }
+    `};
+
+    @keyframes floating {
+        0% {
+            transform: translate(-50%, 0);
+        }
+        50% {
+            transform: translate(-50%, -4px);
+        }
+        100% {
+            transform: translate(-50%, 0);
+        }
+    }
+`;
+
 const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, className }) => {
     const fileUrl = useInput('');
     const [ fileName, setFileName ] = useState('');
+    const [ uploading, setUploading ] = useState(false);
 
     const urlSubmit = () => {
         // eslint-disable-next-line no-useless-escape
@@ -55,6 +104,8 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
 
     const onChangeIconFile = (e) => {
         e.preventDefault();
+        setUploading(true);
+
         const formData = new FormData();
         formData.append('iconFile', e.target.files[0]);
         const config = {
@@ -66,8 +117,12 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
             .then(response => {
                 fileUrl.setValue(response.data.Location);
                 setFileName(response.data.originalname);
+                setUploading(false);
             })
-            .catch(()=>{ alert( languages(Words.failToUpload, lang)); });
+            .catch(()=>{ 
+                setUploading(false);
+                alert( languages(Words.failToUpload, lang));
+            });
     }
 
     return (
@@ -78,11 +133,14 @@ const PickIcon = ({ array, sideWindow, closePopup, onClick, text, lang, classNam
                 <Label htmlFor="iconFile">
                     <TextRegular text={Words.uploadManually} lang={lang} weight="bold" color={Theme.c_blue} />
                 </Label>
-                <InputFile placeholder={Words.uploadManually} onChange={onChangeIconFile} lang={lang} type="file" accept="image/*" name="iconFile" id="iconFile" />
+                <InputFile placeholder={Words.uploadManually} onChange={onChangeIconFile} lang={lang} type="file" accept="image/*" name="iconFile" id="iconFile" capture="camera" />
                 <UrlView string={fileName} />
-                <button onClick={urlSubmit}>
-                    <IconImage url={fileUrl.value} size="medium" />
-                </button>
+                { uploading 
+                    ? <LoaderButton />
+                    : <UplodedImage onClick={urlSubmit} url={fileUrl.value !== ""} >
+                        <IconImage url={fileUrl.value} size="medium" />
+                    </UplodedImage>
+                }
             </MenualUpload>
         </SideWindow>
     )

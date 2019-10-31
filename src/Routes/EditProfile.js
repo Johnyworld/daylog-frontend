@@ -21,6 +21,7 @@ import SmallButton from '../Components/SmallButton';
 import PopupHeader from '../Components/PopupHeader';
 import InputLabel from '../Components/InputLabel';
 import InputDisabled from '../Components/InputDisabed';
+import LoaderRelative from '../Components/LoaderRelative';
 
 const EDIT_USER = gql`
     mutation editUser( $id: String!, $username: String!, $fullname: String!, $bio: String, $lang: String! ) {
@@ -119,9 +120,14 @@ const UploadLabel = styled.label`
     cursor: pointer;
 `;
 
+const Uploading = styled.div`
+    text-align: center;
+`;
+
 export default ({ me }) => {
     const [ editDone, setEditDone ] = useState(false);
     const [ onPopup, setOnPopup ] = useState(false);
+    const [ uploading, setUploading ] = useState(false);
     const [ avatarState, setAvatarState ] = useState(me.avatar);
 
     const lang = getLang(me.lang);
@@ -171,6 +177,7 @@ export default ({ me }) => {
 
     const onChangeAvatar = (e) => {
         e.preventDefault();
+        setUploading(true);
         const formData = new FormData();
         formData.append('avatar', e.target.files[0]);
         formData.append('userId', me.id);
@@ -182,8 +189,12 @@ export default ({ me }) => {
             .then((response) => { 
                 setAvatarState(response.data.Location);
                 setOnPopup(false);
+                setUploading(false);
             })
-            .catch(() => { alert(languages(Words.failToUpload, lang)); });
+            .catch(() => {
+                setUploading(false);
+                alert(languages(Words.failToUpload, lang));
+            });
     }
 
     const onChangeSelect = (e) => {
@@ -224,12 +235,20 @@ export default ({ me }) => {
             { onPopup &&
                 <PopupContainer>
                     <Popup>
-                        <PopupHeader text={Words.editAvatar} lang={lang} closePopup={()=>{ setOnPopup(false) }} />
-                        <UploadLabel htmlFor="avatar">
-                            <TextRegular text={Words.upload} lang={lang} color={Theme.c_blue} weight="bold" />
-                        </UploadLabel>
-                        <Input placeholder={Words.upload} onChange={onChangeAvatar} lang={lang} type="file" accept="image/*" name="avatar" id="avatar" />
-                        <SmallButton text={Words.deleteAvatar} lang={lang} onClick={onDeleteAvatar} color={Theme.c_red} />
+                        { uploading 
+                            ? <Uploading>
+                                <LoaderRelative />
+                                <TextRegular text={Words.uploading} lang={lang} />
+                            </Uploading>
+                            : <>
+                                <PopupHeader text={Words.editAvatar} lang={lang} closePopup={()=>{ setOnPopup(false) }} />
+                                <UploadLabel htmlFor="avatar">
+                                    <TextRegular text={Words.upload} lang={lang} color={Theme.c_blue} weight="bold" />
+                                </UploadLabel>
+                                <Input placeholder={Words.upload} onChange={onChangeAvatar} lang={lang} type="file" accept="image/*" name="avatar" id="avatar" capture="camera" />
+                                <SmallButton text={Words.deleteAvatar} lang={lang} onClick={onDeleteAvatar} color={Theme.c_red} />
+                            </>
+                        }
                     </Popup>
                 </PopupContainer>
             }

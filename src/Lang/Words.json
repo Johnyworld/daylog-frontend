@@ -121,7 +121,7 @@
     },
     "dayComments" : {
         "kr" : "최근 댓글",
-        "en" : "Recent comments"
+        "en" : "Recent"
     },
     "noComments" : {
         "kr" : "댓글이 없습니다.",
@@ -182,6 +182,10 @@
     "upload" : {
         "kr" : "파일 업로드",
         "en" : "Upload photo"
+    },
+    "uploading" : {
+        "kr" : "업로드중...",
+        "en" : "Uploading..."
     },
     "uploadManually" : {
         "kr" : "직접 업로드",
@@ -251,6 +255,18 @@
         "kr" : "처음이신가요? 친구가 있다면, 찾아보세요!",
         "en" : "Is this your first time? You can find your friends!"
     },
+    "setPrivate" : {
+        "kr" : "🔒비공개 계정으로 전환",
+        "en" : "🔒Set Account Private"
+    },
+    "setPublic" : {
+        "kr" : "공개 계정으로 전환",
+        "en" : "Set Account Public"
+    },
+    "isPrivate" : {
+        "kr" : "이 계정은 비공개입니다.",
+        "en" : "This Account is Private."
+    }, 
     "day" : {
         "kr" : "Day",
         "en" : "Day"
