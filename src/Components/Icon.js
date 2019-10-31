@@ -255,4 +255,20 @@ export default ({ icon, size, color="#222" }) => {
             </g>
         </svg> 
     )
+
+    if ( icon === "lock" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <g>
+                <path fill="none" stroke={color} strokeMiterlimit="10" d="M18.8,22H5.2c-0.9,0-1.7-0.8-1.7-1.7v-8.6c0-0.9,0.8-1.7,1.7-1.7h13.5c0.9,0,1.7,0.8,1.7,1.7v8.6
+                    C20.4,21.3,19.7,22,18.8,22z"/>
+                <path fill="none" stroke={color} strokeMiterlimit="10" d="M6.6,10.1V7.4C6.6,4.4,9,2,12,2h0c3,0,5.4,2.4,5.4,5.4v2.7"/>
+            </g>
+            <line fill="none" stroke={color} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" x1="12" y1="14.3" x2="12" y2="17.1"/>
+            <circle fill={color} cx="12" cy="13.5" r="1.2"/> 
+        </svg> 
+    )
+
 }

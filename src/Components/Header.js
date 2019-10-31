@@ -173,7 +173,16 @@ export default withRouter(({ history }) => {
                         <HamburgerMenu onClick={callSideMenu} icon="hamburger" size="medium" color={Theme.c_blue} />
                     </Inner>
                 </Container>
-                { sidemenu && <SideMenu closePopup={closeSideMenu} username={data.me.username} avatar={data.me.avatar} route={route} lang={lang} /> }
+                { sidemenu && 
+                    <SideMenu
+                        closePopup={closeSideMenu}
+                        username={data.me.username}
+                        avatar={data.me.avatar}
+                        isPrivate={data.me.isPrivate}
+                        route={route}
+                        lang={lang}
+                    />
+                }
             </>
         )
     } else return null;

@@ -91,6 +91,7 @@ const UserLog = ({
     fullname,
     likesTotal,
     bio,
+    isPrivate,
     lang,
     followersCount,
     followingCount,
@@ -153,25 +154,29 @@ const UserLog = ({
                             <TextRegular string={likesTotal} />
                         </Likes>
                     </User>
-                    <Follow>
-                        <button onClick={showFollowersList} >
-                            <TextSmall text={Words.followers} color={Theme.c_black} />
-                            <TextSmall string={followersCountState} color={Theme.c_black} weight="bold" />
-                        </button>
-                        <button onClick={showFollowingList} >
-                            <TextSmall text={Words.following} color={Theme.c_black} />
-                            <TextSmall string={followingCount} color={Theme.c_black} weight="bold" />
-                        </button>
-                    </Follow>
+                    { isPrivate && username !== meName ? null :
+                        <Follow>
+                            <button onClick={showFollowersList} >
+                                <TextSmall text={Words.followers} color={Theme.c_black} />
+                                <TextSmall string={followersCountState} color={Theme.c_black} weight="bold" />
+                            </button>
+                            <button onClick={showFollowingList} >
+                                <TextSmall text={Words.following} color={Theme.c_black} />
+                                <TextSmall string={followingCount} color={Theme.c_black} weight="bold" />
+                            </button>
+                        </Follow>
+                    }
                     <div>
                         <p><TextSmall string={fullname} color={Theme.c_blueDarker1} /></p>
                         <TextSmall string={bio} lang={lang} />
                     </div>
                 </Info>
                 { !isSelf
-                    ? !isFollowingState
-                        ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
-                        : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
+                    ? !isPrivate && (
+                        !isFollowingState
+                            ? <Button onClick={onClickFollow} text={Words.follow} lang={lang} />
+                            : <Button onClick={onClickFollow} text={Words.unFollow} lang={lang} />
+                    )
                     : <Button to={`/log/${username}/edit`} text={Words.editProfile} lang={lang} /> 
                 }
                 { onPopup === "followingList" && <Following username={username} closePopup={closePopup} lang={lang} meName={meName} /> }

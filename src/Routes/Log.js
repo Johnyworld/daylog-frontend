@@ -8,6 +8,9 @@ import UserLog from '../Components/UserLog';
 import DateLog from '../Components/DateLog';
 import { ME } from './Today';
 import { getYyyymmdd } from '../Util/Convertors';
+import Words from '../Lang/Words.json';
+import TextRegular from '../Components/TextRegular';
+import Icon from '../Components/Icon';
 
 export const SEE_USER = gql`
     query seeUser( $username: String! ) {
@@ -17,6 +20,7 @@ export const SEE_USER = gql`
             fullname
             avatar
             bio
+            isPrivate
             likesTotal
             followersCount
             followingCount
@@ -29,6 +33,17 @@ export const SEE_USER = gql`
 const Container = styled.main`
     ${({ theme })=> theme.mainContainer };
     background-color: ${({ theme })=> theme.c_lightGray };
+`;
+
+const PrivacyMessage = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+`;
+
+const PrivacyText = styled(TextRegular)`
+    margin-left: 10px;
 `;
 
 export default () => {
@@ -75,6 +90,7 @@ export default () => {
                         fullname={data.seeUser.fullname}
                         likesTotal={data.seeUser.likesTotal}
                         bio={data.seeUser.bio}
+                        isPrivate={data.seeUser.isPrivate}
                         lang={lang}
                         followersCount={data.seeUser.followersCount}
                         followingCount={data.seeUser.followingCount}
@@ -82,13 +98,20 @@ export default () => {
                         isSelf={data.seeUser.isSelf}
                         meName={meData.me.username}
                     />
-                    <DateLog
-                        username={username}
-                        lang={lang}
-                        yyyymmdd={yyyymmdd}
-                        setTheDate={setTheDate}
-                        me={meData.me}
-                    />
+                    { data.seeUser.isPrivate && data.seeUser.username !== meData.me.username
+                        ? <PrivacyMessage>
+                            <Icon icon="lock" size="medium" />
+                            <PrivacyText text={Words.isPrivate} lang={lang} />
+                        </PrivacyMessage>
+                        : <DateLog
+                            username={username}
+                            lang={lang}
+                            yyyymmdd={yyyymmdd}
+                            setTheDate={setTheDate}
+                            me={meData.me}
+                        />
+                    }
+                    
                 </>
             </Container>
         </> 

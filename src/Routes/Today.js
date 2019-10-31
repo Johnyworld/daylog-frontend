@@ -14,6 +14,7 @@ export const ME = gql`
             fullname
             email
             bio
+            isPrivate
             lang
             followersCount
             followingCount

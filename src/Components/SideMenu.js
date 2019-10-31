@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PopupHeader from './PopupHeader';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
@@ -14,6 +14,12 @@ import SmallButton from './SmallButton';
 const LOCAL_LOG_OUT = gql`
     mutation logUserOut {
         logUserOut @client
+    }
+`;
+
+const TOGGLE_PRIVATE = gql`
+    mutation togglePrivate( $username: String! ) {
+        togglePrivate( username: $username )
     }
 `;
 
@@ -76,15 +82,29 @@ const Menu = styled.section`
 
 const LinkStyled = styled(Link)`
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 `;
 
-export default ({ closePopup, username, avatar, lang }) => {
+const MenuButton = styled(SmallButton)`
+    display: block;
+    margin-bottom: 25px;
+`;
+
+export default ({ closePopup, username, avatar, isPrivate, lang }) => {
     const [ localLogOutMutation ] = useMutation( LOCAL_LOG_OUT );
+    const [ privateState, setPrivateState ] = useState( isPrivate );
+    const isPrivateWord = privateState ? Words.setPublic : Words.setPrivate;
+
+    const [ togglePrivateMutation ] = useMutation( TOGGLE_PRIVATE, { variables: { username }});
 
     const localLogOut = () => {
         localLogOutMutation();
         closePopup();
+    }
+
+    const togglePrivate = () => {
+        setPrivateState( !privateState );
+        togglePrivateMutation();
     }
 
     return (
@@ -94,6 +114,7 @@ export default ({ closePopup, username, avatar, lang }) => {
                 <User>
                     <UserAvatar avatar={avatar} size="small" />
                     <Name string={username} text={Words.sir} lang={lang} weight="bold" />
+                    { privateState ? " 🔒" : "" }
                 </User>
                 <Gnb>
                     <LinkGnb to={`/feed`} onClick={closePopup} >
@@ -113,7 +134,8 @@ export default ({ closePopup, username, avatar, lang }) => {
                     <LinkStyled to={`/doing`} onClick={closePopup} >
                         <TextRegular text={Words.doingList} weight="bold" lang={lang} color={Theme.c_blueDarker2} />
                     </LinkStyled>
-                    <SmallButton onClick={localLogOut} text={Words.logOut} lang={lang} color={Theme.c_red} />
+                    <MenuButton onClick={togglePrivate} text={isPrivateWord} lang={lang} color={Theme.c_blueDarker2} />
+                    <MenuButton onClick={localLogOut} text={Words.logOut} lang={lang} color={Theme.c_red} />
                 </Menu>
             </Box>
         </Container>
