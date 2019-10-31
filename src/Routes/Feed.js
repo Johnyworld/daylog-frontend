@@ -173,8 +173,10 @@ export default () => {
                         const resultLastPost = fetchMoreResult.seeFeed.posts[fetchMoreResult.seeFeed.posts.length-1];
                         const prevLastReview = prev.seeFeed.reviews[prev.seeFeed.reviews.length-1];
                         const resultLastReview = fetchMoreResult.seeFeed.reviews[fetchMoreResult.seeFeed.reviews.length-1];
-
-                        if ( prevLastPost.id === resultLastPost.id && prevLastReview.id === resultLastReview.id ) {
+                        if ( 
+                            ( prevLastPost ? prevLastPost.id === resultLastPost.id : true ) && 
+                            ( prevLastReview ? prevLastReview.id === resultLastReview.id : true ) 
+                        ) {
                             setIsFetching(true);
                             setFetchingDone(true);
                             console.log("Fetching DONE");
