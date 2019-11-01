@@ -38,7 +38,7 @@ const PickGrid = ({ type, array, onClick }) => {
         <Container>
             <Items>
                 { array.map( item => (
-                    <button onClick={onClick.bind(this, item.value)} key={item.value} >
+                    <button onClick={onClick.bind(this, item.value)} key={item.key} >
                         <Item value={item.value} type={type} />
                     </button>
                 ))}
