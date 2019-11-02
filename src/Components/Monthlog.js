@@ -16,6 +16,7 @@ const SEE_MONTHLOG = gql`
                 id
                 text
                 likesCount
+                commentsCount
             }
             eachReviews {
                 id

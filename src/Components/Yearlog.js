@@ -22,6 +22,7 @@ const SEE_YEARLOG = gql`
                 id
                 text
                 likesCount
+                commentsCount
             }
         }
     }

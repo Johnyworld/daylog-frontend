@@ -14,6 +14,7 @@ import { languages } from '../Util/Languages';
 import TextSmall from './TextSmall';
 import { FEED_QUERY } from '../Routes/Feed';
 import PopupHeader from './PopupHeader';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const ADD_REVIEW = gql`
     mutation addReview( $username: String!, $text: String!, $yyyymmdd: String! ) {
@@ -69,6 +70,11 @@ const Buttons = styled.div`
 const ConfirmDeleteMessage = styled(TextSmall)`
     display: block;
     margin-top: 5px;
+`;
+
+const CommentsCount = styled(Link)`
+    display: block;
+    margin-top: 10px;
 `;
 
 const InputPopup = styled.div`
@@ -183,6 +189,12 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY, m
                             }
                         </Buttons>
                     }
+                    { review && (
+                        review.commentsCount || review.commentsCount !== undefined || review.commentsCount !== null ?
+                            <CommentsCount to={`/review/${review.id}`}>
+                                <TextSmall string={review.commentsCount+''} text={Words.commentsCount} lang={lang} color={Theme.c_blue} weight="bold" />
+                            </CommentsCount>
+                    : null )}
                 </Inner>
             </Box>
             { onPopup &&

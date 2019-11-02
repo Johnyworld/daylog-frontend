@@ -17,6 +17,7 @@ const SEE_WEEKLOG = gql`
                 id
                 text
                 likesCount
+                commentsCount
             }
             eachDays {
                 yyyymmdd

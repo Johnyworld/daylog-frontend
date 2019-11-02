@@ -16,6 +16,7 @@ export const SEE_DAYLOG = gql`
                 id
                 text
                 likesCount
+                commentsCount
             }
             averageScore
             doingLogs {
