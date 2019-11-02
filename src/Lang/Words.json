@@ -135,6 +135,10 @@
         "kr" : "개의 댓글 더 보기",
         "en" : " more comments"
     },
+    "moreComment" : {
+        "kr" : "개의 댓글 더 보기",
+        "en" : " more comment"
+    },
     "category" : {
         "kr" : "카테고리",
         "en" : "Category" 
@@ -295,13 +299,17 @@
         "kr" : "개의 파이팅",
         "en" : " GO!"
     },
+    "aComment" : {
+        "kr" : "개의 댓글",
+        "en" : " comment"
+    },
     "commentsCount" : {
         "kr" : "개의 댓글",
         "en" : " comments"
     },
     "newComment" : {
-        "kr" : "댓글 쓰기...",
-        "en" : "Add a new comment..."
+        "kr" : "댓글 쓰기",
+        "en" : "Add a new comment"
     },
     "failToSend" : {
         "kr" : "메시지 전송에 실패했습니다.",
