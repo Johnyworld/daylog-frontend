@@ -59,7 +59,7 @@ const PostInfo = ({
             <Heading>
                 <DoingName string={doing} lang={lang} color={color} score={ score && scoreZero(score.toString()) } />
                 { likesCountState !== 0 &&
-                    <Likes string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
+                    <Likes string={likesCountState+''} text={likesCountState === 1 ? Words.like : Words.likes} lang={lang} color={Theme.c_black} />
                 }
             </Heading>
             <FeedUser

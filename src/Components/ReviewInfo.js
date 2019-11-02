@@ -31,7 +31,7 @@ const ReviewInfo = ({ className, id, yyyymmdd, likesCountState, text, author, av
                 <Date string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
                 <Article string={text} lang={lang} />
                 { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
+                    <TextSmall string={likesCountState+''} text={likesCountState === 1 ? Words.like : Words.likes} lang={lang} color={Theme.c_black} />
                 }
             </Text>
             <FeedUser

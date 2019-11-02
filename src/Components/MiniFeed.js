@@ -86,7 +86,7 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
                         <LikesAndComments>
                             <TextCommentsCount type="post" id={post.id} count={post.commentsCount} lang={lang} />
                             { post.likesCount !== 0 &&
-                                <TextSmall string={post.likesCount+''} text={Words.likes} lang={lang} color={Theme.c_black} />
+                                <TextSmall string={post.likesCount+''} text={post.likesCount === 1 ? Words.like : Words.likes} lang={lang} color={Theme.c_black} />
                             }
                         </LikesAndComments>
                     </Box>
