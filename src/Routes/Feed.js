@@ -15,7 +15,7 @@ import { BreakPoint } from '../Styles/Theme';
 import TextLarge from '../Components/TextLarge';
 import TextRegular from '../Components/TextRegular';
 
-export const FEED_POST = gql`
+export const FEED_QUERY = gql`
     query seeFeed( $limit: Int, $offset: Int ) {
         seeFeed( limit: $limit, offset: $offset ) {
             reviews {
@@ -25,10 +25,21 @@ export const FEED_POST = gql`
                 createdAt
                 isLiked
                 likesCount
+                commentsCount
                 user {
                     id
                     username
                     avatar
+                }
+                comments {
+                    id
+                    text
+                    createdAt
+                    user {
+                        id
+                        username
+                        avatar
+                    }
                 }
             }
             posts {
@@ -71,24 +82,6 @@ export const FEED_POST = gql`
                         avatar
                     }
                 }
-            }
-        }
-    }
-`;
-
-export const FEED_REVIEW = gql`
-    query seeFeedReview( $limit: Int, $offset: Int ) {
-        seeFeedReview( limit: $limit, offset: $offset ) {
-            id
-            text
-            yyyymmdd
-            createdAt
-            isLiked
-            likesCount
-            user {
-                id
-                username
-                avatar
             }
         }
     }
@@ -147,7 +140,7 @@ const getFeed = ( posts, reviews ) => {
 }
 
 export default () => {
-    const { data, loading, fetchMore } = useQuery(FEED_POST);
+    const { data, loading, fetchMore } = useQuery(FEED_QUERY);
     const { data: meData, loading: meLoading } = useQuery(ME);
     const [ isFetching, setIsFetching ] = useState(false);
     const [ fetchingDone, setFetchingDone ] = useState(false);
@@ -246,6 +239,8 @@ export default () => {
                                         createdAt={post.createdAt}
                                         isLiked={post.isLiked}
                                         likesCount={post.likesCount}
+                                        comments={post.comments}
+                                        commentsCount={post.commentsCount}
                                         author={post.user.username}
                                         avatar={post.user.avatar}
                                         lang={lang}

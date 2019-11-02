@@ -8,7 +8,7 @@ import Username from './Username';
 import TextSmall from './TextSmall';
 import { FOLLOW, UNFOLLOW } from './UserLog';
 import { useMutation } from 'react-apollo-hooks';
-import { FEED_POST } from '../Routes/Feed';
+import { FEED_QUERY } from '../Routes/Feed';
 import { SEE_FOLLOWERS } from './Followers';
 import { SEE_FOLLOWING } from './Following';
 import { ME } from '../Routes/Today';
@@ -46,7 +46,7 @@ const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, l
             { query: SEE_FOLLOWERS, variables: { username: thisUser }},
             { query: SEE_FOLLOWING, variables: { username: thisUser }},
             { query: ME },
-            { query: FEED_POST }
+            { query: FEED_QUERY }
         ]
     });
 
@@ -56,7 +56,7 @@ const UserListItem = ({ id, username, fullname, avatar, isFollowing, thisUser, l
             { query: SEE_FOLLOWERS, variables: { username: thisUser }},
             { query: SEE_FOLLOWING, variables: { username: thisUser }},
             { query: ME },
-            { query: FEED_POST }
+            { query: FEED_QUERY }
         ]
     });
 

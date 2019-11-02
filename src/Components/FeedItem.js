@@ -97,6 +97,7 @@ export default ({
                     id={id}
                     comments={comments}
                     commentsCount={commentsCount}
+                    type="post"
                     lang={lang}
                 />
             }

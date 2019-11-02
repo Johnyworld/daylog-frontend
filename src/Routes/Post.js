@@ -12,10 +12,12 @@ import { BreakPoint } from '../Styles/Theme';
 import { ME } from './Today';
 import Comments from '../Components/Comments.js';
 import PostInfo from '../Components/PostInfo.js';
+import ReviewInfo from '../Components/ReviewInfo.js';
+import { FEED_QUERY } from './Feed.js';
 
 const ADD_COMMENT = gql`
-    mutation addComment( $postId: String!, $text: String! ) {
-        addComment( postId: $postId, text: $text ) {
+    mutation addComment( $id: String!, $text: String!, $type: String! ) {
+        addComment( id: $id, text: $text, type: $type ) {
             id
             text
             createdAt
@@ -77,6 +79,36 @@ export const SEE_POST = gql`
     }
 `;
 
+export const SEE_REVIEW = gql`
+    query seeReview( $id: String! ) {
+        seeReview( id: $id ) {
+            id
+            text
+            yyyymmdd
+            isLiked
+            likesCount
+            user {
+                id
+                username
+                avatar
+            } 
+            comments {
+                id
+                text
+                createdAt
+                user {
+                    id
+                    username
+                    avatar
+                }
+                post {
+                    id
+                }
+            }
+        }
+    }
+`;
+
 const Container = styled.main`
     background-color: ${({ theme })=> theme.c_lightGray };
     padding-bottom: 70px;
@@ -88,12 +120,21 @@ const Container = styled.main`
     }
 `;
 
-const PostInfoStyled = styled(PostInfo)`
+const FeedItemBox = `
     width: 100%;
     padding: 30px;
     margin-bottom: 10px;
+`
+
+const PostInfoStyled = styled(PostInfo)`
     ${({ theme })=> theme.box };
+    ${FeedItemBox}
 `;
+
+const ReviewInfoStyled = styled(ReviewInfo)`
+    ${({ theme })=> theme.box };
+    ${FeedItemBox}
+`
 
 const Wrapper = styled.div`
     ${({ theme })=> theme.wrapper }
@@ -105,7 +146,9 @@ const NoCommentMessage = styled.p`
 `
 
 export default () => {
-    const id = window.location.hash.split("/")[2];
+    const split = window.location.hash.split("/");
+    const type = split[1];
+    const id = split[2];
     const newComment = useInput('');
     
     const [ newComments, setNewComments ] = useState([]);
@@ -113,14 +156,26 @@ export default () => {
     const [ randomId, setRandomId ] = useState( Math.floor(Math.random()*10000).toString() );
     const [ creating, setCreating ] = useState(false);
     
-    const { data, loading } = useQuery(SEE_POST, { variables: { id }});
+    const { data, loading } = type === 'post'
+        ? useQuery(SEE_POST, { variables: { id }})
+        : useQuery(SEE_REVIEW, { variables: { id }})
+
+    const comments = type === 'post'
+        ? data && data.seePost && data.seePost.comments
+        : data && data.seeReview && data.seeReview.comments
+
     const { data: meData, loading: meLoading } = useQuery(ME);
-        
+
     const lang = getLang( !meLoading && meData && meData.me && meData.me.lang );
     const failToSend = languages(Words.failToSend, lang);
 
     const [ addCommentMutation ] = useMutation( ADD_COMMENT, { 
-        variables: { postId: id, text: newComment.value }
+        variables: { 
+            id, 
+            text: newComment.value,
+            type
+        },
+        refetchQueries: [{ query: FEED_QUERY }]
     });
 
     const [ editCommentMutation ] = useMutation(EDIT_COMMENT);
@@ -134,7 +189,6 @@ export default () => {
                     id: randomId,
                     text: newComment.value,
                     createdAt: new Date().toISOString(),
-                    post: { id },
                     isCreating: true,
                     user: {
                         id: meData && meData.me && meData.me.username, 
@@ -142,6 +196,9 @@ export default () => {
                         avatar: meData && meData.me && meData.me.avatar,
                     }
                 }
+                if ( type==="post" ) newOne.post = { id }
+                if ( type==="review" ) newOne.review = { id }
+
                 setNewComments([ ...newComments, newOne ]);
 
                 newComment.setValue("");
@@ -176,31 +233,47 @@ export default () => {
 
     return <>
         { loading && <Loader />}
-        { !loading && data && data.seePost && (
+        { !loading && data && (
             <Container>
                 <Wrapper>
-                    <PostInfoStyled
-                        doing={data.seePost.doing.name}
-                        color={data.seePost.doing.color}
-                        category={data.seePost.doing.category}
-                        score={data.seePost.score}
-                        startAt={data.seePost.startAt}
-                        blocks={data.seePost.blocks}
-                        likesCountState={data.seePost.likesCount}
-                        lang={lang}
-                        id={id}
-                        author={data.seePost.user.username}
-                        avatar={data.seePost.user.avatar}
-                        location={data.seePost.location}
-                        createdAt={data.seePost.createdAt}
-                        disableComment={true}
-                    />
+
+                    { type === 'post' && data.seePost &&
+                        <PostInfoStyled
+                            doing={data.seePost.doing.name}
+                            color={data.seePost.doing.color}
+                            category={data.seePost.doing.category}
+                            score={data.seePost.score}
+                            startAt={data.seePost.startAt}
+                            blocks={data.seePost.blocks}
+                            likesCountState={data.seePost.likesCount}
+                            lang={lang}
+                            id={id}
+                            author={data.seePost.user.username}
+                            avatar={data.seePost.user.avatar}
+                            location={data.seePost.location}
+                            createdAt={data.seePost.createdAt}
+                        />
+                    }
+
+                    { type === 'review' && data.seeReview &&
+                        <ReviewInfoStyled
+                            yyyymmdd={data.seeReview.yyyymmdd}
+                            likesCount={data.seeReview.likesCount}
+                            text={data.seeReview.text}
+                            id={id}
+                            author={data.seeReview.user.username}
+                            avatar={data.seeReview.user.avatar}
+                            likesCountState={data.seeReview.likesCount}
+                            lang={lang}
+                        />
+                    }
+
                     { !meLoading && meData && meData.me &&
                         <>
-                            { data.seePost.comments[0] || newComments[0]
+                            { comments[0] || newComments[0]
                                 ? 
                                 <Comments
-                                    comments={data.seePost.comments}
+                                    comments={comments}
                                     newComments={newComments}
                                     me={meData.me}
                                     lang={lang} 

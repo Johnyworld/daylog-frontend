@@ -14,7 +14,8 @@ export default ({ comments, newComments, me, lang, editCommentMutation }) => {
                 <Comment
                     key={comment.id}
                     id={comment.id}
-                    postId={comment.post.id}
+                    postId={comment.post && comment.post.id}
+                    reviewId={comment.review && comment.review.id}
                     text={comment.text}
                     author={comment.user.username}
                     avatar={comment.user.avatar}
@@ -29,7 +30,8 @@ export default ({ comments, newComments, me, lang, editCommentMutation }) => {
                 <Comment
                     key={comment.id}
                     id={comment.id}
-                    postId={comment.post.id}
+                    postId={comment.post && comment.post.id}
+                    reviewId={comment.review && comment.review.id}
                     text={comment.text}
                     author={comment.user.username}
                     avatar={comment.user.avatar}

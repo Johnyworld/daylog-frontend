@@ -11,7 +11,7 @@ import Theme, { BreakPoint } from '../Styles/Theme';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
 import { SEE_USER } from '../Routes/Log';
-import { FEED_POST } from '../Routes/Feed';
+import { FEED_QUERY } from '../Routes/Feed';
 import Following from './Following';
 import Followers from './Followers';
 import { getLangArray } from '../Util/Languages';
@@ -107,14 +107,14 @@ const UserLog = ({
         variables : { id },
         refetchQueries: [
             { query: SEE_USER, variables: { username }},
-            { query: FEED_POST }, 
+            { query: FEED_QUERY }, 
         ]
     });
     const [ unFollowMutation ] = useMutation( UNFOLLOW, { 
         variables : { id },
         refetchQueries: [
             { query: SEE_USER, variables: { username }},
-            { query: FEED_POST }, 
+            { query: FEED_QUERY }, 
         ]
     });
 

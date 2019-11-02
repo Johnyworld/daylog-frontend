@@ -28,13 +28,13 @@ const MainText = styled(TextRegular)`
     display: inline;
 `
 
-const FeedItemComments = ({ id, comments, commentsCount, lang }) => {
+const FeedItemComments = ({ id, comments, commentsCount, type, lang }) => {
     const limit = 2;
 
     return (
         <Container>
             { commentsCount > limit &&
-                <LinkStyled to={`/post/${id}`}>
+                <LinkStyled to={`/${type}/${id}`}>
                     <TextSmall text={Words.view} lang={lang} color={Theme.c_blue} weight="bold" />
                     <TextSmall string={commentsCount-limit} lang={lang} color={Theme.c_blue} weight="bold" />
                     <TextSmall text={Words.moreComments} lang={lang} color={Theme.c_blue} weight="bold" />

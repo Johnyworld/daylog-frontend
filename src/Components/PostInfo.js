@@ -45,7 +45,7 @@ const Likes = styled(TextSmall)`
 
 const PostInfo = ({ 
     className, doing, color, score, category, startAt, blocks, lang, likesCountState,
-    id, author, avatar, location, createdAt, toggleLike, isLikedState, disableComment = false
+    id, author, avatar, location, createdAt, toggleLike, isLikedState
 }) => {
     return (
         <Container className={className} >
@@ -70,8 +70,8 @@ const PostInfo = ({
                 createdAt={createdAt}
                 toggleLike={toggleLike}
                 isLikedState={isLikedState}
-                disableComment={disableComment}
                 lang={lang}
+                type="post"
             />
         </Container>
     )

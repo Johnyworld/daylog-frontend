@@ -35,7 +35,7 @@ const Icons = styled.div`
     }
 `;
 
-const FeedUser = ({ id, author, avatar, location, createdAt, toggleLike, isLikedState, disableComment, lang }) => {
+const FeedUser = ({ id, author, avatar, location, createdAt, toggleLike, isLikedState, lang, type }) => {
     return (
         <Container>
             <UserInfo>
@@ -52,11 +52,9 @@ const FeedUser = ({ id, author, avatar, location, createdAt, toggleLike, isLiked
                         <Icon icon="clap" size="medium" color={isLikedState ? Theme.c_blue : Theme.c_black } />
                     </button> 
                 }
-                { !disableComment && (
-                    <Link to={`/post/${id}`}>
-                        <Icon icon="bubble" size="medium" />
-                    </Link>
-                )}
+                <Link to={`/${type}/${id}`}>
+                    <Icon icon="bubble" size="medium" />
+                </Link>
             </Icons>
         </Container>
     )
@@ -70,8 +68,8 @@ FeedUser.propTypes = {
     createdAt: PropTypes.string,
     toggleLike: PropTypes.func,
     isLikedState: PropTypes.bool,
-    disableComment: PropTypes.bool,
-    lang: PropTypes.oneOf( getLangArray() )
+    lang: PropTypes.oneOf( getLangArray() ),
+    type: PropTypes.oneOf([ "post", "review" ])
 }
 
 export default FeedUser;

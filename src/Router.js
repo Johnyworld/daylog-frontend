@@ -22,6 +22,7 @@ const LoggedInRoutes = () => {
                 <Route path='/log/:username/edit' component={EditProfileContainer} />
                 <Route path='/log/:username' component={Log} />
                 <Route path='/post/:postId'component={Post} />
+                <Route path='/review/:reviewId'component={Post} />
                 <Route path='/search'component={Search} />
                 <Route path='/doing'component={EditDoings} />
                 <Redirect from="*" to="/" />

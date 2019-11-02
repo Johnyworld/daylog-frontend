@@ -9,7 +9,7 @@ import Icon from './Icon';
 import Username from './Username';
 import { getLangArray } from '../Util/Languages';
 import LoaderButton from './LoaderButton';
-import { SEE_POST } from '../Routes/Post';
+import { SEE_POST, SEE_REVIEW } from '../Routes/Post';
 
 const Container = styled.li`
     position: relative;
@@ -58,6 +58,7 @@ const Delete = styled.button`
 const Comment = ({
     id,
     postId,
+    reviewId,
     text,
     author,
     avatar,
@@ -83,8 +84,7 @@ const Comment = ({
     const deleteComment = async() => {
         setIsDelete(true);
         editCommentMutation({
-            variables: { id, action: "DELETE" },
-            refetchQueries: [{ query: SEE_POST, variables: { id: postId }}]
+            variables: { id, action: "DELETE" }
         });
     }
 
@@ -111,7 +111,8 @@ const Comment = ({
 
 Comment.propTypes = {
     id: PropTypes.string,
-    postId: PropTypes.string.isRequired,
+    postId: PropTypes.string,
+    reviewId: PropTypes.string,
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     avatar: PropTypes.string.isRequired,

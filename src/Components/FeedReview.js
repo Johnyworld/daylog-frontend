@@ -3,11 +3,8 @@ import styled from 'styled-components';
 import FeedUser from './FeedUser';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
-import TextRegular from './TextRegular';
-import Theme from '../Styles/Theme';
-import Words from '../Lang/Words.json';
-import TextSmall from './TextSmall';
-import { getPrintDateAuto } from '../Util/Languages';
+import ReviewInfo from './ReviewInfo';
+import FeedItemComments from './FeedItemComments';
 
 const SEE_REVIEW = gql`
     query seeReview( $id: String! ) {
@@ -38,22 +35,7 @@ const Container = styled.li`
     padding: 30px;
 `;
 
-const Text = styled.div`
-    margin-bottom: 20px;
-`;
-
-const Date = styled(TextSmall)`
-    display: inline-block;
-    margin-bottom: 5px;
-`;
-
-const Article = styled(TextRegular)`
-    display: block;
-    margin-bottom: 5px;
-`
-
-
-export default ({ className, id, text, yyyymmdd, createdAt, isLiked, likesCount, author, avatar, lang }) => {
+export default ({ className, id, text, yyyymmdd, createdAt, isLiked, likesCount, comments, commentsCount, author, avatar, lang }) => {
     useQuery(SEE_REVIEW, {variables: {id}});
     const [ isLikedState, setIsLiked ] = useState(isLiked);
     const [ likesCountState, setLikesCount ] = useState(likesCount);
@@ -75,8 +57,6 @@ export default ({ className, id, text, yyyymmdd, createdAt, isLiked, likesCount,
         }
     );
 
-    const datePrint = getPrintDateAuto(yyyymmdd, lang);
-
     const toggleLike = (e) => {
         toggleLikeReviewMutation();
         if ( !isLikedState ) {
@@ -94,23 +74,27 @@ export default ({ className, id, text, yyyymmdd, createdAt, isLiked, likesCount,
 
     return (
         <Container className={className} >
-            <Text>
-                <Date string={datePrint} text={Words.reviewWhen} lang={lang} color={Theme.c_gray} />
-                <Article string={text} lang={lang} />
-                { likesCountState !== 0 &&
-                    <TextSmall string={likesCountState+''} text={Words.likes} lang={lang} color={Theme.c_black} />
-                }
-            </Text>
-            <FeedUser
+            <ReviewInfo
+                yyyymmdd={yyyymmdd}
+                likesCountState={likesCountState}
+                text={text}
                 id={id}
                 author={author}
                 avatar={avatar}
                 createdAt={createdAt}
                 toggleLike={toggleLike}
                 isLikedState={isLikedState}
-                disableComment={true}
                 lang={lang}
             />
+            { comments[0] && 
+                <FeedItemComments
+                    id={id}
+                    comments={comments}
+                    commentsCount={commentsCount}
+                    type="review"
+                    lang={lang}
+                />
+            }
         </Container>
        
     )
