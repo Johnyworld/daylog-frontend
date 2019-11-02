@@ -14,7 +14,7 @@ import { languages } from '../Util/Languages';
 import TextSmall from './TextSmall';
 import { FEED_QUERY } from '../Routes/Feed';
 import PopupHeader from './PopupHeader';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import TextCommentsCount from './TextCommentsCount';
 
 const ADD_REVIEW = gql`
     mutation addReview( $username: String!, $text: String!, $yyyymmdd: String! ) {
@@ -72,7 +72,7 @@ const ConfirmDeleteMessage = styled(TextSmall)`
     margin-top: 5px;
 `;
 
-const CommentsCount = styled(Link)`
+const CommentsCount = styled(TextCommentsCount)`
     display: block;
     margin-top: 10px;
 `;
@@ -191,9 +191,7 @@ export default ({ review, averageScore, username, date, weekDate, lang, QUERY, m
                     }
                     { review && (
                         review.commentsCount || review.commentsCount !== undefined || review.commentsCount !== null ?
-                            <CommentsCount to={`/review/${review.id}`}>
-                                <TextSmall string={review.commentsCount+''} text={Words.commentsCount} lang={lang} color={Theme.c_blue} weight="bold" />
-                            </CommentsCount>
+                            <CommentsCount type="review" id={review.id} count={review.commentsCount} lang={lang} />
                     : null )}
                 </Inner>
             </Box>

@@ -10,7 +10,7 @@ import TextLarge from './TextLarge';
 import TextSmall from './TextSmall';
 import { timePresenter } from '../Util/Convertors';
 import Words from '../Lang/Words.json';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import TextCommentsCount from './TextCommentsCount';
 
 const SEE_MY_POSTS = gql`
     query seeMyPosts( $username: String!, $yyyymmdd: String! ) {
@@ -84,9 +84,7 @@ const MiniFeed = ({ username, yyyymmdd, lang }) => {
                         </Info>
                         <TextLarge string={ post.doing.name } color={ post.doing.color } key={post.id} />
                         <LikesAndComments>
-                            <Link to={`/post/${post.id}`}>
-                                <TextSmall string={post.commentsCount+''} text={Words.commentsCount} lang={lang} color={Theme.c_blue} weight="bold" />
-                            </Link>
+                            <TextCommentsCount type="post" id={post.id} count={post.commentsCount} lang={lang} />
                             { post.likesCount !== 0 &&
                                 <TextSmall string={post.likesCount+''} text={Words.likes} lang={lang} color={Theme.c_black} />
                             }
