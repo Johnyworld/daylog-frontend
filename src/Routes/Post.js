@@ -87,6 +87,7 @@ export const SEE_REVIEW = gql`
             yyyymmdd
             isLiked
             likesCount
+            createdAt
             user {
                 id
                 username
@@ -264,6 +265,7 @@ export default () => {
                             author={data.seeReview.user.username}
                             avatar={data.seeReview.user.avatar}
                             likesCountState={data.seeReview.likesCount}
+                            createdAt={data.seeReview.createdAt}
                             lang={lang}
                         />
                     }
