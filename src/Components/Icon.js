@@ -271,4 +271,14 @@ export default ({ icon, size, color="#222" }) => {
         </svg> 
     )
 
+    if ( icon === "arrow" ) return (
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            width={sizeNum} 
+            height={sizeNum} 
+            viewBox={`0 0 24 24`}>
+            <polygon fill="none" stroke={color} strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" points="2.5,8.2 21.5,3.4 14.3,20.6 10.8,12.9 20.7,4.2 8.5,11.2 	"/>
+            <polyline fill="none" stroke={color} strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" points="8.5,11.2 8,18.3 10.8,12.9 	"/>
+            <line fill="none" stroke={color} strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" x1="8" y1="18.3" x2="12" y2="15.8"/>
+        </svg> 
+    )
 }

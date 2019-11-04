@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import styled from 'styled-components';
 import Words from '../Lang/Words.json';
 import { getLang, languages } from '../Util/Languages';
@@ -13,7 +13,6 @@ import { ME } from './Today';
 import Comments from '../Components/Comments.js';
 import PostInfo from '../Components/PostInfo.js';
 import ReviewInfo from '../Components/ReviewInfo.js';
-import { FEED_QUERY } from './Feed.js';
 
 const ADD_COMMENT = gql`
     mutation addComment( $id: String!, $text: String!, $type: String! ) {
@@ -175,46 +174,53 @@ export default () => {
             id, 
             text: newComment.value,
             type
-        },
-        refetchQueries: [{ query: FEED_QUERY }]
+        }
     });
 
     const [ editCommentMutation ] = useMutation(EDIT_COMMENT);
 
-    const onKeyPress = async e => {
+    const submitNewComment = async() => {
+        try {
+            const newOne = {
+                id: randomId,
+                text: newComment.value,
+                createdAt: new Date().toISOString(),
+                isCreating: true,
+                user: {
+                    id: meData && meData.me && meData.me.username, 
+                    username: meData && meData.me && meData.me.username,
+                    avatar: meData && meData.me && meData.me.avatar,
+                }
+            }
+            if ( type==="post" ) newOne.post = { id }
+            if ( type==="review" ) newOne.review = { id }
+
+            setNewComments([ ...newComments, newOne ]);
+
+            newComment.setValue("");
+            setCreating(true);
+
+            await addCommentMutation({ 
+                update: (_, { data: { addComment }}) => {
+                    setNewId(addComment.id);
+                }
+            });
+
+        } catch {
+            alert(failToSend);
+        }
+    }
+
+    const onKeyPress = e => {
         const { which } = e;
         if ( which === 13 ) {
             e.preventDefault();
-            try {
-                const newOne = {
-                    id: randomId,
-                    text: newComment.value,
-                    createdAt: new Date().toISOString(),
-                    isCreating: true,
-                    user: {
-                        id: meData && meData.me && meData.me.username, 
-                        username: meData && meData.me && meData.me.username,
-                        avatar: meData && meData.me && meData.me.avatar,
-                    }
-                }
-                if ( type==="post" ) newOne.post = { id }
-                if ( type==="review" ) newOne.review = { id }
-
-                setNewComments([ ...newComments, newOne ]);
-
-                newComment.setValue("");
-                setCreating(true);
-
-                await addCommentMutation({ 
-                    update: (_, { data: { addComment }}) => {
-                        setNewId(addComment.id);
-                    }
-                });
-
-            } catch {
-                alert(failToSend);
-            }
+            submitNewComment();
         }
+    }
+
+    const onClickSend = () => {
+        submitNewComment();
     }
 
     const updateCommentId = (randomId, newId) => {
@@ -231,6 +237,12 @@ export default () => {
         setNewId(false);
         setCreating(false);
     }
+
+    useEffect(()=> {
+        if ( creating ) {
+            window.scrollTo(0, document.body.clientHeight );
+        }
+    }, [creating])
 
     return <>
         { loading && <Loader />}
@@ -289,6 +301,7 @@ export default () => {
                             <NewComment
                                 lang={lang}
                                 onKeyPress={onKeyPress}
+                                onClickSend={onClickSend}
                                 value={newComment.value}
                                 onChange={newComment.onChange}
                                 avatar={meData.me.avatar}

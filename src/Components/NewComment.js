@@ -4,12 +4,14 @@ import TextareaAutosize from 'react-autosize-textarea'
 import Avatar from './Avatar';
 import Words from '../Lang/Words.json';
 import { languages } from '../Util/Languages';
-import { BreakPoint } from '../Styles/Theme';
+import Theme, { BreakPoint } from '../Styles/Theme';
 import LoaderButton from './LoaderButton';
+import IconButton from './IconButton';
 
 const Form = styled.form`
     display: flex;
     align-items: center;
+    justify-content: space-between;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -33,9 +35,19 @@ const Textarea = styled(TextareaAutosize)`
     font-size: 14px;
     max-height: 3.7em;
     width: 100%;
+    resize: none;
 `;
 
-const NewComment = ({ lang, onKeyPress, value, onChange, avatar, creating }) => {
+const SendButton = styled(IconButton)`
+    opacity: 1;
+    transition: opacity .5s;
+    margin-left: 10px;
+    ${({ disable })=> disable && `
+        opacity: .3;
+    `};
+`
+
+const NewComment = ({ lang, onKeyPress, value, onChange, onClickSend, avatar, creating }) => {
      const placeholder = languages(Words.newComment, lang);
 
     return (
@@ -43,13 +55,20 @@ const NewComment = ({ lang, onKeyPress, value, onChange, avatar, creating }) => 
             <>
                 <Avatar avatar={avatar} size="medium" />
                 { !creating ? 
-                    <Textarea 
+                    <Textarea
                         placeholder={placeholder}
                         value={value}
                         onChange={onChange}
                         onKeyPress={onKeyPress}
                     />
                 : <LoaderButton /> }
+                <SendButton
+                    disable={value === ""}
+                    icon="arrow"
+                    size="medium"
+                    onClick={value !== "" && onClickSend}
+                    color={Theme.c_blue}
+                />
             </>
         </Form>
     )
