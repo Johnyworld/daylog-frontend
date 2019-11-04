@@ -133,7 +133,7 @@ export default () => {
     const lang = getLang();
 
     const email = useInput('');
-    const username = useInput('');
+    const username = useInput('', 'lowerCase');
     const fullname = useInput('');
     const secret = useInput('');
 

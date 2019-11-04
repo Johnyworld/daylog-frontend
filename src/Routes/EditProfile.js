@@ -132,7 +132,7 @@ export default ({ me }) => {
 
     const lang = getLang(me.lang);
 
-    const username = useInput(me.username);
+    const username = useInput(me.username, 'lowerCase');
     const fullname = useInput(me.fullname);
     const bio = useInput(me.bio);
     const language = useInput(me.lang);
