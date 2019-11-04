@@ -9,7 +9,6 @@ import Icon from './Icon';
 import Username from './Username';
 import { getLangArray } from '../Util/Languages';
 import LoaderButton from './LoaderButton';
-import { SEE_POST, SEE_REVIEW } from '../Routes/Post';
 
 const Container = styled.li`
     position: relative;
