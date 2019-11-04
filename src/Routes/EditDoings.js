@@ -22,7 +22,7 @@ export const SEE_MY_DOINGS = gql`
                 name
                 lang {
                     id
-                    kr
+                    ko
                     en
                 }
             }
@@ -40,7 +40,7 @@ const SEE_CATEGORY_LIST = gql`
             name
             lang {
                 id
-                kr
+                ko
                 en
             }
         }

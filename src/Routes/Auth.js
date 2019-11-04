@@ -146,10 +146,27 @@ export default () => {
     const checkEmail = () => regEmail.test( email.value );
     const checkSignUp = () => { if ( checkUsername() && checkFullname() && checkEmail() ) return true; }
 
-    const [ requestSecretMutation ] = useMutation( LOG_IN, { variables: { email: email.value }});
-    const [ confirmSecretMutation ] = useMutation( CONFIRM_SECRET, { variables: { email: email.value, secret: secret.value }});
+    const [ requestSecretMutation ] = useMutation( LOG_IN, { 
+        variables: { email: email.value }}
+    );
+
+    const [ confirmSecretMutation ] = useMutation( CONFIRM_SECRET, { 
+        variables: {
+            email: email.value,
+            secret: secret.value 
+        }
+    });
+
     const [ localLogInMutation ] = useMutation( LOCAL_LOG_IN );
-    const [ createAccountMutation ] = useMutation( CREATE_ACCOUNT, { variables: { username: username.value, email: email.value, fullname: fullname.value, lang } } )
+
+    const [ createAccountMutation ] = useMutation( CREATE_ACCOUNT, { 
+        variables: { 
+            username: username.value,
+            email: email.value,
+            fullname: fullname.value,
+            lang 
+        }
+    });
     
     const onClickSignUp = () => {
         setAction('signUp');

@@ -9,7 +9,7 @@ const Container = styled.p`
     line-height: 1.4;
     word-break: keep-all;
     color: white;
-    ${({ lang }) => lang === 'kr' && ` 
+    ${({ lang }) => lang === 'ko' && ` 
         letter-spacing: -.03em;
     `}
     ${({ color }) => color && `color: ${color};` };

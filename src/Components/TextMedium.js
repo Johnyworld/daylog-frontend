@@ -10,7 +10,7 @@ const Container = styled.span`
     ${({ weight }) => weight === 'bold' && ` 
         font-weight: 700;
     `}
-    ${({ lang }) => lang === 'kr' && ` 
+    ${({ lang }) => lang === 'ko' && ` 
         letter-spacing: -.03em;
     `}
     ${({ color }) => color && ` 

@@ -25,7 +25,7 @@ const SEE_MY_POSTS = gql`
                     name
                     lang {
                         id
-                        kr
+                        ko
                         en
                     }
                 }

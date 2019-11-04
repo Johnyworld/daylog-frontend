@@ -110,7 +110,7 @@ export default ({ closePopup, username, avatar, isPrivate, lang }) => {
     return (
         <Container className="fadeIn">
             <Box>
-                <MenuHeader text={{ kr:"", en:"" }} closePopup={closePopup} lang={lang} />
+                <MenuHeader text={{ ko:"", en:"" }} closePopup={closePopup} lang={lang} />
                 <User>
                     <UserAvatar avatar={avatar} size="small" />
                     <Name string={username} text={Words.sir} lang={lang} weight="bold" />

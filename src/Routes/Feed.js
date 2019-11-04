@@ -52,7 +52,7 @@ export const FEED_QUERY = gql`
                         id
                         lang {
                             id
-                            kr
+                            ko
                             en
                         }
                     }
